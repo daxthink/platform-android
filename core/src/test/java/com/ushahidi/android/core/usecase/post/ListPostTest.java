@@ -69,7 +69,7 @@ public class ListPostTest {
         ListPost.Callback mockListPostCallback = mock(
             ListPost.Callback.class);
 
-        mListPost.execute(mockListPostCallback);
+        mListPost.execute(1l, mockListPostCallback);
 
         verify(mMockThreadExecutor).execute(any(IInteractor.class));
         verifyNoMoreInteractions(mMockThreadExecutor);
@@ -85,7 +85,7 @@ public class ListPostTest {
         doNothing().when(mMockPostRepository).getPostList(anyLong(),
             any(IPostRepository.PostListCallback.class));
 
-        mListPost.execute(mockListPostCallback);
+        mListPost.execute(1l, mockListPostCallback);
         mListPost.run();
 
         verify(mMockPostRepository).getPostList(anyLong(),
@@ -98,6 +98,6 @@ public class ListPostTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testListPostNullParameter() {
-        mListPost.execute(null);
+        mListPost.execute(1l, null);
     }
 }

@@ -33,9 +33,10 @@ public interface IListPost extends IInteractor {
     /**
      * Executes this use case.
      *
-     * @param callback A {@link IListPost.Callback} used to notify the client.
+     * @param deploymentId The active {@link com.ushahidi.android.core.entity.Deployment} id
+     * @param callback     A {@link IListPost.Callback} used to notify the client.
      */
-    void execute(Callback callback);
+    void execute(long deploymentId, Callback callback);
 
     /**
      * Notify client when a list of posts are successfully loaded or an error occurred in the

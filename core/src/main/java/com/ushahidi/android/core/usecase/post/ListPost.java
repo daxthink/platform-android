@@ -85,11 +85,12 @@ public class ListPost implements IListPost {
     }
 
     @Override
-    public void execute(Callback callback) {
-        if (callback == null) {
+    public void execute(final long deploymentId, Callback callback) {
+        if (deploymentId < 0 || callback == null) {
             throw new IllegalArgumentException("Callback cannot be null!!!");
         }
         mCallback = callback;
+        mDeploymentId = deploymentId;
         mThreadExecutor.execute(this);
     }
 

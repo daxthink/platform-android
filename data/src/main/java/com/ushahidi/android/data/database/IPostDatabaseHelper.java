@@ -35,11 +35,11 @@ public interface IPostDatabaseHelper {
      * Puts a post entity into the database.
      *
      * @param postEntity Post to insert into the database.
-     * @param callback         The {@link com.ushahidi.android.data.database.IPostDatabaseHelper.IPostEntityPutCallback}
-     *                         use to notify client.
+     * @param callback   The {@link com.ushahidi.android.data.database.IPostDatabaseHelper.IPostEntityPutCallback}
+     *                   use to notify client.
      */
-    public void put(PostEntity postEntity,
-            final IPostEntityPutCallback callback);
+    void put(PostEntity postEntity,
+             final IPostEntityPutCallback callback);
 
     /**
      * Gets a post from the database using a {@link IPostEntityCallback}.
@@ -47,48 +47,49 @@ public interface IPostDatabaseHelper {
      * @param id       The post id to retrieve data.
      * @param callback The {@link IPostEntityCallback} to notify the client.
      */
-    public void get(final long id, final IPostEntityCallback callback);
+    void get(final long id, final IPostEntityCallback callback);
 
     /**
      * Gets a list of post entities.
      *
-     * @param callback The {@link IPostEntitiesCallback} to notify the client.
+     * @param deploymentId The {@link com.ushahidi.android.data.entity.DeploymentEntity}
+     * @param callback     The {@link IPostEntitiesCallback} to notify the client.
      */
-    public void getPostEntities(final IPostEntitiesCallback callback);
+    void getPostEntities(final long deploymentId, final IPostEntitiesCallback callback);
 
     /**
      * Puts list of post entity into the database
      *
      * @param postEntities The list of {@link com.ushahidi.android.data.entity.PostEntity}
-     *                           to be added to the database.
-     * @param callback           The {@link com.ushahidi.android.data.database.IPostDatabaseHelper.IPostEntityPutCallback}
-     *                           use to notify client.
+     *                     to be added to the database.
+     * @param callback     The {@link com.ushahidi.android.data.database.IPostDatabaseHelper.IPostEntityPutCallback}
+     *                     use to notify client.
      */
-    public void put(final List<PostEntity> postEntities,
-            final IPostEntityPutCallback callback);
+    void put(final List<PostEntity> postEntities,
+             final IPostEntityPutCallback callback);
 
     /**
      * Deletes all post entities
      *
      * @param callback The {@link IPostEntityDeletedCallback} use to notify client.
      */
-    public void deleteAll(final IPostEntityDeletedCallback callback);
+    void deleteAll(final IPostEntityDeletedCallback callback);
 
     /**
      * Deletes a post entity
      *
      * @param postEntity The {@link com.ushahidi.android.data.entity.PostEntity} to be
-     *                         deleted
-     * @param callback         The {@link IPostEntityDeletedCallback} use to notify client.
+     *                   deleted
+     * @param callback   The {@link IPostEntityDeletedCallback} use to notify client.
      */
-    public void delete(final PostEntity postEntity,
-            final IPostEntityDeletedCallback callback);
+    void delete(final PostEntity postEntity,
+                final IPostEntityDeletedCallback callback);
 
     /**
      * Callback use to notify client when a {@link com.ushahidi.android.data.entity.PostEntity} has been loaded from the
      * database.
      */
-    public interface IPostEntityCallback {
+    interface IPostEntityCallback {
 
         void onPostEntityLoaded(PostEntity postEntity);
 
@@ -99,7 +100,7 @@ public interface IPostDatabaseHelper {
      * Callback use to notify the client when a list of {@link com.ushahidi.android.data.entity.PostEntity} have been loaded
      * from the database.
      */
-    public interface IPostEntitiesCallback {
+    interface IPostEntitiesCallback {
 
         void onPostEntitiesLoaded(List<PostEntity> postEntities);
 
@@ -109,7 +110,7 @@ public interface IPostDatabaseHelper {
     /**
      * Callback use to notify client when {@link com.ushahidi.android.data.entity.PostEntity} has been added to the database.
      */
-    public interface IPostEntityPutCallback {
+    interface IPostEntityPutCallback {
 
         void onPostEntityPut();
 
@@ -120,7 +121,7 @@ public interface IPostDatabaseHelper {
      * Callback use to notify client when {@link com.ushahidi.android.data.entity.PostEntity} has been deleted from the
      * database.
      */
-    public interface IPostEntityDeletedCallback {
+    interface IPostEntityDeletedCallback {
 
         void onPostEntityDeleted();
 

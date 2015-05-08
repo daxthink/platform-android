@@ -38,8 +38,8 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostDatabaseHelper  extends BaseDatabseHelper
-        implements IPostDatabaseHelper, ISearchDatabaseHelper<PostEntity> {
+public class PostDatabaseHelper extends BaseDatabseHelper
+    implements IPostDatabaseHelper, ISearchDatabaseHelper<PostEntity> {
 
     private static PostDatabaseHelper sInstance;
 
@@ -58,7 +58,7 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
     }
 
     public static synchronized PostDatabaseHelper getInstance(Context context,
-            ThreadExecutor threadExecutor) {
+                                                              ThreadExecutor threadExecutor) {
 
         if (sInstance == null) {
             sInstance = new PostDatabaseHelper(context, threadExecutor);
@@ -77,7 +77,7 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
 
     @Override
     public synchronized void put(final PostEntity postEntity,
-            final IPostEntityPutCallback callback) {
+                                 final IPostEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -91,18 +91,18 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
         SQLiteDatabase db = getReadableDatabase();
         try {
             db.beginTransaction();
-                //Delete before insertion
-                cupboard().withDatabase(db).delete(postEntity);
-                Long rows = cupboard().withDatabase(db).put(postEntity);
-                if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
-                        postEntity.getPostTagEntityList().size() > 0)) {
+            //Delete before insertion
+            cupboard().withDatabase(db).delete(postEntity);
+            Long rows = cupboard().withDatabase(db).put(postEntity);
+            if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
+                postEntity.getPostTagEntityList().size() > 0)) {
 
-                    for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
-                            postTagEntity.setPostId(postEntity.getId());
-                            cupboard().withDatabase(db).put(postTagEntity);
+                for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
+                    postTagEntity.setPostId(postEntity.getId());
+                    cupboard().withDatabase(db).put(postTagEntity);
 
-                    }
                 }
+            }
             db.setTransactionSuccessful();
             callback.onPostEntityPut();
         } catch (Exception e) {
@@ -134,11 +134,11 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
     }
 
     @Override
-    public synchronized void getPostEntities(final IPostEntitiesCallback callback) {
+    public synchronized void getPostEntities(final long deploymentId, final IPostEntitiesCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
-                final List<PostEntity> postEntities = getPosts();
+                final List<PostEntity> postEntities = getPosts(deploymentId);
                 final List<PostEntity> postEntityList = new ArrayList<>();
                 if (postEntities != null) {
                     for (PostEntity postEntity : postEntities) {
@@ -154,13 +154,13 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
         });
     }
 
-    private List<PostEntity> getPosts() {
-        return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class).list();
+    private List<PostEntity> getPosts(final long deploymentId) {
+        return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class).withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
     }
 
     private PostEntity get(long id) {
         return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class)
-                .byId(id).get();
+            .byId(id).get();
     }
 
     private List<TagEntity> getTagEntity(PostEntity postEntity) {
@@ -168,8 +168,8 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
 
         // fetch posttag entity
         List<PostTagEntity> postTagEntityList = cupboard().withDatabase(getReadableDatabase())
-                .query(PostTagEntity.class)
-                .withSelection("mPostId = ?", String.valueOf(postEntity.getId())).list();
+            .query(PostTagEntity.class)
+            .withSelection("mPostId = ?", String.valueOf(postEntity.getId())).list();
 
         for (PostTagEntity postTagEntity : postTagEntityList) {
             TagEntity tagEntity = cupboard().withDatabase(getReadableDatabase())
@@ -183,13 +183,13 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
 
     @Override
     public synchronized void put(final List<PostEntity> postEntities,
-            final IPostEntityPutCallback callback) {
+                                 final IPostEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
                 // Delete existing posttag entities
                 // Lame way to avoid duplicates
-                cupboard().withDatabase(getWritableDatabase()).delete(PostTagEntity.class,null);
+                cupboard().withDatabase(getWritableDatabase()).delete(PostTagEntity.class, null);
                 for (PostEntity postEntity : postEntities) {
                     puts(postEntity, callback);
                 }
@@ -206,10 +206,10 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
                 if (!isClosed()) {
                     try {
                         final int numRows = cupboard().withDatabase(getWritableDatabase())
-                                .delete(PostEntity.class, null);
+                            .delete(PostEntity.class, null);
                         if (BuildConfig.DEBUG) {
                             Log.d(TAG, "delete all post entities. Deleted " + numRows
-                                    + " rows.");
+                                + " rows.");
                         }
                         callback.onPostEntityDeleted();
                     } catch (Exception e) {
@@ -222,7 +222,7 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
 
     @Override
     public synchronized void delete(final PostEntity postEntity,
-            final IPostEntityDeletedCallback callback) {
+                                    final IPostEntityDeletedCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -243,11 +243,11 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
-                if(!isClosed()) {
+                if (!isClosed()) {
                     try {
                         final List<PostEntity> postEntityList = search(query);
                         callback.onSearchResult(postEntityList);
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         callback.onError(e);
                     }
                 }
@@ -257,9 +257,9 @@ public class PostDatabaseHelper  extends BaseDatabseHelper
 
     public List<PostEntity> search(final String query) {
         String selection = " mTitle like ? OR mContent like ?";
-        String args [] = {query+"%", query+"%"};
+        String args[] = {query + "%", query + "%"};
         // Post title holds the search term
         return cupboard().withDatabase(getReadableDatabase()).query(
-                PostEntity.class).withSelection(selection, args).list();
+            PostEntity.class).withSelection(selection, args).list();
     }
 }

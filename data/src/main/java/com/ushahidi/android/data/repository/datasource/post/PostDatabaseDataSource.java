@@ -51,7 +51,7 @@ public class PostDatabaseDataSource implements PostDataSource {
 
     @Override
     public void getPostEntityList(final long deploymentId, final PostEntityListCallback postListCallback) {
-        mPostDatabaseHelper.getPostEntities(new PostDatabaseHelper.IPostEntitiesCallback() {
+        mPostDatabaseHelper.getPostEntities(deploymentId, new PostDatabaseHelper.IPostEntitiesCallback() {
             @Override
             public void onPostEntitiesLoaded(List<PostEntity> postEntities) {
                 postListCallback.onPostEntityListLoaded(postEntities);
