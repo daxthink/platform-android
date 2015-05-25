@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/eyedol/Devel/Workspace/Raiburari/library/raiburari/src/main/res/values-v21/dimens.xml -->
+    <eat-comment/>
+    <dimen name="navdrawer_profile_pic_top_padding">38dp</dimen>
+    <!-- From: file:/home/eyedol/Devel/Workspace/Raiburari/library/raiburari/src/main/res/values-v21/themes.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+    </style>
+</resources>

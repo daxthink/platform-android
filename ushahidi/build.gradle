@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+def globalConfiguration = rootProject.extensions.getByName("ext")
+
+def libVersion = globalConfiguration.getAt("androidVersionName")
+
+android {
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+    defaultConfig {
+        applicationId "com.ushahidi.android"
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName = libVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def appDependencies = rootProject.ext.appDependencies
+    def appTestDependencies = rootProject.ext.appTestDependencies
+
+    apt appDependencies.daggerCompiler
+    compile appDependencies.raiburari
+    compile(appDependencies.materialdrawer) {
+        transitive = true
+    }
+    provided appDependencies.javaxAnnotation
+
+    androidTestCompile appTestDependencies.mockito
+    androidTestCompile appTestDependencies.dexmaker
+    androidTestCompile appTestDependencies.dexmakerMockito
+    androidTestCompile appTestDependencies.espresso
+    androidTestCompile appTestDependencies.testingSupportLib
+    testCompile appTestDependencies.junit
+    testCompile appTestDependencies.mockito
+}

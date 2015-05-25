@@ -1,0 +1,67 @@
+/*
+ *  Copyright (c) 2015 Ushahidi.
+ *
+ *   This program is free software: you can redistribute it and/or modify it under
+ *   the terms of the GNU Affero General Public License as published by the Free
+ *   Software Foundation, either version 3 of the License, or (at your option)
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but WITHOUT
+ *   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *   FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Affero General Public License
+ *   along with this program in the file LICENSE-AGPL. If not, see
+ *   https://www.gnu.org/licenses/agpl-3.0.html
+ *
+ */
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "22.0.0"
+    androidMinSdkVersion = 14
+    androidTargetSdkVersion = 22
+    androidCompileSdkVersion = 22
+
+    //Libraries
+    daggerVersion = '2.0'
+    butterKnifeVersion = '6.0.0'
+    daggerVersion = '2.0'
+    butterKnifeVersion = '6.0.0'
+    javaxAnnotationVersion = '10.0-b28'
+    raiburari = '1.1.0'
+    materialdrawer = '2.9.8'
+
+    //Testing
+    robolectricVersion = '2.4'
+    jUnitVersion = '4.11'
+    mockitoVersion = '1.9.5'
+    dexmakerVersion = '1.0'
+    espressoVersion = '2.0'
+    testingSupportLibVersion = '0.1'
+
+    appDependencies = [
+            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger         : "com.google.dagger:dagger:${daggerVersion}",
+            javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            raiburari      : "com.addhen.android:raiburari:${raiburari}",
+            materialdrawer : "com.mikepenz:materialdrawer:${materialdrawer}",
+    ]
+
+    appTestDependencies = [
+            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
+            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+            junit            : "junit:junit:${jUnitVersion}",
+            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
+            robolectric      : "org.robolectric:robolectric:${robolectricVersion}",
+    ]
+}
