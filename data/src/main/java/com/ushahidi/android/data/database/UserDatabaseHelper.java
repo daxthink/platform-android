@@ -17,14 +17,14 @@
 
 package com.ushahidi.android.data.database;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.UserEntity;
 import com.ushahidi.android.data.exception.UserNotFoundException;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.List;
 
@@ -41,20 +41,12 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
 
     private static String TAG = UserDatabaseHelper.class.getSimpleName();
 
-    private final ThreadExecutor mThreadExecutor;
-
     private UserDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
-        super(context);
-
-        if (threadExecutor == null) {
-            throw new IllegalArgumentException("Invalid null parameter");
-        }
-
-        mThreadExecutor = threadExecutor;
+        super(context, threadExecutor);
     }
 
     public static synchronized UserDatabaseHelper getInstance(Context context,
-            ThreadExecutor threadExecutor) {
+                                                              ThreadExecutor threadExecutor) {
 
         if (sInstance == null) {
             sInstance = new UserDatabaseHelper(context, threadExecutor);
@@ -62,24 +54,14 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
         return sInstance;
     }
 
-    /**
-     * Executes a {@link Runnable} in another Thread.
-     *
-     * @param runnable {@link Runnable} to execute
-     */
-    private void asyncRun(Runnable runnable) {
-        mThreadExecutor.execute(runnable);
-    }
-
     @Override
     public synchronized void put(final UserEntity userEntity,
-            final IUserEntityPutCallback callback) {
+                                 final IUserEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
                 if (!isClosed()) {
                     try {
-                        Log.e(TAG, "Repo " + userEntity.toString());
                         cupboard().withDatabase(getWritableDatabase()).put(userEntity);
                         callback.onUserEntityPut();
                     } catch (Exception e) {
@@ -107,7 +89,7 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
 
     private UserEntity get(long id) {
         return cupboard().withDatabase(getReadableDatabase()).query(UserEntity.class)
-                .byId(id).get();
+            .byId(id).get();
     }
 
     private List<UserEntity> getUsers() {
@@ -131,13 +113,13 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
 
     @Override
     public void getUserEntitiesByDeploymentId(final Long deploymentId,
-            final IUserEntitiesCallback callback) {
+                                              final IUserEntitiesCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
                 final List<UserEntity> userEntities = cupboard().withDatabase(getReadableDatabase()).query(
-                        UserEntity.class).withSelection("mDeployment = ?",
-                        String.valueOf(deploymentId)).list();
+                    UserEntity.class).withSelection("mDeployment = ?",
+                    String.valueOf(deploymentId)).list();
                 if (userEntities != null) {
                     callback.onUserEntitiesLoaded(userEntities);
                 } else {
@@ -149,7 +131,7 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
 
     @Override
     public synchronized void put(final List<UserEntity> userEntities,
-            final IUserEntityPutCallback callback) {
+                                 final IUserEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -182,10 +164,10 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
                 if (!isClosed()) {
                     try {
                         final int numRows = cupboard().withDatabase(getWritableDatabase())
-                                .delete(UserEntity.class, null);
+                            .delete(UserEntity.class, null);
                         if (BuildConfig.DEBUG) {
                             Log.d(TAG, "delete all user entities. Deleted " + numRows
-                                    + " rows.");
+                                + " rows.");
                         }
                         callback.onUserEntityDeleted();
                     } catch (Exception e) {
@@ -198,7 +180,7 @@ public class UserDatabaseHelper extends BaseDatabseHelper implements IUserDataba
 
     @Override
     public synchronized void delete(final UserEntity userEntity,
-            final IUserEntityDeletedCallback callback) {
+                                    final IUserEntityDeletedCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {

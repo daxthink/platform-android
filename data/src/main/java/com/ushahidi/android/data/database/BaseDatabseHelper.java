@@ -17,10 +17,12 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.database.converter.EnumEntityFieldConverter;
 import com.ushahidi.android.data.database.converter.PostEntityConverter;
 import com.ushahidi.android.data.entity.DeploymentEntity;
+import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.MediaEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
@@ -51,8 +53,11 @@ public abstract class BaseDatabseHelper extends SQLiteOpenHelper {
 
     private static final int LAST_DATABASE_NUKE_VERSION = 1;
 
+    private final ThreadExecutor mThreadExecutor;
+
     private static final Class[] ENTITIES = new Class[]{DeploymentEntity.class, UserEntity.class,
-            TagEntity.class, MediaEntity.class, PostTagEntity.class, PostEntity.class};
+            TagEntity.class, MediaEntity.class, PostTagEntity.class, PostEntity.class,
+            GeoJsonEntity.class};
 
 
     static {
@@ -60,7 +65,7 @@ public abstract class BaseDatabseHelper extends SQLiteOpenHelper {
 
             @Override
             public <T> EntityConverter<T> create(Cupboard cupboard, Class<T> type) {
-                if(type == PostEntity.class) {
+                if (type == PostEntity.class) {
                     return (EntityConverter<T>) new PostEntityConverter(cupboard);
                 }
                 return null;
@@ -83,8 +88,12 @@ public abstract class BaseDatabseHelper extends SQLiteOpenHelper {
 
     private boolean mIsClosed;
 
-    public BaseDatabseHelper(Context context) {
+    public BaseDatabseHelper(Context context, ThreadExecutor threadExecutor) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        if (threadExecutor == null) {
+            throw new IllegalArgumentException("Invalid null parameter");
+        }
+        mThreadExecutor = threadExecutor;
     }
 
     @Override
@@ -115,6 +124,17 @@ public abstract class BaseDatabseHelper extends SQLiteOpenHelper {
     public synchronized void close() {
         super.close();
         mIsClosed = true;
+    }
+
+    /**
+     * Executes a {@link Runnable} in another Thread.
+     *
+     * @param runnable {@link Runnable} to execute
+     */
+    protected void asyncRun(Runnable runnable) {
+        if (mThreadExecutor != null) {
+            mThreadExecutor.execute(runnable);
+        }
     }
 
     public boolean isClosed() {

@@ -19,7 +19,7 @@ package com.ushahidi.android.data.repository;
 
 import com.ushahidi.android.core.entity.Tag;
 import com.ushahidi.android.data.BaseTestCase;
-import com.ushahidi.android.data.database.ITagDatabaseHelper;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.database.TagDatabaseHelper;
 import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.entity.mapper.TagEntityMapper;
@@ -38,7 +38,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.Date;
@@ -54,8 +54,8 @@ import static org.mockito.Mockito.verify;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(manifest=Config.NONE)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class TagDataRepositoryTest extends BaseTestCase {
 
     @Rule
@@ -119,11 +119,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
         MockitoAnnotations.initMocks(this);
         clearSingleton(TagDataRepository.class);
         mTagDataRepository = TagDataRepository
-                .getInstance(mMockTagDataSourceFactory, mMockTagEntityMapper);
+            .getInstance(mMockTagDataSourceFactory, mMockTagEntityMapper);
 
         given(mMockTagDataSourceFactory.createTagApiSource()).willReturn(mMockTagDataSource);
         given(mMockTagDataSourceFactory.createTagDatabaseSource())
-                .willReturn(mMockTagDataSource);
+            .willReturn(mMockTagDataSource);
         mTag = new Tag();
         mTag.setId(DUMMY_ID);
         mTag.setTag(DUMMY_TAG);
@@ -153,11 +153,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityAddCallback) invocation
-                        .getArguments()[1]).onTagEntityAdded();
+                    .getArguments()[1]).onTagEntityAdded();
                 return null;
             }
         }).when(mMockTagDataSource).addTag(any(TagEntity.class),
-                any(TagDataSource.TagEntityAddCallback.class));
+            any(TagDataSource.TagEntityAddCallback.class));
 
         given(mMockTagEntityMapper.unmap(mTag)).willReturn(mMockTagEntity);
 
@@ -174,15 +174,15 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockTagDataSource).addTag(any(TagEntity.class),
-                any(TagDataSource.TagEntityAddCallback.class));
+            any(TagDataSource.TagEntityAddCallback.class));
 
         mTagDataRepository.addTag(mMockTag, mMockTagAddCallback);
 
-        verify(mMockTagAddCallback, times(2)).onError(any(RepositoryError.class));
+        verify(mMockTagAddCallback, times(1)).onError(any(RepositoryError.class));
     }
 
     @Test
@@ -192,11 +192,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockTagDataSource).addTag(any(TagEntity.class),
-                any(TagDataSource.TagEntityAddCallback.class));
+            any(TagDataSource.TagEntityAddCallback.class));
 
         mTagDataRepository.addTag(mTag, mMockTagAddCallback);
 
@@ -210,11 +210,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityUpdateCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockTagDataSource).updateTagEntity(any(TagEntity.class),
-                any(TagDataSource.TagEntityUpdateCallback.class));
+            any(TagDataSource.TagEntityUpdateCallback.class));
 
         mTagDataRepository.addTag(mTag, mMockTagAddCallback);
 
@@ -229,11 +229,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityUpdateCallback) invocation
-                        .getArguments()[1]).onTagEntityUpdated();
+                    .getArguments()[1]).onTagEntityUpdated();
                 return null;
             }
         }).when(mMockTagDataSource).updateTagEntity(any(TagEntity.class),
-                any(TagDataSource.TagEntityUpdateCallback.class));
+            any(TagDataSource.TagEntityUpdateCallback.class));
 
         given(mMockTagEntityMapper.unmap(mTag)).willReturn(mMockTagEntity);
 
@@ -249,11 +249,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityUpdateCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockTagDataSource).updateTagEntity(any(TagEntity.class),
-                any(TagDataSource.TagEntityUpdateCallback.class));
+            any(TagDataSource.TagEntityUpdateCallback.class));
 
         mTagDataRepository.updateTag(mMockTag, mMockTagUpdateCallback);
 
@@ -268,11 +268,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityDeletedCallback) invocation
-                        .getArguments()[1]).onTagEntityDeleted();
+                    .getArguments()[1]).onTagEntityDeleted();
                 return null;
             }
         }).when(mMockTagDataSource).deleteTagEntity(any(TagEntity.class),
-                any(TagDataSource.TagEntityDeletedCallback.class));
+            any(TagDataSource.TagEntityDeletedCallback.class));
 
         given(mMockTagEntityMapper.unmap(mTag)).willReturn(mMockTagEntity);
 
@@ -288,11 +288,11 @@ public class TagDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((TagDataSource.TagEntityDeletedCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockTagDataSource).deleteTagEntity(any(TagEntity.class),
-                any(TagDataSource.TagEntityDeletedCallback.class));
+            any(TagDataSource.TagEntityDeletedCallback.class));
 
         mTagDataRepository.deleteTag(mMockTag, mMockTagDeletedCallback);
 

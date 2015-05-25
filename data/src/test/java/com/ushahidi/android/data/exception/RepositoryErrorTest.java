@@ -18,13 +18,14 @@
 package com.ushahidi.android.data.exception;
 
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.mockito.Mockito.verify;
@@ -34,8 +35,8 @@ import static org.mockito.Mockito.verify;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class RepositoryErrorTest extends BaseTestCase {
 
     private RepositoryError mRepositoryError;

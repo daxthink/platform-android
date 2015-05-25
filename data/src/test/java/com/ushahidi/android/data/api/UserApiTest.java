@@ -17,7 +17,10 @@
 
 package com.ushahidi.android.data.api;
 
+import android.content.Context;
+
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.api.auth.AccessToken;
 import com.ushahidi.android.data.api.auth.Payload;
 import com.ushahidi.android.data.api.service.UserService;
@@ -34,11 +37,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import android.content.Context;
 
 import java.io.IOException;
 
@@ -55,8 +56,8 @@ import static org.mockito.Mockito.verify;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class UserApiTest extends BaseTestCase {
 
     @Rule
@@ -114,7 +115,7 @@ public class UserApiTest extends BaseTestCase {
                 return null;
             }
         }).when(mMockUserService).getAccessToken(any(Payload.class), Matchers
-                .<Callback<AccessToken>>any());
+            .<Callback<AccessToken>>any());
 
         given(mUserApi.isDeviceConnectedToInternet(mMockContext)).willReturn(true);
 
@@ -130,18 +131,18 @@ public class UserApiTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IUserApi.UserAccountLoggedInCallback) invocation
-                        .getArguments()[1]).onError(any(NetworkConnectionException.class));
+                    .getArguments()[1]).onError(any(NetworkConnectionException.class));
                 return null;
             }
         }).when(mMockUserService).getAccessToken(any(Payload.class), Matchers
-                .<Callback<AccessToken>>any());
+            .<Callback<AccessToken>>any());
 
         given(mUserApi.isDeviceConnectedToInternet(mMockContext)).willReturn(false);
 
         mUserApi.loginUserAccount(mSpyPayload, mMockUserAccountLoggedInCallback);
 
         verify(mMockUserAccountLoggedInCallback, times(1))
-                .onError(any(NetworkConnectionException.class));
+            .onError(any(NetworkConnectionException.class));
     }
 
     @Test
@@ -180,7 +181,7 @@ public class UserApiTest extends BaseTestCase {
         mUserApi.getUserProfile(mMockUserProfileCallback);
 
         verify(mMockUserProfileCallback, times(1))
-                .onError(any(NetworkConnectionException.class));
+            .onError(any(NetworkConnectionException.class));
     }
 
     @SuppressWarnings("unchecked")

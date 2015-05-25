@@ -19,6 +19,7 @@ package com.ushahidi.android.data.repository;
 
 import com.ushahidi.android.core.entity.User;
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.UserEntity;
 import com.ushahidi.android.data.entity.mapper.UserEntityMapper;
 import com.ushahidi.android.data.exception.RepositoryError;
@@ -36,7 +37,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.Date;
@@ -44,7 +45,6 @@ import java.util.Date;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -54,8 +54,8 @@ import static org.mockito.Mockito.verifyZeroInteractions;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class UserDataRepositoryTest extends BaseTestCase {
 
     private static final long DUMMY_ID = 1;
@@ -115,12 +115,12 @@ public class UserDataRepositoryTest extends BaseTestCase {
         MockitoAnnotations.initMocks(this);
         clearSingleton(UserDataRepository.class);
         mUserDataRepository = UserDataRepository
-                .getInstance(mMockUserDataSourceFactory, mMockUserEntityMapper,
-                        mMockEmailValidator);
+            .getInstance(mMockUserDataSourceFactory, mMockUserEntityMapper,
+                mMockEmailValidator);
 
         given(mMockUserDataSourceFactory.createUserApiDataSource()).willReturn(mMockUserDataSource);
         given(mMockUserDataSourceFactory.createUserDatabaseDataSource())
-                .willReturn(mMockUserDataSource);
+            .willReturn(mMockUserDataSource);
 
         mUser = new User();
         mUser.setId(DUMMY_ID);
@@ -150,11 +150,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityAddCallback) invocation
-                        .getArguments()[1]).onUserEntityAdded();
+                    .getArguments()[1]).onUserEntityAdded();
                 return null;
             }
         }).when(mMockUserDataSource).addUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityAddCallback.class));
+            any(UserDataSource.UserEntityAddCallback.class));
         given(mMockEmailValidator.isValid(mUser.getEmail())).willReturn(true);
         given(mMockUserEntityMapper.unmap(mUser)).willReturn(mMockUserEntity);
 
@@ -171,11 +171,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockUserDataSource).addUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityAddCallback.class));
+            any(UserDataSource.UserEntityAddCallback.class));
 
         mUserDataRepository.addUser(mMockUser, mMockUserAddCallback);
 
@@ -190,11 +190,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockUserDataSource).addUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityAddCallback.class));
+            any(UserDataSource.UserEntityAddCallback.class));
 
         given(mMockEmailValidator.isValid(mUser.getEmail())).willReturn(false);
 
@@ -210,11 +210,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockUserDataSource).addUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityAddCallback.class));
+            any(UserDataSource.UserEntityAddCallback.class));
 
         given(mMockEmailValidator.isValid(mUser.getEmail())).willReturn(true);
 
@@ -231,11 +231,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityUpdateCallback) invocation
-                        .getArguments()[1]).onUserEntityUpdated();
+                    .getArguments()[1]).onUserEntityUpdated();
                 return null;
             }
         }).when(mMockUserDataSource).updateUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityUpdateCallback.class));
+            any(UserDataSource.UserEntityUpdateCallback.class));
         given(mMockEmailValidator.isValid(mUser.getEmail())).willReturn(true);
         given(mMockUserEntityMapper.unmap(mUser)).willReturn(mMockUserEntity);
 
@@ -251,11 +251,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityUpdateCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockUserDataSource).updateUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityUpdateCallback.class));
+            any(UserDataSource.UserEntityUpdateCallback.class));
 
         mUserDataRepository.updateUser(mMockUser, mMockUserUpdateCallback);
 
@@ -270,11 +270,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityDeletedCallback) invocation
-                        .getArguments()[1]).onUserEntityDeleted();
+                    .getArguments()[1]).onUserEntityDeleted();
                 return null;
             }
         }).when(mMockUserDataSource).deleteUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityDeletedCallback.class));
+            any(UserDataSource.UserEntityDeletedCallback.class));
 
         given(mMockUserEntityMapper.unmap(mUser)).willReturn(mMockUserEntity);
 
@@ -290,11 +290,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityDeletedCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockUserDataSource).deleteUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityDeletedCallback.class));
+            any(UserDataSource.UserEntityDeletedCallback.class));
 
         mUserDataRepository.deleteUser(mMockUser, mMockUserDeletedCallback);
 
@@ -308,11 +308,11 @@ public class UserDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((UserDataSource.UserEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockUserDataSource).addUserEntity(any(UserEntity.class),
-                any(UserDataSource.UserEntityAddCallback.class));
+            any(UserDataSource.UserEntityAddCallback.class));
 
         //given(mMockEmailValidator.isValid(mockUser.getEmail())).willReturn(true);
         given(mMockUserEntityMapper.unmap(mUser)).willReturn(mMockUserEntity);

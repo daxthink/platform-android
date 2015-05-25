@@ -39,8 +39,9 @@ public class TagApi implements ITagApi {
     private final TagService mTagService;
 
     public TagApi(Context context, TagService tagService) {
+
         mContext = Preconditions.checkNotNull(context, "Context cannot be null,");
-        mTagService =  Preconditions.checkNotNull(tagService, "PostService cannot be null.");
+        mTagService = Preconditions.checkNotNull(tagService, "PostService cannot be null.");
     }
 
     @Override

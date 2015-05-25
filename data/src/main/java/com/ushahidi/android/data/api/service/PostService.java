@@ -24,12 +24,12 @@ import retrofit.http.GET;
 
 import static com.ushahidi.android.data.Constants.POSTS;
 
-
 /**
+ * API service for posts
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface PostService {
-
     @GET(POSTS)
     void posts(Callback<Posts> callback);
 }

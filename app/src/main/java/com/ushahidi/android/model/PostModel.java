@@ -17,9 +17,6 @@
 
 package com.ushahidi.android.model;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.clustering.ClusterItem;
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +25,7 @@ import java.util.List;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostModel extends Model implements ClusterItem {
+public class PostModel extends Model {
 
     private long mParent;
 
@@ -53,8 +50,6 @@ public class PostModel extends Model implements ClusterItem {
     private String mValues;
 
     private List<TagModel> mTags;
-
-    private LatLng mPosition;
 
     public long getParent() {
         return mParent;
@@ -170,14 +165,5 @@ public class PostModel extends Model implements ClusterItem {
                 ", mValues='" + mValues + '\'' +
                 ", mTags=" + mTags +
                 '}';
-    }
-
-    public void setPosition(LatLng position) {
-        mPosition = position;
-    }
-
-    @Override
-    public LatLng getPosition() {
-        return mPosition;
     }
 }

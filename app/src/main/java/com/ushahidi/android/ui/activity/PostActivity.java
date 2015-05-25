@@ -18,6 +18,23 @@
 package com.ushahidi.android.ui.activity;
 
 
+import com.squareup.otto.Subscribe;
+import com.ushahidi.android.R;
+import com.ushahidi.android.model.DeploymentModel;
+import com.ushahidi.android.model.UserModel;
+import com.ushahidi.android.module.PostUiModule;
+import com.ushahidi.android.presenter.ActivateDeploymentPresenter;
+import com.ushahidi.android.presenter.DeploymentNavPresenter;
+import com.ushahidi.android.presenter.PostPresenter;
+import com.ushahidi.android.state.IDeploymentState;
+import com.ushahidi.android.state.IPostState;
+import com.ushahidi.android.state.IUserState;
+import com.ushahidi.android.ui.fragment.ListPostFragment;
+import com.ushahidi.android.ui.fragment.MapPostFragment;
+import com.ushahidi.android.ui.prefs.Prefs;
+import com.ushahidi.android.ui.widget.NavDrawerItem;
+import com.ushahidi.android.ui.widget.SlidingTabLayout;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -34,23 +51,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.squareup.otto.Subscribe;
-import com.ushahidi.android.R;
-import com.ushahidi.android.model.DeploymentModel;
-import com.ushahidi.android.model.PostModel;
-import com.ushahidi.android.model.UserModel;
-import com.ushahidi.android.module.PostUiModule;
-import com.ushahidi.android.presenter.ActivateDeploymentPresenter;
-import com.ushahidi.android.presenter.DeploymentNavPresenter;
-import com.ushahidi.android.presenter.PostPresenter;
-import com.ushahidi.android.state.IDeploymentState;
-import com.ushahidi.android.state.IUserState;
-import com.ushahidi.android.ui.fragment.ListPostFragment;
-import com.ushahidi.android.ui.fragment.MapPostFragment;
-import com.ushahidi.android.ui.prefs.Prefs;
-import com.ushahidi.android.ui.widget.NavDrawerItem;
-import com.ushahidi.android.ui.widget.SlidingTabLayout;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,11 +63,10 @@ import javax.inject.Inject;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawerItemListener,
-    NavDrawerItem.NavDeploymentItemListener,
-    PostPresenter.View,
-    DeploymentNavPresenter.View,
-    ListPostFragment.PostListListener,
-    ActivateDeploymentPresenter.View {
+        NavDrawerItem.NavDeploymentItemListener,
+        PostPresenter.View,
+        DeploymentNavPresenter.View,
+        ActivateDeploymentPresenter.View {
 
     private static final String SELECTED_TAB = "selected_tab";
 
@@ -107,12 +106,11 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mListPostFragment = ListPostFragment.newInstance();
         mMainPresenter.setView(this);
         mActivateDeploymentPresenter.setView(this);
         mDeploymentNavPresenter.setView(this);
-
-        mListPostFragment = ListPostFragment.newInstance();
-
         // Set up tabs
         mTabTitle = new ArrayList<>();
         mTabTitle.add(getString(R.string.list));
@@ -120,7 +118,8 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
 
         mSlidingTabStrip = (SlidingTabLayout) findViewById(R.id.tabs);
         mHeaderView = findViewById(R.id.toolbar_container);
-        ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
+        ViewCompat
+                .setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
         mSlidingTabStrip.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
         mSlidingTabStrip.setDistributeEvenly(true);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -129,7 +128,7 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.setPageMargin(
-            getResources().getDimensionPixelSize(R.dimen.element_spacing_normal));
+                getResources().getDimensionPixelSize(R.dimen.element_spacing_normal));
 
         mSlidingTabStrip.setViewPager(mViewPager);
         mSlidingTabStrip.setTabListener(new SlidingTabLayout.TabListener() {
@@ -176,7 +175,7 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
         super.onCreateOptionsMenu(menu);
 
         mSearchView =
-            (SearchView) menu.findItem(R.id.menu_search_post).getActionView();
+                (SearchView) menu.findItem(R.id.menu_search_post).getActionView();
         initSearchView();
         return true;
     }
@@ -192,10 +191,10 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
 
     private void initSearchView() {
         final SearchManager searchManager =
-            (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         mSearchView.setSearchableInfo(
-            searchManager.getSearchableInfo(getComponentName()));
+                searchManager.getSearchableInfo(getComponentName()));
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -228,8 +227,8 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
             mSearchView.setQuery(mQuery, false);
         }
         SearchView.SearchAutoComplete searchAutoComplete
-            = (SearchView.SearchAutoComplete) mSearchView
-            .findViewById(android.support.v7.appcompat.R.id.search_src_text);
+                = (SearchView.SearchAutoComplete) mSearchView
+                .findViewById(android.support.v7.appcompat.R.id.search_src_text);
         searchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
         searchAutoComplete.setTextSize(14);
     }
@@ -243,24 +242,25 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
     @Override
     public void onResume() {
         super.onResume();
+        mMainPresenter.resume();
         mActivateDeploymentPresenter.resume();
         mDeploymentNavPresenter.resume();
-        mMainPresenter.resume();
         mSlidingTabStrip.getBackground().setAlpha(255);
 
     }
 
     @Override
     public void onPause() {
-        mMainPresenter.onPause();
         super.onPause();
+        mMainPresenter.onPause();
+        mMainPresenter.onDetach();
         mCurrentItem = mViewPager.getCurrentItem();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        mMainPresenter.onDetach();
     }
 
     @Override
@@ -279,19 +279,19 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
     @Override
     protected void initNavDrawerItems() {
         mNavDrawerItemViews
-            .add(setNavDrawerItem(R.string.manage_deployments, R.drawable.ic_action_map, 1,
-                DeploymentActivity.getIntent(this)));
+                .add(setNavDrawerItem(R.string.manage_deployments, R.drawable.ic_action_map, 1,
+                        DeploymentActivity.getIntent(this)));
 
         mNavDrawerItemViews
-            .add(setNavDrawerItem(R.string.settings, R.drawable.ic_action_settings, 2,
-                SettingsActivity.getIntent(this)));
+                .add(setNavDrawerItem(R.string.settings, R.drawable.ic_action_settings, 2,
+                        SettingsActivity.getIntent(this)));
 
         mNavDrawerItemViews.add(setNavDrawerItem(R.string.about, R.drawable.ic_action_info, 3,
-            AboutActivity.getIntent(this)));
+                AboutActivity.getIntent(this)));
 
         mNavDrawerItemViews
-            .add(setNavDrawerItem(R.string.send_feedback, R.drawable.ic_action_help, 4,
-                SendFeedbackActivity.getIntent(this)));
+                .add(setNavDrawerItem(R.string.send_feedback, R.drawable.ic_action_help, 4,
+                        SendFeedbackActivity.getIntent(this)));
 
         setFragments();
 
@@ -308,13 +308,13 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
     }
 
     private NavDrawerItem setNavDrawerItem(int titleResId, int iconId, int position,
-                                           Intent intent) {
+            Intent intent) {
         return setNavDrawerItem(getResources().getString(titleResId), iconId, position, intent);
     }
 
     private NavDrawerItem setNavDrawerItem(String title, int iconId, int position, Intent intent) {
         NavDrawerItem navDrawerItem = new NavDrawerItem(this, title,
-            iconId, position, intent);
+                iconId, position, intent);
         navDrawerItem.setOnClickListener(this);
         return navDrawerItem;
     }
@@ -338,7 +338,7 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
 
         if (deploymentModels.get(position).getStatus() == DeploymentModel.Status.DEACTIVATED) {
             mActivateDeploymentPresenter.activateDeployment(deploymentModels,
-                navDrawerItem.getPosition());
+                    navDrawerItem.getPosition());
         }
     }
 
@@ -347,7 +347,7 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
         mNavDrawerItemViews.clear();
         for (int i = 0; i < listDeploymentModel.size(); i++) {
             NavDrawerItem navDrawerItem = setNavDrawerItem(listDeploymentModel.get(i).getTitle(),
-                R.drawable.ic_action_globe, i, null);
+                    R.drawable.ic_action_globe, i, null);
             navDrawerItem.setNavDrawerItemId(listDeploymentModel.get(i).getId());
             navDrawerItem.setStatus(listDeploymentModel.get(i).getStatus());
             navDrawerItem.setOnDeploymentClickListener(this);
@@ -394,9 +394,9 @@ public class PostActivity extends BaseActivity implements NavDrawerItem.NavDrawe
         mDeploymentState.setActiveDeployment(deploymentModel);
     }
 
-    @Override
-    public void onPostClicked(final PostModel postModel) {
-        showToast(postModel.getTitle());
+    @Subscribe
+    public void onPostClicked(final IPostState.PostClickedEvent event) {
+        showToast(event.postModel.getTitle());
     }
 
     @Override

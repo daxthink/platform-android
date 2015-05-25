@@ -18,18 +18,19 @@
 
 package com.ushahidi.android.presenter;
 
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
 import com.ushahidi.android.core.entity.Deployment;
 import com.ushahidi.android.core.exception.ErrorWrap;
 import com.ushahidi.android.core.usecase.deployment.ActivateDeployment;
 import com.ushahidi.android.core.usecase.deployment.ListDeployment;
 import com.ushahidi.android.exception.ErrorMessageFactory;
+import com.ushahidi.android.state.IPostState;
 import com.ushahidi.android.ui.activity.ActivityLauncher;
 import com.ushahidi.android.ui.prefs.Prefs;
 import com.ushahidi.android.ui.view.IView;
 import com.ushahidi.android.util.Util;
+
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -57,6 +58,9 @@ public class MainPresenter implements IPresenter {
 
     @Inject
     Prefs mPrefs;
+
+    @Inject
+    IPostState mPostState;
 
     private final ActivateDeployment mActivateDeployment;
 
@@ -95,34 +99,34 @@ public class MainPresenter implements IPresenter {
     }
 
     private final ActivateDeployment.Callback mActivateDeploymentCallback =
-        new ActivateDeployment.Callback() {
-            @Override
-            public void onDeploymentActivated() {
-                launchPostActivity();
-            }
+            new ActivateDeployment.Callback() {
+                @Override
+                public void onDeploymentActivated() {
+                    launchPostActivity();
+                }
 
-            @Override
-            public void onError(ErrorWrap error) {
-                showErrorMessage(error);
-
-            }
-        };
+                @Override
+                public void onError(ErrorWrap error) {
+                    showErrorMessage(error);
+                }
+            };
 
     @Inject
     public MainPresenter(@NonNull ListDeployment listDeployment,
-                         @NonNull ActivateDeployment activateDeployment) {
+            @NonNull ActivateDeployment activateDeployment) {
         mListDeployment = listDeployment;
         mActivateDeployment = activateDeployment;
     }
 
     @Override
     public void resume() {
+        mPostState.registerEvent(this);
         mListDeployment.execute(mListDeploymentCallback);
     }
 
     @Override
     public void pause() {
-        // Do nothing
+        mPostState.unregisterEvent(this);
     }
 
     public void setView(@NonNull View view) {
@@ -131,11 +135,12 @@ public class MainPresenter implements IPresenter {
 
     private void showErrorMessage(ErrorWrap errorWrap) {
         String errorMessage = ErrorMessageFactory.create(mView.getAppContext(),
-            errorWrap.getException());
+                errorWrap.getException());
         mView.showError(errorMessage);
     }
 
     public interface View extends IView {
+
         // Use inherited methods
         void finishActivity();
     }

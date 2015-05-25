@@ -18,6 +18,7 @@
 package com.ushahidi.android.data.api.service;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.api.BaseApiTestCase;
 import com.ushahidi.android.data.api.auth.AccessToken;
 import com.ushahidi.android.data.api.auth.Payload;
@@ -26,7 +27,7 @@ import com.ushahidi.android.data.entity.UserEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -49,12 +50,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest = Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class UserServiceTest extends BaseApiTestCase {
 
     final SimpleDateFormat PARSER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale
-            .getDefault());
+        .getDefault());
 
     private Payload mPayload = new Payload("", "", "", "", "", "");
 
@@ -65,11 +66,11 @@ public class UserServiceTest extends BaseApiTestCase {
 
     @Test
     public void shouldSuccessfullyAuthenticateUserAccount() throws IOException {
-        mMockWebServer.play();
+        mMockWebServer.start();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setExecutors(httpExecutor, callbackExecutor)
-                .setConverter(new GsonConverter(mGson))
-                .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
+            .setExecutors(httpExecutor, callbackExecutor)
+            .setConverter(new GsonConverter(mGson))
+            .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
 
         final String loginSuccessful = getResource("login_success.json");
         UserService userService = restAdapter.create(UserService.class);
@@ -79,9 +80,9 @@ public class UserServiceTest extends BaseApiTestCase {
             public void success(AccessToken accessToken, Response response) {
 
                 assertThat(accessToken.getAccessToken(),
-                        equalTo("XGOtn8jE6iQ73c7Jupz3hrvRaWJefo0qCuLCXl2e"));
+                    equalTo("XGOtn8jE6iQ73c7Jupz3hrvRaWJefo0qCuLCXl2e"));
                 assertThat(accessToken.getRefreshToken(),
-                        equalTo("GyOHosEcJFPI4cMxPtJiCBNsb1L9mFFG4xzc7anc"));
+                    equalTo("GyOHosEcJFPI4cMxPtJiCBNsb1L9mFFG4xzc7anc"));
                 assertThat(accessToken.getTokenType(), equalTo("Bearer"));
                 assertThat(accessToken.getExpires(), equalTo(1418997691l));
             }
@@ -97,11 +98,11 @@ public class UserServiceTest extends BaseApiTestCase {
 
     @Test
     public void shouldFailToAuthenticateUserAccount() throws IOException {
-        mMockWebServer.play();
+        mMockWebServer.start();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setExecutors(httpExecutor, callbackExecutor)
-                .setConverter(new GsonConverter(mGson))
-                .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
+            .setExecutors(httpExecutor, callbackExecutor)
+            .setConverter(new GsonConverter(mGson))
+            .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
         final String loginFailed = getResource("login_failed.json");
         UserService userService = restAdapter.create(UserService.class);
         mMockWebServer.enqueue(new MockResponse().setBody(loginFailed));
@@ -109,14 +110,14 @@ public class UserServiceTest extends BaseApiTestCase {
             @Override
             public void success(AccessToken accessToken, Response response) {
                 assertThat(accessToken.getErrorDescription(),
-                        equalTo("The user credentials were incorrect."));
+                    equalTo("The user credentials were incorrect."));
                 assertThat(accessToken.getError(), equalTo("invalid_request"));
                 assertThat(accessToken.getExpiresIn(), nullValue());
                 assertThat(accessToken.getRefreshTokenExpiresIn(), nullValue());
                 assertThat(accessToken.getAccessToken(),
-                        nullValue());
+                    nullValue());
                 assertThat(accessToken.getRefreshToken(),
-                        nullValue());
+                    nullValue());
                 assertThat(accessToken.getTokenType(), nullValue());
                 assertThat(accessToken.getExpires(), nullValue());
             }
@@ -132,11 +133,11 @@ public class UserServiceTest extends BaseApiTestCase {
 
     @Test
     public void shouldSuccessfullyFetchUser() throws IOException {
-        mMockWebServer.play();
+        mMockWebServer.start();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setExecutors(httpExecutor, callbackExecutor)
-                .setConverter(new GsonConverter(mGson))
-                .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
+            .setExecutors(httpExecutor, callbackExecutor)
+            .setConverter(new GsonConverter(mGson))
+            .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
 
         final String user = getResource("user.json");
         UserService userService = restAdapter.create(UserService.class);
@@ -147,7 +148,7 @@ public class UserServiceTest extends BaseApiTestCase {
 
                 assertThat(userEntity.getId(), equalTo(1l));
                 assertThat(userEntity.getCreated(), equalTo(parseDateTime(
-                        "1970-01-01T00:00:00+00:00")));
+                    "1970-01-01T00:00:00+00:00")));
                 assertThat(userEntity.getRealName(), equalTo("Robbie Mackay"));
                 assertThat(userEntity.getEmail(), equalTo("robbie@ushahidi.com"));
                 assertThat(userEntity.getUsername(), equalTo("robbie"));

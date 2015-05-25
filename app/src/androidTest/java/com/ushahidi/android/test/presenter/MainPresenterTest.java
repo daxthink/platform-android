@@ -61,7 +61,7 @@ public class MainPresenterTest extends CustomAndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.initMocks(this);
-        mMainPresenter = spy(new MainPresenter(mMockGetActiveDeployment, mMockListDeployment,
+        mMainPresenter = spy(new MainPresenter(mMockListDeployment,
             mMockActivateDeployment));
 
         mMainPresenter.setView(mMockView);

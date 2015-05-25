@@ -20,7 +20,6 @@ package com.ushahidi.android.util;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import com.ushahidi.android.data.api.ApiHeader;
 import com.ushahidi.android.data.api.Date;
@@ -48,7 +47,8 @@ public class ApiServiceUtil {
     private UnauthorizedAccessErrorHandler mUnauthorizedAccessErrorHandler;
 
     @Inject
-    public ApiServiceUtil(Client client, UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler ) {
+    public ApiServiceUtil(Client client,
+            UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler) {
         mClient = client;
         mUnauthorizedAccessErrorHandler = unauthorizedAccessErrorHandler;
     }

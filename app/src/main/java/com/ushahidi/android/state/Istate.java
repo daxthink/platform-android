@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.state;
 
-import com.ushahidi.android.core.entity.UserAccount;
 import com.ushahidi.android.model.DeploymentModel;
 import com.ushahidi.android.model.UserAccountModel;
 import com.ushahidi.android.model.UserModel;
@@ -27,13 +26,13 @@ import com.ushahidi.android.model.UserModel;
  */
 public interface Istate {
 
-    public UserAccountModel getActiveUserAccount();
+    UserAccountModel getActiveUserAccount();
 
-    public UserModel getUserModel();
+    UserModel getUserModel();
 
-    public DeploymentModel getActiveDeployment();
+    DeploymentModel getActiveDeployment();
 
-    public void registerEvent(Object receiver);
+    void registerEvent(Object receiver);
 
-    public void unregisterEvent(Object receiver);
+    void unregisterEvent(Object receiver);
 }

@@ -30,7 +30,7 @@ public interface IPostApi {
      * Get a list of {@link com.ushahidi.android.core.entity.Post}.
      *
      * @param postEntityListCallback A {@link PostEntityListCallback} used for notifying clients about the
-     *                         status of the operation.
+     *                               status of the operation.
      */
     void getPostEntityList(PostEntityListCallback postEntityListCallback);
 

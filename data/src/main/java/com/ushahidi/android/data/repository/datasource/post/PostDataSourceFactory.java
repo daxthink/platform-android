@@ -17,13 +17,12 @@
 
 package com.ushahidi.android.data.repository.datasource.post;
 
-import com.google.common.base.Preconditions;
+import android.content.Context;
 
+import com.google.common.base.Preconditions;
 import com.ushahidi.android.data.api.PostApi;
 import com.ushahidi.android.data.api.service.PostService;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
-
-import android.content.Context;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -39,10 +38,10 @@ public class PostDataSourceFactory {
     public PostDataSourceFactory(Context context, PostDatabaseHelper postDatabaseHelper) {
         mContext = Preconditions.checkNotNull(context, "Context cannot be null.");
         mPostDatabaseHelper = Preconditions
-                .checkNotNull(postDatabaseHelper, "PostDatabaseHelper cannot be null");
+            .checkNotNull(postDatabaseHelper, "PostDatabaseHelper cannot be null");
     }
 
-    public void setPostService(PostService postService){
+    public void setPostService(PostService postService) {
         mPostService = postService;
     }
 

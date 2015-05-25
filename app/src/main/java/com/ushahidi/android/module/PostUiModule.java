@@ -25,6 +25,8 @@ import com.ushahidi.android.core.usecase.Search;
 import com.ushahidi.android.core.usecase.deployment.ActivateDeployment;
 import com.ushahidi.android.core.usecase.deployment.GetActiveDeployment;
 import com.ushahidi.android.core.usecase.deployment.ListDeployment;
+import com.ushahidi.android.core.usecase.geojson.FetchGeoJson;
+import com.ushahidi.android.core.usecase.geojson.ListGeoJson;
 import com.ushahidi.android.core.usecase.post.FetchPost;
 import com.ushahidi.android.core.usecase.post.ListPost;
 import com.ushahidi.android.core.usecase.tag.FetchTag;
@@ -44,15 +46,15 @@ import dagger.Provides;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Module(library = true, complete = false, injects = {
-        ListPostFragment.class, MapPostFragment.class, PostActivity.class
+    ListPostFragment.class, MapPostFragment.class, PostActivity.class
 })
 public final class PostUiModule {
 
     @Provides
     ListPost providesListPost(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
+                              PostExecutionThread postExecutionThread) {
         return new ListPost(threadExecutor,
-                postExecutionThread);
+            postExecutionThread);
 
     }
 
@@ -63,44 +65,58 @@ public final class PostUiModule {
 
     @Provides
     FetchPost providesFetchPost(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
+                                PostExecutionThread postExecutionThread) {
         return new FetchPost(threadExecutor,
-                postExecutionThread);
+            postExecutionThread);
 
     }
 
     @Provides
     FetchTag providesFetchTag(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
+                              PostExecutionThread postExecutionThread) {
         return new FetchTag(threadExecutor, postExecutionThread);
     }
 
     @Provides
     ListDeployment providesListDeployment(IDeploymentRepository deploymentRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                          ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         return new ListDeployment(deploymentRepository, threadExecutor,
-                postExecutionThread);
+            postExecutionThread);
 
+    }
+
+    @Provides
+    FetchGeoJson provideFetchGeoJson(ThreadExecutor threadExecutor,
+                                     PostExecutionThread postExecutionThread) {
+        return new FetchGeoJson(threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    ListGeoJson provideListGeoJson(ThreadExecutor threadExecutor,
+                                   PostExecutionThread postExecutionThread) {
+        return new ListGeoJson(threadExecutor, postExecutionThread);
     }
 
     @Provides
     @Singleton
     ActivateDeployment providesActivateDeployment(IDeploymentRepository deploymentRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                                  ThreadExecutor threadExecutor,
+                                                  PostExecutionThread postExecutionThread) {
         return new ActivateDeployment(deploymentRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides
     @Singleton
     GetActiveDeployment providesActiveDeployment(IDeploymentRepository deploymentRepository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+                                                 ThreadExecutor threadExecutor,
+                                                 PostExecutionThread postExecutionThread) {
         return new GetActiveDeployment(deploymentRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides
     @Singleton
     Search<Post> providePostSearch(ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
+                                   PostExecutionThread postExecutionThread) {
         return new Search<>(threadExecutor, postExecutionThread);
     }
 }

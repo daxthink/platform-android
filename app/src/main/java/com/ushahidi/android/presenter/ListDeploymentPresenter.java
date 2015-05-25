@@ -40,7 +40,7 @@ public class ListDeploymentPresenter implements IPresenter {
 
     private final ListDeployment mListDeployment;
 
-    private final ListDeployment.Callback mListCallback = new ListDeployment.Callback() {
+    private ListDeployment.Callback mListCallback = new ListDeployment.Callback() {
 
         @Override
         public void onDeploymentListLoaded(List<Deployment> listDeployment) {

@@ -24,9 +24,10 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
@@ -34,7 +35,8 @@ import com.google.maps.android.ui.IconGenerator;
 import com.google.maps.android.ui.SquareTextView;
 
 import com.ushahidi.android.R;
-import com.ushahidi.android.model.PostModel;
+import com.ushahidi.android.model.ClusterMarkerModel;
+import com.ushahidi.android.presenter.MapPresenter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -43,36 +45,39 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Date;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+
+import javax.inject.Inject;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class MapPostFragment extends BaseFragment implements
-        OnMapReadyCallback, ClusterManager.OnClusterClickListener<PostModel>,
-        ClusterManager.OnClusterInfoWindowClickListener<PostModel>,
-        ClusterManager.OnClusterItemInfoWindowClickListener<PostModel> {
+        OnMapReadyCallback, ClusterManager.OnClusterClickListener<ClusterMarkerModel>,
+        ClusterManager.OnClusterInfoWindowClickListener<ClusterMarkerModel>,
+        ClusterManager.OnClusterItemInfoWindowClickListener<ClusterMarkerModel>,
+        MapPresenter.View {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private static MapPostFragment mMapPostFragment;
 
-    private ClusterManager<PostModel> mClusterManager;
+    private ClusterManager<ClusterMarkerModel> mClusterManager;
 
     private MapFragment mMapFragment;
 
     private GoogleMap mMap;
 
-    private Random mRandom = new Random(1984);
+    @Inject
+    MapPresenter mMapPresenter;
 
-    private HashMap<Marker, PostModel> markers = new HashMap<>();
+    private HashMap<Marker, ClusterMarkerModel> markers = new HashMap<>();
 
     /**
      * BaseFragment
@@ -82,12 +87,13 @@ public class MapPostFragment extends BaseFragment implements
     }
 
     public static MapPostFragment newInstance() {
-
-        if (mMapPostFragment == null) {
-            mMapPostFragment = new MapPostFragment();
-        }
-
+        mMapPostFragment = new MapPostFragment();
         return mMapPostFragment;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mMapPresenter.setView(this);
     }
 
     @Override
@@ -101,12 +107,20 @@ public class MapPostFragment extends BaseFragment implements
         super.onResume();
         // Set up Google map
         setUpMapIfNeeded();
+        mMapPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapPresenter.pause();
     }
 
     @Override
     void initPresenter() {
         // Make sure there is Google play service installed on the user's device
         checkPlayServices();
+        mMapPresenter.init();
     }
 
     private void setUpMapIfNeeded() {
@@ -116,45 +130,22 @@ public class MapPostFragment extends BaseFragment implements
             mMap = mMapFragment.getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-
                 mClusterManager = new ClusterManager<>(getActivity(), mMap);
-                mClusterManager.setRenderer(new PostModelRenderer());
+                final PostModelRenderer postModelRenderer = new PostModelRenderer(
+                        getActivity().getApplicationContext(), new WeakReference<>(mMap),
+                        new WeakReference<ClusterManager>(mClusterManager),
+                        new WeakReference<>(markers));
+                mClusterManager.setRenderer(postModelRenderer);
                 mMap.setOnCameraChangeListener(mClusterManager);
                 mMap.setOnMarkerClickListener(mClusterManager);
                 mMap.setOnInfoWindowClickListener(mClusterManager);
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 mClusterManager.setOnClusterInfoWindowClickListener(this);
                 mClusterManager.setOnClusterItemInfoWindowClickListener(this);
-
-                addDummyPostItems();
-                mClusterManager.cluster();
             }
         }
     }
 
-    //TODO: Remove this dummy generated post model
-    private void addDummyPostItems() {
-        for(int i =0; i < 50; i++) {
-            PostModel postModel = new PostModel();
-            postModel.setTitle("New "+i);
-            postModel.setCreated(new Date());
-            postModel.setContent("Junction");
-            postModel.setPosition(position());
-            if(mClusterManager !=null) {
-                mClusterManager.addItem(postModel);
-            }
-        }
-
-    }
-
-    //TODO: Remove this dummy generated latng
-    private LatLng position() {
-        return new LatLng(random(51.6723432, 51.38494009999999), random(0.148271, -0.3514683));
-    }
-
-    private double random(double min, double max) {
-        return mRandom.nextDouble() * (max - min) + min;
-    }
 
     /**
      * Check if Google play services is installed on the user's device. If it's not
@@ -182,53 +173,104 @@ public class MapPostFragment extends BaseFragment implements
     }
 
     @Override
-    public boolean onClusterClick(Cluster<PostModel> postModelCluster) {
+    public boolean onClusterClick(Cluster<ClusterMarkerModel> postModelCluster) {
 
         return false;
     }
 
     @Override
-    public void onClusterInfoWindowClick(Cluster<PostModel> postModelCluster) {
-       //Do nothing
+    public void onClusterInfoWindowClick(Cluster<ClusterMarkerModel> postModelCluster) {
+        //Do nothing
     }
 
     @Override
-    public void onClusterItemInfoWindowClick(PostModel postModel) {
+    public void onClusterItemInfoWindowClick(ClusterMarkerModel geoJsonModel) {
         //TODO launch post detail view
         //For now show a toast with the title
-        showToast(postModel.getTitle());
+        showToast(geoJsonModel.title);
+    }
+
+    @Override
+    public void showGeoJson(ArrayList<Object> uiObjects) {
+        for (Object uiObj : uiObjects) {
+            if (uiObj instanceof PolylineOptions) {
+                mMap.addPolyline((PolylineOptions) uiObj);
+            } else if (uiObj instanceof PolygonOptions) {
+                mMap.addPolygon((PolygonOptions) uiObj);
+            } else {
+                if (mClusterManager != null) {
+                    mClusterManager.addItem((ClusterMarkerModel) uiObj);
+                    mClusterManager.cluster();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showRetry(String message) {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public Context getAppContext() {
+        return getActivity().getApplicationContext();
     }
 
     /**
      * Draws custom colored circle for clustered pins.
      */
-    private class PostModelRenderer extends DefaultClusterRenderer<PostModel> {
-        private final IconGenerator mClusterIconGenerator = new IconGenerator(getActivity());
+    private static class PostModelRenderer extends DefaultClusterRenderer<ClusterMarkerModel> {
+
+        private final IconGenerator mClusterIconGenerator;
 
         private final float mDensity;
 
         private ShapeDrawable mColoredCircleBackground;
 
+        private Context mContext;
+
+        private WeakReference<HashMap<Marker, ClusterMarkerModel>> mMarkers;
+
         /**
          * Icons for each bucket.
          */
-        private SparseArray<BitmapDescriptor> mIcons = new SparseArray<BitmapDescriptor>();
+        private SparseArray<BitmapDescriptor> mIcons = new SparseArray<>();
 
-        public PostModelRenderer() {
-            super(getActivity().getApplicationContext(), mMap, mClusterManager);
-            mDensity = getActivity().getResources().getDisplayMetrics().density;
-            mClusterIconGenerator.setContentView(makeSquareTextView(getActivity()));
+        public PostModelRenderer(Context context, WeakReference<GoogleMap> map,
+                WeakReference<ClusterManager> clusterManager,
+                WeakReference<HashMap<Marker, ClusterMarkerModel>> markers) {
+            super(context, map.get(), clusterManager.get());
+            mContext = context;
+            mDensity = context.getResources().getDisplayMetrics().density;
+            mClusterIconGenerator = new IconGenerator(mContext);
+            mClusterIconGenerator.setContentView(makeSquareTextView());
             mClusterIconGenerator.setTextAppearance(R.style.CustomClusterIcon_TextAppearance);
             mClusterIconGenerator.setBackground(makeClusterBackground());
+            mMarkers = markers;
         }
 
-        private SquareTextView makeSquareTextView(Context context) {
-            SquareTextView squareTextView = new SquareTextView(context);
+        private SquareTextView makeSquareTextView() {
+            SquareTextView squareTextView = new SquareTextView(mContext);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             squareTextView.setLayoutParams(layoutParams);
             squareTextView.setId(R.id.text);
-            squareTextView.setTextColor(getActivity().getResources().getColor(R.color.body_text_1));
+            squareTextView.setTextColor(mContext.getResources().getColor(R.color.body_text_1));
             int twelveDpi = (int) (12 * mDensity);
             squareTextView.setPadding(twelveDpi, twelveDpi, twelveDpi, twelveDpi);
             return squareTextView;
@@ -238,9 +280,10 @@ public class MapPostFragment extends BaseFragment implements
             mColoredCircleBackground = new ShapeDrawable(new OvalShape());
             ShapeDrawable outline = new ShapeDrawable(new OvalShape());
 
-            outline.getPaint().setColor(getActivity().getResources()
+            outline.getPaint().setColor(mContext.getResources()
                     .getColor(R.color.cluster_solid_color)); // Solid red
-            LayerDrawable background = new LayerDrawable(new Drawable[]{outline, mColoredCircleBackground});
+            LayerDrawable background = new LayerDrawable(
+                    new Drawable[]{outline, mColoredCircleBackground});
             int strokeWidth = (int) (mDensity * 5);
             background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
             return background;
@@ -250,21 +293,24 @@ public class MapPostFragment extends BaseFragment implements
             final float hueRange = 100;
             final float sizeRange = 300;
             final float size = Math.min(clusterSize, sizeRange);
-            final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
+            final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange)
+                    * hueRange;
             return Color.HSVToColor(new float[]{
                     hue, 0f, 1f
             });
         }
 
         @Override
-        protected void onBeforeClusterItemRendered(PostModel post, MarkerOptions markerOptions) {
-            super.onBeforeClusterItemRendered(post, markerOptions);
-            markerOptions.snippet(post.getContent());
-            markerOptions.title(post.getTitle());
+        protected void onBeforeClusterItemRendered(ClusterMarkerModel geoJsonModel,
+                MarkerOptions markerOptions) {
+            super.onBeforeClusterItemRendered(geoJsonModel, markerOptions);
+            markerOptions.snippet(geoJsonModel.description);
+            markerOptions.title(geoJsonModel.title);
         }
 
         @Override
-        protected void onBeforeClusterRendered(Cluster<PostModel> cluster, MarkerOptions markerOptions) {
+        protected void onBeforeClusterRendered(Cluster<ClusterMarkerModel> cluster,
+                MarkerOptions markerOptions) {
             super.onBeforeClusterRendered(cluster, markerOptions);
             int bucket = getBucket(cluster);
             BitmapDescriptor descriptor = mIcons.get(bucket);
@@ -276,7 +322,7 @@ public class MapPostFragment extends BaseFragment implements
                 mIcons.put(bucket, descriptor);
             }
 
-            markerOptions.anchor(.5f,.5f);
+            markerOptions.anchor(.5f, .5f);
             markerOptions.icon(descriptor);
 
         }
@@ -287,10 +333,10 @@ public class MapPostFragment extends BaseFragment implements
             return cluster.getSize() > 1;
         }
 
-        protected void onClusterRendered(Cluster<PostModel> cluster, Marker marker) {
+        protected void onClusterRendered(Cluster<ClusterMarkerModel> cluster, Marker marker) {
             super.onClusterRendered(cluster, marker);
-            for (PostModel postModel : cluster.getItems()) {
-                markers.put(marker, postModel);
+            for (ClusterMarkerModel geoJsonModel : cluster.getItems()) {
+                mMarkers.get().put(marker, geoJsonModel);
             }
         }
     }

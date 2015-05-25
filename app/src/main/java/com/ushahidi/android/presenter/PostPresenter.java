@@ -17,9 +17,8 @@
 
 package com.ushahidi.android.presenter;
 
-import android.accounts.AccountManager;
-
 import com.google.common.base.Objects;
+
 import com.squareup.otto.Subscribe;
 import com.ushahidi.android.core.entity.User;
 import com.ushahidi.android.core.entity.UserAccount;
@@ -35,6 +34,8 @@ import com.ushahidi.android.model.mapper.UserModelDataMapper;
 import com.ushahidi.android.state.IUserState;
 import com.ushahidi.android.ui.view.IView;
 import com.ushahidi.android.util.Util;
+
+import android.accounts.AccountManager;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class PostPresenter implements IPresenter {
 
     private UserAccountModel mUserAccountModel;
 
-    private final IListDeploymentUsers.Callback mCallback = new IListDeploymentUsers.Callback() {
+    private IListDeploymentUsers.Callback mCallback = new IListDeploymentUsers.Callback() {
         @Override
         public void onUserListLoaded(List<User> users) {
             List<UserModel> userModels = mUserModelDataMapper.map(users);
@@ -80,9 +81,9 @@ public class PostPresenter implements IPresenter {
 
     @Inject
     public PostPresenter(ListDeploymentUsers deploymentUsers, AccountManager accountManager,
-                         UserModelDataMapper userModelDataMapper,
-                         IUserState userState,
-                         UserAccountModelDataMapper userAccountModelDataMapper) {
+            UserModelDataMapper userModelDataMapper,
+            IUserState userState,
+            UserAccountModelDataMapper userAccountModelDataMapper) {
         mDeploymentUsers = deploymentUsers;
         mAccountManager = accountManager;
         mUserModelDataMapper = userModelDataMapper;
@@ -102,6 +103,11 @@ public class PostPresenter implements IPresenter {
     public void resume() {
         mUserState.registerEvent(this);
         showLoginUserProfile();
+    }
+
+
+    public void onDetach() {
+        mCallback = null;
     }
 
     @Subscribe
@@ -128,7 +134,7 @@ public class PostPresenter implements IPresenter {
             boolean found = false;
             for (int i = 0, z = userAccountModels.size(); i < z; i++) {
                 if (Objects.equal(userAccountModels.get(i).getAccountName(),
-                    mUserAccountModel.getAccountName())) {
+                        mUserAccountModel.getAccountName())) {
                     found = true;
                     break;
                 }
@@ -144,7 +150,8 @@ public class PostPresenter implements IPresenter {
         if (!Util.isCollectionEmpty(userModels) && mUserAccountModel != null) {
             for (int i = 0, z = userModels.size(); i < z; i++) {
                 if ((Objects.equal(userModels.get(i).getUsername(),
-                    mUserAccountModel.getAccountName()) && (userModels.get(i).getDeployment() == mUserAccountModel.getId()))) {
+                        mUserAccountModel.getAccountName()) && (userModels.get(i).getDeployment()
+                        == mUserAccountModel.getId()))) {
                     mUserState.setUserProfile(userModels.get(i));
                     mView.setActiveUserProfile(userModels.get(i));
                     break;

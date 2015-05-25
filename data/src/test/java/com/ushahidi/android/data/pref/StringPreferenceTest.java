@@ -17,18 +17,18 @@
 
 package com.ushahidi.android.data.pref;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -39,8 +39,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class StringPreferenceTest extends BaseTestCase {
 
     private SharedPreferences mSharedPreferences;
@@ -50,7 +50,7 @@ public class StringPreferenceTest extends BaseTestCase {
     @Before
     public void setup() {
         mSharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(RuntimeEnvironment.application);
+            .getDefaultSharedPreferences(RuntimeEnvironment.application);
     }
 
     @Test

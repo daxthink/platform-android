@@ -17,14 +17,14 @@
 
 package com.ushahidi.android.data.database;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class DeploymentDatabaseHelper extends BaseDatabseHelper
-        implements IDeploymentDatabaseHelper {
+    implements IDeploymentDatabaseHelper {
 
     private static DeploymentDatabaseHelper sInstance;
 
@@ -43,7 +43,7 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
     private final ThreadExecutor mThreadExecutor;
 
     private DeploymentDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
-        super(context);
+        super(context, threadExecutor);
 
         if (threadExecutor == null) {
             throw new IllegalArgumentException("Invalid null parameter");
@@ -53,7 +53,7 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
     }
 
     public static synchronized DeploymentDatabaseHelper getInstance(Context context,
-            ThreadExecutor threadExecutor) {
+                                                                    ThreadExecutor threadExecutor) {
 
         if (sInstance == null) {
             sInstance = new DeploymentDatabaseHelper(context, threadExecutor);
@@ -61,18 +61,9 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
         return sInstance;
     }
 
-    /**
-     * Executes a {@link Runnable} in another Thread.
-     *
-     * @param runnable {@link Runnable} to execute
-     */
-    private void asyncRun(Runnable runnable) {
-        mThreadExecutor.execute(runnable);
-    }
-
     @Override
     public synchronized void put(final DeploymentEntity deploymentEntity,
-            final IDeploymentEntityPutCallback callback) {
+                                 final IDeploymentEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -108,14 +99,14 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
 
     @Override
     public void get(final DeploymentEntity.Status status,
-            final IDeploymentEntityCallback callback) {
+                    final IDeploymentEntityCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
 
                 final DeploymentEntity deploymentEntity = cupboard()
-                        .withDatabase(getReadableDatabase()).query(DeploymentEntity.class)
-                        .withSelection("mStatus = ?", status.name()).get();
+                    .withDatabase(getReadableDatabase()).query(DeploymentEntity.class)
+                    .withSelection("mStatus = ?", status.name()).get();
 
                 if (deploymentEntity != null) {
                     callback.onDeploymentEntityLoaded(deploymentEntity);
@@ -147,13 +138,13 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
 
     private DeploymentEntity get(long id) {
         return cupboard().withDatabase(getReadableDatabase()).query(DeploymentEntity.class)
-                .byId(id).get();
+            .byId(id).get();
     }
 
 
     @Override
     public synchronized void put(final List<DeploymentEntity> deploymentEntities,
-            final IDeploymentEntityPutCallback callback) {
+                                 final IDeploymentEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -186,10 +177,10 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
                 if (!isClosed()) {
                     try {
                         final int numRows = cupboard().withDatabase(getWritableDatabase())
-                                .delete(DeploymentEntity.class, null);
+                            .delete(DeploymentEntity.class, null);
                         if (BuildConfig.DEBUG) {
                             Log.d(TAG, "delete all deployment entities. Deleted " + numRows
-                                    + " rows.");
+                                + " rows.");
                         }
                         callback.onDeploymentEntityDeleted();
                     } catch (Exception e) {
@@ -202,7 +193,7 @@ public class DeploymentDatabaseHelper extends BaseDatabseHelper
 
     @Override
     public synchronized void delete(final DeploymentEntity deploymentEntity,
-            final IDeploymentEntityDeletedCallback callback) {
+                                    final IDeploymentEntityDeletedCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {

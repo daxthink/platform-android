@@ -22,6 +22,8 @@ import com.ushahidi.android.data.entity.PostEntity;
 import java.util.List;
 
 /**
+ * Represent a data source for retrieving data
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface PostDataSource {

@@ -17,28 +17,25 @@
 
 package com.ushahidi.android.data;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import com.ushahidi.android.data.api.Date;
 import com.ushahidi.android.data.api.DateDeserializer;
 import com.ushahidi.android.data.api.ValueDeserializer;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.entity.MediaEntity;
 import com.ushahidi.android.data.entity.PostEntity;
+import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
-
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.lang.reflect.Field;
 
@@ -53,7 +50,7 @@ import nl.qbusict.cupboard.Cupboard;
 public class BaseTestCase {
 
     protected static final Class[] ENTITIES = new Class[]{DeploymentEntity.class, UserEntity.class,
-            TagEntity.class, MediaEntity.class, PostTagEntity.class, PostEntity.class};
+        TagEntity.class, MediaEntity.class, PostTagEntity.class, PostEntity.class, GeoJsonEntity.class};
 
     private static final String TEST_DB = "ushahidi_test.db";
 
@@ -74,7 +71,7 @@ public class BaseTestCase {
     protected void setupTestDb(final Cupboard cupboard) {
 
         SQLiteOpenHelper helper = new SQLiteOpenHelper(RuntimeEnvironment.application, TEST_DB,
-                null, 1) {
+            null, 1) {
             @Override
             public void onCreate(SQLiteDatabase db) {
                 cupboard.withDatabase(db).createTables();

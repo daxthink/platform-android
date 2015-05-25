@@ -19,6 +19,7 @@ package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.PostEntity;
 
 import org.junit.Before;
@@ -28,7 +29,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 /**
@@ -36,8 +37,8 @@ import org.robolectric.annotation.Config;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class PostDatabaseHelperTest extends BaseTestCase {
 
     @Rule
@@ -48,7 +49,7 @@ public class PostDatabaseHelperTest extends BaseTestCase {
 
     @Mock
     private IPostDatabaseHelper.IPostEntityPutCallback
-            mMockPostEntityAddedCallback;
+        mMockPostEntityAddedCallback;
 
     @Mock
     private PostEntity mMockPostEntity;

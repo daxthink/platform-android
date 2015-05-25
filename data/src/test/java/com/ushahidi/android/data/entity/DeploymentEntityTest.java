@@ -18,11 +18,12 @@
 package com.ushahidi.android.data.entity;
 
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -34,8 +35,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class DeploymentEntityTest extends BaseTestCase {
 
     private DeploymentEntity mDeploymentEntity;

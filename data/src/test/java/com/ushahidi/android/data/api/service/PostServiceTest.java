@@ -18,14 +18,14 @@
 package com.ushahidi.android.data.api.service;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.api.BaseApiTestCase;
 import com.ushahidi.android.data.api.model.Posts;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -45,8 +45,8 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class PostServiceTest extends BaseApiTestCase {
 
     @Before
@@ -54,13 +54,13 @@ public class PostServiceTest extends BaseApiTestCase {
         super.setUp();
     }
 
-   @Test
+    @Test
     public void shouldSuccessfullyFetchPost() throws IOException {
-        mMockWebServer.play();
+        mMockWebServer.start();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setExecutors(httpExecutor, callbackExecutor)
-                .setConverter(new GsonConverter(mGson))
-                .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
+            .setExecutors(httpExecutor, callbackExecutor)
+            .setConverter(new GsonConverter(mGson))
+            .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
 
         final String postJson = getResource("posts.json");
         PostService postService = restAdapter.create(PostService.class);

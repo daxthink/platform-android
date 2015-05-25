@@ -20,6 +20,7 @@ package com.ushahidi.android.module;
 import com.squareup.otto.Bus;
 import com.ushahidi.android.state.ApplicationState;
 import com.ushahidi.android.state.IDeploymentState;
+import com.ushahidi.android.state.IPostState;
 import com.ushahidi.android.state.IUserState;
 
 import javax.inject.Singleton;
@@ -55,6 +56,11 @@ public class StateModule {
 
     @Provides
     public IDeploymentState provideDeploymentState(ApplicationState state) {
+        return state;
+    }
+
+    @Provides
+    public IPostState providePostState(ApplicationState state) {
         return state;
     }
 }

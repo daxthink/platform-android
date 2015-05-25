@@ -18,10 +18,11 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.database.converter.PostEntityConverter;
 import com.ushahidi.android.data.database.converter.EnumEntityFieldConverter;
+import com.ushahidi.android.data.database.converter.PostEntityConverter;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
 import com.ushahidi.android.data.entity.TagEntity;
@@ -31,7 +32,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -53,8 +54,8 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-//@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class PostDatabaseTest extends BaseTestCase {
 
     static {
@@ -69,9 +70,9 @@ public class PostDatabaseTest extends BaseTestCase {
             }
         };
         CupboardFactory.setCupboard(new CupboardBuilder()
-                .registerFieldConverter(UserEntity.Role.class,
-                        new EnumEntityFieldConverter<>(UserEntity.Role.class))
-                .registerEntityConverterFactory(factory).useAnnotations().build());
+            .registerFieldConverter(UserEntity.Role.class,
+                new EnumEntityFieldConverter<>(UserEntity.Role.class))
+            .registerEntityConverterFactory(factory).useAnnotations().build());
 
         // Register our entities
         for (Class<?> clazz : ENTITIES) {
@@ -80,7 +81,7 @@ public class PostDatabaseTest extends BaseTestCase {
 
     }
 
-    //@Test
+    @Test
     public void seedPostEntityTable() throws IOException {
         final String postsJson = getResource("posts.json");
         final String tagsJson = getResource("tags.json");
@@ -115,7 +116,7 @@ public class PostDatabaseTest extends BaseTestCase {
             for (PostEntity postEntity : posts.getPosts()) {
                 Long rows = cupboard().withDatabase(db).put(postEntity);
                 if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
-                        postEntity.getPostTagEntityList().size() > 0)) {
+                    postEntity.getPostTagEntityList().size() > 0)) {
 
                     for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
                         postTagEntity.setPostId(postEntity.getId());
@@ -134,7 +135,7 @@ public class PostDatabaseTest extends BaseTestCase {
         }
 
         final List<PostEntity> postEntities = cupboard().withDatabase(db).query(PostEntity.class)
-                .list();
+            .list();
 
         final List<PostEntity> postEntityList = new ArrayList<>();
 
@@ -162,12 +163,12 @@ public class PostDatabaseTest extends BaseTestCase {
 
         // fetch post tag entity
         List<PostTagEntity> postTagEntityList = cupboard().withDatabase(db)
-                .query(PostTagEntity.class)
-                .withSelection("mPostId = ?", String.valueOf(postEntity.getId())).list();
+            .query(PostTagEntity.class)
+            .withSelection("mPostId = ?", String.valueOf(postEntity.getId())).list();
 
         for (PostTagEntity postTagEntity : postTagEntityList) {
             TagEntity tagEntity = cupboard().withDatabase(db)
-                    .get(TagEntity.class, postTagEntity.getTagId());
+                .get(TagEntity.class, postTagEntity.getTagId());
             tagEntityList.add(tagEntity);
         }
 

@@ -22,13 +22,14 @@ import com.google.common.base.Preconditions;
 
 import com.squareup.otto.Bus;
 import com.ushahidi.android.model.DeploymentModel;
+import com.ushahidi.android.model.PostModel;
 import com.ushahidi.android.model.UserAccountModel;
 import com.ushahidi.android.model.UserModel;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ApplicationState implements Istate, IUserState, IDeploymentState {
+public class ApplicationState implements Istate, IUserState, IDeploymentState, IPostState {
 
     private final Bus mEventBus;
 
@@ -60,6 +61,7 @@ public class ApplicationState implements Istate, IUserState, IDeploymentState {
     public DeploymentModel getActiveDeployment() {
         return mDeploymentModel;
     }
+
 
     @Override
     public void setActiveUserAccount(UserAccountModel account) {
@@ -99,6 +101,11 @@ public class ApplicationState implements Istate, IUserState, IDeploymentState {
 
     public void onSwipe() {
         mEventBus.post(new SwipeRefreshEvent());
+    }
+
+    @Override
+    public void setPost(PostModel postModel) {
+        mEventBus.post(new PostClickedEvent(postModel));
     }
 
     public static class SwipeRefreshEvent {

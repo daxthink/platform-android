@@ -18,14 +18,17 @@
 package com.ushahidi.android.test.presenter;
 
 import com.ushahidi.android.core.entity.Post;
+import com.ushahidi.android.core.repository.IGeoJsonRepository;
 import com.ushahidi.android.core.repository.IPostRepository;
 import com.ushahidi.android.core.repository.ITagRepository;
 import com.ushahidi.android.core.usecase.Search;
+import com.ushahidi.android.core.usecase.geojson.FetchGeoJson;
 import com.ushahidi.android.core.usecase.post.FetchPost;
 import com.ushahidi.android.core.usecase.post.ListPost;
 import com.ushahidi.android.core.usecase.tag.FetchTag;
 import com.ushahidi.android.data.api.service.PostService;
 import com.ushahidi.android.data.pref.StringPreference;
+import com.ushahidi.android.data.repository.datasource.geojson.GeoJsonDataSourceFactory;
 import com.ushahidi.android.data.repository.datasource.post.PostDataSourceFactory;
 import com.ushahidi.android.data.repository.datasource.tag.TagDataSourceFactory;
 import com.ushahidi.android.model.mapper.PostModelDataMapper;
@@ -42,6 +45,7 @@ import android.content.Context;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -71,6 +75,8 @@ public class ListPostPresenterTest extends CustomAndroidTestCase {
     @Mock
     private TagDataSourceFactory mMockTagDataSourceFactory;
 
+    @Mock
+    private GeoJsonDataSourceFactory mMockGeoJsonDataSourceFactory;
 
     @Mock
     private Prefs mMockPrefs;
@@ -88,6 +94,9 @@ public class ListPostPresenterTest extends CustomAndroidTestCase {
     private FetchTag mMockFetchTag;
 
     @Mock
+    private FetchGeoJson mMockFetchGeoJson;
+
+    @Mock
     private Search<Post> mMockSearch;
 
     @Mock
@@ -102,6 +111,9 @@ public class ListPostPresenterTest extends CustomAndroidTestCase {
     @Mock
     private IDeploymentState mDeploymentState;
 
+    @Mock
+    private IGeoJsonRepository mGeoJsonRepository;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -112,21 +124,26 @@ public class ListPostPresenterTest extends CustomAndroidTestCase {
         setupPrefsMock();
         mPostListPresenter = new ListPostPresenter(
                 mMockListPost, mMockFetchTag,
-                mMockSearch, mMockFetchPost, mMockPostModelDataMapper,
+                mMockSearch, mMockFetchPost,
+                mMockFetchGeoJson,
+                mMockPostModelDataMapper,
                 mMockPostRepository,
                 mMockTagRepository,
                 mockPostDataSourceFactory,
                 mMockTagDataSourceFactory,
                 mMockPrefs,
                 mMockApiServiceUtil,
-                mDeploymentState);
+                mDeploymentState,
+                mMockGeoJsonDataSourceFactory,
+                mGeoJsonRepository);
         mPostListPresenter.setView(mMockView);
     }
 
     public void testInitializingPostListPresenterWithNullValues() {
         final String expectedMessage = "ListPost cannot be null";
         try {
-            new ListPostPresenter(null, null, null, null, null, null, null, null,null,null,null,null);
+            new ListPostPresenter(null, null, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null);
         } catch (NullPointerException e) {
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -135,10 +152,10 @@ public class ListPostPresenterTest extends CustomAndroidTestCase {
 
     public void testPostListPresenterInit() {
         doNothing().when(mMockListPost)
-                .execute(any(ListPost.Callback.class));
+                .execute(anyLong(), any(ListPost.Callback.class));
 
         given(mMockView.getAppContext()).willReturn(mMockContext);
-        given(mMockApiServiceUtil.createService(PostService.class,"", "")).willReturn(
+        given(mMockApiServiceUtil.createService(PostService.class, "", "")).willReturn(
                 mMockPostService);
 
         mPostListPresenter.init();

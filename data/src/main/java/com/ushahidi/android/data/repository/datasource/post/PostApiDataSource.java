@@ -22,6 +22,7 @@ import com.ushahidi.android.data.database.IPostDatabaseHelper;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 import com.ushahidi.android.data.entity.PostEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,12 +47,14 @@ public class PostApiDataSource implements PostDataSource {
     }
 
     @Override
-    public void getPostEntityList(final long deploymentId, final PostEntityListCallback postEntityListCallback) {
+    public void getPostEntityList(final long deploymentId,
+            final PostEntityListCallback postEntityListCallback) {
         mPostApi.getPostEntityList(new PostApi.PostEntityListCallback() {
             @Override
             public void onPostEntityListLoaded(List<PostEntity> postEntityList) {
-                postEntityListCallback.onPostEntityListLoaded(postEntityList);
-                putPostEntityList(postEntityList, postEntityListCallback);
+                final List<PostEntity> postEntities = setDeploymentId(deploymentId, postEntityList);
+                putPostEntityList(postEntities, postEntityListCallback);
+                postEntityListCallback.onPostEntityListLoaded(postEntities);
             }
 
             @Override
@@ -63,13 +66,13 @@ public class PostApiDataSource implements PostDataSource {
 
     @Override
     public void getPostEntityById(long postId,
-                                  PostEntityDetailsCallback postEntityDetailsCallback) {
+            PostEntityDetailsCallback postEntityDetailsCallback) {
         //TODO Implement GET via the API
     }
 
     @Override
     public void deletePostEntity(PostEntity postEntity,
-                                 PostEntityDeletedCallback callback) {
+            PostEntityDeletedCallback callback) {
         //TODO implement DELETE via the API
     }
 
@@ -79,7 +82,7 @@ public class PostApiDataSource implements PostDataSource {
     }
 
     private void putPostEntityList(final List<PostEntity> postEntityList,
-                                   final PostEntityListCallback postListCallback) {
+            final PostEntityListCallback postListCallback) {
         mPostDatabaseHelper.put(postEntityList, new IPostDatabaseHelper.IPostEntityPutCallback() {
             @Override
             public void onPostEntityPut() {
@@ -91,5 +94,15 @@ public class PostApiDataSource implements PostDataSource {
                 postListCallback.onError(exception);
             }
         });
+    }
+
+    private List<PostEntity> setDeploymentId(final long deploymentId,
+            List<PostEntity> postEntityList) {
+        List<PostEntity> postEntities = new ArrayList<>(postEntityList.size());
+        for (PostEntity postEntity : postEntityList) {
+            postEntity.setDeploymentId(deploymentId);
+            postEntities.add(postEntity);
+        }
+        return postEntities;
     }
 }

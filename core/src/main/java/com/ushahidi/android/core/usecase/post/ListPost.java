@@ -40,7 +40,6 @@ public class ListPost implements IListPost {
 
     private Callback mCallback;
 
-    //TODO initialize this in the execute method
     private long mDeploymentId;
 
     private final IPostRepository.PostListCallback mRepositoryCallback =

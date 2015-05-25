@@ -17,6 +17,19 @@
 
 package com.ushahidi.android.ui.activity;
 
+import com.google.common.eventbus.Subscribe;
+
+import com.squareup.picasso.Picasso;
+import com.ushahidi.android.R;
+import com.ushahidi.android.UshahidiApplication;
+import com.ushahidi.android.model.UserModel;
+import com.ushahidi.android.module.ActivityModule;
+import com.ushahidi.android.state.ApplicationState;
+import com.ushahidi.android.state.IDeploymentState;
+import com.ushahidi.android.state.IUserState;
+import com.ushahidi.android.ui.widget.NavDrawerItem;
+import com.ushahidi.android.util.GravatarUtil;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -43,18 +56,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.eventbus.Subscribe;
-import com.squareup.picasso.Picasso;
-import com.ushahidi.android.R;
-import com.ushahidi.android.UshahidiApplication;
-import com.ushahidi.android.model.UserModel;
-import com.ushahidi.android.module.ActivityModule;
-import com.ushahidi.android.state.ApplicationState;
-import com.ushahidi.android.state.IDeploymentState;
-import com.ushahidi.android.state.IUserState;
-import com.ushahidi.android.ui.widget.NavDrawerItem;
-import com.ushahidi.android.util.GravatarUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,7 @@ import static android.view.View.VISIBLE;
 public abstract class BaseActivity extends ActionBarActivity {
 
     private static final int ACCOUNT_BOX_EXPAND_ANIM_DURATION = 200;
+
     /**
      * Layout resource id
      */
@@ -199,11 +201,11 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         mDrawerLayout.setStatusBarBackgroundColor(
-            getResources().getColor(R.color.theme_primary_dark));
+                getResources().getColor(R.color.theme_primary_dark));
 
         mDrawerToggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mActionBarToolbar,
-            R.string.open, R.string.close
+                this, mDrawerLayout, mActionBarToolbar,
+                R.string.open, R.string.close
         ) {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -295,6 +297,11 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onPause() {
         mApplicationState.unregisterEvent(this);
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -408,17 +415,17 @@ public abstract class BaseActivity extends ActionBarActivity {
             LayoutInflater layoutInflater = LayoutInflater.from(this);
             for (UserModel userModel : userModels) {
                 View itemView = layoutInflater.inflate(R.layout.list_item_user_account,
-                    mUserAccountListContainer, false);
+                        mUserAccountListContainer, false);
 
                 TextView username = (TextView) itemView
-                    .findViewById(R.id.user_account_profile_user_name);
+                        .findViewById(R.id.user_account_profile_user_name);
                 username.setText(userModel.getUsername());
 
                 ImageView userProfileImage = (ImageView) itemView
-                    .findViewById(R.id.user_account_profile_image);
+                        .findViewById(R.id.user_account_profile_image);
                 if (userModel.getEmail() != null) {
                     Picasso.with(this).load(GravatarUtil.url(userModel.getEmail()))
-                        .into(userProfileImage);
+                            .into(userProfileImage);
                 }
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -446,7 +453,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         mUserAccountListExpandIndicator.setImageResource(mUserAccountListExpanded ?
-            R.drawable.ic_drawer_profile_collapse : R.drawable.ic_drawer_profile_expand);
+                R.drawable.ic_drawer_profile_collapse : R.drawable.ic_drawer_profile_expand);
 
         // Credits: http://goo.gl/yHfwZp
         int hideTranslateY = -mUserAccountListContainer.getHeight() / 4; // last 25% of animation
@@ -463,10 +470,10 @@ public abstract class BaseActivity extends ActionBarActivity {
             public void onAnimationEnd(Animator animation) {
 
                 mUserAccountListContainer.setVisibility(mUserAccountListExpanded
-                    ? View.VISIBLE : View.INVISIBLE);
+                        ? View.VISIBLE : View.INVISIBLE);
 
                 mDrawerItemsContainer.setVisibility(mUserAccountListExpanded
-                    ? View.INVISIBLE : View.VISIBLE);
+                        ? View.INVISIBLE : View.VISIBLE);
             }
 
             @Override
@@ -490,18 +497,18 @@ public abstract class BaseActivity extends ActionBarActivity {
     private void animateExpandView(AnimatorSet set) {
         AnimatorSet subSet = animateExpandOrCollapseView(1, 0);
         set.playSequentially(
-            ObjectAnimator.ofFloat(mUserAccountListContainer, View.ALPHA, 0)
-                .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
-            subSet);
+                ObjectAnimator.ofFloat(mUserAccountListContainer, View.ALPHA, 0)
+                        .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
+                subSet);
         set.start();
     }
 
     private void animateCollapseView(AnimatorSet set, int hideTranslateY) {
         AnimatorSet subSet = animateExpandOrCollapseView(0, hideTranslateY);
         set.playSequentially(
-            subSet,
-            ObjectAnimator.ofFloat(mDrawerItemsContainer, View.ALPHA, 1)
-                .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
+                subSet,
+                ObjectAnimator.ofFloat(mDrawerItemsContainer, View.ALPHA, 1)
+                        .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
         set.start();
     }
 
@@ -509,11 +516,11 @@ public abstract class BaseActivity extends ActionBarActivity {
         final int ACCOUNT_BOX_EXPAND_ANIM_DURATION = 200;
         AnimatorSet subSet = new AnimatorSet();
         subSet.playTogether(
-            ObjectAnimator.ofFloat(mUserAccountListContainer, View.ALPHA, together)
-                .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
-            ObjectAnimator
-                .ofFloat(mUserAccountListContainer, View.TRANSLATION_Y, hideTranslateY)
-                .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
+                ObjectAnimator.ofFloat(mUserAccountListContainer, View.ALPHA, together)
+                        .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION),
+                ObjectAnimator
+                        .ofFloat(mUserAccountListContainer, View.TRANSLATION_Y, hideTranslateY)
+                        .setDuration(ACCOUNT_BOX_EXPAND_ANIM_DURATION));
         return subSet;
 
     }
@@ -566,7 +573,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         if (view != null) {
             if (animate) {
                 view.startAnimation(AnimationUtils.loadAnimation(this,
-                    android.R.anim.fade_in));
+                        android.R.anim.fade_in));
             } else {
 
                 view.clearAnimation();
@@ -581,7 +588,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         if (view != null) {
             if (animate) {
                 view.startAnimation(AnimationUtils.loadAnimation(this,
-                    android.R.anim.fade_out));
+                        android.R.anim.fade_out));
             } else {
                 view.clearAnimation();
             }
@@ -630,7 +637,7 @@ public abstract class BaseActivity extends ActionBarActivity {
      */
     protected void showToast(int message) {
         Toast.makeText(this, getText(message), Toast.LENGTH_LONG)
-            .show();
+                .show();
     }
 
     /**
@@ -640,7 +647,7 @@ public abstract class BaseActivity extends ActionBarActivity {
      */
     protected void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG)
-            .show();
+                .show();
     }
 
     /**
@@ -652,7 +659,7 @@ public abstract class BaseActivity extends ActionBarActivity {
      */
     protected void addFragment(int containerViewId, Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
-            .beginTransaction();
+                .beginTransaction();
         fragmentTransaction.add(containerViewId, fragment, tag);
         fragmentTransaction.commit();
     }
@@ -666,7 +673,7 @@ public abstract class BaseActivity extends ActionBarActivity {
      */
     protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
-            .beginTransaction();
+                .beginTransaction();
         fragmentTransaction.replace(containerViewId, fragment, tag);
         fragmentTransaction.commit();
     }

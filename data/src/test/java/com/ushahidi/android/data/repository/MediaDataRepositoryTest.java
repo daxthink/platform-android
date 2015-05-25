@@ -19,6 +19,7 @@ package com.ushahidi.android.data.repository;
 
 import com.ushahidi.android.core.entity.Media;
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.database.IMediaDatabaseHelper;
 import com.ushahidi.android.data.database.MediaDatabaseHelper;
 import com.ushahidi.android.data.entity.MediaEntity;
@@ -36,7 +37,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.Date;
@@ -52,8 +53,8 @@ import static org.mockito.Mockito.verify;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class MediaDataRepositoryTest extends BaseTestCase {
 
     @Rule
@@ -105,7 +106,7 @@ public class MediaDataRepositoryTest extends BaseTestCase {
         MockitoAnnotations.initMocks(this);
         clearSingleton(MediaDataRepository.class);
         mMediaDataRepository = MediaDataRepository
-                .getInstance(mMockMediaDatabaseHelper, mMockMediaEntityMapper);
+            .getInstance(mMockMediaDatabaseHelper, mMockMediaEntityMapper);
         mMedia = new Media();
         mMedia.setId(DUMMY_ID);
         mMedia.setCaption(DUMMY_CAPTION);
@@ -132,11 +133,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityPutCallback) invocation
-                        .getArguments()[1]).onMediaEntityPut();
+                    .getArguments()[1]).onMediaEntityPut();
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).put(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
 
         given(mMockMediaEntityMapper.unmap(mMedia)).willReturn(mMockMediaEntity);
 
@@ -153,11 +154,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityPutCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).put(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
 
         mMediaDataRepository.addMedia(mMockMedia, mMockMediaAddCallback);
 
@@ -171,11 +172,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityPutCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).put(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
 
         mMediaDataRepository.addMedia(mMedia, mMockMediaAddCallback);
 
@@ -189,11 +190,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityPutCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).put(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
 
         mMediaDataRepository.addMedia(mMedia, mMockMediaAddCallback);
 
@@ -208,11 +209,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityPutCallback) invocation
-                        .getArguments()[1]).onMediaEntityPut();
+                    .getArguments()[1]).onMediaEntityPut();
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).put(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
 
         given(mMockMediaEntityMapper.unmap(mMedia)).willReturn(mMockMediaEntity);
 
@@ -228,11 +229,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityPutCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).put(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityPutCallback.class));
 
         mMediaDataRepository.updateMedia(mMockMedia, mMockMediaUpdateCallback);
 
@@ -247,11 +248,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityDeletedCallback) invocation
-                        .getArguments()[1]).onMediaEntityDeleted();
+                    .getArguments()[1]).onMediaEntityDeleted();
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).delete(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityDeletedCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityDeletedCallback.class));
 
         given(mMockMediaEntityMapper.unmap(mMedia)).willReturn(mMockMediaEntity);
 
@@ -267,11 +268,11 @@ public class MediaDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IMediaDatabaseHelper.IMediaEntityDeletedCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockMediaDatabaseHelper).delete(any(MediaEntity.class),
-                any(IMediaDatabaseHelper.IMediaEntityDeletedCallback.class));
+            any(IMediaDatabaseHelper.IMediaEntityDeletedCallback.class));
 
         mMediaDataRepository.deleteMedia(mMockMedia, mMockMediaDeletedCallback);
 

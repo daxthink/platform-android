@@ -17,14 +17,14 @@
 
 package com.ushahidi.android.data.database;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.exception.TagNotFoundException;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.List;
 
@@ -41,34 +41,16 @@ public class TagDatabaseHelper extends BaseDatabseHelper implements ITagDatabase
 
     private static String TAG = TagDatabaseHelper.class.getSimpleName();
 
-    private final ThreadExecutor mThreadExecutor;
-
     private TagDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
-        super(context);
-
-        if (threadExecutor == null) {
-            throw new IllegalArgumentException("Invalid null parameter");
-        }
-
-        mThreadExecutor = threadExecutor;
+        super(context, threadExecutor);
     }
 
     public static synchronized TagDatabaseHelper getInstance(Context context,
-            ThreadExecutor threadExecutor) {
-
+                                                             ThreadExecutor threadExecutor) {
         if (sInstance == null) {
             sInstance = new TagDatabaseHelper(context, threadExecutor);
         }
         return sInstance;
-    }
-
-    /**
-     * Executes a {@link Runnable} in another Thread.
-     *
-     * @param runnable {@link Runnable} to execute
-     */
-    private void asyncRun(Runnable runnable) {
-        mThreadExecutor.execute(runnable);
     }
 
     @Override
@@ -106,7 +88,7 @@ public class TagDatabaseHelper extends BaseDatabseHelper implements ITagDatabase
 
     private TagEntity get(long id) {
         return cupboard().withDatabase(getReadableDatabase()).query(TagEntity.class)
-                .byId(id).get();
+            .byId(id).get();
     }
 
     private List<TagEntity> getTags() {
@@ -130,7 +112,7 @@ public class TagDatabaseHelper extends BaseDatabseHelper implements ITagDatabase
 
     @Override
     public synchronized void put(final List<TagEntity> tagEntities,
-            final ITagEntityPutCallback callback) {
+                                 final ITagEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -159,10 +141,10 @@ public class TagDatabaseHelper extends BaseDatabseHelper implements ITagDatabase
                 if (!isClosed()) {
                     try {
                         final int numRows = cupboard().withDatabase(getWritableDatabase())
-                                .delete(TagEntity.class, null);
+                            .delete(TagEntity.class, null);
                         if (BuildConfig.DEBUG) {
                             Log.d(TAG, "delete all tag entities. Deleted " + numRows
-                                    + " rows.");
+                                + " rows.");
                         }
                         callback.onTagEntityDeleted();
                     } catch (Exception e) {
@@ -175,7 +157,7 @@ public class TagDatabaseHelper extends BaseDatabseHelper implements ITagDatabase
 
     @Override
     public synchronized void delete(final TagEntity tagEntity,
-            final ITagEntityDeletedCallback callback) {
+                                    final ITagEntityDeletedCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {

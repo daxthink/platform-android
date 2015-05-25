@@ -17,18 +17,6 @@
 
 package com.ushahidi.android.ui.fragment;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.enums.SnackbarType;
@@ -37,12 +25,23 @@ import com.nispok.snackbar.listeners.EventListener;
 import com.ushahidi.android.R;
 import com.ushahidi.android.model.PostModel;
 import com.ushahidi.android.presenter.ListPostPresenter;
+import com.ushahidi.android.state.IPostState;
 import com.ushahidi.android.ui.adapter.PostAdapter;
 import com.ushahidi.android.ui.animators.FadeInAnimator;
 import com.ushahidi.android.ui.listener.ObservableScrollState;
 import com.ushahidi.android.ui.listener.ObservableScrollViewListener;
 import com.ushahidi.android.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.ushahidi.android.ui.widget.MovableFab;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +56,9 @@ import butterknife.InjectView;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAdapter>
-    implements
-    ListPostPresenter.View, RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
+        implements
+        ListPostPresenter.View,
+        RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
     @Inject
     ListPostPresenter mPostListPresenter;
@@ -74,17 +74,18 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private boolean isRefreshing = false;
 
-    private PostListListener mPostListListener;
-
     private static ListPostFragment mListPostFragment;
 
     private RecyclerViewItemTouchListenerAdapter mRecyclerViewItemTouchListenerAdapter;
 
     private LinearLayoutManager mLinearLayoutManager;
 
+    @Inject
+    IPostState mPostState;
+
     public ListPostFragment() {
         super(PostAdapter.class, R.layout.list_post, R.menu.list_post,
-            android.R.id.list);
+                android.R.id.list);
     }
 
     public static ListPostFragment newInstance() {
@@ -95,21 +96,10 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof PostListListener) {
-            mPostListListener = (PostListListener) activity;
-        }
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPostListPresenter.init();
         initRecyclerView();
-        if (savedInstanceState != null) {
-            isRefreshing = savedInstanceState.getBoolean(IS_REFERESHING, false);
-        }
     }
 
     @Override
@@ -126,17 +116,23 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void onResume() {
         super.onResume();
-        mPostListPresenter.isRefreshing = isRefreshing;
         mPostListPresenter.resume();
-        if (isRefreshing) {
-            refreshLists();
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mPostListPresenter.pause();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mPostListPresenter.onDetach();
+        mBloatedRecyclerView = null;
+        mPostFab = null;
+        mProgressBar = null;
+        mEmptyView = null;
     }
 
     @Override
@@ -150,15 +146,12 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_refresh_post) {
-
             refreshWithSwipeToRefresh();
             return true;
         } else if (id == R.id.menu_sort_by_title) {
             sortByTitle();
-
             return true;
         } else if (id == R.id.menu_sort_by_date) {
-
             mListPostFragment.sortByDate();
             return true;
         }
@@ -175,12 +168,13 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void setEmptyView() {
-        mEmptyView = (TextView) mBloatedRecyclerView.getmEmptyView().findViewById(android.R.id.empty);
+        mEmptyView = (TextView) mBloatedRecyclerView.getmEmptyView()
+                .findViewById(android.R.id.empty);
     }
 
     private void initRecyclerView() {
         mRecyclerViewItemTouchListenerAdapter = new RecyclerViewItemTouchListenerAdapter(
-            mBloatedRecyclerView.recyclerView, this);
+                mBloatedRecyclerView.recyclerView, this);
 
         mPostFab = mBloatedRecyclerView.getDefaultFloatingActionButton();
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -188,16 +182,18 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         mBloatedRecyclerView.setItemAnimator(new FadeInAnimator());
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
         mBloatedRecyclerView.displayDefaultFloatingActionButton(true);
-        mBloatedRecyclerView.recyclerView.addOnItemTouchListener(mRecyclerViewItemTouchListenerAdapter);
+        mBloatedRecyclerView.recyclerView
+                .addOnItemTouchListener(mRecyclerViewItemTouchListenerAdapter);
 
         // Upon  successful refresh, disable swipe to refresh
-        mBloatedRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshLists();
-                mLinearLayoutManager.scrollToPosition(0);
-            }
-        });
+        mBloatedRecyclerView
+                .setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        refreshLists();
+                        mLinearLayoutManager.scrollToPosition(0);
+                    }
+                });
 
         // Show or hide Toolbar and FAB upon scrolling
         mBloatedRecyclerView.setScrollViewCallbacks(new ObservableScrollViewListener() {
@@ -235,9 +231,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void viewPost(PostModel postModel) {
-        if (mPostListPresenter != null) {
-            mPostListListener.onPostClicked(postModel);
-        }
+        mPostState.setPost(postModel);
     }
 
     public void refreshLists() {
@@ -246,7 +240,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         }
 
         if (mPostListPresenter != null) {
-            mPostListPresenter.refreshList();
+            mPostListPresenter.fetchPostFromApi();
         }
     }
 
@@ -289,52 +283,48 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void showRetry(String message) {
         SnackbarManager.show(Snackbar.with(getActivity())
-            .type(SnackbarType.MULTI_LINE)
-            .text(message)
-            .actionLabel(getActivity().getString(R.string.retry))
-            .actionColorResource(R.color.undo_text_color)
-            .duration(Snackbar.SnackbarDuration.LENGTH_LONG)
-            .actionListener(new ActionClickListener() {
-                @Override
-                public void onActionClicked(Snackbar snackbar) {
-                    refreshWithSwipeToRefresh();
-                }
-            })
-            .eventListener(new EventListener() {
-                @Override
-                public void onShow(Snackbar snackbar) {
-                    mPostFab.moveUp(snackbar.getHeight());
-                }
+                .type(SnackbarType.MULTI_LINE)
+                .text(message)
+                .actionLabel(getActivity().getString(R.string.retry))
+                .actionColorResource(R.color.undo_text_color)
+                .duration(Snackbar.SnackbarDuration.LENGTH_LONG)
+                .actionListener(new ActionClickListener() {
+                    @Override
+                    public void onActionClicked(Snackbar snackbar) {
+                        refreshWithSwipeToRefresh();
+                    }
+                })
+                .eventListener(new EventListener() {
+                    @Override
+                    public void onShow(Snackbar snackbar) {
+                        mPostFab.moveUp(snackbar.getHeight());
+                    }
 
-                @Override
-                public void onShowByReplace(Snackbar snackbar) {
-                    // Do nothing
-                }
+                    @Override
+                    public void onShowByReplace(Snackbar snackbar) {
+                        // Do nothing
+                    }
 
-                @Override
-                public void onShown(Snackbar snackbar) {
-                    // Do nothing
-                }
+                    @Override
+                    public void onShown(Snackbar snackbar) {
+                        // Do nothing
+                    }
 
-                @Override
-                public void onDismiss(Snackbar snackbar) {
-                    mPostFab.moveDown(0);
-                }
+                    @Override
+                    public void onDismiss(Snackbar snackbar) {
+                        mPostFab.moveDown(0);
+                    }
 
-                @Override
-                public void onDismissByReplace(Snackbar snackbar) {
-                    // Do nothing
-                }
+                    @Override
+                    public void onDismissByReplace(Snackbar snackbar) {
+                        // Do nothing
+                    }
 
-                @Override
-                public void onDismissed(Snackbar snackbar) {
+                    @Override
+                    public void onDismissed(Snackbar snackbar) {
 
-                }
-            }));
-    }
-
-    public boolean canCollectionViewScrollUp() {
-        return ViewCompat.canScrollVertically(mBloatedRecyclerView, -1);
+                    }
+                }));
     }
 
     public void sortByDate() {
@@ -352,41 +342,41 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void showError(String message) {
         SnackbarManager.show(Snackbar.with(getActivity())
-            .type(SnackbarType.MULTI_LINE)
-            .text(message)
-            .actionLabel(getActivity().getString(R.string.retry))
-            .actionColorResource(R.color.undo_text_color)
-            .attachToRecyclerView(mBloatedRecyclerView.recyclerView)
-            .eventListener(new EventListener() {
-                @Override
-                public void onShow(Snackbar snackbar) {
-                    mPostFab.moveUp(snackbar.getHeight());
-                }
+                .type(SnackbarType.MULTI_LINE)
+                .text(message)
+                .actionLabel(getActivity().getString(R.string.retry))
+                .actionColorResource(R.color.undo_text_color)
+                .attachToRecyclerView(mBloatedRecyclerView.recyclerView)
+                .eventListener(new EventListener() {
+                    @Override
+                    public void onShow(Snackbar snackbar) {
+                        mPostFab.moveUp(snackbar.getHeight());
+                    }
 
-                @Override
-                public void onShowByReplace(Snackbar snackbar) {
+                    @Override
+                    public void onShowByReplace(Snackbar snackbar) {
 
-                }
+                    }
 
-                @Override
-                public void onShown(Snackbar snackbar) {
+                    @Override
+                    public void onShown(Snackbar snackbar) {
 
-                }
+                    }
 
-                @Override
-                public void onDismiss(Snackbar snackbar) {
-                    mPostFab.moveDown(0);
-                }
+                    @Override
+                    public void onDismiss(Snackbar snackbar) {
+                        mPostFab.moveDown(0);
+                    }
 
-                @Override
-                public void onDismissByReplace(Snackbar snackbar) {
-                }
+                    @Override
+                    public void onDismissByReplace(Snackbar snackbar) {
+                    }
 
-                @Override
-                public void onDismissed(Snackbar snackbar) {
-                    // Do nothing
-                }
-            }));
+                    @Override
+                    public void onDismissed(Snackbar snackbar) {
+                        // Do nothing
+                    }
+                }));
     }
 
     private void onItemClick(int position) {
@@ -405,12 +395,4 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
         //Do nothing
     }
-
-    /**
-     * Listens for post list events
-     */
-    public interface PostListListener {
-        void onPostClicked(final PostModel postModel);
-    }
-
 }

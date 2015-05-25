@@ -20,6 +20,7 @@ package com.ushahidi.android.module;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.ushahidi.android.core.repository.IDeploymentRepository;
+import com.ushahidi.android.core.repository.IGeoJsonRepository;
 import com.ushahidi.android.core.repository.IPostRepository;
 import com.ushahidi.android.core.repository.ITagRepository;
 import com.ushahidi.android.core.repository.IUserRepository;
@@ -27,24 +28,29 @@ import com.ushahidi.android.core.task.PostExecutionThread;
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.core.usecase.user.ListDeploymentUsers;
 import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
+import com.ushahidi.android.data.database.GeoJsonDatabaseHelper;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 import com.ushahidi.android.data.database.TagDatabaseHelper;
 import com.ushahidi.android.data.database.UserDatabaseHelper;
 import com.ushahidi.android.data.entity.mapper.DeploymentEntityMapper;
+import com.ushahidi.android.data.entity.mapper.GeoJsonEntityMapper;
 import com.ushahidi.android.data.entity.mapper.PostEntityMapper;
 import com.ushahidi.android.data.entity.mapper.TagEntityMapper;
 import com.ushahidi.android.data.entity.mapper.UserAccountEntityMapper;
 import com.ushahidi.android.data.entity.mapper.UserEntityMapper;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
+import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.data.repository.TagDataRepository;
 import com.ushahidi.android.data.repository.UserDataRepository;
+import com.ushahidi.android.data.repository.datasource.geojson.GeoJsonDataSourceFactory;
 import com.ushahidi.android.data.repository.datasource.post.PostDataSourceFactory;
 import com.ushahidi.android.data.repository.datasource.tag.TagDataSourceFactory;
 import com.ushahidi.android.data.repository.datasource.user.UserDataSourceFactory;
 import com.ushahidi.android.data.validator.EmailValidator;
 import com.ushahidi.android.data.validator.UrlValidator;
 import com.ushahidi.android.model.mapper.DeploymentModelDataMapper;
+import com.ushahidi.android.model.mapper.GeoJsonModelDataMapper;
 import com.ushahidi.android.model.mapper.PostModelDataMapper;
 import com.ushahidi.android.model.mapper.UserAccountModelDataMapper;
 import com.ushahidi.android.model.mapper.UserModelDataMapper;
@@ -54,7 +60,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.inject.Singleton;
 
@@ -79,15 +84,8 @@ public class DataModule {
         OkHttpClient client = new OkHttpClient();
 
         File cacheDir = new File(app.getApplicationContext().getCacheDir(),
-                    "ushahidi-android-http-cache");
-
-        Cache cache = null;
-        try {
-            cache = new Cache(cacheDir, DISK_CACHE_SIZE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+                "ushahidi-android-http-cache");
+        Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
         client.setCache(cache);
         return client;
     }
@@ -153,7 +151,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    IPostRepository providePostRepository(PostDataSourceFactory postDataSourceFactory, PostEntityMapper entityMapper) {
+    IPostRepository providePostRepository(PostDataSourceFactory postDataSourceFactory,
+            PostEntityMapper entityMapper) {
         return PostDataRepository.getInstance(postDataSourceFactory, entityMapper);
     }
 
@@ -162,6 +161,13 @@ public class DataModule {
     ITagRepository provideTagRepository(TagDataSourceFactory tagDataSourceFactory,
             TagEntityMapper entityMapper) {
         return TagDataRepository.getInstance(tagDataSourceFactory, entityMapper);
+    }
+
+    @Provides
+    @Singleton
+    IGeoJsonRepository providGeoJsonRepository(GeoJsonDataSourceFactory geoJsonDataSourceFactory,
+            GeoJsonEntityMapper entityMapper) {
+        return GeoJsonDataRepository.getInstance(geoJsonDataSourceFactory, entityMapper);
     }
 
     @Provides
@@ -180,6 +186,12 @@ public class DataModule {
     @Singleton
     UserEntityMapper provideUserEntityMapper() {
         return new UserEntityMapper();
+    }
+
+    @Provides
+    @Singleton
+    GeoJsonEntityMapper providerGeoJsonEntityMapper() {
+        return new GeoJsonEntityMapper();
     }
 
     @Provides
@@ -208,6 +220,12 @@ public class DataModule {
 
     @Provides
     @Singleton
+    GeoJsonModelDataMapper provideGeoJsonModelDataMapper() {
+        return new GeoJsonModelDataMapper();
+    }
+
+    @Provides
+    @Singleton
     UserDatabaseHelper provideUserDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
         return UserDatabaseHelper.getInstance(context, threadExecutor);
     }
@@ -220,8 +238,15 @@ public class DataModule {
 
     @Provides
     @Singleton
+    GeoJsonDatabaseHelper provideGeoJsonDatabaseHelper(Context context,
+            ThreadExecutor threadExecutor) {
+        return GeoJsonDatabaseHelper.getsInstance(context, threadExecutor);
+    }
+
+    @Provides
+    @Singleton
     TagDatabaseHelper provideTagDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
-        return TagDatabaseHelper.getInstance(context,threadExecutor);
+        return TagDatabaseHelper.getInstance(context, threadExecutor);
     }
 
     @Provides
@@ -232,14 +257,16 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public UserDataSourceFactory provideUserDataSourceFactory(Context context, UserDatabaseHelper userDatabaseHelper) {
+    public UserDataSourceFactory provideUserDataSourceFactory(Context context,
+            UserDatabaseHelper userDatabaseHelper) {
         return new UserDataSourceFactory(context, userDatabaseHelper);
     }
 
     @Provides
     @Singleton
-    public PostDataSourceFactory providePostDataSourceFactory(Context context, PostDatabaseHelper postDatabaseHelper) {
-        return  new PostDataSourceFactory(context, postDatabaseHelper);
+    public PostDataSourceFactory providePostDataSourceFactory(Context context,
+            PostDatabaseHelper postDatabaseHelper) {
+        return new PostDataSourceFactory(context, postDatabaseHelper);
     }
 
     @Provides
@@ -247,6 +274,13 @@ public class DataModule {
     public TagDataSourceFactory provideTagDataSourceFactory(Context context,
             TagDatabaseHelper tagDatabaseHelper) {
         return new TagDataSourceFactory(context, tagDatabaseHelper);
+    }
+
+    @Provides
+    @Singleton
+    public GeoJsonDataSourceFactory provideGeoJsonDataSourceFactory(Context context,
+            GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
+        return new GeoJsonDataSourceFactory(context, geoJsonDatabaseHelper);
     }
 
     @Provides

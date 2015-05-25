@@ -21,6 +21,7 @@ import com.ushahidi.android.core.entity.Post;
 import com.ushahidi.android.core.entity.Tag;
 import com.ushahidi.android.core.entity.User;
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.database.IPostDatabaseHelper;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.mapper.PostEntityMapper;
@@ -38,7 +39,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
@@ -57,8 +58,8 @@ import static org.mockito.Mockito.verify;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class PostDataRepositoryTest extends BaseTestCase {
 
     private static final long DUMMY_ID = 1;
@@ -120,11 +121,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
         MockitoAnnotations.initMocks(this);
         clearSingleton(PostDataRepository.class);
         mPostDataRepository = PostDataRepository
-                .getInstance(mPostDataSourceFactory, mMockPostEntityMapper);
+            .getInstance(mPostDataSourceFactory, mMockPostEntityMapper);
 
         given(mPostDataSourceFactory.createPostApiDataSource()).willReturn(mMockPostDataSource);
         given(mPostDataSourceFactory.createPostDatabaseDataSource())
-                .willReturn(mMockPostDataSource);
+            .willReturn(mMockPostDataSource);
 
         mPost = new Post();
         mPost.setId(DUMMY_ID);
@@ -158,11 +159,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((PostDataSource.PostEntityAddCallback) invocation
-                        .getArguments()[1]).onPostEntityAdded();
+                    .getArguments()[1]).onPostEntityAdded();
                 return null;
             }
         }).when(mMockPostDataSource).putPostEntity(any(PostEntity.class),
-                any(PostDataSource.PostEntityAddCallback.class));
+            any(PostDataSource.PostEntityAddCallback.class));
         given(mMockPostEntityMapper.unmap(mPost)).willReturn(mMockPostEntity);
 
         mPostDataRepository.putPost(mPost, mMockPostAddCallback);
@@ -178,11 +179,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((PostDataSource.PostEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockPostDataSource).putPostEntity(any(PostEntity.class),
-                any(PostDataSource.PostEntityAddCallback.class));
+            any(PostDataSource.PostEntityAddCallback.class));
 
         mPostDataRepository.putPost(mMockPost, mMockPostAddCallback);
 
@@ -196,11 +197,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((PostDataSource.PostEntityAddCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockPostDataSource).putPostEntity(any(PostEntity.class),
-                any(PostDataSource.PostEntityAddCallback.class));
+            any(PostDataSource.PostEntityAddCallback.class));
 
         mPostDataRepository.putPost(mPost, mMockPostAddCallback);
 
@@ -214,11 +215,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((IPostDatabaseHelper.IPostEntityPutCallback) invocation
-                        .getArguments()[1]).onError(any(ValidationException.class));
+                    .getArguments()[1]).onError(any(ValidationException.class));
                 return null;
             }
         }).when(mMockPostDataSource).putPostEntity(any(PostEntity.class),
-                any(PostDataSource.PostEntityAddCallback.class));
+            any(PostDataSource.PostEntityAddCallback.class));
 
         mPostDataRepository.putPost(mPost, mMockPostAddCallback);
 
@@ -233,11 +234,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((PostDataSource.PostEntityDeletedCallback) invocation
-                        .getArguments()[1]).onPostEntityDeleted();
+                    .getArguments()[1]).onPostEntityDeleted();
                 return null;
             }
         }).when(mMockPostDataSource).deletePostEntity(any(PostEntity.class),
-                any(PostDataSource.PostEntityDeletedCallback.class));
+            any(PostDataSource.PostEntityDeletedCallback.class));
 
         given(mMockPostEntityMapper.unmap(mPost)).willReturn(mMockPostEntity);
 
@@ -253,11 +254,11 @@ public class PostDataRepositoryTest extends BaseTestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 ((PostDataSource.PostEntityDeletedCallback) invocation
-                        .getArguments()[1]).onError(any(Exception.class));
+                    .getArguments()[1]).onError(any(Exception.class));
                 return null;
             }
         }).when(mMockPostDataSource).deletePostEntity(any(PostEntity.class),
-                any(PostDataSource.PostEntityDeletedCallback.class));
+            any(PostDataSource.PostEntityDeletedCallback.class));
 
         mPostDataRepository.deletePost(mMockPost, mMockPostDeletedCallback);
 

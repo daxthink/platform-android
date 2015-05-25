@@ -27,7 +27,8 @@ public class UshahidiApplication extends Application {
     }
 
     /**
-     * Extend the dependency container graph with new dependencies provided by the modules passed as
+     * Extend the dependency container graph with new dependencies provided by the modules passed
+     * as
      * arguments.
      *
      * @param modules used to populate the dependency container.

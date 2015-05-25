@@ -18,14 +18,14 @@
 package com.ushahidi.android.data.api.service;
 
 import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.api.BaseApiTestCase;
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.database.PostDatabaseTest;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.IOException;
@@ -43,8 +43,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class TagServiceTest extends BaseApiTestCase {
 
     private TagService mTagService;
@@ -57,11 +57,11 @@ public class TagServiceTest extends BaseApiTestCase {
     @Test
     public void shouldSuccessfullyFetchTags() throws IOException {
         final String tagsJson = getResource("tags.json");
-        mMockWebServer.play();
+        mMockWebServer.start();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setExecutors(httpExecutor, callbackExecutor)
-                .setConverter(new GsonConverter(mGson))
-                .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
+            .setExecutors(httpExecutor, callbackExecutor)
+            .setConverter(new GsonConverter(mGson))
+            .setEndpoint(mMockWebServer.getUrl("/").toString()).build();
 
         mTagService = restAdapter.create(TagService.class);
         mMockWebServer.enqueue(new MockResponse().setBody(tagsJson));

@@ -64,7 +64,7 @@ public class LongPreference extends BasePreference<Long> {
     @Override
     public void set(Long value) {
         Preconditions.checkNotNull(value, "Long value cannot be null");
-        this.set(value);
+        this.set((long) value);
     }
 
     /**

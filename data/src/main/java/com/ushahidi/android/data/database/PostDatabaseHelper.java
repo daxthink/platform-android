@@ -17,16 +17,16 @@
 
 package com.ushahidi.android.data.database;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.exception.PostNotFoundException;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,45 +39,27 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostDatabaseHelper extends BaseDatabseHelper
-    implements IPostDatabaseHelper, ISearchDatabaseHelper<PostEntity> {
+        implements IPostDatabaseHelper, ISearchDatabaseHelper<PostEntity> {
 
     private static PostDatabaseHelper sInstance;
 
     private static String TAG = PostDatabaseHelper.class.getSimpleName();
 
-    private final ThreadExecutor mThreadExecutor;
-
     private PostDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
-        super(context);
-
-        if (threadExecutor == null) {
-            throw new IllegalArgumentException("Invalid null parameter");
-        }
-
-        mThreadExecutor = threadExecutor;
+        super(context, threadExecutor);
     }
 
     public static synchronized PostDatabaseHelper getInstance(Context context,
-                                                              ThreadExecutor threadExecutor) {
-
+            ThreadExecutor threadExecutor) {
         if (sInstance == null) {
             sInstance = new PostDatabaseHelper(context, threadExecutor);
         }
         return sInstance;
     }
 
-    /**
-     * Executes a {@link Runnable} in another Thread.
-     *
-     * @param runnable {@link Runnable} to execute
-     */
-    private void asyncRun(Runnable runnable) {
-        mThreadExecutor.execute(runnable);
-    }
-
     @Override
     public synchronized void put(final PostEntity postEntity,
-                                 final IPostEntityPutCallback callback) {
+            final IPostEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -95,7 +77,7 @@ public class PostDatabaseHelper extends BaseDatabseHelper
             cupboard().withDatabase(db).delete(postEntity);
             Long rows = cupboard().withDatabase(db).put(postEntity);
             if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
-                postEntity.getPostTagEntityList().size() > 0)) {
+                    postEntity.getPostTagEntityList().size() > 0)) {
 
                 for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
                     postTagEntity.setPostId(postEntity.getId());
@@ -134,7 +116,8 @@ public class PostDatabaseHelper extends BaseDatabseHelper
     }
 
     @Override
-    public synchronized void getPostEntities(final long deploymentId, final IPostEntitiesCallback callback) {
+    public synchronized void getPostEntities(final long deploymentId,
+            final IPostEntitiesCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -155,12 +138,13 @@ public class PostDatabaseHelper extends BaseDatabseHelper
     }
 
     private List<PostEntity> getPosts(final long deploymentId) {
-        return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class).withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
+        return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class)
+                .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
     }
 
     private PostEntity get(long id) {
         return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class)
-            .byId(id).get();
+                .byId(id).get();
     }
 
     private List<TagEntity> getTagEntity(PostEntity postEntity) {
@@ -168,12 +152,12 @@ public class PostDatabaseHelper extends BaseDatabseHelper
 
         // fetch posttag entity
         List<PostTagEntity> postTagEntityList = cupboard().withDatabase(getReadableDatabase())
-            .query(PostTagEntity.class)
-            .withSelection("mPostId = ?", String.valueOf(postEntity.getId())).list();
+                .query(PostTagEntity.class)
+                .withSelection("mPostId = ?", String.valueOf(postEntity.getId())).list();
 
         for (PostTagEntity postTagEntity : postTagEntityList) {
             TagEntity tagEntity = cupboard().withDatabase(getReadableDatabase())
-                .get(TagEntity.class, postTagEntity.getTagId());
+                    .get(TagEntity.class, postTagEntity.getTagId());
 
             tagEntityList.add(tagEntity);
         }
@@ -183,7 +167,7 @@ public class PostDatabaseHelper extends BaseDatabseHelper
 
     @Override
     public synchronized void put(final List<PostEntity> postEntities,
-                                 final IPostEntityPutCallback callback) {
+            final IPostEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -206,10 +190,10 @@ public class PostDatabaseHelper extends BaseDatabseHelper
                 if (!isClosed()) {
                     try {
                         final int numRows = cupboard().withDatabase(getWritableDatabase())
-                            .delete(PostEntity.class, null);
+                                .delete(PostEntity.class, null);
                         if (BuildConfig.DEBUG) {
                             Log.d(TAG, "delete all post entities. Deleted " + numRows
-                                + " rows.");
+                                    + " rows.");
                         }
                         callback.onPostEntityDeleted();
                     } catch (Exception e) {
@@ -222,7 +206,7 @@ public class PostDatabaseHelper extends BaseDatabseHelper
 
     @Override
     public synchronized void delete(final PostEntity postEntity,
-                                    final IPostEntityDeletedCallback callback) {
+            final IPostEntityDeletedCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -260,6 +244,6 @@ public class PostDatabaseHelper extends BaseDatabseHelper
         String args[] = {query + "%", query + "%"};
         // Post title holds the search term
         return cupboard().withDatabase(getReadableDatabase()).query(
-            PostEntity.class).withSelection(selection, args).list();
+                PostEntity.class).withSelection(selection, args).list();
     }
 }

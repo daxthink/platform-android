@@ -19,12 +19,13 @@ package com.ushahidi.android.data.entity.mapper;
 
 import com.ushahidi.android.core.entity.Tag;
 import com.ushahidi.android.data.BaseTestCase;
+import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.TagEntity;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.Date;
@@ -38,8 +39,8 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Config(manifest=Config.NONE)
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
 public class TagEntityMapperTest extends BaseTestCase {
 
     private TagEntityMapper mTagEntityMapper;
@@ -62,7 +63,7 @@ public class TagEntityMapperTest extends BaseTestCase {
 
     private static final String DUMMY_TAG = "tag";
 
-    private static final String DUMMY_SLUG = "slug";
+    private static final String DUMMY_COLOR = "#000000";
 
     private static final TagEntity.Type DUMMY_TAG_ENTITY_TYPE = TagEntity.Type.CATEGORY;
 
@@ -83,7 +84,7 @@ public class TagEntityMapperTest extends BaseTestCase {
         mTagEntity.setCreated(DUMMY_DATE);
         mTagEntity.setParentId(DUMMY_PARENT);
         mTagEntity.setTag(DUMMY_TAG);
-        mTagEntity.setColor(DUMMY_SLUG);
+        mTagEntity.setColor(DUMMY_COLOR);
         mTagEntity.setType(DUMMY_TAG_ENTITY_TYPE);
 
         Tag tag = mTagEntityMapper.map(mTagEntity);
@@ -96,8 +97,8 @@ public class TagEntityMapperTest extends BaseTestCase {
         assertThat(tag.getParentId(), is(DUMMY_PARENT));
         assertThat(tag.getPriority(), is(DUMMY_PRIORITY));
         assertThat(tag.getTag(), is(DUMMY_TAG));
-        assertThat(tag.getSlug(), is(DUMMY_SLUG));
         assertThat(tag.getType(), is(DUMMY_TAG_TYPE));
+        assertThat(tag.getColor(), is(DUMMY_COLOR));
     }
 
     @Test
@@ -109,7 +110,7 @@ public class TagEntityMapperTest extends BaseTestCase {
         mTag.setPriority(DUMMY_PRIORITY);
         mTag.setCreated(DUMMY_DATE);
         mTag.setParentId(DUMMY_PARENT);
-        mTag.setSlug(DUMMY_SLUG);
+        mTag.setColor(DUMMY_COLOR);
         mTag.setTag(DUMMY_TAG);
         mTag.setType(DUMMY_TAG_TYPE);
 
@@ -122,7 +123,7 @@ public class TagEntityMapperTest extends BaseTestCase {
         assertThat(tagEntity.getCreated(), is(DUMMY_DATE));
         assertThat(tagEntity.getParentId(), is(DUMMY_PARENT));
         assertThat(tagEntity.getPriority(), is(DUMMY_PRIORITY));
-        assertThat(tagEntity.getColor(), is(DUMMY_SLUG));
+        assertThat(tagEntity.getColor(), is(DUMMY_COLOR));
         assertThat(tagEntity.getTag(), is(DUMMY_TAG));
         assertThat(tagEntity.getType(), is(DUMMY_TAG_ENTITY_TYPE));
     }

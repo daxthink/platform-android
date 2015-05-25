@@ -17,14 +17,14 @@
 
 package com.ushahidi.android.data.database;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.ushahidi.android.core.task.ThreadExecutor;
 import com.ushahidi.android.data.BuildConfig;
 import com.ushahidi.android.data.entity.MediaEntity;
 import com.ushahidi.android.data.exception.MediaNotFoundException;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.List;
 
@@ -41,20 +41,12 @@ public class MediaDatabaseHelper extends BaseDatabseHelper implements IMediaData
 
     private static String TAG = MediaDatabaseHelper.class.getSimpleName();
 
-    private final ThreadExecutor mThreadExecutor;
-
     private MediaDatabaseHelper(Context context, ThreadExecutor threadExecutor) {
-        super(context);
-
-        if (threadExecutor == null) {
-            throw new IllegalArgumentException("Invalid null parameter");
-        }
-
-        mThreadExecutor = threadExecutor;
+        super(context, threadExecutor);
     }
 
     public static synchronized MediaDatabaseHelper getInstance(Context context,
-            ThreadExecutor threadExecutor) {
+                                                               ThreadExecutor threadExecutor) {
 
         if (sInstance == null) {
             sInstance = new MediaDatabaseHelper(context, threadExecutor);
@@ -62,18 +54,9 @@ public class MediaDatabaseHelper extends BaseDatabseHelper implements IMediaData
         return sInstance;
     }
 
-    /**
-     * Executes a {@link Runnable} in another Thread.
-     *
-     * @param runnable {@link Runnable} to execute
-     */
-    private void asyncRun(Runnable runnable) {
-        mThreadExecutor.execute(runnable);
-    }
-
     @Override
     public synchronized void put(final MediaEntity mediaEntity,
-            final IMediaEntityPutCallback callback) {
+                                 final IMediaEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -107,7 +90,7 @@ public class MediaDatabaseHelper extends BaseDatabseHelper implements IMediaData
 
     private MediaEntity get(long id) {
         return cupboard().withDatabase(getReadableDatabase()).query(MediaEntity.class)
-                .byId(id).get();
+            .byId(id).get();
     }
 
     private List<MediaEntity> getMedias() {
@@ -131,7 +114,7 @@ public class MediaDatabaseHelper extends BaseDatabseHelper implements IMediaData
 
     @Override
     public synchronized void put(final List<MediaEntity> mediaEntities,
-            final IMediaEntityPutCallback callback) {
+                                 final IMediaEntityPutCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
@@ -164,10 +147,10 @@ public class MediaDatabaseHelper extends BaseDatabseHelper implements IMediaData
                 if (!isClosed()) {
                     try {
                         final int numRows = cupboard().withDatabase(getWritableDatabase())
-                                .delete(MediaEntity.class, null);
+                            .delete(MediaEntity.class, null);
                         if (BuildConfig.DEBUG) {
                             Log.d(TAG, "delete all media entities. Deleted " + numRows
-                                    + " rows.");
+                                + " rows.");
                         }
                         callback.onMediaEntityDeleted();
                     } catch (Exception e) {
@@ -180,7 +163,7 @@ public class MediaDatabaseHelper extends BaseDatabseHelper implements IMediaData
 
     @Override
     public synchronized void delete(final MediaEntity mediaEntity,
-            final IMediaEntityDeletedCallback callback) {
+                                    final IMediaEntityDeletedCallback callback) {
         this.asyncRun(new Runnable() {
             @Override
             public void run() {
