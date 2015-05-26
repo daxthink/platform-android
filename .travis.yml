@@ -1,4 +1,7 @@
 language: android
+jdk: oraclejdk8
+before_install:
+  - export "JAVA8_HOME=/usr/lib/jvm/java-8-oracle"
 android:
   components:
   - build-tools-22.0.0
@@ -9,7 +12,9 @@ android:
   - extra-android-m2repository
   - addon-google_apis-google-22
 
-script: ./gradlew build
+script:
+  - ./gradlew build -PdisablePreDex
+  - ./gradlew test -PdisablePreDex
 notifications:
   hipchat:
     rooms:
