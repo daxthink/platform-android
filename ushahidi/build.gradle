@@ -14,6 +14,7 @@ android {
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName = libVersion
+        testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
     }
     buildTypes {
         release {
@@ -34,11 +35,14 @@ dependencies {
     }
     provided appDependencies.javaxAnnotation
 
+    testCompile appTestDependencies.junit
+    testCompile appTestDependencies.mockito
+    testCompile appTestDependencies.robolectric
+    testCompile appTestDependencies.truth
+
     androidTestCompile appTestDependencies.mockito
     androidTestCompile appTestDependencies.dexmaker
     androidTestCompile appTestDependencies.dexmakerMockito
     androidTestCompile appTestDependencies.espresso
     androidTestCompile appTestDependencies.testingSupportLib
-    testCompile appTestDependencies.junit
-    testCompile appTestDependencies.mockito
 }

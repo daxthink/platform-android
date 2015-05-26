@@ -17,14 +17,26 @@
 package com.ushahidi.android.presentation;
 
 import com.addhen.android.raiburari.presentation.BaseApplication;
+import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class UshahidiApplication extends BaseApplication {
 
+    ApplicationComponent mApplicationComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mApplicationComponent = getApplicationComponent();
     }
+
+    /**
+     * Visible only for testing purposes.
+     */
+    public void setTestComponent(ApplicationComponent testAppComponent) {
+        mApplicationComponent = testAppComponent;
+    }
+
 }

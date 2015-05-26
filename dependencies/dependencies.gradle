@@ -39,12 +39,13 @@ ext {
     materialdrawer = '2.9.8'
 
     //Testing
-    robolectricVersion = '2.4'
-    jUnitVersion = '4.11'
+    jUnitVersion = '4.12'
     mockitoVersion = '1.9.5'
     dexmakerVersion = '1.0'
     espressoVersion = '2.0'
     testingSupportLibVersion = '0.1'
+    robolectricVersion = '3.0-rc2'
+    truthVersion = '0.26'
 
     appDependencies = [
             daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
@@ -63,5 +64,6 @@ ext {
             junit            : "junit:junit:${jUnitVersion}",
             mockito          : "org.mockito:mockito-core:${mockitoVersion}",
             robolectric      : "org.robolectric:robolectric:${robolectricVersion}",
+            truth            : "com.google.truth:truth:${truthVersion}",
     ]
 }
