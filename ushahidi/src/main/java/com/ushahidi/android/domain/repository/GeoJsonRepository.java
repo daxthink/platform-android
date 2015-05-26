@@ -19,6 +19,8 @@ package com.ushahidi.android.domain.repository;
 import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.GeoJson;
 
+import rx.Observable;
+
 /**
  * GeoJson Repository
  *
@@ -31,5 +33,5 @@ public interface GeoJsonRepository extends Repository<GeoJson> {
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.domain.entity.Deployment}
      */
-    void getGeoJsonViaApi(long deploymentId);
+    Observable<GeoJson> getGeoJsonViaApi(Long deploymentId);
 }

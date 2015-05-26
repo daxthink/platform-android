@@ -19,6 +19,8 @@ package com.ushahidi.android.domain.repository;
 import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.UserAccount;
 
+import rx.Observable;
+
 /**
  * User Account Repository
  *
@@ -26,5 +28,5 @@ import com.ushahidi.android.domain.entity.UserAccount;
  */
 public interface UserAccountRepository extends Repository<UserAccount> {
 
-    void login(UserAccount userAccount);
+    Observable login(UserAccount userAccount);
 }

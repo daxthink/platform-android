@@ -19,6 +19,8 @@ package com.ushahidi.android.domain.repository;
 import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.UserProfile;
 
+import rx.Observable;
+
 /**
  * Repository for manipulating {@link com.ushahidi.android.domain.entity.UserProfile}
  *
@@ -29,5 +31,5 @@ public interface UserProfileRepository extends Repository<UserProfile> {
     /**
      * Fetches user profile from the API
      */
-    void getViaApi();
+    Observable<UserProfile> getViaApi();
 }

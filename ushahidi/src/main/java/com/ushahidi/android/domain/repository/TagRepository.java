@@ -19,6 +19,10 @@ package com.ushahidi.android.domain.repository;
 import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.Tag;
 
+import java.util.List;
+
+import rx.Observable;
+
 /**
  * Repository for Tag
  *
@@ -29,5 +33,5 @@ public interface TagRepository extends Repository<Tag> {
     /**
      * Get a list of {@link Tag}.
      */
-    void getViaApi();
+    Observable<List<Tag>> getViaApi();
 }

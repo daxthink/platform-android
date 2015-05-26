@@ -19,6 +19,10 @@ package com.ushahidi.android.domain.repository;
 import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.Post;
 
+import java.util.List;
+
+import rx.Observable;
+
 /**
  * Repository for manipulating {@link Post} entity
  *
@@ -26,12 +30,12 @@ import com.ushahidi.android.domain.entity.Post;
  */
 public interface PostRepository extends Repository<Post> {
 
-    void getViaApi(long deploymentId);
+    Observable<List<Post>> getViaApi(Long deploymentId);
 
     /**
      * Search for a {@link Post}
      *
      * @param query The entity to be searched for.
      */
-    void search(String query);
+    Observable<List<Post>> search(String query);
 }
