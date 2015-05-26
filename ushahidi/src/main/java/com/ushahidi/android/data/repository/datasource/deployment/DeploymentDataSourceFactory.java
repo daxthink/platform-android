@@ -16,6 +16,10 @@
 
 package com.ushahidi.android.data.repository.datasource.deployment;
 
+import com.ushahidi.android.database.DeploymentDatabaseHelper;
+
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 
 /**
@@ -25,12 +29,15 @@ import javax.inject.Inject;
  */
 public class DeploymentDataSourceFactory {
 
+    private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;
+
+
     @Inject
-    public DeploymentDataSourceFactory() {
-        // Do nothing
+    DeploymentDataSourceFactory(@NonNull DeploymentDatabaseHelper deploymentDatabaseHelper) {
+        mDeploymentDatabaseHelper = deploymentDatabaseHelper;
     }
 
     public DeploymentDataSource createDatabaseDataSource() {
-        return new DeploymentDatabaseDataSource();
+        return new DeploymentDatabaseDataSource(mDeploymentDatabaseHelper);
     }
 }

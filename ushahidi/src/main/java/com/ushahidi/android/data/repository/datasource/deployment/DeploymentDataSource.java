@@ -39,7 +39,14 @@ public interface DeploymentDataSource {
      *
      * @param deploymentId The id to retrieve user data.
      */
-    Observable<DeploymentEntity> getDeploymentEntityEntityDetails(Long deploymentId);
+    Observable<DeploymentEntity> getDeploymentEntity(Long deploymentId);
+
+    /**
+     * Get an {@link Observable} which will emit a {@link DeploymentEntity} by its id.
+     *
+     * @param status The deployment status to be used for retrieving a deployment
+     */
+    Observable<DeploymentEntity> getByStatus(DeploymentEntity.Status status);
 
     /**
      * Adds an {@link DeploymentEntity} to storage and then returns an {@link Observable} for all
@@ -64,7 +71,7 @@ public interface DeploymentDataSource {
      * all
      * subscribers to react to it.
      *
-     * @param deploymentId The deployment to be added
+     * @param deploymentId The deployment to be deleted
      */
     Observable<Long> deleteDeploymentEntity(Long deploymentId);
 }

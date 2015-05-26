@@ -17,6 +17,7 @@
 package com.ushahidi.android.data.repository.datasource.deployment;
 
 import com.ushahidi.android.data.entity.DeploymentEntity;
+import com.ushahidi.android.database.DeploymentDatabaseHelper;
 
 import java.util.List;
 
@@ -29,28 +30,39 @@ import rx.Observable;
  */
 public class DeploymentDatabaseDataSource implements DeploymentDataSource {
 
-    @Override
-    public Observable<List<DeploymentEntity>> getDeploymentEntityList() {
-        return null;
+    private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;
+
+    public DeploymentDatabaseDataSource(DeploymentDatabaseHelper deploymentDatabaseHelper) {
+        mDeploymentDatabaseHelper = deploymentDatabaseHelper;
     }
 
     @Override
-    public Observable<DeploymentEntity> getDeploymentEntityEntityDetails(Long deploymentId) {
-        return null;
+    public Observable<List<DeploymentEntity>> getDeploymentEntityList() {
+        return mDeploymentDatabaseHelper.getDeployments();
+    }
+
+    @Override
+    public Observable<DeploymentEntity> getDeploymentEntity(Long deploymentId) {
+        return mDeploymentDatabaseHelper.getDeployment(deploymentId);
+    }
+
+    @Override
+    public Observable<DeploymentEntity> getByStatus(DeploymentEntity.Status status) {
+        return mDeploymentDatabaseHelper.getByStatus(status);
     }
 
     @Override
     public Observable<Long> addDeploymentEntity(DeploymentEntity deployment) {
-        return null;
+        return mDeploymentDatabaseHelper.put(deployment);
     }
 
     @Override
     public Observable<Long> updateDeploymentEntity(DeploymentEntity deployment) {
-        return null;
+        return mDeploymentDatabaseHelper.put(deployment);
     }
 
     @Override
     public Observable<Long> deleteDeploymentEntity(Long deploymentId) {
-        return null;
+        return mDeploymentDatabaseHelper.deleteDeployment(deploymentId);
     }
 }

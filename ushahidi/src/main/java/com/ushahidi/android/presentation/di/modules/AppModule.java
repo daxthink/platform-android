@@ -24,7 +24,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Reusable Dagger modules for activities related to Inventory manipulations
+ * Reusable Dagger modules for the entire app
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

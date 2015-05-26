@@ -35,8 +35,9 @@ ext {
     daggerVersion = '2.0'
     butterKnifeVersion = '6.0.0'
     javaxAnnotationVersion = '10.0-b28'
-    raiburari = '1.1.0'
-    materialdrawer = '2.9.8'
+    raiburariVersion = '1.1.0'
+    materialdrawerVersion = '2.9.8'
+    cupboardVersion = '2.1.1'
 
     //Testing
     jUnitVersion = '4.12'
@@ -51,8 +52,9 @@ ext {
             daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger         : "com.google.dagger:dagger:${daggerVersion}",
             javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            raiburari      : "com.addhen.android:raiburari:${raiburari}",
-            materialdrawer : "com.mikepenz:materialdrawer:${materialdrawer}",
+            raiburari      : "com.addhen.android:raiburari:${raiburariVersion}",
+            materialdrawer : "com.mikepenz:materialdrawer:${materialdrawerVersion}",
+            cupboard       : "nl.qbusict:cupboard:${cupboardVersion}",
     ]
 
     appTestDependencies = [

@@ -16,7 +16,6 @@
 
 package com.ushahidi.android.data.repository;
 
-import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.entity.mapper.DeploymentEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.deployment.DeploymentDataSource;
 import com.ushahidi.android.data.repository.datasource.deployment.DeploymentDataSourceFactory;
@@ -28,7 +27,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.functions.Func1;
 
 /**
  * Implementation of {@link DeploymentRepository} for manipulating deployment data
@@ -41,24 +39,6 @@ public class DeploymentDataRepository implements DeploymentRepository {
 
     private final DeploymentEntityDataMapper mDeploymentEntityDataMapper;
 
-    private final DeploymentDataSource mDeploymentDataSource;
-
-    private final Func1<List<DeploymentEntity>, List<Deployment>> deploymentListEntityMapper =
-            new Func1<List<DeploymentEntity>, List<Deployment>>() {
-                @Override
-                public List<Deployment> call(List<DeploymentEntity> deploymentEntities) {
-                    return DeploymentDataRepository.this.mDeploymentEntityDataMapper
-                            .map(deploymentEntities);
-                }
-            };
-
-    private final Func1<DeploymentEntity, Deployment>
-            deploymentEntityMapper = new Func1<DeploymentEntity, Deployment>() {
-        @Override
-        public Deployment call(DeploymentEntity deploymentEntity) {
-            return DeploymentDataRepository.this.mDeploymentEntityDataMapper.map(deploymentEntity);
-        }
-    };
 
     /**
      * Constructs a {@link DeploymentRepository}.
@@ -72,36 +52,53 @@ public class DeploymentDataRepository implements DeploymentRepository {
             DeploymentEntityDataMapper deploymentEntityDataMapper) {
         mDeploymentDataStoreFactory = dataSourceFactory;
         mDeploymentEntityDataMapper = deploymentEntityDataMapper;
-        mDeploymentDataSource = mDeploymentDataStoreFactory.createDatabaseDataSource();
     }
 
     @Override
-    public void getByStatus(Deployment.Status status) {
-
+    public Observable<Deployment> getByStatus(Deployment.Status status) {
+        final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
+                .createDatabaseDataSource();
+        return deploymentDataSource.getByStatus(mDeploymentEntityDataMapper.map(status))
+                .map((deployment) -> mDeploymentEntityDataMapper.map(deployment));
     }
 
     @Override
     public Observable<List<Deployment>> getEntities() {
-        return null;
+        final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
+                .createDatabaseDataSource();
+        return deploymentDataSource.getDeploymentEntityList().map((deploymentList) ->
+                        mDeploymentEntityDataMapper.map(deploymentList)
+        );
     }
 
     @Override
-    public Observable<Deployment> getEntity(Long aLong) {
-        return null;
+    public Observable<Deployment> getEntity(Long id) {
+        final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
+                .createDatabaseDataSource();
+        return deploymentDataSource.getDeploymentEntity(id)
+                .map((deployment) -> mDeploymentEntityDataMapper.map(deployment));
     }
 
     @Override
     public Observable<Long> addEntity(Deployment deployment) {
-        return null;
+        final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
+                .createDatabaseDataSource();
+        return deploymentDataSource
+                .addDeploymentEntity(mDeploymentEntityDataMapper.map(deployment));
     }
 
     @Override
     public Observable<Long> updateEntity(Deployment deployment) {
-        return null;
+        final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
+                .createDatabaseDataSource();
+        return deploymentDataSource
+                .updateDeploymentEntity(mDeploymentEntityDataMapper.map(deployment));
     }
 
     @Override
-    public Observable<Long> deleteEntity(Long aLong) {
-        return null;
+    public Observable<Long> deleteEntity(Long deploymentId) {
+        final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
+                .createDatabaseDataSource();
+        return deploymentDataSource.deleteDeploymentEntity(deploymentId);
     }
 }

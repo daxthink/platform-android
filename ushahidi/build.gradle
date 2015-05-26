@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
 
@@ -22,7 +23,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
+
+retrolambda {
+    jdk System.getenv("JAVA8_HOME")
+    oldJdk System.getenv("JAVA_HOME")
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+apply from: 'resource-workaround.gradle'
 
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
@@ -33,12 +51,14 @@ dependencies {
     compile(appDependencies.materialdrawer) {
         transitive = true
     }
+    compile appDependencies.cupboard
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit
     testCompile appTestDependencies.mockito
     testCompile appTestDependencies.robolectric
     testCompile appTestDependencies.truth
+    testApt appDependencies.daggerCompiler
 
     androidTestCompile appTestDependencies.mockito
     androidTestCompile appTestDependencies.dexmaker

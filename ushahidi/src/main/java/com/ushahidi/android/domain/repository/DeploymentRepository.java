@@ -19,6 +19,8 @@ package com.ushahidi.android.domain.repository;
 import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.Deployment;
 
+import rx.Observable;
+
 /**
  * Repository for manipulating {@link Deployment} data
  *
@@ -29,7 +31,7 @@ public interface DeploymentRepository extends Repository<Deployment> {
     /**
      * Get an {@link Deployment} by its status.
      *
-     * @param status The deployment used for retrieving deployment data.
+     * @param status The deployment status to be used for retrieving deployment data.
      */
-    void getByStatus(final Deployment.Status status);
+    Observable<Deployment> getByStatus(final Deployment.Status status);
 }
