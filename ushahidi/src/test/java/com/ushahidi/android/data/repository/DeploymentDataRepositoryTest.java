@@ -14,6 +14,9 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rx.Observable;
 
 import static org.mockito.BDDMockito.given;
@@ -97,5 +100,20 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
 
         verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
         verify(mMockDataSource).getDeploymentEntity(1l);
+    }
+
+    @Test
+    public void shouldSuccessfullyGetAListOfDeployments() {
+        List<DeploymentEntity> deploymentEntities = new ArrayList<>();
+        deploymentEntities.add(new DeploymentEntity());
+        List<Deployment> deployments = new ArrayList<>();
+        deployments.add(new Deployment());
+        given(mMockDataSource.getDeploymentEntityList()).willReturn(
+                Observable.just(deploymentEntities));
+        given(mMockDeploymentEntityMapper.map(deploymentEntities)).willReturn(deployments);
+        mDeploymentDataRepository.getEntities();
+
+        verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
+        verify(mMockDataSource).getDeploymentEntityList();
     }
 }
