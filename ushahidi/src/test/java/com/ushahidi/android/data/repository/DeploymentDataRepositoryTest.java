@@ -64,6 +64,7 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
         given(mMockDataSource.addDeploymentEntity(mMockDeploymentEntity)).willReturn(
                 Observable.just(1l));
         given(mMockDeploymentEntityMapper.map(mMockDeployment)).willReturn(mMockDeploymentEntity);
+
         mDeploymentDataRepository.addEntity(mMockDeployment);
 
         verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
@@ -75,6 +76,7 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
         given(mMockDataSource.updateDeploymentEntity(mMockDeploymentEntity)).willReturn(
                 Observable.just(1l));
         given(mMockDeploymentEntityMapper.map(mMockDeployment)).willReturn(mMockDeploymentEntity);
+
         mDeploymentDataRepository.updateEntity(mMockDeployment);
 
         verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
@@ -96,6 +98,7 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
         given(mMockDataSource.getDeploymentEntity(1l)).willReturn(
                 Observable.just(mMockDeploymentEntity));
         given(mMockDeploymentEntityMapper.map(mMockDeployment)).willReturn(mMockDeploymentEntity);
+
         mDeploymentDataRepository.getEntity(1l);
 
         verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
@@ -108,12 +111,34 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
         deploymentEntities.add(new DeploymentEntity());
         List<Deployment> deployments = new ArrayList<>();
         deployments.add(new Deployment());
+
         given(mMockDataSource.getDeploymentEntityList()).willReturn(
                 Observable.just(deploymentEntities));
         given(mMockDeploymentEntityMapper.map(deploymentEntities)).willReturn(deployments);
+
         mDeploymentDataRepository.getEntities();
 
         verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
         verify(mMockDataSource).getDeploymentEntityList();
+    }
+
+    @Test
+    public void shouldSuccessfullyGetADeploymentByItsStatus() {
+        DeploymentEntity deploymentEntity = new DeploymentEntity();
+        deploymentEntity.setStatus(DeploymentEntity.Status.ACTIVATED);
+        Deployment deployment = new Deployment();
+        deployment.setStatus(Deployment.Status.ACTIVATED);
+
+        given(mMockDataSource.getByStatus(DeploymentEntity.Status.ACTIVATED)).willReturn(
+                Observable.just(deploymentEntity));
+        given(mMockDeploymentEntityMapper.map(Deployment.Status.ACTIVATED))
+                .willReturn(DeploymentEntity.Status.ACTIVATED);
+        given(mMockDeploymentEntityMapper.map(deployment)).willReturn(deploymentEntity);
+
+        mDeploymentDataRepository.getByStatus(Deployment.Status.ACTIVATED);
+
+        verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
+        verify(mMockDeploymentEntityMapper).map(Deployment.Status.ACTIVATED);
+        verify(mMockDataSource).getByStatus(DeploymentEntity.Status.ACTIVATED);
     }
 }
