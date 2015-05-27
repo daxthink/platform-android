@@ -77,4 +77,14 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
         verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
         verify(mMockDataSource).updateDeploymentEntity(mMockDeploymentEntity);
     }
+
+    @Test
+    public void shouldSuccessfullyDeleteADeployment() {
+        given(mMockDataSource.deleteDeploymentEntity(1l)).willReturn(
+                Observable.just(1l));
+        mDeploymentDataRepository.deleteEntity(1l);
+
+        verify(mMockDeploymentDataSourceFactory).createDatabaseDataSource();
+        verify(mMockDataSource).deleteDeploymentEntity(1l);
+    }
 }
