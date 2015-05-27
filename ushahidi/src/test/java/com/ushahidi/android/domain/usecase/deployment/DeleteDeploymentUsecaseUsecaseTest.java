@@ -3,7 +3,6 @@ package com.ushahidi.android.domain.usecase.deployment;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
-import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 
 import org.junit.Before;
@@ -21,55 +20,54 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 /**
- * Test case for {@link AddDeploymentUsecase}
+ * Test case for {@link DeleteDeploymentUsecase}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = 21, constants = BuildConfig.class)
-public class AddDeploymentUsecaseTest {
+public class DeleteDeploymentUsecaseUsecaseTest {
 
     @Mock
-    private ThreadExecutor mMockThreadExecutor;
+    private ThreadExecutor mockThreadExecutor;
 
     @Mock
-    private PostExecutionThread mMockPostExecutionThread;
+    private PostExecutionThread mockPostExecutionThread;
 
     @Mock
-    private DeploymentRepository mMockDeploymentRepository;
+    private DeploymentRepository mockDeploymentRepository;
 
-    @Mock
-    private Deployment mMockDeployment;
+    private DeleteDeploymentUsecase mDeleteDeploymentUsecase;
 
-    private AddDeploymentUsecase mAddDeploymentUsecase;
+    private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mAddDeploymentUsecase = new AddDeploymentUsecase(mMockDeploymentRepository,
-                mMockThreadExecutor, mMockPostExecutionThread);
+        mDeleteDeploymentUsecase = new DeleteDeploymentUsecase(mockDeploymentRepository,
+                mockThreadExecutor, mockPostExecutionThread);
     }
 
     @Test
-    public void shouldSuccessfullyAddDeployment() {
-        mAddDeploymentUsecase.setDeployment(mMockDeployment);
-        mAddDeploymentUsecase.buildUseCaseObservable();
-        verify(mMockDeploymentRepository).addEntity(mMockDeployment);
+    public void shouldSuccessfullyDeleteDeployment() {
+        mDeleteDeploymentUsecase.setDeploymentId(DUMMY_DEPLOYMENT_ID);
+        mDeleteDeploymentUsecase.buildUseCaseObservable();
+        verify(mockDeploymentRepository).deleteEntity(DUMMY_DEPLOYMENT_ID);
 
-        verifyNoMoreInteractions(mMockDeploymentRepository);
-        verifyZeroInteractions(mMockPostExecutionThread);
-        verifyZeroInteractions(mMockThreadExecutor);
+        verifyNoMoreInteractions(mockDeploymentRepository);
+        verifyZeroInteractions(mockPostExecutionThread);
+        verifyZeroInteractions(mockThreadExecutor);
     }
 
     @Test
     public void shouldThrowRuntimeException() {
-        assertThat(mAddDeploymentUsecase).isNotNull();
-        mAddDeploymentUsecase.setDeployment(null);
+        assertThat(mDeleteDeploymentUsecase).isNotNull();
+        mDeleteDeploymentUsecase.setDeploymentId(null);
         try {
-            mAddDeploymentUsecase.execute(null);
+            mDeleteDeploymentUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Deployment is null. You must call setDeployment(...)");
+            assertThat(e).hasMessage("Deployment ID is null. You must call setDeployment(...)");
         }
     }
 }

@@ -16,7 +16,7 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(emulateSdk = 21, reportSdk = 21, constants = BuildConfig.class)
+@Config(sdk = 21, constants = BuildConfig.class)
 public class DeploymentTest {
 
     private Deployment mDeployment;

@@ -15,14 +15,14 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeleteDeployment extends Usecase {
+public class DeleteDeploymentUsecase extends Usecase {
 
     private final DeploymentRepository mDeploymentRepository;
 
     private Long mDeploymentId;
 
     @Inject
-    protected DeleteDeployment(DeploymentRepository deploymentRepository,
+    protected DeleteDeploymentUsecase(DeploymentRepository deploymentRepository,
             ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mDeploymentRepository = deploymentRepository;

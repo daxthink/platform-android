@@ -45,7 +45,7 @@ public class ActivateDeploymentUsecase extends Usecase {
         mDeploymentRepository = deploymentRepository;
     }
 
-    public void setInventory(Deployment deployment) {
+    public void setDeployment(Deployment deployment) {
         mDeployment = deployment;
     }
 

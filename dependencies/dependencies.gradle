@@ -45,7 +45,7 @@ ext {
     dexmakerVersion = '1.0'
     espressoVersion = '2.0'
     testingSupportLibVersion = '0.1'
-    robolectricVersion = '3.0-rc2'
+    robolectricVersion = '3.0-rc3'
     truthVersion = '0.26'
 
     appDependencies = [

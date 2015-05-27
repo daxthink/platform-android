@@ -40,7 +40,7 @@ retrolambda {
     javaVersion JavaVersion.VERSION_1_7
 }
 
-apply from: 'resource-workaround.gradle'
+//apply from: 'resource-workaround.gradle'
 
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
