@@ -13,20 +13,18 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
-import static com.google.common.truth.Truth.assertThat;
-import static com.google.common.truth.Truth.assert_;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 /**
- * Test case for {@link DeleteDeploymentUsecase}
+ * Tests {@link GetDeploymentUsecase}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = 21, constants = BuildConfig.class)
-public class DeleteDeploymentUsecaseUsecaseTest {
+public class GetDeploymentUsecaseTest {
 
     @Mock
     private ThreadExecutor mockThreadExecutor;
@@ -37,37 +35,24 @@ public class DeleteDeploymentUsecaseUsecaseTest {
     @Mock
     private DeploymentRepository mockDeploymentRepository;
 
-    private DeleteDeploymentUsecase mDeleteDeploymentUsecase;
+    private GetDeploymentUsecase mGetDeploymentUsecase;
 
     private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mDeleteDeploymentUsecase = new DeleteDeploymentUsecase(mockDeploymentRepository,
-                mockThreadExecutor, mockPostExecutionThread);
+        mGetDeploymentUsecase = new GetDeploymentUsecase(DUMMY_DEPLOYMENT_ID,
+                mockDeploymentRepository, mockThreadExecutor, mockPostExecutionThread);
     }
 
     @Test
     public void shouldSuccessfullyDeleteDeployment() {
-        mDeleteDeploymentUsecase.setDeploymentId(DUMMY_DEPLOYMENT_ID);
-        mDeleteDeploymentUsecase.buildUseCaseObservable();
-        verify(mockDeploymentRepository).deleteEntity(DUMMY_DEPLOYMENT_ID);
+        mGetDeploymentUsecase.buildUseCaseObservable();
+        verify(mockDeploymentRepository).getEntity(DUMMY_DEPLOYMENT_ID);
 
         verifyNoMoreInteractions(mockDeploymentRepository);
         verifyZeroInteractions(mockPostExecutionThread);
         verifyZeroInteractions(mockThreadExecutor);
-    }
-
-    @Test
-    public void shouldThrowRuntimeException() {
-        assertThat(mDeleteDeploymentUsecase).isNotNull();
-        mDeleteDeploymentUsecase.setDeploymentId(null);
-        try {
-            mDeleteDeploymentUsecase.execute(null);
-            assert_().fail("Should have thrown RuntimeException");
-        } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Deployment ID is null. You must call setDeployment(...)");
-        }
     }
 }
