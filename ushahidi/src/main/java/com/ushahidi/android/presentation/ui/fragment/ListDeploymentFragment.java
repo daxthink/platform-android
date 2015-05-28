@@ -29,6 +29,7 @@ import com.ushahidi.android.presentation.presenter.DeleteDeploymentPresenter;
 import com.ushahidi.android.presentation.presenter.ListDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.adapter.DeploymentAdapter;
+import com.ushahidi.android.presentation.ui.navigation.Launcher;
 import com.ushahidi.android.presentation.ui.view.DeleteDeploymentView;
 import com.ushahidi.android.presentation.ui.view.ListDeploymentView;
 import com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView;
@@ -72,9 +73,12 @@ public class ListDeploymentFragment
     @Inject
     DeleteDeploymentPresenter mDeleteDeploymentPresenter;
 
+    @Inject
+    Launcher mLauncher;
+
     // Manually creating the deployment adapter because
     // for some weirdness the super class cannot find the custom recyclerviewer
-    // in the layout.
+    // in the layout so the adapter is not created.
     private DeploymentAdapter mDeploymentAdapter;
 
     DeploymentListListener mDeploymentListListener;
@@ -123,9 +127,7 @@ public class ListDeploymentFragment
         if (mFab != null) {
             setViewGone(mFab, false);
             mFab.setOnClickListener(v -> {
-                if (mDeploymentListListener != null) {
-                    mDeploymentListListener.onFabClicked();
-                }
+                mLauncher.launchAddDeployment();
             });
         }
         mDeploymentRecyclerView.setFocusable(true);
@@ -283,8 +285,6 @@ public class ListDeploymentFragment
     public interface DeploymentListListener {
 
         void onDeploymentClicked(final DeploymentModel deploymentModel);
-
-        void onFabClicked();
     }
 
 }

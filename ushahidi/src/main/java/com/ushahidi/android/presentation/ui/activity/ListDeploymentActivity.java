@@ -26,10 +26,13 @@ import com.ushahidi.android.presentation.di.components.deployment.DeleteDeployme
 import com.ushahidi.android.presentation.di.components.deployment.ListDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment;
+import com.ushahidi.android.presentation.ui.navigation.Launcher;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import javax.inject.Inject;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -41,6 +44,9 @@ public class ListDeploymentActivity extends BaseActivity
     private ListDeploymentComponent mListDeploymentComponent;
 
     private DeleteDeploymentComponent mDeleteDeploymentComponent;
+
+    @Inject
+    Launcher mLauncher;
 
     public ListDeploymentActivity() {
         super(R.layout.activity_list_deployment, R.menu.list_deployment);
@@ -83,11 +89,6 @@ public class ListDeploymentActivity extends BaseActivity
 
     @Override
     public void onDeploymentClicked(DeploymentModel deploymentModel) {
-
-    }
-
-    @Override
-    public void onFabClicked() {
 
     }
 }

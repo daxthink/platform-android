@@ -16,7 +16,10 @@
 
 package com.ushahidi.android.presentation.ui.navigation;
 
+import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
+
 import android.app.Activity;
+import android.content.Intent;
 
 import javax.inject.Inject;
 
@@ -32,5 +35,10 @@ public class Launcher {
     @Inject
     public Launcher(Activity activity) {
         mActivity = activity;
+    }
+
+    public void launchAddDeployment() {
+        final Intent intent = AddDeploymentActivity.getIntent(mActivity);
+        mActivity.startActivity(intent);
     }
 }
