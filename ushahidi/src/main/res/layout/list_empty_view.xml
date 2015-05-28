@@ -22,6 +22,6 @@
     <TextView
             android:id="@id/android:empty"
             style="@style/TextView.Empty"
-            android:text="@string/list"
+            android:text="@string/empty_list"
             android:layout_centerInParent="true"/>
 </RelativeLayout>
