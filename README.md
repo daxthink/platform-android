@@ -12,6 +12,11 @@ Ushahidi Android App, is an Android implementation of the [Ushahidi platform][1]
 This is a Gradle based project. You can build it using Android Studio or from the command line. To 
 do so follow the steps below:
 
+**Note:** This project uses [gradle-retrolambda](https://github.com/evant/gradle-retrolambda) in
+order to support Java 8 lambdas on Android. This requires Java 8 in order to build, and if you are
+building outside of Android Studio the `JAVA8_HOME` environment variable must be set to the location
+of the Java 8 JDK. Go to `File` -> `Settings` -> `Build, Execution, Deployment` -> `Path Variables`
+
 1. Install the following software:
        - Android SDK:
          http://developer.android.com/sdk/index.html

@@ -38,12 +38,6 @@ android {
     }
 }
 
-retrolambda {
-    jdk System.getenv("JAVA8_HOME")
-    oldJdk System.getenv("JAVA_HOME")
-    javaVersion JavaVersion.VERSION_1_7
-}
-
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
     def appTestDependencies = rootProject.ext.appTestDependencies
