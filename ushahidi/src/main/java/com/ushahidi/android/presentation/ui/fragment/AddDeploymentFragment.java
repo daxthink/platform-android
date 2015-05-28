@@ -27,8 +27,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.EditText;
 
 import javax.inject.Inject;
@@ -78,18 +76,16 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initialize();
-        url.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (TextUtils.isEmpty(url.getText().toString())) {
-                    url.setText("http://");
-                }
-
-                return false;
-            }
-
+        url.setOnTouchListener((view, event) -> {
+            return setHttpProtocol();
         });
+    }
+
+    private boolean setHttpProtocol() {
+        if (TextUtils.isEmpty(url.getText().toString())) {
+            url.setText("http://");
+        }
+        return false;
     }
 
     @Override
