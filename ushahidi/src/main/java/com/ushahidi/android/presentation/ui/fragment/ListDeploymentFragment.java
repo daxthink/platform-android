@@ -21,6 +21,10 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFra
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
 import com.addhen.android.raiburari.presentation.ui.widget.MovableFab;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.enums.SnackbarType;
+import com.nispok.snackbar.listeners.EventListener;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.ListDeploymentComponent;
@@ -242,8 +246,45 @@ public class ListDeploymentFragment
     }
 
     @Override
-    public void showError(String s) {
-        showToast(s);
+    public void showError(String message) {
+        SnackbarManager.show(Snackbar.with(getAppContext())
+                .type(SnackbarType.MULTI_LINE)
+                .text(message)
+                .actionLabel(getAppContext().getString(R.string.retry))
+                .actionColorResource(R.color.orange)
+                .duration(Snackbar.SnackbarDuration.LENGTH_LONG)
+                .actionListener(snackbar -> mListDeploymentPresenter.loadDeployments())
+                .eventListener(new EventListener() {
+                    @Override
+                    public void onShow(Snackbar snackbar) {
+                        mFab.moveUp(snackbar.getHeight());
+                    }
+
+                    @Override
+                    public void onShowByReplace(Snackbar snackbar) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onShown(Snackbar snackbar) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onDismiss(Snackbar snackbar) {
+                        mFab.moveDown(0);
+                    }
+
+                    @Override
+                    public void onDismissByReplace(Snackbar snackbar) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void onDismissed(Snackbar snackbar) {
+
+                    }
+                }), getActivity());
     }
 
     @Override
