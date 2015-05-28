@@ -33,10 +33,6 @@ public class DeleteDeploymentPresenter extends DefaultSubscriber<Long> implement
         mDeploymentModelDataMapper = deploymentModelDataMapper;
     }
 
-    public void setView(@NonNull DeleteDeploymentView deleteDeploymentView) {
-        mDeleteDeploymentView = deleteDeploymentView;
-    }
-
     @Override
     public void resume() {
         // Do nothing
@@ -50,6 +46,10 @@ public class DeleteDeploymentPresenter extends DefaultSubscriber<Long> implement
     @Override
     public void destroy() {
         mDeleteDeploymentUsecase.unsubscribe();
+    }
+
+    public void setView(@NonNull DeleteDeploymentView deleteDeploymentView) {
+        mDeleteDeploymentView = deleteDeploymentView;
     }
 
     public void deleteDeployment(Long deploymentId) {
