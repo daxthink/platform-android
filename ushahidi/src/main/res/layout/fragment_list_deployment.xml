@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.ushahidi.android.ui.widget.DeploymentRecyclerView
+    <com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,15 +30,15 @@
             fab:recyclerviewEmptyView="@layout/list_empty_view"
             android:scrollbars="vertical"/>
 
-    <com.ushahidi.android.ui.widget.MovableFab
+    <com.ushahidi.android.presentation.ui.widget.MovableFab
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:gravity="bottom|right"
             fab:fab_icon="@drawable/ic_action_add"
-            fab:fab_colorNormal="@color/fab_color_primary"
-            fab:fab_colorPressed="@color/fab_color_pressed"
+            fab:fab_colorNormal="@color/green"
+            fab:fab_colorPressed="@color/color_accent"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"/>
