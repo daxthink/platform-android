@@ -15,7 +15,7 @@ do so follow the steps below:
 **Note:** This project uses [gradle-retrolambda](https://github.com/evant/gradle-retrolambda) in
 order to support Java 8 lambdas on Android. This requires Java 8 in order to build, and if you are
 building outside of Android Studio the `JAVA8_HOME` environment variable must be set to the location
-of the Java 8 JDK. Go to `File` -> `Settings` -> `Build, Execution, Deployment` -> `Path Variables`
+of the Java 8 JDK.
 
 1. Install the following software:
        - Android SDK:
