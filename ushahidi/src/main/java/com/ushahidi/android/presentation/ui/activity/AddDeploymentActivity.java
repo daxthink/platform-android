@@ -21,6 +21,7 @@ import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.DaggerAddDeploymentComponent;
+import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
 import com.ushahidi.android.presentation.ui.fragment.AddDeploymentFragment;
 
 import android.content.Context;
@@ -36,6 +37,8 @@ public class AddDeploymentActivity extends BaseActivity
         implements HasComponent<AddDeploymentComponent> {
 
     private AddDeploymentComponent mAddDeploymentComponent;
+
+    private DeleteDeploymentComponent mDeleteDeploymentComponent;
 
     public AddDeploymentActivity() {
         super(R.layout.activity_add_deployment, 0);
@@ -65,5 +68,9 @@ public class AddDeploymentActivity extends BaseActivity
     @Override
     public AddDeploymentComponent getComponent() {
         return mAddDeploymentComponent;
+    }
+
+    public DeleteDeploymentComponent getDeleteCompnent() {
+        return mDeleteDeploymentComponent;
     }
 }

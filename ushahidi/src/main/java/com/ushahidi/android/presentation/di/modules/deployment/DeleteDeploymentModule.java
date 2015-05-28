@@ -18,7 +18,7 @@
 package com.ushahidi.android.presentation.di.modules.deployment;
 
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
-import com.ushahidi.android.domain.usecase.deployment.ListDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
 
 import javax.inject.Named;
 
@@ -26,20 +26,22 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * List deployment related Dagger DI modules
+ * Delete deployment dagger related module
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Module
-public class ListDeploymentModule {
+public class DeleteDeploymentModule {
 
-    public ListDeploymentModule() {
+    public DeleteDeploymentModule() {
+
     }
 
     @Provides
     @ActivityScope
-    @Named("categoryList")
-    ListDeploymentUsecase provideAddDeploymentUseCase(ListDeploymentUsecase listDeploymentUsecase) {
+    @Named("categoryDelete")
+    DeleteDeploymentUsecase provideAddDeploymentUseCase(
+            DeleteDeploymentUsecase listDeploymentUsecase) {
         return listDeploymentUsecase;
     }
 }

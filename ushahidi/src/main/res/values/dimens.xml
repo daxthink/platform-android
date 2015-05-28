@@ -26,6 +26,7 @@
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_xlarge">20sp</dimen>
+    <dimen name="list_title_height">72dp</dimen>
 
     <dimen name="tag_icon_color_normal">5dp</dimen>
     <dimen name="tag_badge_color_normal">12dp</dimen>

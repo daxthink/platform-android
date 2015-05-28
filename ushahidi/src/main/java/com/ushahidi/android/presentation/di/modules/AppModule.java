@@ -16,18 +16,12 @@
 
 package com.ushahidi.android.presentation.di.modules;
 
-import com.addhen.android.raiburari.data.pref.RxSharedPreferences;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import dagger.Module;
 import dagger.Provides;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Reusable Dagger modules for the entire app
@@ -37,7 +31,7 @@ import static android.content.Context.MODE_PRIVATE;
 @Module
 public class AppModule {
 
-    @Provides
+   /* @Provides
     @ActivityScope
     SharedPreferences provideSharedPreferences(Context context) {
         return context.getApplicationContext()
@@ -48,7 +42,7 @@ public class AppModule {
     @ActivityScope
     RxSharedPreferences provideRxSharedPreferences(SharedPreferences sharedPreferences) {
         return new RxSharedPreferences(sharedPreferences);
-    }
+    }*/
 
     @Provides
     @ActivityScope

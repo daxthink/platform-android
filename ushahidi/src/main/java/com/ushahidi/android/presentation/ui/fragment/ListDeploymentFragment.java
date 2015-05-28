@@ -22,10 +22,12 @@ import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTou
 import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
 import com.addhen.android.raiburari.presentation.ui.widget.MovableFab;
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.ListDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.DeleteDeploymentPresenter;
 import com.ushahidi.android.presentation.presenter.ListDeploymentPresenter;
+import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.adapter.DeploymentAdapter;
 import com.ushahidi.android.presentation.ui.view.DeleteDeploymentView;
 import com.ushahidi.android.presentation.ui.view.ListDeploymentView;
@@ -34,6 +36,7 @@ import com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -60,25 +63,35 @@ public class ListDeploymentFragment
     @InjectView(android.R.id.empty)
     TextView mEmptyView;
 
+    @InjectView(android.R.id.list)
+    DeploymentRecyclerView mDeploymentRecyclerView;
+
     @Inject
     ListDeploymentPresenter mListDeploymentPresenter;
 
     @Inject
     DeleteDeploymentPresenter mDeleteDeploymentPresenter;
 
+    // Manually creating the deployment adapter because
+    // for some weirdness the super class cannot find the custom recyclerviewer
+    // in the layout.
+    private DeploymentAdapter mDeploymentAdapter;
+
     DeploymentListListener mDeploymentListListener;
 
-    private DeploymentRecyclerView mDeploymentRecyclerView;
-
     private boolean isDismissToDelete = false;
+
+    private static ListDeploymentFragment mListDeploymentFragment;
 
     public ListDeploymentFragment() {
         super(DeploymentAdapter.class, R.layout.fragment_list_deployment, 0);
     }
 
     public static ListDeploymentFragment newInstance() {
-        ListDeploymentFragment listDeploymentFragment = new ListDeploymentFragment();
-        return listDeploymentFragment;
+        if (mListDeploymentFragment == null) {
+            mListDeploymentFragment = new ListDeploymentFragment();
+        }
+        return mListDeploymentFragment;
     }
 
     @Override
@@ -96,10 +109,16 @@ public class ListDeploymentFragment
     }
 
     private void initialize() {
+        getDeleteDeploymentComponent(DeleteDeploymentComponent.class).inject(this);
         getComponent(ListDeploymentComponent.class).inject(this);
         mListDeploymentPresenter.setView(this);
-        mListDeploymentPresenter.setView(this);
-        mDeploymentRecyclerView = (DeploymentRecyclerView) mBloatedRecyclerView;
+        mDeleteDeploymentPresenter.setView(this);
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        mDeploymentAdapter = new DeploymentAdapter();
+        mDeploymentRecyclerView = (DeploymentRecyclerView) mDeploymentRecyclerView;
         mDeploymentRecyclerView.setDeleteDeploymentPresenter(mDeleteDeploymentPresenter);
         if (mFab != null) {
             setViewGone(mFab, false);
@@ -109,11 +128,12 @@ public class ListDeploymentFragment
                 }
             });
         }
-        initRecyclerView();
-    }
-
-    private void initRecyclerView() {
-        mRecyclerViewAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        mDeploymentRecyclerView.setFocusable(true);
+        mDeploymentRecyclerView.setFocusableInTouchMode(true);
+        mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
+        mDeploymentRecyclerView.setHasFixedSize(true);
+        mDeploymentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mDeploymentAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -127,13 +147,13 @@ public class ListDeploymentFragment
         mDeploymentRecyclerView.recyclerView
                 .addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
         mDeploymentRecyclerView.setMovableFab(mFab);
-        mDeploymentRecyclerView.setAdapter(mRecyclerViewAdapter);
+        mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
         swipeToDeleteUndo();
         setEmptyView();
     }
 
     private void setEmptyView() {
-        if (mRecyclerViewAdapter != null && mRecyclerViewAdapter.getItemCount() == 0) {
+        if (mDeploymentAdapter != null && mDeploymentAdapter.getItemCount() == 0) {
             setViewGone(mEmptyView, false);
         } else {
             setViewGone(mEmptyView);
@@ -141,7 +161,7 @@ public class ListDeploymentFragment
     }
 
     private void swipeToDeleteUndo() {
-        mDeploymentRecyclerView.initAdapter(mRecyclerViewAdapter);
+        mDeploymentRecyclerView.initAdapter(mDeploymentAdapter);
 
         mDeploymentRecyclerView
                 .setSwipeToDismissCallback(new SwipeToDismissTouchListener.DismissCallbacks() {
@@ -158,9 +178,9 @@ public class ListDeploymentFragment
                             mDeploymentRecyclerView.mPendingDeletedDeployments.add(
                                     new DeploymentRecyclerView.PendingDeletedDeployment(
                                             data.position
-                                            , mRecyclerViewAdapter.getItem(data.position)));
-                            mRecyclerViewAdapter.removeItem(
-                                    mRecyclerViewAdapter.getItem(data.position));
+                                            , mDeploymentAdapter.getItem(data.position)));
+                            mDeploymentAdapter.removeItem(
+                                    mDeploymentAdapter.getItem(data.position));
                         }
                         mDeploymentRecyclerView.deleteItems();
                     }
@@ -194,8 +214,8 @@ public class ListDeploymentFragment
 
     @Override
     public void renderDeploymentList(List<DeploymentModel> deploymentModel) {
-        if (deploymentModel != null && mRecyclerViewAdapter != null) {
-            mRecyclerViewAdapter.setItems(deploymentModel);
+        if (deploymentModel != null && mDeploymentAdapter != null) {
+            mDeploymentAdapter.setItems(deploymentModel);
         }
     }
 
@@ -229,10 +249,16 @@ public class ListDeploymentFragment
         return getActivity().getApplicationContext();
     }
 
+    @SuppressWarnings("unchecked")
+    protected <C> C getDeleteDeploymentComponent(Class<C> componentType) {
+        return componentType
+                .cast(((ListDeploymentActivity) getActivity()).getDeleteDeploymentComponent());
+    }
+
     @Override
     public void onItemClick(RecyclerView recyclerView, View view, int position) {
-        if (mRecyclerViewAdapter.getItemCount() > 0) {
-            DeploymentModel deploymentModel = mRecyclerViewAdapter.getItem(position);
+        if (mDeploymentAdapter.getItemCount() > 0) {
+            DeploymentModel deploymentModel = mDeploymentAdapter.getItem(position);
             if (mDeploymentListListener != null) {
                 mDeploymentListListener.onDeploymentClicked(deploymentModel);
             }

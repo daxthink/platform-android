@@ -30,7 +30,7 @@
             fab:recyclerviewEmptyView="@layout/list_empty_view"
             android:scrollbars="vertical"/>
 
-    <com.ushahidi.android.presentation.ui.widget.MovableFab
+    <com.addhen.android.raiburari.presentation.ui.widget.MovableFab
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

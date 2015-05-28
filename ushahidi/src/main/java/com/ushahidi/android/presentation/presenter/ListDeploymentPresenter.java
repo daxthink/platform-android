@@ -20,9 +20,9 @@ package com.ushahidi.android.presentation.presenter;
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
-import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.entity.Deployment;
+import com.ushahidi.android.domain.usecase.deployment.ListDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
 import com.ushahidi.android.presentation.ui.view.ListDeploymentView;
@@ -40,14 +40,14 @@ import javax.inject.Named;
 public class ListDeploymentPresenter extends DefaultSubscriber<List<Deployment>> implements
         Presenter {
 
-    private final Usecase mUsecase;
+    private final ListDeploymentUsecase mUsecase;
 
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
     private ListDeploymentView mListDeploymentView;
 
     @Inject
-    public ListDeploymentPresenter(@Named("categoryList") Usecase usecase,
+    public ListDeploymentPresenter(@Named("categoryList") ListDeploymentUsecase usecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
         mUsecase = usecase;
         mDeploymentModelDataMapper = deploymentModelDataMapper;

@@ -24,7 +24,7 @@ import com.ushahidi.android.presentation.di.components.AppComponent;
 import com.ushahidi.android.presentation.di.modules.AppModule;
 import com.ushahidi.android.presentation.di.modules.deployment.DeleteDeploymentModule;
 import com.ushahidi.android.presentation.di.modules.deployment.ListDeploymentModule;
-import com.ushahidi.android.presentation.presenter.ListDeploymentPresenter;
+import com.ushahidi.android.presentation.presenter.DeleteDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment;
 
@@ -36,13 +36,13 @@ import dagger.Component;
 @ActivityScope
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
         AppModule.class,
-        DeleteDeploymentModule.class,
-        ListDeploymentModule.class})
-public interface ListDeploymentComponent extends AppComponent {
+        ListDeploymentModule.class,
+        DeleteDeploymentModule.class})
+public interface DeleteDeploymentComponent extends AppComponent {
 
     void inject(ListDeploymentActivity listDeploymentActivity);
 
     void inject(ListDeploymentFragment listDeploymentFragment);
 
-    ListDeploymentPresenter listDeploymentPresenter();
+    DeleteDeploymentPresenter deleteDeploymentPresenter();
 }
