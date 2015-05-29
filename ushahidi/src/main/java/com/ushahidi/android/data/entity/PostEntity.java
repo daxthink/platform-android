@@ -1,33 +1,37 @@
 /*
- * Copyright (c) 2015 Ushahidi.
+ * Copyright (c) 2015 Ushahidi Inc
+ *
  * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ *  the terms of the GNU Affero General Public License as published by the Free
+ *  Software Foundation, either version 3 of the License, or (at your option)
+ *  any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program in the file LICENSE-AGPL. If not, see
- * https://www.gnu.org/licenses/agpl-3.0.html
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program in the file LICENSE-AGPL. If not, see
+ *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.domain.entity;
+package com.ushahidi.android.data.entity;
 
-import com.addhen.android.raiburari.domain.entity.Entity;
+import com.google.gson.annotations.SerializedName;
+
+import com.addhen.android.raiburari.data.entity.DataEntity;
 
 import java.util.Date;
 import java.util.List;
 
+import nl.qbusict.cupboard.annotation.Ignore;
+
 /**
- * A post entity
+ * Post data entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-
-public class Post extends Entity {
+public class PostEntity extends DataEntity {
 
     public enum Status {
         DRAFT("draft"), PUBLISHED("published"), PENDING("pending");
@@ -49,33 +53,52 @@ public class Post extends Entity {
         }
     }
 
-    private Long mParent;
+    @SerializedName("parent")
+    @Ignore // Make cupboard ignore this field
+    private Parent parent;
 
+    private transient Long mParent;
+
+    @SerializedName("user")
+    private UserEntity mUser;
+
+    @SerializedName("type")
     private Type mType;
 
+    @SerializedName("title")
     private String mTitle;
 
+    @SerializedName("slug")
     private String mSlug;
 
+    @SerializedName("content")
     private String mContent;
 
+    @SerializedName("author_email")
     private String mAuthorEmail;
 
+    @SerializedName("author_realname")
     private String mAuthorRealname;
 
+    @SerializedName("status")
     private Status mStatus;
 
+    @SerializedName("created")
     private Date mCreated;
 
+    @SerializedName("updated")
     private Date mUpdated;
 
-    private Long mDeploymentId;
+    @SerializedName("values")
+    private PostValueEntity mValues;
 
-    // Store the raw JSON for this field. This is a dynamic field
-    // and can't predict its keys.
-    private PostValue mValues;
+    @SerializedName("tags")
+    @Ignore
+    private List<PostTagEntity> mPostTagEntityList;
 
-    private List<Tag> mTags;
+    private long mDeploymentId;
+
+    private transient List<TagEntity> mTags;
 
     public Long getParent() {
         return mParent;
@@ -83,6 +106,14 @@ public class Post extends Entity {
 
     public void setParent(Long parent) {
         mParent = parent;
+    }
+
+    public List<PostTagEntity> getPostTagEntityList() {
+        return mPostTagEntityList;
+    }
+
+    public void setPostTagEntityList(List<PostTagEntity> postTagEntityList) {
+        mPostTagEntityList = postTagEntityList;
     }
 
     public Type getType() {
@@ -157,19 +188,19 @@ public class Post extends Entity {
         mUpdated = updated;
     }
 
-    public PostValue getValues() {
+    public PostValueEntity getValues() {
         return mValues;
     }
 
-    public void setValues(PostValue values) {
+    public void setValues(PostValueEntity values) {
         mValues = values;
     }
 
-    public List<Tag> getTags() {
+    public List<TagEntity> getTags() {
         return mTags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(List<TagEntity> tags) {
         mTags = tags;
     }
 
@@ -179,6 +210,16 @@ public class Post extends Entity {
 
     public void setDeploymentId(Long deploymentId) {
         mDeploymentId = deploymentId;
+    }
+
+    public static class Parent {
+
+        @SerializedName("id")
+        private Long id;
+
+        public Long getId() {
+            return id;
+        }
     }
 
     @Override
