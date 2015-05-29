@@ -21,7 +21,7 @@ public class DeploymentTest {
 
     private Deployment mDeployment;
 
-    private static final long DUMMY_ID = 1;
+    private static final Long DUMMY_ID = 1l;
 
     private static final String DUMMY_TITLE = "Dummy Deployment Title";
 

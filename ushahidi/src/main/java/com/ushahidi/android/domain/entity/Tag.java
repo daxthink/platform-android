@@ -45,7 +45,7 @@ public class Tag extends Entity {
 
     private Date mCreated;
 
-    private long mDeploymentId;
+    private Long mDeploymentId;
 
     public Long getParentId() {
         return mParentId;
