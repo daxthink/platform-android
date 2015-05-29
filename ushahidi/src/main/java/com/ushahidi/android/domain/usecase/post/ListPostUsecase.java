@@ -26,9 +26,11 @@ import com.ushahidi.android.domain.repository.PostRepository;
 import rx.Observable;
 
 /**
+ * Use case for listing {@link com.ushahidi.android.domain.entity.Post}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListPost extends Usecase {
+public class ListPostUsecase extends Usecase {
 
     private final PostRepository mPostRepository;
 
@@ -36,7 +38,7 @@ public class ListPost extends Usecase {
 
     private From mFrom;
 
-    protected ListPost(PostRepository postRepository, ThreadExecutor threadExecutor,
+    protected ListPostUsecase(PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mPostRepository = postRepository;

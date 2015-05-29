@@ -32,7 +32,7 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListGeoJson extends Usecase {
+public class ListGeoJsonUsecase extends Usecase {
 
     private final GeoJsonRepository mGeoJsonRepository;
 
@@ -41,7 +41,7 @@ public class ListGeoJson extends Usecase {
     private From mFrom;
 
     @Inject
-    protected ListGeoJson(GeoJsonRepository geoJsonRepository, ThreadExecutor threadExecutor,
+    protected ListGeoJsonUsecase(GeoJsonRepository geoJsonRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mGeoJsonRepository = geoJsonRepository;

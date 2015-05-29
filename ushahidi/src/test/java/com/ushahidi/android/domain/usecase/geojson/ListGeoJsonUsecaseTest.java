@@ -37,13 +37,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
- * Tests {@link ListGeoJson}
+ * Tests {@link ListGeoJsonUsecase}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = 21, constants = BuildConfig.class)
-public class ListGeoJsonTest {
+public class ListGeoJsonUsecaseTest {
 
     @Mock
     private GeoJsonRepository mMockGeoJsonRepository;
@@ -54,19 +54,19 @@ public class ListGeoJsonTest {
     @Mock
     private PostExecutionThread mMockPostExecutionThread;
 
-    private ListGeoJson mListGeoJson;
+    private ListGeoJsonUsecase mListGeoJsonUsecase;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mListGeoJson = new ListGeoJson(mMockGeoJsonRepository, mMockThreadExecutor,
+        mListGeoJsonUsecase = new ListGeoJsonUsecase(mMockGeoJsonRepository, mMockThreadExecutor,
                 mMockPostExecutionThread);
     }
 
     @Test
     public void shouldSuccessfullyFromOnline() {
-        mListGeoJson.setListGeoJson(1l, From.ONLINE);
-        mListGeoJson.buildUseCaseObservable();
+        mListGeoJsonUsecase.setListGeoJson(1l, From.ONLINE);
+        mListGeoJsonUsecase.buildUseCaseObservable();
 
         verify(mMockGeoJsonRepository).getGeoJson(1l, From.ONLINE);
 
@@ -77,10 +77,10 @@ public class ListGeoJsonTest {
 
     @Test
     public void shouldThrowRuntimeException() {
-        assertThat(mListGeoJson).isNotNull();
-        mListGeoJson.setListGeoJson(null, null);
+        assertThat(mListGeoJsonUsecase).isNotNull();
+        mListGeoJsonUsecase.setListGeoJson(null, null);
         try {
-            mListGeoJson.execute(null);
+            mListGeoJsonUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
             assertThat(e).hasMessage(
