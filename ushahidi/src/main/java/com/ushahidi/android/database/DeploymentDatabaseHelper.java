@@ -17,7 +17,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeploymentDatabaseHelper extends BaseDatabaseHelper<DeploymentDatabaseHelper> {
+public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
 
     @Inject
     public DeploymentDatabaseHelper(@NonNull Context context) {

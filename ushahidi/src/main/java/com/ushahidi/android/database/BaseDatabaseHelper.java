@@ -24,7 +24,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public abstract class BaseDatabaseHelper<D extends BaseDatabaseHelper> extends SQLiteOpenHelper {
+public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
 
     private static String TAG = BaseDatabaseHelper.class.getSimpleName();
 
@@ -53,7 +53,7 @@ public abstract class BaseDatabaseHelper<D extends BaseDatabaseHelper> extends S
     private void createTables(SQLiteDatabase db) {
         for (Class<?> entity : cupboard().getRegisteredEntities()) {
             // Attempt to create table only if the entity has been registered
-            if (!cupboard().getRegisteredEntities().contains(entity)) {
+            if (cupboard().getRegisteredEntities().contains(entity)) {
                 EntityConverter<?> converter = cupboard().getEntityConverter(entity);
                 createNewTable(db, converter.getTable(), converter.getColumns());
             }

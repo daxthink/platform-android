@@ -1,7 +1,6 @@
 language: android
 jdk: oraclejdk8
 before_install:
-  - echo $JAVA_HOME
   - export JAVA8_HOME=$JAVA_HOME
 android:
   components:

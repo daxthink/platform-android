@@ -38,6 +38,10 @@ android {
     }
 }
 
+retrolambda {
+    jvmArgs '-noverify'
+}
+
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
     def appTestDependencies = rootProject.ext.appTestDependencies
