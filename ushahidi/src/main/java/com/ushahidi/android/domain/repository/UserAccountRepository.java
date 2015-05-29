@@ -16,7 +16,6 @@
 
 package com.ushahidi.android.domain.repository;
 
-import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.UserAccount;
 
 import rx.Observable;
@@ -26,7 +25,7 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface UserAccountRepository extends Repository<UserAccount> {
+public interface UserAccountRepository {
 
     Observable login(UserAccount userAccount);
 }
