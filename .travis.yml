@@ -1,7 +1,8 @@
 language: android
 jdk: oraclejdk8
 before_install:
-  - export "JAVA8_HOME=/usr/lib/jvm/java-8-oracle"
+  - echo $JAVA_HOME
+  - export JAVA8_HOME=$JAVA_HOME
 android:
   components:
   - build-tools-22.0.0
