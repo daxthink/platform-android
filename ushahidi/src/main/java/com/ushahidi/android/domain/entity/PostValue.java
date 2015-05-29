@@ -25,6 +25,8 @@ public class PostValue {
 
     private String mValues;
 
+    private long mDeploymentId;
+
     public String getValues() {
         return mValues;
     }
@@ -33,10 +35,19 @@ public class PostValue {
         mValues = values;
     }
 
+    public long getDeploymentId() {
+        return mDeploymentId;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
     @Override
     public String toString() {
         return "PostValue{" +
                 "mValues='" + mValues + '\'' +
+                ", mDeploymentId=" + mDeploymentId +
                 '}';
     }
 }

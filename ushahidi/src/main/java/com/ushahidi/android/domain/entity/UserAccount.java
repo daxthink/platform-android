@@ -33,6 +33,8 @@ public class UserAccount extends Entity {
 
     private String mAuthTokenType;
 
+    private long mDeploymentId;
+
     public void setAccountName(String accountName) {
         mAccountName = accountName;
     }
@@ -57,6 +59,14 @@ public class UserAccount extends Entity {
         return mPassword;
     }
 
+    public long getDeploymentId() {
+        return mDeploymentId;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
     public void setAuthToken(String authToken, String type) {
         mAuthToken = authToken;
         mAuthTokenType = type;
@@ -73,11 +83,11 @@ public class UserAccount extends Entity {
     @Override
     public String toString() {
         return "UserAccount{" +
-                "_id=" + _id +
-                ", mAccountName='" + mAccountName + '\'' +
+                "mAccountName='" + mAccountName + '\'' +
                 ", mPassword='" + mPassword + '\'' +
                 ", mAuthToken='" + mAuthToken + '\'' +
                 ", mAuthTokenType='" + mAuthTokenType + '\'' +
+                ", mDeploymentId=" + mDeploymentId +
                 '}';
     }
 }

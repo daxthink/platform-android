@@ -45,6 +45,8 @@ public class Tag extends Entity {
 
     private Date mCreated;
 
+    private long mDeploymentId;
+
     public Long getParentId() {
         return mParentId;
     }
@@ -117,6 +119,14 @@ public class Tag extends Entity {
         this.mColor = mColor;
     }
 
+    public long getDeploymentId() {
+        return mDeploymentId;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
     public enum Type {
         CATEGORY("category"),
         STATUS("status");
@@ -136,8 +146,7 @@ public class Tag extends Entity {
     @Override
     public String toString() {
         return "Tag{" +
-                " id=" + _id +
-                ", mParentId=" + mParentId +
+                "mParentId=" + mParentId +
                 ", mTag='" + mTag + '\'' +
                 ", mSlug='" + mSlug + '\'' +
                 ", mColor='" + mColor + '\'' +
@@ -146,6 +155,7 @@ public class Tag extends Entity {
                 ", mDescription='" + mDescription + '\'' +
                 ", mPriority=" + mPriority +
                 ", mCreated=" + mCreated +
+                ", mDeploymentId=" + mDeploymentId +
                 '}';
     }
 }

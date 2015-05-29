@@ -37,6 +37,14 @@ public class GeoJson extends Entity {
         mGeoJson = geoJson;
     }
 
+    public Long getDeploymentId() {
+        return mDeploymentId;
+    }
+
+    public void setDeploymentId(Long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
     @Override
     public String toString() {
         return "GeoJson{" +
