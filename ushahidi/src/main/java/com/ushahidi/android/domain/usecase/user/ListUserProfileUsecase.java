@@ -62,7 +62,7 @@ public class ListUserProfileUsecase extends Usecase {
     protected Observable buildUseCaseObservable() {
         if (mDeploymentId == null || mFrom == null) {
             throw new RuntimeException(
-                    "Deployment id and from cannot be null. You must call setListTag(...)");
+                    "Deployment id and from cannot be null. You must call setListUserProfile(...)");
         }
         return mUserProfileRepository.getUserProfile(mDeploymentId, mFrom);
     }
