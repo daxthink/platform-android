@@ -166,7 +166,13 @@ public class Post extends Entity {
     }
 
     public enum Type {
-        REPORT, UPDATE, REVISION
+        REPORT("report"), UPDATE("update"), REVISION("revision");
+
+        public String value;
+
+        Type(String value) {
+            this.value = value;
+        }
     }
 
     @Override
