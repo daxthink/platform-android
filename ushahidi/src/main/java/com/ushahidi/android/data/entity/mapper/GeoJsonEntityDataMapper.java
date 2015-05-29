@@ -23,10 +23,17 @@ import com.ushahidi.android.domain.entity.GeoJson;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class GeoJsonEntityDataMapper {
+
+    @Inject
+    public GeoJsonEntityDataMapper() {
+        // Do nothing
+    }
 
     /**
      * Maps {@link GeoJsonEntity} to {@link
