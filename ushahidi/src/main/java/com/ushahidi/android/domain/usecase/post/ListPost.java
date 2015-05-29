@@ -15,46 +15,41 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.domain.usecase.geojson;
+package com.ushahidi.android.domain.usecase.post;
 
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.entity.From;
-import com.ushahidi.android.domain.repository.GeoJsonRepository;
-
-import javax.inject.Inject;
+import com.ushahidi.android.domain.repository.PostRepository;
 
 import rx.Observable;
 
 /**
- * Get {@link com.ushahidi.android.domain.entity.GeoJson} from local storage or via the API
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListGeoJson extends Usecase {
+public class ListPost extends Usecase {
 
-    private final GeoJsonRepository mGeoJsonRepository;
+    private final PostRepository mPostRepository;
 
     private Long mDeploymentId = null;
 
     private From mFrom;
 
-    @Inject
-    protected ListGeoJson(GeoJsonRepository geoJsonRepository, ThreadExecutor threadExecutor,
+    protected ListPost(PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mGeoJsonRepository = geoJsonRepository;
+        mPostRepository = postRepository;
     }
 
     /**
-     * Sets the deployment ID to be used to fetch the {@link com.ushahidi.android.domain.entity.GeoJson}
+     * Sets the deployment ID to be used to fetch the {@link com.ushahidi.android.domain.entity.Post}
      * and where to fetch it from.
      *
      * @param deploymentId The deploymentId associated with the GeoJson
      * @param from         Whether to fetch through the API or the local storage
      */
-    public void setListGeoJson(Long deploymentId, From from) {
+    public void setListPost(Long deploymentId, From from) {
         mDeploymentId = deploymentId;
         mFrom = from;
     }
@@ -63,8 +58,8 @@ public class ListGeoJson extends Usecase {
     protected Observable buildUseCaseObservable() {
         if (mDeploymentId == null || mFrom == null) {
             throw new RuntimeException(
-                    "Deployment id and from cannot be null. You must call setListGeoJson(...)");
+                    "Deployment id and from cannot be null. You must call setListPost(...)");
         }
-        return mGeoJsonRepository.getGeoJson(mDeploymentId, mFrom);
+        return mPostRepository.getPost(mDeploymentId, mFrom);
     }
 }

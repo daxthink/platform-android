@@ -16,7 +16,7 @@
 
 package com.ushahidi.android.domain.repository;
 
-import com.addhen.android.raiburari.domain.repository.Repository;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.Post;
 
 import java.util.List;
@@ -28,14 +28,19 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface PostRepository extends Repository<Post> {
+public interface PostRepository {
 
-    Observable<List<Post>> getViaApi(Long deploymentId);
+    /**
+     * @param deploymentId @param deploymentId The deploymentId to be used for fetching the API
+     * @param from         Where to fetch the deployment from. Either Online or Offline.
+     */
+    Observable<List<Post>> getPost(Long deploymentId, From from);
 
     /**
      * Search for a {@link Post}
      *
-     * @param query The entity to be searched for.
+     * @param deploymentId The deploymentId to be used for fetching the API
+     * @param query        The entity to be searched for.
      */
-    Observable<List<Post>> search(String query);
+    Observable<List<Post>> search(Long deploymentId, String query);
 }
