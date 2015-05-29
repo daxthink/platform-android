@@ -27,6 +27,8 @@ public class GeoJson extends Entity {
 
     private String mGeoJson;
 
+    private Long mDeploymentId;
+
     public String getGeoJson() {
         return mGeoJson;
     }
@@ -39,6 +41,7 @@ public class GeoJson extends Entity {
     public String toString() {
         return "GeoJson{" +
                 "mID='" + _id + '\'' +
+                "mDeploymentId='" + mDeploymentId + '\'' +
                 ", geojson='" + mGeoJson + '\'' +
                 '}';
     }
