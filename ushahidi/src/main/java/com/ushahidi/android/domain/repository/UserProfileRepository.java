@@ -16,7 +16,7 @@
 
 package com.ushahidi.android.domain.repository;
 
-import com.addhen.android.raiburari.domain.repository.Repository;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.UserProfile;
 
 import rx.Observable;
@@ -26,10 +26,11 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface UserProfileRepository extends Repository<UserProfile> {
+public interface UserProfileRepository {
 
     /**
-     * Fetches user profile from the API
+     * @param deploymentId The deploymentId to be used for fetching the API
+     * @param from         Where to fetch the user profile from. Either Online or Offline.
      */
-    Observable<UserProfile> getViaApi();
+    Observable<UserProfile> getUserProfile(Long deploymentId, From from);
 }
