@@ -36,8 +36,6 @@ public class UserProfile extends Entity {
 
     private transient Role mRole;
 
-    private long mDeployment;
-
     private Date mCreated;
 
     private Date mUpdated;
@@ -76,14 +74,6 @@ public class UserProfile extends Entity {
         mRole = role;
     }
 
-    public long getDeployment() {
-        return mDeployment;
-    }
-
-    public void setDeployment(long deployment) {
-        mDeployment = deployment;
-    }
-
     public Date getCreated() {
         return mCreated;
     }
@@ -115,7 +105,6 @@ public class UserProfile extends Entity {
                 ", mRealName='" + mRealName + '\'' +
                 ", mUsername='" + mUsername + '\'' +
                 ", mRole=" + mRole +
-                ", mDeployment=" + mDeployment +
                 ", mCreated=" + mCreated +
                 ", mUpdated=" + mUpdated +
                 ", mDeploymentId=" + mDeploymentId +

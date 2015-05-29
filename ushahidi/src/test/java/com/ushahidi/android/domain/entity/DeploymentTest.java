@@ -30,12 +30,12 @@ public class DeploymentTest {
     private static final String DUMMY_URL = "http://deployment.com";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mDeployment = new Deployment();
     }
 
     @Test
-    public void shouldCreateDeployment() throws Exception {
+    public void shouldSetDeployment() {
         mDeployment._id = DUMMY_ID;
         mDeployment.setTitle(DUMMY_TITLE);
         mDeployment.setStatus(DUMMY_STATUS);
