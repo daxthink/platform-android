@@ -50,7 +50,7 @@ public class LoginUsecase extends Usecase {
     @Override
     protected Observable buildUseCaseObservable() {
         if (mUserAccount == null) {
-            throw new RuntimeException("Useraccoun is null. You must call setUserAccount(...)");
+            throw new RuntimeException("User account is null. You must call setUserAccount(...)");
         }
         return mUserAccountRepository.login(mUserAccount);
     }
