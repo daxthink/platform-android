@@ -50,7 +50,7 @@ public class GeoJsonTest {
     }
 
     @Test
-    public void shouldCreateGeoJson() {
+    public void shouldSetGeoJsonProperties() {
         mGeoJson._id = DUMMY_ID;
         mGeoJson.setDeploymentId(DUMMY_DEPLOYMENT_ID);
         mGeoJson.setGeoJson(DUMMY_STRING);

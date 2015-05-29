@@ -31,7 +31,7 @@ public class Post extends Entity {
 
     private Long mParent;
 
-    private String mType;
+    private Type mType;
 
     private String mTitle;
 
@@ -43,7 +43,7 @@ public class Post extends Entity {
 
     private String mAuthorRealname;
 
-    private String mStatus;
+    private Status mStatus;
 
     private Date mCreated;
 
@@ -65,11 +65,11 @@ public class Post extends Entity {
         mParent = parent;
     }
 
-    public String getType() {
+    public Type getType() {
         return mType;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         mType = type;
     }
 
@@ -113,11 +113,11 @@ public class Post extends Entity {
         mAuthorEmail = authorEmail;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return mStatus;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         mStatus = status;
     }
 
@@ -161,17 +161,25 @@ public class Post extends Entity {
         mDeploymentId = deploymentId;
     }
 
+    public enum Status {
+        DRAFT, PUBLISHED, PENDING
+    }
+
+    public enum Type {
+        REPORT, UPDATE, REVISION
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "mParent=" + mParent +
-                ", mType='" + mType + '\'' +
+                ", mType=" + mType +
                 ", mTitle='" + mTitle + '\'' +
                 ", mSlug='" + mSlug + '\'' +
                 ", mContent='" + mContent + '\'' +
                 ", mAuthorEmail='" + mAuthorEmail + '\'' +
                 ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus='" + mStatus + '\'' +
+                ", mStatus=" + mStatus +
                 ", mCreated=" + mCreated +
                 ", mUpdated=" + mUpdated +
                 ", mDeploymentId=" + mDeploymentId +
