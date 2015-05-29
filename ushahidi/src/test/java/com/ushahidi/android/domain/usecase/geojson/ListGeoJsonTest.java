@@ -84,7 +84,7 @@ public class ListGeoJsonTest {
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
             assertThat(e).hasMessage(
-                    "Deployment id and from cannot be null. You must call setFetchVia(...)");
+                    "Deployment id and from cannot be null. You must call setListGeoJson(...)");
         }
     }
 }
