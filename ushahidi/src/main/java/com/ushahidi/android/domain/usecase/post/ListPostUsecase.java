@@ -62,6 +62,6 @@ public class ListPostUsecase extends Usecase {
             throw new RuntimeException(
                     "Deployment id and from cannot be null. You must call setListPost(...)");
         }
-        return mPostRepository.getPost(mDeploymentId, mFrom);
+        return mPostRepository.getPostList(mDeploymentId, mFrom);
     }
 }

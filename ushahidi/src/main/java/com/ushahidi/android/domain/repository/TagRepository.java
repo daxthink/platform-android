@@ -16,7 +16,7 @@
 
 package com.ushahidi.android.domain.repository;
 
-import com.addhen.android.raiburari.domain.repository.Repository;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.Tag;
 
 import java.util.List;
@@ -28,10 +28,11 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface TagRepository extends Repository<Tag> {
+public interface TagRepository {
 
     /**
-     * Get a list of {@link Tag}.
+     * @param deploymentId @param deploymentId The deploymentId to be used for fetching the API
+     * @param from         Where to fetch the deployment from. Either Online or Offline.
      */
-    Observable<List<Tag>> getViaApi();
+    Observable<List<Tag>> getTagList(Long deploymentId, From from);
 }

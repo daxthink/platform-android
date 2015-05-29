@@ -34,7 +34,7 @@ public interface PostRepository {
      * @param deploymentId @param deploymentId The deploymentId to be used for fetching the API
      * @param from         Where to fetch the deployment from. Either Online or Offline.
      */
-    Observable<List<Post>> getPost(Long deploymentId, From from);
+    Observable<List<Post>> getPostList(Long deploymentId, From from);
 
     /**
      * Search for a {@link Post}
