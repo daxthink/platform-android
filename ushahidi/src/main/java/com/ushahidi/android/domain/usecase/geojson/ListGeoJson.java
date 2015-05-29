@@ -20,6 +20,7 @@ package com.ushahidi.android.domain.usecase.geojson;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 
 import javax.inject.Inject;
@@ -27,7 +28,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * List GeoJson
+ * Get {@link com.ushahidi.android.domain.entity.GeoJson} from local storage or via the API
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -37,6 +38,8 @@ public class ListGeoJson extends Usecase {
 
     private Long mDeploymentId = null;
 
+    private From mFrom;
+
     @Inject
     protected ListGeoJson(GeoJsonRepository geoJsonRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
@@ -44,15 +47,24 @@ public class ListGeoJson extends Usecase {
         mGeoJsonRepository = geoJsonRepository;
     }
 
-    public void setDeploymentId(Long deploymentId) {
+    /**
+     * Sets the deployment ID to be used to fetch the {@link com.ushahidi.android.domain.entity.GeoJson}
+     * and where to fetch it from.
+     *
+     * @param deploymentId The deploymentId associated with the GeoJson
+     * @param from         Whether to fetch through the API or the local storage
+     */
+    public void setListGeoJson(Long deploymentId, From from) {
         mDeploymentId = deploymentId;
+        mFrom = from;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeploymentId == null) {
-            throw new RuntimeException("Deployment id is null. You must call setDeploymentId(...)");
+        if (mDeploymentId == null || mFrom == null) {
+            throw new RuntimeException(
+                    "Deployment id and from cannot be null. You must call setFetchVia(...)");
         }
-        return mGeoJsonRepository.getGeoJson(mDeploymentId);
+        return mGeoJsonRepository.getGeoJson(mDeploymentId, mFrom);
     }
 }

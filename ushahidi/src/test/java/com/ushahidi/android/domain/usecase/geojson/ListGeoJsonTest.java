@@ -20,6 +20,7 @@ package com.ushahidi.android.domain.usecase.geojson;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 
 import org.junit.Before;
@@ -63,11 +64,11 @@ public class ListGeoJsonTest {
     }
 
     @Test
-    public void shouldSuccessfullyLogin() {
-        mListGeoJson.setDeploymentId(1l);
+    public void shouldSuccessfullyFromOnline() {
+        mListGeoJson.setListGeoJson(1l, From.ONLINE);
         mListGeoJson.buildUseCaseObservable();
 
-        verify(mMockGeoJsonRepository).getGeoJson(1l);
+        verify(mMockGeoJsonRepository).getGeoJson(1l, From.ONLINE);
 
         verifyNoMoreInteractions(mMockGeoJsonRepository);
         verifyNoMoreInteractions(mMockPostExecutionThread);
@@ -77,12 +78,13 @@ public class ListGeoJsonTest {
     @Test
     public void shouldThrowRuntimeException() {
         assertThat(mListGeoJson).isNotNull();
-        mListGeoJson.setDeploymentId(null);
+        mListGeoJson.setListGeoJson(null, null);
         try {
             mListGeoJson.execute(null);
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Deployment id is null. You must call setDeploymentId(...)");
+            assertThat(e).hasMessage(
+                    "Deployment id and from cannot be null. You must call setFetchVia(...)");
         }
     }
 }
