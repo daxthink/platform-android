@@ -15,13 +15,13 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.domain.usecase.geojson;
+package com.ushahidi.android.domain.usecase.post;
 
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.domain.entity.From;
-import com.ushahidi.android.domain.repository.GeoJsonRepository;
+import com.ushahidi.android.domain.repository.PostRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,16 +37,16 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
- * Tests {@link ListGeoJsonUsecase}
+ * Tests {@link ListPostUsecase}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = 21, constants = BuildConfig.class)
-public class ListGeoJsonUsecaseTest {
+public class ListPostUsecaseTest {
 
     @Mock
-    private GeoJsonRepository mMockGeoJsonRepository;
+    private PostRepository mMockListRepository;
 
     @Mock
     private ThreadExecutor mMockThreadExecutor;
@@ -54,37 +54,37 @@ public class ListGeoJsonUsecaseTest {
     @Mock
     private PostExecutionThread mMockPostExecutionThread;
 
-    private ListGeoJsonUsecase mListGeoJsonUsecase;
+    private ListPostUsecase mListPostUsecase;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mListGeoJsonUsecase = new ListGeoJsonUsecase(mMockGeoJsonRepository, mMockThreadExecutor,
+        mListPostUsecase = new ListPostUsecase(mMockListRepository, mMockThreadExecutor,
                 mMockPostExecutionThread);
     }
 
     @Test
     public void shouldSuccessfullyFetchFromOnline() {
-        mListGeoJsonUsecase.setListGeoJson(1l, From.ONLINE);
-        mListGeoJsonUsecase.buildUseCaseObservable();
+        mListPostUsecase.setListPost(1l, From.ONLINE);
+        mListPostUsecase.buildUseCaseObservable();
 
-        verify(mMockGeoJsonRepository).getGeoJson(1l, From.ONLINE);
+        verify(mMockListRepository).getPostList(1l, From.ONLINE);
 
-        verifyNoMoreInteractions(mMockGeoJsonRepository);
+        verifyNoMoreInteractions(mMockListRepository);
         verifyNoMoreInteractions(mMockPostExecutionThread);
         verifyNoMoreInteractions(mMockThreadExecutor);
     }
 
     @Test
     public void shouldThrowRuntimeException() {
-        assertThat(mListGeoJsonUsecase).isNotNull();
-        mListGeoJsonUsecase.setListGeoJson(null, null);
+        assertThat(mListPostUsecase).isNotNull();
+        mListPostUsecase.setListPost(null, null);
         try {
-            mListGeoJsonUsecase.execute(null);
+            mListPostUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
             assertThat(e).hasMessage(
-                    "Deployment id and from cannot be null. You must call setListGeoJson(...)");
+                    "Deployment id and from cannot be null. You must call setListPost(...)");
         }
     }
 }
