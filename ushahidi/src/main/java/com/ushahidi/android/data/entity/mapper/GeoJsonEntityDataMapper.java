@@ -48,6 +48,7 @@ public class GeoJsonEntityDataMapper {
         if (geoJsonEntity != null) {
             geoJson._id = geoJsonEntity._id;
             geoJson.setGeoJson(geoJsonEntity.getGeoJson());
+            geoJson.setDeploymentId(geoJsonEntity.getDeploymentId());
         }
         return geoJson;
     }
@@ -65,6 +66,7 @@ public class GeoJsonEntityDataMapper {
         if (geoJson != null) {
             geoJsonEntity._id = geoJson._id;
             geoJsonEntity.setGeoJson(geoJson.getGeoJson());
+            geoJsonEntity.setDeploymentId(geoJson.getDeploymentId());
         }
         return geoJsonEntity;
     }
