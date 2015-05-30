@@ -18,7 +18,6 @@
 package com.ushahidi.android.data.entity;
 
 import com.ushahidi.android.BuildConfig;
-import com.ushahidi.android.domain.entity.Deployment;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,17 +52,21 @@ public class DeploymentEntityTest {
     }
 
     @Test
-    public void shouldSetDeploymentEntityProperities() {
+    public void shouldSetDeploymentEntity() {
         mDeploymentEntity._id = DUMMY_ID;
         mDeploymentEntity.setTitle(DUMMY_TITLE);
         mDeploymentEntity.setStatus(DUMMY_STATUS);
         mDeploymentEntity.setUrl(DUMMY_URL);
 
         assertThat(mDeploymentEntity).isNotNull();
-        assertThat(mDeploymentEntity).isInstanceOf(Deployment.class);
+        assertThat(mDeploymentEntity).isInstanceOf(DeploymentEntity.class);
+        assertThat(mDeploymentEntity._id).isNotNull();
         assertThat(mDeploymentEntity._id).isEqualTo(DUMMY_ID);
-        assertThat(mDeploymentEntity.getTitle()).isSameAs(DUMMY_TITLE);
+        assertThat(mDeploymentEntity.getTitle()).isNotNull();
+        assertThat(mDeploymentEntity.getTitle()).isEqualTo(DUMMY_TITLE);
+        assertThat(mDeploymentEntity.getStatus()).isNotNull();
         assertThat(mDeploymentEntity.getStatus()).isEqualTo(DUMMY_STATUS);
+        assertThat(mDeploymentEntity.getUrl()).isNotNull();
         assertThat(mDeploymentEntity.getUrl()).isEqualTo(DUMMY_URL);
     }
 }

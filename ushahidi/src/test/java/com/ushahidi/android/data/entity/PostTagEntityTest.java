@@ -50,15 +50,18 @@ public class PostTagEntityTest {
     }
 
     @Test
-    public void shouldSetPostTagEntityProperies() {
+    public void shouldSetPostTagEntity() {
         mPostTagEntity.setId(ID);
         mPostTagEntity.setPostId(POST_ID);
         mPostTagEntity.setTagId(TAG_ID);
 
         assertThat(mPostTagEntity).isNotNull();
         assertThat(mPostTagEntity).isInstanceOf(PostTagEntity.class);
+        assertThat(mPostTagEntity).isNotNull();
         assertThat(mPostTagEntity.getId()).isEqualTo(ID);
+        assertThat(mPostTagEntity.getPostId()).isNotNull();
         assertThat(mPostTagEntity.getPostId()).isEqualTo(POST_ID);
+        assertThat(mPostTagEntity.getTagId()).isNotNull();
         assertThat(mPostTagEntity.getTagId()).isEqualTo(TAG_ID);
     }
 }

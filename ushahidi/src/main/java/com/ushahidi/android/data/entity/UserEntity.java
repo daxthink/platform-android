@@ -109,11 +109,11 @@ public class UserEntity {
         mRole = role;
     }
 
-    public long getDeployment() {
+    public long getDeploymentId() {
         return mDeployment;
     }
 
-    public void setDeployment(long deployment) {
+    public void setDeploymentId(long deployment) {
         mDeployment = deployment;
     }
 

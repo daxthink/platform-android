@@ -52,7 +52,7 @@ public class UserProfileEntityDataMapper {
             user.setRole(UserProfile.Role.valueOf(userEntity.getRole().name()));
             user.setUpdated(userEntity.getUpdated());
             user.setCreated(userEntity.getCreated());
-            user.setDeploymentId(userEntity.getDeployment());
+            user.setDeploymentId(userEntity.getDeploymentId());
         }
 
         return user;
@@ -68,7 +68,7 @@ public class UserProfileEntityDataMapper {
             userEntity.setRole(UserEntity.Role.valueOf(user.getRole().name()));
             userEntity.setUpdated(user.getUpdated());
             userEntity.setCreated(user.getCreated());
-            userEntity.setDeployment(user.getDeploymentId());
+            userEntity.setDeploymentId(user.getDeploymentId());
         }
         return userEntity;
     }

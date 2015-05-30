@@ -18,7 +18,6 @@
 package com.ushahidi.android.data.entity;
 
 import com.ushahidi.android.BuildConfig;
-import com.ushahidi.android.domain.entity.Post;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +70,7 @@ public class PostEntityTest {
     private PostEntity mPostEntity = new PostEntity();
 
     @Test
-    public void shouldSetPostProperties() {
+    public void shouldSetPostEntity() {
         mPostEntity._id = DUMMY_ID;
         mPostEntity.setTitle(TITLE);
         mPostEntity.setDeploymentId(DEPLOYMENT_ID);
@@ -89,21 +88,34 @@ public class PostEntityTest {
         mPostEntity.setPostTagEntityList(POST_TAG_ENTITY);
 
         assertThat(mPostEntity).isNotNull();
-        assertThat(mPostEntity).isInstanceOf(Post.class);
+        assertThat(mPostEntity).isInstanceOf(PostEntity.class);
+        assertThat(mPostEntity.getDeploymentId()).isNotNull();
         assertThat(mPostEntity.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
+        assertThat(mPostEntity.getAuthorEmail()).isNotNull();
         assertThat(mPostEntity.getAuthorEmail()).isEqualTo(AUTHOR_EMAIL);
+        assertThat(mPostEntity.getAuthorRealname()).isNotNull();
         assertThat(mPostEntity.getAuthorRealname()).isEqualTo(AUTHOR_REAL_NAME);
+        assertThat(mPostEntity.getContent()).isNotNull();
         assertThat(mPostEntity.getContent()).isEqualTo(CONTENT);
+        assertThat(mPostEntity.getCreated()).isNotNull();
         assertThat(mPostEntity.getCreated()).isEqualTo(CREATED);
+        assertThat(mPostEntity.getUpdated()).isNotNull();
         assertThat(mPostEntity.getUpdated()).isEqualTo(UPDATED);
+        assertThat(mPostEntity.getSlug()).isNotNull();
         assertThat(mPostEntity.getSlug()).isEqualTo(SLUG);
+        assertThat(mPostEntity.getTags()).isNotNull();
         assertThat(mPostEntity.getTags()).isEqualTo(TAG_LIST);
+        assertThat(mPostEntity.getStatus()).isNotNull();
         assertThat(mPostEntity.getStatus()).isEqualTo(POST_STATUS);
+        assertThat(mPostEntity.getType()).isNotNull();
         assertThat(mPostEntity.getType()).isEqualTo(TYPE);
+        assertThat(mPostEntity._id).isNotNull();
         assertThat(mPostEntity._id).isEqualTo(DUMMY_ID);
+        assertThat(mPostEntity.getParent()).isNotNull();
         assertThat(mPostEntity.getParent()).isEqualTo(PARENT);
+        assertThat(mPostEntity.getValues()).isNotNull();
         assertThat(mPostEntity.getValues()).isEqualTo(POST_VALUE);
+        assertThat(mPostEntity.getTitle()).isNotNull();
         assertThat(mPostEntity.getTitle()).isEqualTo(TITLE);
-        assertThat(mPostEntity.getPostTagEntityList()).isEqualTo(POST_TAG_ENTITY);
     }
 }

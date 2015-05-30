@@ -17,9 +17,67 @@
 
 package com.ushahidi.android.data.entity;
 
+import com.ushahidi.android.BuildConfig;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
+
+import java.util.Date;
+
+import static com.google.common.truth.Truth.assertThat;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(sdk = 21, constants = BuildConfig.class)
 public class UserEntityTest {
 
+    private static String EMAIL = "email";
+
+    private static String REAL_NAME = "Real name";
+
+    private static String USER_NAME = "username";
+
+    private static UserEntity.Role ROLE = UserEntity.Role.ADMIN;
+
+    private static Date CREATED = new Date();
+
+    private static Date UPDATED = new Date();
+
+    private static Long DEPLOYMENT_ID = 1l;
+
+    private static final Long DUMMY_ID = 1l;
+
+    private UserEntity mUserEntity;
+
+    @Before
+    public void setUp() {
+        mUserEntity = new UserEntity();
+    }
+
+    @Test
+    public void shouldSetUserEntity() {
+        mUserEntity.setId(DUMMY_ID);
+        mUserEntity.setDeploymentId(DEPLOYMENT_ID);
+        mUserEntity.setCreated(CREATED);
+        mUserEntity.setUpdated(UPDATED);
+        mUserEntity.setRole(ROLE);
+        mUserEntity.setEmail(EMAIL);
+        mUserEntity.setUsername(USER_NAME);
+        mUserEntity.setRealName(REAL_NAME);
+
+        assertThat(mUserEntity).isNotNull();
+        assertThat(mUserEntity).isInstanceOf(UserEntity.class);
+        assertThat(mUserEntity.getId()).isNotNull();
+        assertThat(mUserEntity.getId()).isEqualTo(DUMMY_ID);
+        assertThat(mUserEntity.getCreated()).isNotNull();
+        assertThat(mUserEntity.getCreated()).isEqualTo(CREATED);
+        assertThat(mUserEntity.getDeploymentId()).isNotNull();
+        assertThat(mUserEntity.getDeploymentId()).isGreaterThan(0l);
+        assertThat(mUserEntity.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
+    }
 }

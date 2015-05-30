@@ -56,7 +56,7 @@ public class UserAccountEntityTest {
     }
 
     @Test
-    public void shouldSetUserAccount() {
+    public void shouldSetUserAccountEntity() {
         mUserAccountEntity._id = DUMMY_ID;
         mUserAccountEntity.setDeploymentId(DEPLOYMENT_ID);
         mUserAccountEntity.setAuthToken(AUTH_TOKEN);

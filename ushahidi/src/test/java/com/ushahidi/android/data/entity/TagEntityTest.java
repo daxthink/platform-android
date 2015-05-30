@@ -18,7 +18,6 @@
 package com.ushahidi.android.data.entity;
 
 import com.ushahidi.android.BuildConfig;
-import com.ushahidi.android.domain.entity.Tag;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +68,7 @@ public class TagEntityTest {
     }
 
     @Test
-    public void shouldSetTagEntityProperties() {
+    public void shouldSetTagEntity() {
         mTagEntity._id = DUMMY_ID;
         mTagEntity.setDeploymentId(DEPLOYMENT_ID);
         mTagEntity.setSlug(SLUG);
@@ -83,15 +82,24 @@ public class TagEntityTest {
         mTagEntity.setTag(TAG);
 
         assertThat(mTagEntity).isNotNull();
-        assertThat(mTagEntity).isInstanceOf(Tag.class);
+        assertThat(mTagEntity).isInstanceOf(TagEntity.class);
+        assertThat(mTagEntity.getSlug()).isNotNull();
         assertThat(mTagEntity.getSlug()).isEqualTo(SLUG);
+        assertThat(mTagEntity.getDeploymentId()).isNotNull();
         assertThat(mTagEntity.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
+        assertThat(mTagEntity.getCreated()).isNotNull();
         assertThat(mTagEntity.getCreated()).isEqualTo(CREATED);
+        assertThat(mTagEntity.getIcon()).isNotNull();
         assertThat(mTagEntity.getIcon()).isEqualTo(ICON);
+        assertThat(mTagEntity.getPriority()).isNotNull();
         assertThat(mTagEntity.getPriority()).isEqualTo(PRIORITY);
+        assertThat(mTagEntity.getType()).isNotNull();
         assertThat(mTagEntity.getType()).isEqualTo(TYPE);
+        assertThat(mTagEntity.getColor()).isNotNull();
         assertThat(mTagEntity.getColor()).isEqualTo(COLOR);
+        assertThat(mTagEntity.getParentId()).isNotNull();
         assertThat(mTagEntity.getParentId()).isEqualTo(PARENT_ID);
+        assertThat(mTagEntity.getDescription()).isNotNull();
         assertThat(mTagEntity.getDescription()).isEqualTo(DESCRIPTION);
     }
 }
