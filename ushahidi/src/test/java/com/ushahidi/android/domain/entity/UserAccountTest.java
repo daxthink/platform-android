@@ -45,7 +45,7 @@ public class UserAccountTest {
     private String AUTH_TOKEN = "Auth token";
 
     private String AUTH_TOKEN_TYPE = "auth token type";
-    
+
     private long DEPLOYMENT_ID = 1l;
 
     private static final Long DUMMY_ID = 1l;

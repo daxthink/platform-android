@@ -83,14 +83,23 @@ public class TagTest {
 
         assertThat(mTag).isNotNull();
         assertThat(mTag).isInstanceOf(Tag.class);
+        assertThat(mTag.getSlug()).isNull();
         assertThat(mTag.getSlug()).isEqualTo(SLUG);
+        assertThat(mTag.getDeploymentId()).isNotNull();
         assertThat(mTag.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
+        assertThat(mTag.getCreated()).isNotNull();
         assertThat(mTag.getCreated()).isEqualTo(CREATED);
+        assertThat(mTag.getIcon()).isNotNull();
         assertThat(mTag.getIcon()).isEqualTo(ICON);
+        assertThat(mTag.getPriority()).isNotNull();
         assertThat(mTag.getPriority()).isEqualTo(PRIORITY);
+        assertThat(mTag.getType()).isNotNull();
         assertThat(mTag.getType()).isEqualTo(TYPE);
+        assertThat(mTag.getColor()).isNotNull();
         assertThat(mTag.getColor()).isEqualTo(COLOR);
+        assertThat(mTag.getParentId()).isNotNull();
         assertThat(mTag.getParentId()).isEqualTo(PARENT_ID);
+        assertThat(mTag.getDescription()).isNotNull();
         assertThat(mTag.getDescription()).isEqualTo(DESCRIPTION);
     }
 }
