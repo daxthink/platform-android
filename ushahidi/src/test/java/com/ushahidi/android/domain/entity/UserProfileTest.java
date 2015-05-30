@@ -74,8 +74,13 @@ public class UserProfileTest {
 
         assertThat(mUserProfile).isNotNull();
         assertThat(mUserProfile).isInstanceOf(UserProfile.class);
+        assertThat(mUserProfile._id).isNotNull();
+        assertThat(mUserProfile._id).isGreaterThan(0l);
         assertThat(mUserProfile._id).isEqualTo(DUMMY_ID);
+        assertThat(mUserProfile.getCreated()).isNotNull();
         assertThat(mUserProfile.getCreated()).isEqualTo(CREATED);
+        assertThat(mUserProfile.getDeploymentId()).isNotNull();
+        assertThat(mUserProfile.getDeploymentId()).isGreaterThan(0l);
         assertThat(mUserProfile.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
     }
 }
