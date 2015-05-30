@@ -32,9 +32,12 @@ public class PostEntityDataMapper {
 
     private TagEntityDataMapper mTagEntityMapper;
 
+    private PostValueEntityDataMapper mPostValueEntityMapper;
+
     @Inject
     public PostEntityDataMapper() {
         mTagEntityMapper = new TagEntityDataMapper();
+        mPostValueEntityMapper = new PostValueEntityDataMapper();
     }
 
     /**
@@ -61,7 +64,8 @@ public class PostEntityDataMapper {
             post.setAuthorRealname(postEntity.getAuthorRealname());
             post.setContent(postEntity.getContent());
             post.setDeploymentId(postEntity.getDeploymentId());
-
+            post.setParent(postEntity.getParent());
+            post.setValues(mPostValueEntityMapper.map(postEntity.getValues()));
         }
 
         return post;
@@ -84,6 +88,8 @@ public class PostEntityDataMapper {
             postEntity.setAuthorRealname(post.getAuthorRealname());
             postEntity.setContent(post.getContent());
             postEntity.setDeploymentId(post.getDeploymentId());
+            postEntity.setParent(post.getParent());
+            postEntity.setValues(mPostValueEntityMapper.map(post.getValues()));
         }
         return postEntity;
     }
