@@ -50,7 +50,7 @@ public class GeoJsonTest {
     }
 
     @Test
-    public void shouldSetGeoJsonProperties() {
+    public void shouldSetGeoJson() {
         mGeoJson._id = DUMMY_ID;
         mGeoJson.setDeploymentId(DUMMY_DEPLOYMENT_ID);
         mGeoJson.setGeoJson(DUMMY_STRING);
@@ -58,7 +58,9 @@ public class GeoJsonTest {
         assertThat(mGeoJson).isNotNull();
         assertThat(mGeoJson).isInstanceOf(GeoJson.class);
         assertThat(mGeoJson._id).isEqualTo(DUMMY_ID);
+        assertThat(mGeoJson.getDeploymentId()).isNotNull();
         assertThat(mGeoJson.getDeploymentId()).isEqualTo(DUMMY_DEPLOYMENT_ID);
+        assertThat(mGeoJson.getGeoJson()).isNotNull();
         assertThat(mGeoJson.getGeoJson()).isEqualTo(DUMMY_STRING);
     }
 }

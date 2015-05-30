@@ -69,7 +69,7 @@ public class PostTest {
     }
 
     @Test
-    public void shouldSetPostProperties() {
+    public void shouldSetPost() {
         mPost._id = DUMMY_ID;
         mPost.setTitle(TITLE);
         mPost.setDeploymentId(DEPLOYMENT_ID);
@@ -87,19 +87,33 @@ public class PostTest {
 
         assertThat(mPost).isNotNull();
         assertThat(mPost).isInstanceOf(Post.class);
+        assertThat(mPost.getDeploymentId()).isNotNull();
         assertThat(mPost.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
+        assertThat(mPost.getAuthorEmail()).isNotNull();
         assertThat(mPost.getAuthorEmail()).isEqualTo(AUTHOR_EMAIL);
+        assertThat(mPost.getAuthorRealname()).isNotNull();
         assertThat(mPost.getAuthorRealname()).isEqualTo(AUTHOR_REAL_NAME);
+        assertThat(mPost.getContent()).isNotNull();
         assertThat(mPost.getContent()).isEqualTo(CONTENT);
+        assertThat(mPost.getCreated()).isNotNull();
         assertThat(mPost.getCreated()).isEqualTo(CREATED);
+        assertThat(mPost.getUpdated()).isNotNull();
         assertThat(mPost.getUpdated()).isEqualTo(UPDATED);
+        assertThat(mPost.getSlug()).isNotNull();
         assertThat(mPost.getSlug()).isEqualTo(SLUG);
+        assertThat(mPost.getTags()).isNotNull();
         assertThat(mPost.getTags()).isEqualTo(TAG_LIST);
+        assertThat(mPost.getStatus()).isNotNull();
         assertThat(mPost.getStatus()).isEqualTo(POST_STATUS);
+        assertThat(mPost.getType()).isNotNull();
         assertThat(mPost.getType()).isEqualTo(TYPE);
+        assertThat(mPost._id).isNotNull();
         assertThat(mPost._id).isEqualTo(DUMMY_ID);
+        assertThat(mPost.getParent()).isNotNull();
         assertThat(mPost.getParent()).isEqualTo(PARENT);
+        assertThat(mPost.getValues()).isNotNull();
         assertThat(mPost.getValues()).isEqualTo(POST_VALUE);
+        assertThat(mPost.getTitle()).isNotNull();
         assertThat(mPost.getTitle()).isEqualTo(TITLE);
     }
 }

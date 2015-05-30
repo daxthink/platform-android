@@ -83,7 +83,7 @@ public class TagTest {
 
         assertThat(mTag).isNotNull();
         assertThat(mTag).isInstanceOf(Tag.class);
-        assertThat(mTag.getSlug()).isNull();
+        assertThat(mTag.getSlug()).isNotNull();
         assertThat(mTag.getSlug()).isEqualTo(SLUG);
         assertThat(mTag.getDeploymentId()).isNotNull();
         assertThat(mTag.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);

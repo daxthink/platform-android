@@ -43,9 +43,13 @@ public class DeploymentTest {
 
         assertThat(mDeployment).isNotNull();
         assertThat(mDeployment).isInstanceOf(Deployment.class);
+        assertThat(mDeployment._id).isNotNull();
         assertThat(mDeployment._id).isEqualTo(DUMMY_ID);
-        assertThat(mDeployment.getTitle()).isSameAs(DUMMY_TITLE);
+        assertThat(mDeployment.getTitle()).isNotNull();
+        assertThat(mDeployment.getTitle()).isEqualTo(DUMMY_TITLE);
+        assertThat(mDeployment.getStatus()).isNotNull();
         assertThat(mDeployment.getStatus()).isEqualTo(DUMMY_STATUS);
+        assertThat(mDeployment.getUrl()).isNotNull();
         assertThat(mDeployment.getUrl()).isEqualTo(DUMMY_URL);
     }
 }

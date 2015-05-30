@@ -52,7 +52,9 @@ public class PostValueTest {
         mPostValue.setValues(VALUES);
         mPostValue.setDeploymentId(DEPLOYMENT_ID);
 
+        assertThat(mPostValue.getValues()).isNotNull();
         assertThat(mPostValue.getValues()).isEqualTo(VALUES);
+        assertThat(mPostValue.getDeploymentId()).isNotNull();
         assertThat(mPostValue.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
     }
 }
