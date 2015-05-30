@@ -59,7 +59,7 @@ public class PostTest {
 
     private static Date UPDATED = new Date();
 
-    private static List<Tag> TAG_LIST = new ArrayList<Tag>();
+    private static List<Tag> TAG_LIST = new ArrayList<>();
 
     private static PostValue POST_VALUE = new PostValue();
 

@@ -15,9 +15,10 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.domain.entity;
+package com.ushahidi.android.data.entity;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.domain.entity.Tag;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +31,13 @@ import java.util.Date;
 import static com.google.common.truth.Truth.assertThat;
 
 /**
- * Test {@link Tag}
+ * Tests {@link TagEntity}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = 21, constants = BuildConfig.class)
-public class TagTest {
+public class TagEntityTest {
 
     private static final Long DUMMY_ID = 1l;
 
@@ -48,7 +49,7 @@ public class TagTest {
 
     private static String COLOR = "color";
 
-    private static Tag.Type TYPE = Tag.Type.CATEGORY;
+    private static TagEntity.Type TYPE = TagEntity.Type.CATEGORY;
 
     private static String ICON = "icon";
 
@@ -60,37 +61,37 @@ public class TagTest {
 
     private static Long DEPLOYMENT_ID = 1l;
 
-    private Tag mTag;
+    private TagEntity mTagEntity;
 
     @Before
     public void setUp() {
-        mTag = new Tag();
+        mTagEntity = new TagEntity();
     }
 
     @Test
-    public void shouldSetTag() {
-        mTag._id = DUMMY_ID;
-        mTag.setDeploymentId(DEPLOYMENT_ID);
-        mTag.setSlug(SLUG);
-        mTag.setCreated(CREATED);
-        mTag.setIcon(ICON);
-        mTag.setPriority(PRIORITY);
-        mTag.setColor(COLOR);
-        mTag.setParentId(PARENT_ID);
-        mTag.setDescription(DESCRIPTION);
-        mTag.setType(TYPE);
-        mTag.setTag(TAG);
+    public void shouldSetTagEntityProperties() {
+        mTagEntity._id = DUMMY_ID;
+        mTagEntity.setDeploymentId(DEPLOYMENT_ID);
+        mTagEntity.setSlug(SLUG);
+        mTagEntity.setCreated(CREATED);
+        mTagEntity.setIcon(ICON);
+        mTagEntity.setPriority(PRIORITY);
+        mTagEntity.setColor(COLOR);
+        mTagEntity.setParentId(PARENT_ID);
+        mTagEntity.setDescription(DESCRIPTION);
+        mTagEntity.setType(TYPE);
+        mTagEntity.setTag(TAG);
 
-        assertThat(mTag).isNotNull();
-        assertThat(mTag).isInstanceOf(Tag.class);
-        assertThat(mTag.getSlug()).isEqualTo(SLUG);
-        assertThat(mTag.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
-        assertThat(mTag.getCreated()).isEqualTo(CREATED);
-        assertThat(mTag.getIcon()).isEqualTo(ICON);
-        assertThat(mTag.getPriority()).isEqualTo(PRIORITY);
-        assertThat(mTag.getType()).isEqualTo(TYPE);
-        assertThat(mTag.getColor()).isEqualTo(COLOR);
-        assertThat(mTag.getParentId()).isEqualTo(PARENT_ID);
-        assertThat(mTag.getDescription()).isEqualTo(DESCRIPTION);
+        assertThat(mTagEntity).isNotNull();
+        assertThat(mTagEntity).isInstanceOf(Tag.class);
+        assertThat(mTagEntity.getSlug()).isEqualTo(SLUG);
+        assertThat(mTagEntity.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
+        assertThat(mTagEntity.getCreated()).isEqualTo(CREATED);
+        assertThat(mTagEntity.getIcon()).isEqualTo(ICON);
+        assertThat(mTagEntity.getPriority()).isEqualTo(PRIORITY);
+        assertThat(mTagEntity.getType()).isEqualTo(TYPE);
+        assertThat(mTagEntity.getColor()).isEqualTo(COLOR);
+        assertThat(mTagEntity.getParentId()).isEqualTo(PARENT_ID);
+        assertThat(mTagEntity.getDescription()).isEqualTo(DESCRIPTION);
     }
 }
