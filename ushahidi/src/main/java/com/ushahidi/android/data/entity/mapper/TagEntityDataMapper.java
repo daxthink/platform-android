@@ -47,6 +47,7 @@ public class TagEntityDataMapper {
         if (tagEntity != null) {
             tag = new Tag();
             tag._id = tagEntity._id;
+            tag.setDeploymentId(tagEntity.getDeploymentId());
             tag.setDescription(tagEntity.getDescription());
             tag.setPriority(tagEntity.getPriority());
             tag.setCreated(tagEntity.getCreated());
@@ -55,6 +56,7 @@ public class TagEntityDataMapper {
             tag.setColor(tagEntity.getColor());
             tag.setType(Tag.Type.valueOf(tagEntity.getType().name()));
             tag.setTag(tagEntity.getTag());
+            tag.setSlug(tagEntity.getSlug());
         }
 
         return tag;
@@ -66,6 +68,7 @@ public class TagEntityDataMapper {
         if (tag != null) {
             tagEntity = new TagEntity();
             tagEntity._id = tag._id;
+            tagEntity.setDeploymentId(tag.getDeploymentId());
             tagEntity.setDescription(tag.getDescription());
             tagEntity.setPriority(tag.getPriority());
             tagEntity.setParentId(tag.getParentId());
@@ -74,6 +77,7 @@ public class TagEntityDataMapper {
             tagEntity.setTag(tag.getTag());
             tagEntity.setColor(tag.getColor());
             tagEntity.setType(TagEntity.Type.valueOf(tag.getType().name()));
+            tagEntity.setSlug(tag.getSlug());
         }
         return tagEntity;
     }

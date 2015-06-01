@@ -17,11 +17,15 @@
 
 package com.ushahidi.android.data.entity.mapper;
 
+import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.data.entity.PostValueEntity;
 import com.ushahidi.android.domain.entity.PostValue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,8 @@ import static com.google.common.truth.Truth.assertThat;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(sdk = 21, constants = BuildConfig.class)
 public class PostValueEntityDataMapperTest {
 
     private static Long DEPLOYMENT_ID = 1l;
