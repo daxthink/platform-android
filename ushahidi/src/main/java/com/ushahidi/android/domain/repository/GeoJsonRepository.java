@@ -16,6 +16,7 @@
 
 package com.ushahidi.android.domain.repository;
 
+import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.GeoJson;
 
@@ -35,4 +36,11 @@ public interface GeoJsonRepository {
      * @param from         Where to get the geojson from
      */
     Observable<GeoJson> getGeoJson(Long deploymentId, From from);
+
+    /**
+     * Add/Update a {@link GeoJsonEntity}.
+     *
+     * @param geoJson The GeoJson to be saved.
+     */
+    Observable<Long> putGeojson(GeoJsonEntity geoJson);
 }
