@@ -32,7 +32,7 @@ public class GeoJsonDatabaseDataSource implements GeoJsonDataSource {
     }
 
     @Override
-    public Observable<Long> putGeojson(GeoJsonEntity geoJson) {
+    public Observable<Long> putGeoJson(GeoJsonEntity geoJson) {
         return null;
     }
 }

@@ -40,5 +40,5 @@ public interface GeoJsonDataSource {
      *
      * @param geoJson The GeoJson to be saved.
      */
-    Observable<Long> putGeojson(GeoJsonEntity geoJson);
+    Observable<Long> putGeoJson(GeoJsonEntity geoJson);
 }

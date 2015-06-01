@@ -15,24 +15,20 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.repository.datasource.geojson;
+package com.ushahidi.android.data.api.service;
 
-import com.ushahidi.android.data.entity.GeoJsonEntity;
+import com.google.gson.JsonElement;
 
+import retrofit.http.GET;
 import rx.Observable;
+
+import static com.ushahidi.android.data.api.Constant.GEOJSON;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonApiDataSource implements GeoJsonDataSource {
+public interface GeoJsonService {
 
-    @Override
-    public Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId) {
-        return null;
-    }
-
-    @Override
-    public Observable<Long> putGeoJson(GeoJsonEntity geoJson) {
-        return null;
-    }
+    @GET(GEOJSON)
+    Observable<JsonElement> getGeoJson();
 }
