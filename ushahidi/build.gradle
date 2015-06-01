@@ -52,12 +52,17 @@ dependencies {
         transitive = true
     }
     compile appDependencies.cupboard
+    compile appDependencies.retrofit
+    compile appDependencies.okhttp
+    compile appDependencies.okhttpUrlConnection
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit
     testCompile appTestDependencies.mockito
     testCompile appTestDependencies.robolectric
     testCompile appTestDependencies.truth
+    testCompile appTestDependencies.retrofitMock
+    testCompile appTestDependencies.okhttpMockWebserver
     testApt appDependencies.daggerCompiler
 
     androidTestCompile appTestDependencies.mockito

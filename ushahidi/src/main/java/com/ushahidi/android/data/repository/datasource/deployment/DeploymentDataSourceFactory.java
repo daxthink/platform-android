@@ -16,7 +16,7 @@
 
 package com.ushahidi.android.data.repository.datasource.deployment;
 
-import com.ushahidi.android.database.DeploymentDatabaseHelper;
+import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
 
 import android.support.annotation.NonNull;
 

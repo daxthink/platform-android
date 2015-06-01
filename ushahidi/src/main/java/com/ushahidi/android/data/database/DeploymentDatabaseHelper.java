@@ -1,4 +1,4 @@
-package com.ushahidi.android.database;
+package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;

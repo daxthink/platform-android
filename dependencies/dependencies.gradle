@@ -38,6 +38,9 @@ ext {
     raiburariVersion = '1.3.0'
     materialdrawerVersion = '2.9.8'
     cupboardVersion = '2.1.1'
+    retrofitVersion = '1.9.0'
+    okhttpVersion = '2.3.0'
+    okhttpUrlConnectionVersion = '2.3.0'
 
     //Testing
     jUnitVersion = '4.12'
@@ -47,25 +50,32 @@ ext {
     testingSupportLibVersion = '0.1'
     robolectricVersion = '3.0-rc3'
     truthVersion = '0.26'
+    retrofitMockVersion = '1.9.0'
+    okhttpMockWebserver = '2.3.0'
 
     appDependencies = [
-            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger         : "com.google.dagger:dagger:${daggerVersion}",
-            javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            raiburari      : "com.addhen.android:raiburari:${raiburariVersion}",
-            materialdrawer : "com.mikepenz:materialdrawer:${materialdrawerVersion}",
-            cupboard       : "nl.qbusict:cupboard:${cupboardVersion}",
+            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger             : "com.google.dagger:dagger:${daggerVersion}",
+            javaxAnnotation    : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            raiburari          : "com.addhen.android:raiburari:${raiburariVersion}",
+            materialdrawer     : "com.mikepenz:materialdrawer:${materialdrawerVersion}",
+            cupboard           : "nl.qbusict:cupboard:${cupboardVersion}",
+            retrofit           : "com.squareup.retrofit:retrofit:${retrofitVersion}",
+            okhttp             : "com.squareup.okhttp:okhttp:${okhttpVersion}",
+            okhttpUrlConnection: "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
     ]
 
     appTestDependencies = [
-            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
-            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
-            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
-            espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
-            junit            : "junit:junit:${jUnitVersion}",
-            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
-            robolectric      : "org.robolectric:robolectric:${robolectricVersion}",
-            truth            : "com.google.truth:truth:${truthVersion}",
+            mockito            : "org.mockito:mockito-core:${mockitoVersion}",
+            dexmaker           : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+            dexmakerMockito    : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            espresso           : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            testingSupportLib  : "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+            junit              : "junit:junit:${jUnitVersion}",
+            mockito            : "org.mockito:mockito-core:${mockitoVersion}",
+            robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
+            truth              : "com.google.truth:truth:${truthVersion}",
+            retrofitMock       : "com.squareup.retrofit:retrofit-mock:${retrofitMockVersion}",
+            okhttpMockWebserver: "com.squareup.okhttp:mockwebserver:${okhttpMockWebserver}",
     ]
 }
