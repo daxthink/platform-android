@@ -133,11 +133,9 @@ public class PostEntityDataMapperTest {
         assertThat(post.getTags()).isNotNull();
         assertThat(post.getTags()).isEqualTo(TAG_LIST);
         assertThat(post.getStatus()).isNotNull();
-        //Fixme: Not mapping the post status
-        //assertThat(post.getStatus()).isEqualTo(POST_STATUS);
+        assertThat(post.getStatus()).isEqualTo(Post.Status.DRAFT);
         assertThat(post.getType()).isNotNull();
-        //Fixme: Not mapping post type
-        //assertThat(post.getType()).isEqualTo(TYPE);
+        assertThat(post.getType()).isEqualTo(Post.Type.REPORT);
         assertThat(post._id).isNotNull();
         assertThat(post._id).isEqualTo(DUMMY_ID);
         assertThat(post.getParent()).isNotNull();
@@ -154,9 +152,6 @@ public class PostEntityDataMapperTest {
     @Test
     public void shouldUnMapFromPostToPostEntity() {
         mPost = new Post();
-        PostValue postValue = new PostValue();
-        postValue.setDeploymentId(1l);
-        postValue.setValues("values");
         mPost._id = DUMMY_ID;
         mPost.setTitle(TITLE);
         mPost.setDeploymentId(DEPLOYMENT_ID);
@@ -168,7 +163,7 @@ public class PostEntityDataMapperTest {
         mPost.setUpdated(UPDATED);
         mPost.setParent(PARENT);
         mPost.setStatus(Post.Status.DRAFT);
-        mPost.setValues(postValue);
+        mPost.setValues(POST_VALUE);
         mPost.setTags(new ArrayList<>());
         mPost.setType(Post.Type.REPORT);
 
@@ -201,8 +196,10 @@ public class PostEntityDataMapperTest {
         assertThat(postEntity.getParent()).isNotNull();
         assertThat(postEntity.getParent()).isEqualTo(PARENT);
         assertThat(postEntity.getValues()).isNotNull();
-        //FIXME: Not mapping the postvalue
-        //assertThat(postEntity.getValues()).isEqualTo(POST_VALUE);
+        assertThat(postEntity.getValues()).isInstanceOf(PostValueEntity.class);
+        assertThat(postEntity.getValues().getDeploymentId())
+                .isEqualTo(POST_VALUE.getDeploymentId());
+        assertThat(postEntity.getValues().getValues()).isEqualTo(POST_VALUE.getValues());
         assertThat(postEntity.getTitle()).isNotNull();
         assertThat(postEntity.getTitle()).isEqualTo(TITLE);
     }
