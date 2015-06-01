@@ -17,6 +17,7 @@
 
 package com.ushahidi.android.data.repository;
 
+import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.mapper.GeoJsonEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.geojson.GeoJsonDataSourceFactory;
 import com.ushahidi.android.domain.entity.From;
@@ -48,6 +49,11 @@ public class GeoJsonDataRepository implements GeoJsonRepository {
 
     @Override
     public Observable<GeoJson> getGeoJson(Long deploymentId, From from) {
+        return null;
+    }
+
+    @Override
+    public Observable<Long> putGeoJson(GeoJsonEntity geoJson) {
         return null;
     }
 }

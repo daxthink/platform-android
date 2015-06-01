@@ -30,7 +30,7 @@ import rx.Observable;
 public interface GeoJsonRepository {
 
     /**
-     * Get a list of {@link GeoJson} from either the database or online
+     * Get a list of {@link GeoJson} from either the database or online.
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.domain.entity.Deployment}
      * @param from         Where to get the geojson from
@@ -42,5 +42,5 @@ public interface GeoJsonRepository {
      *
      * @param geoJson The GeoJson to be saved.
      */
-    Observable<Long> putGeojson(GeoJsonEntity geoJson);
+    Observable<Long> putGeoJson(GeoJsonEntity geoJson);
 }
