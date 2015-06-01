@@ -72,9 +72,13 @@ public class PostEntityDataMapperTest {
 
     private static List<PostTagEntity> POST_TAG_ENTITY = new ArrayList<>();
 
-    private static PostValueEntity POST_VALUE = new PostValueEntity();
+    private static PostValueEntity POST_VALUE_ENTITY = new PostValueEntity();
+
+    private static PostValue POST_VALUE = new PostValue();
 
     private PostEntityDataMapper mPostEntityMapper;
+
+    private PostValueEntityDataMapper mPostValueEntityDataMapper;
 
     private PostEntity mPostEntity;
 
@@ -83,8 +87,10 @@ public class PostEntityDataMapperTest {
     @Before
     public void setUp() throws Exception {
         mPostEntityMapper = new PostEntityDataMapper();
-        POST_VALUE.setDeploymentId(1l);
-        POST_VALUE.setValues("values");
+        mPostValueEntityDataMapper = new PostValueEntityDataMapper();
+        POST_VALUE_ENTITY.setDeploymentId(1l);
+        POST_VALUE_ENTITY.setValues("values");
+        POST_VALUE = mPostValueEntityDataMapper.map(POST_VALUE_ENTITY);
     }
 
     @Test
@@ -101,7 +107,7 @@ public class PostEntityDataMapperTest {
         mPostEntity.setUpdated(UPDATED);
         mPostEntity.setParent(PARENT);
         mPostEntity.setStatus(POST_STATUS);
-        mPostEntity.setValues(POST_VALUE);
+        mPostEntity.setValues(POST_VALUE_ENTITY);
         mPostEntity.setTags(TAG_LIST);
         mPostEntity.setType(TYPE);
         mPostEntity.setPostTagEntityList(POST_TAG_ENTITY);
@@ -137,8 +143,10 @@ public class PostEntityDataMapperTest {
         assertThat(post.getParent()).isNotNull();
         assertThat(post.getParent()).isEqualTo(PARENT);
         assertThat(post.getValues()).isNotNull();
-        //FixMe Not mapping post value
-        //assertThat(post.getValues()).isEqualTo(POST_VALUE);
+        assertThat(post.getValues()).isInstanceOf(PostValue.class);
+        assertThat(post.getValues().getDeploymentId())
+                .isEqualTo(POST_VALUE_ENTITY.getDeploymentId());
+        assertThat(post.getValues().getValues()).isEqualTo(POST_VALUE_ENTITY.getValues());
         assertThat(post.getTitle()).isNotNull();
         assertThat(post.getTitle()).isEqualTo(TITLE);
     }
