@@ -17,12 +17,9 @@
 
 package com.ushahidi.android.data.api;
 
-import com.google.gson.JsonElement;
-
-import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.service.TagService;
-import com.ushahidi.android.data.entity.GeoJsonEntity;
-import com.ushahidi.android.data.entity.TagEntity;
+import com.ushahidi.android.data.api.model.Posts;
+import com.ushahidi.android.data.api.service.PostService;
+import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.exception.NetworkConnectionException;
 
 import android.content.Context;
@@ -37,26 +34,23 @@ import rx.Observable;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagApi {
+public class PostApi {
 
     private final Context mContext;
 
-    private final TagService mTagService;
+    private final PostService mPostService;
 
     @Inject
-    public TagApi(@NonNull Context context, @NonNull TagService tagService) {
+    public PostApi(@NonNull Context context, @NonNull PostService postService) {
         mContext = context;
-        mTagService = tagService;
+        mPostService = postService;
     }
 
-    /**
-     * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
-     */
-    public Observable<List<TagEntity>> getGeoJson() {
+    public Observable<List<PostEntity>> getPostList() {
         return Observable.create((subscriber) -> {
             if (isDeviceConnectedToInternet(mContext)) {
-                mTagService.getTags()
-                        .map((tags) -> setTags(tags));
+                mPostService.posts()
+                        .map((tags) -> setPost(tags));
             } else {
                 subscriber.onError(new NetworkConnectionException());
             }
@@ -64,13 +58,13 @@ public class TagApi {
     }
 
     /**
-     * Sets the {@link TagEntity} entity properties from the {@link Tags}
+     * Sets the {@link PostEntity} entity properties from the {@link Posts}
      *
-     * @param tags The Tags model to be set as tag entity.
+     * @param posts The jsonElement to retrieve the raw JSON string from.
      */
-    private Observable<List<TagEntity>> setTags(Tags tags) {
+    private Observable<List<PostEntity>> setPost(Posts posts) {
         return Observable.create(subscriber -> {
-            subscriber.onNext(tags.getTags());
+            subscriber.onNext(posts.getPosts());
             subscriber.onCompleted();
         });
     }
