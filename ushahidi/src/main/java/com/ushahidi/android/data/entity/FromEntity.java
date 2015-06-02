@@ -22,6 +22,7 @@ package com.ushahidi.android.data.entity;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+
 public enum FromEntity {
     ONLINE, DATABASE
 }

@@ -16,8 +16,10 @@
 
 package com.ushahidi.android.data.repository.datasource.deployment;
 
-import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
+import com.ushahidi.android.data.entity.DeploymentEntity;
+
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -32,7 +34,8 @@ public class DeploymentDatabaseDataSource implements DeploymentDataSource {
 
     private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;
 
-    public DeploymentDatabaseDataSource(DeploymentDatabaseHelper deploymentDatabaseHelper) {
+    public DeploymentDatabaseDataSource(
+            @NonNull DeploymentDatabaseHelper deploymentDatabaseHelper) {
         mDeploymentDatabaseHelper = deploymentDatabaseHelper;
     }
 

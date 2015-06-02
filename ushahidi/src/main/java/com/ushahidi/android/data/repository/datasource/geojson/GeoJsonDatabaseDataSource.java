@@ -17,7 +17,10 @@
 
 package com.ushahidi.android.data.repository.datasource.geojson;
 
+import com.ushahidi.android.data.database.GeoJsonDatabaseHelper;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
+
+import android.support.annotation.NonNull;
 
 import rx.Observable;
 
@@ -26,13 +29,19 @@ import rx.Observable;
  */
 public class GeoJsonDatabaseDataSource implements GeoJsonDataSource {
 
-    @Override
-    public Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId) {
-        return null;
+    private final GeoJsonDatabaseHelper mGeoJsonDatabaseHelper;
+
+    public GeoJsonDatabaseDataSource(@NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
+        mGeoJsonDatabaseHelper = geoJsonDatabaseHelper;
     }
 
     @Override
-    public Observable<Long> putGeoJson(GeoJsonEntity geoJson) {
-        return null;
+    public Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId) {
+        return mGeoJsonDatabaseHelper.getGeoJson(deploymentId);
+    }
+
+    @Override
+    public Observable<Long> putGeoJson(GeoJsonEntity geoJsonEntity) {
+        return mGeoJsonDatabaseHelper.putGeoJson(geoJsonEntity);
     }
 }

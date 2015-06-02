@@ -17,6 +17,15 @@
 
 package com.ushahidi.android.data.repository.datasource.geojson;
 
+import com.ushahidi.android.data.api.GeoJsonApi;
+import com.ushahidi.android.data.api.service.GeoJsonService;
+import com.ushahidi.android.data.database.GeoJsonDatabaseHelper;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
+
 /**
  * For creating the object of the various data source for {@link com.ushahidi.android.data.entity.GeoJsonEntity}
  *
@@ -24,4 +33,29 @@ package com.ushahidi.android.data.repository.datasource.geojson;
  */
 public class GeoJsonDataSourceFactory {
 
+    private final Context mContext;
+
+    private final GeoJsonDatabaseHelper mGeoDatabaseHelper;
+
+    private GeoJsonService mGeoJsonService;
+
+    @Inject
+    public GeoJsonDataSourceFactory(@NonNull Context context,
+            @NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
+        mContext = context;
+        mGeoDatabaseHelper = geoJsonDatabaseHelper;
+    }
+
+    public void setGeoJsonService(@NonNull GeoJsonService geoJsonService) {
+        mGeoJsonService = geoJsonService;
+    }
+
+    public GeoJsonDataSource createGeoJsonApiDataSource() {
+        final GeoJsonApi geoJsonApi = new GeoJsonApi(mContext, mGeoJsonService);
+        return new GeoJsonApiDataSource(geoJsonApi);
+    }
+
+    public GeoJsonDataSource createGeoJsonDatabaseDataSource() {
+        return new GeoJsonDatabaseDataSource(mGeoDatabaseHelper);
+    }
 }

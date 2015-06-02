@@ -17,22 +17,34 @@
 
 package com.ushahidi.android.data.repository.datasource.geojson;
 
+import com.ushahidi.android.data.api.GeoJsonApi;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
+
+import android.support.annotation.NonNull;
 
 import rx.Observable;
 
 /**
+ * Use the API as source for getting {@link GeoJsonEntity} data
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class GeoJsonApiDataSource implements GeoJsonDataSource {
 
+    private final GeoJsonApi mGeoJsonApi;
+
+    public GeoJsonApiDataSource(@NonNull GeoJsonApi geoJsonApi) {
+        mGeoJsonApi = geoJsonApi;
+    }
+
     @Override
     public Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId) {
-        return null;
+        return mGeoJsonApi.getGeoJson(deploymentId);
     }
 
     @Override
     public Observable<Long> putGeoJson(GeoJsonEntity geoJson) {
+        // Do nothing as posting GeoJson via the API isn't supported yet.
         return null;
     }
 }
