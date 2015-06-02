@@ -35,4 +35,18 @@ public interface TagRepository {
      * @param from         Where to fetch the deployment from. Either Online or Offline.
      */
     Observable<List<Tag>> getTagList(Long deploymentId, From from);
+
+    /**
+     * Add / Update an {@link Tag} to a storage.
+     *
+     * @param entity The entity to be added.
+     */
+    Observable<Long> putTag(Tag entity);
+
+    /**
+     * Delete an existing {@link Tag} in a storage.
+     *
+     * @param id The entity's id to be deleted.
+     */
+    Observable<Long> deleteTag(Long id);
 }

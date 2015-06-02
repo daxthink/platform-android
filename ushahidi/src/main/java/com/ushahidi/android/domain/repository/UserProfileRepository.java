@@ -33,4 +33,18 @@ public interface UserProfileRepository {
      * @param from         Where to fetch the user profile from. Either Online or Offline.
      */
     Observable<UserProfile> getUserProfile(Long deploymentId, From from);
+
+    /**
+     * Add / Update an {@link UserProfile} to/in a storage.
+     *
+     * @param userProfile The entity to be added.
+     */
+    Observable<Long> putUserProfile(UserProfile userProfile);
+
+    /**
+     * Delete an existing {@link UserProfile} in a storage.
+     *
+     * @param id The user profile's id to be deleted.
+     */
+    Observable<Long> deleteUserProfile(Long id);
 }

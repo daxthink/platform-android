@@ -43,4 +43,18 @@ public interface PostRepository {
      * @param query        The entity to be searched for.
      */
     Observable<List<Post>> search(Long deploymentId, String query);
+
+    /**
+     * Add / Update an {@link Post} to/in a storage.
+     *
+     * @param post The entity to be added.
+     */
+    Observable<Long> putPost(Post post);
+
+    /**
+     * Delete an existing {@link Post} to/in a storage.
+     *
+     * @param id The post's id to be deleted.
+     */
+    Observable<Long> deletePost(Long id);
 }

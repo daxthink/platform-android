@@ -16,6 +16,7 @@
 
 package com.ushahidi.android.domain.repository;
 
+import com.ushahidi.android.domain.entity.Tag;
 import com.ushahidi.android.domain.entity.UserAccount;
 
 import rx.Observable;
@@ -28,4 +29,18 @@ import rx.Observable;
 public interface UserAccountRepository {
 
     Observable login(UserAccount userAccount);
+
+    /**
+     * Add / Update an {@link Tag} to a storage.
+     *
+     * @param entity The entity to be added.
+     */
+    Observable<Long> putUserAccount(Tag entity);
+
+    /**
+     * Delete an existing {@link Tag} in a storage.
+     *
+     * @param id The entity's id to be deleted.
+     */
+    Observable<Long> deleteUserAccount(Long id);
 }
