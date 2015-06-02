@@ -49,12 +49,14 @@ public class GeoJsonApi {
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
+     *
+     * @param deploymentId The ID of the deployment the GeoJson is fetched from.
      */
     public Observable<GeoJsonEntity> getGeoJson(Long deploymentId) {
         return Observable.create((subscriber) -> {
             if (isDeviceConnectedToInternet(mContext)) {
                 mGeoJsonService.getGeoJson()
-                        .flatMap((jsonElement) -> setGeoJson(deploymentId, jsonElement));
+                        .map((jsonElement) -> setGeoJson(deploymentId, jsonElement));
             } else {
                 subscriber.onError(new NetworkConnectionException());
             }
@@ -67,6 +69,12 @@ public class GeoJsonApi {
         return ApiUtil.isDeviceConnectedToInternet(context);
     }
 
+    /**
+     * Sets the {@link GeoJsonEntity} entity properties from the {@link JsonElement}
+     *
+     * @param deploymentId The ID of the deployment the GeoJson is fetched from.
+     * @param jsonElement  The jsonElement to retrieve the raw JSON string from.
+     */
     private Observable<GeoJsonEntity> setGeoJson(Long deploymentId, JsonElement jsonElement) {
         return Observable.create(subscriber -> {
             GeoJsonEntity geoJsonEntity = new GeoJsonEntity();
