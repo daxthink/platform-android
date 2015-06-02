@@ -57,10 +57,10 @@ public class GeoJsonDataSourceFactory {
 
     public GeoJsonDataSource createGeoJsonApiDataSource() {
         final GeoJsonApi geoJsonApi = new GeoJsonApi(mContext, mGeoJsonService);
-        return new GeoJsonApiDataSource(geoJsonApi);
+        return new GeoJsonApiDataSource(geoJsonApi, mGeoDatabaseHelper);
     }
 
-    public GeoJsonDataSource createGeoJsonDatabaseDataSource(Long deploymentId) {
-        return new GeoJsonDatabaseDataSource(deploymentId, mGeoDatabaseHelper);
+    public GeoJsonDataSource createGeoJsonDatabaseDataSource() {
+        return new GeoJsonDatabaseDataSource(mGeoDatabaseHelper);
     }
 }

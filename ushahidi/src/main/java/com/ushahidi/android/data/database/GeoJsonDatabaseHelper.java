@@ -56,7 +56,7 @@ public class GeoJsonDatabaseHelper extends BaseDatabaseHelper {
         return Observable.create(subscriber -> {
             final GeoJsonEntity geoJsonEntity = cupboard()
                     .withDatabase(getReadableDatabase()).query(GeoJsonEntity.class)
-                    .withProjection("mDeploymentId = ?", String.valueOf(deploymentId)).get();
+                    .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).get();
             if (geoJsonEntity != null) {
                 subscriber.onNext(geoJsonEntity);
                 subscriber.onCompleted();

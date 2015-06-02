@@ -15,24 +15,11 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.repository.datasource.tag;
-
-import com.ushahidi.android.data.entity.TagEntity;
-
-import java.util.List;
-
-import rx.Observable;
+package com.ushahidi.android.data.exception;
 
 /**
- * Data source for {@link TagEntity}
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface TagDataSource {
+public class TagNotFoundException extends Exception {
 
-    Observable<List<TagEntity>> getTagList(Long deploymentId);
-
-    Observable<Long> putTag(List<TagEntity> tag);
-
-    Observable<Boolean> deleteTag(TagEntity tagEntity);
 }

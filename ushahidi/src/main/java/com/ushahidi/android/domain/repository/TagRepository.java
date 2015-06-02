@@ -41,12 +41,12 @@ public interface TagRepository {
      *
      * @param entity The entity to be added.
      */
-    Observable<Long> putTag(Tag entity);
+    Observable<Long> putTag(List<Tag> entity);
 
     /**
      * Delete an existing {@link Tag} in a storage.
      *
-     * @param id The entity's id to be deleted.
+     * @param tag The tag to be deleted.
      */
-    Observable<Long> deleteTag(Long id);
+    Observable<Boolean> deleteTag(Tag tag);
 }

@@ -18,10 +18,12 @@
 package com.ushahidi.android.data.repository.datasource.tag;
 
 import com.ushahidi.android.data.api.TagApi;
+import com.ushahidi.android.data.database.TagDatabaseHelper;
 import com.ushahidi.android.data.entity.TagEntity;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -34,26 +36,49 @@ import rx.Observable;
  */
 public class TagApiDataSource implements TagDataSource {
 
+
     private final TagApi mTagApi;
 
-    public TagApiDataSource(@NonNull TagApi tagApi) {
+    private final TagDatabaseHelper mTagDatabaseHelper;
+
+    public TagApiDataSource(@NonNull TagApi tagApi, TagDatabaseHelper tagDatabaseHelper) {
         mTagApi = tagApi;
+        mTagDatabaseHelper = tagDatabaseHelper;
     }
 
     @Override
-    public Observable<List<TagEntity>> getTagList() {
-        return mTagApi.getGeoJson();
+    public Observable<List<TagEntity>> getTagList(Long deploymentId) {
+        return mTagApi.getGeoJson()
+                .doOnNext(tag -> mTagDatabaseHelper.putTags(setDeploymentId(tag, deploymentId)));
     }
 
     @Override
-    public Observable<Long> putTag(TagEntity tag) {
+    public Observable<Long> putTag(List<TagEntity> tagList) {
         // Do nothing. For now we're posting tags via the API
         return null;
     }
 
     @Override
-    public Observable<Long> deleteTag(Long id) {
+    public Observable<Boolean> deleteTag(TagEntity tagEntity) {
         // Do nothing. For now we're not deleting tags via the API
         return null;
+    }
+
+    /**
+     * Set the deployment ID for the TagEntity since it's not set by the
+     * API
+     *
+     * @param tagEntities  The TagEntity to set the deployment Id on
+     * @param deploymentId The ID of the deployment to set
+     * @return observable
+     */
+    private List<TagEntity> setDeploymentId(List<TagEntity> tagEntities,
+            Long deploymentId) {
+        List<TagEntity> tagEntityList = new ArrayList<>(tagEntities.size());
+        for (TagEntity tagEntity : tagEntities) {
+            tagEntity.setDeploymentId(deploymentId);
+            tagEntityList.add(tagEntity);
+        }
+        return tagEntityList;
     }
 }

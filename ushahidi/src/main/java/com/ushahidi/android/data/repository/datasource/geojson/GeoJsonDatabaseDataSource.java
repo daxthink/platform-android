@@ -31,17 +31,14 @@ public class GeoJsonDatabaseDataSource implements GeoJsonDataSource {
 
     private final GeoJsonDatabaseHelper mGeoJsonDatabaseHelper;
 
-    private final Long mDeploymentId;
-
-    public GeoJsonDatabaseDataSource(@NonNull Long deploymentId,
+    public GeoJsonDatabaseDataSource(
             @NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
-        mDeploymentId = deploymentId;
         mGeoJsonDatabaseHelper = geoJsonDatabaseHelper;
     }
 
     @Override
-    public Observable<GeoJsonEntity> getGeoJsonList() {
-        return mGeoJsonDatabaseHelper.getGeoJson(mDeploymentId);
+    public Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId) {
+        return mGeoJsonDatabaseHelper.getGeoJson(deploymentId);
     }
 
     @Override

@@ -17,12 +17,42 @@
 
 package com.ushahidi.android.data.repository.datasource.tag;
 
+import com.ushahidi.android.data.database.TagDatabaseHelper;
+import com.ushahidi.android.data.entity.TagEntity;
+
+import android.support.annotation.NonNull;
+
+import java.util.List;
+
+import rx.Observable;
+
 /**
  * Data source for manipulating {@link com.ushahidi.android.data.entity.TagEntity} data to and from
  * the database.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagDatabaseDataSource {
+public class TagDatabaseDataSource implements TagDataSource {
 
+    private final TagDatabaseHelper mTagDatabaseHelper;
+
+    public TagDatabaseDataSource(
+            @NonNull TagDatabaseHelper tagDatabaseHelper) {
+        mTagDatabaseHelper = tagDatabaseHelper;
+    }
+
+    @Override
+    public Observable<List<TagEntity>> getTagList(Long deploymentId) {
+        return mTagDatabaseHelper.getTags(deploymentId);
+    }
+
+    @Override
+    public Observable<Long> putTag(List<TagEntity> tagEntityList) {
+        return mTagDatabaseHelper.putTags(tagEntityList);
+    }
+
+    @Override
+    public Observable<Boolean> deleteTag(TagEntity tagEntity) {
+        return mTagDatabaseHelper.deleteTag(tagEntity);
+    }
 }

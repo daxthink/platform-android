@@ -53,7 +53,8 @@ public class GeoJsonDataRepository implements GeoJsonRepository {
         if (from.equals(From.ONLINE)) {
             geoJsonDataSource = mGeoJsonDataSourceFactory.createGeoJsonApiDataSource();
         } else {
-            geoJsonDataSource = mGeoJsonDataSourceFactory.createGeoJsonDatabaseDataSource();
+            geoJsonDataSource = mGeoJsonDataSourceFactory
+                    .createGeoJsonDatabaseDataSource();
         }
         return geoJsonDataSource.getGeoJsonList(deploymentId)
                 .map((geojson) -> mGeoJsonEntityDataMapper.map(geojson));

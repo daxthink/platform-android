@@ -17,6 +17,15 @@
 
 package com.ushahidi.android.data.repository.datasource.tag;
 
+import com.ushahidi.android.data.api.TagApi;
+import com.ushahidi.android.data.api.service.TagService;
+import com.ushahidi.android.data.database.TagDatabaseHelper;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
+
 /**
  * Factory class for creating the various data source for the {@link
  * com.ushahidi.android.data.entity.TagEntity}
@@ -25,4 +34,37 @@ package com.ushahidi.android.data.repository.datasource.tag;
  */
 public class TagDataSourceFactory {
 
+    private final Context mContext;
+
+    private final TagDatabaseHelper mTagDatabaseHelper;
+
+    private TagService mTagService;
+
+    @Inject
+    public TagDataSourceFactory(@NonNull Context context,
+            @NonNull TagDatabaseHelper tagDatabaseHelper) {
+        mContext = context;
+        mTagDatabaseHelper = tagDatabaseHelper;
+    }
+
+    /**
+     * Call this to set the Tag API service
+     *
+     * @param tagService The tag service
+     */
+    public void setTagService(@NonNull TagService tagService) {
+        mTagService = tagService;
+    }
+
+    public TagDatabaseDataSource createTagDatabaseDataSource() {
+        return new TagDatabaseDataSource(mTagDatabaseHelper);
+    }
+
+    public TagDataSource createTagApiDataSource() {
+        if (mTagService == null) {
+            throw new RuntimeException("Please call setTagService(...)");
+        }
+        final TagApi tagApi = new TagApi(mContext, mTagService);
+        return new TagApiDataSource(tagApi, mTagDatabaseHelper);
+    }
 }

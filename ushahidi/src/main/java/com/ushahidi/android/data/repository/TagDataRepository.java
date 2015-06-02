@@ -18,6 +18,8 @@
 package com.ushahidi.android.data.repository;
 
 import com.ushahidi.android.data.entity.mapper.TagEntityDataMapper;
+import com.ushahidi.android.data.repository.datasource.tag.TagDataSource;
+import com.ushahidi.android.data.repository.datasource.tag.TagDataSourceFactory;
 import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.Tag;
 import com.ushahidi.android.domain.repository.TagRepository;
@@ -37,23 +39,36 @@ public class TagDataRepository implements TagRepository {
 
     private final TagEntityDataMapper mTagEntityDataMapper;
 
+    private final TagDataSourceFactory mTagDataSourceFactory;
+
     @Inject
-    public TagDataRepository(TagEntityDataMapper tagEntityDataMapper) {
+    public TagDataRepository(TagDataSourceFactory tagDataSourceFactory,
+            TagEntityDataMapper tagEntityDataMapper) {
+        mTagDataSourceFactory = tagDataSourceFactory;
         mTagEntityDataMapper = tagEntityDataMapper;
     }
 
     @Override
     public Observable<List<Tag>> getTagList(Long deploymentId, From from) {
-        return null;
+        TagDataSource tagDataSource;
+        if (from.equals(From.ONLINE)) {
+            tagDataSource = mTagDataSourceFactory.createTagApiDataSource();
+        } else {
+            tagDataSource = mTagDataSourceFactory.createTagDatabaseDataSource();
+        }
+        return tagDataSource.getTagList(deploymentId)
+                .map((tagEntities -> mTagEntityDataMapper.map(tagEntities)));
     }
 
     @Override
-    public Observable<Long> putTag(Tag entity) {
-        return null;
+    public Observable<Long> putTag(List<Tag> entity) {
+        final TagDataSource tagDataSource = mTagDataSourceFactory.createTagDatabaseDataSource();
+        return tagDataSource.putTag(mTagEntityDataMapper.unmap(entity));
     }
 
     @Override
-    public Observable<Long> deleteTag(Long id) {
-        return null;
+    public Observable<Boolean> deleteTag(Tag tag) {
+        final TagDataSource tagDataSource = mTagDataSourceFactory.createTagDatabaseDataSource();
+        return tagDataSource.deleteTag(mTagEntityDataMapper.map(tag));
     }
 }
