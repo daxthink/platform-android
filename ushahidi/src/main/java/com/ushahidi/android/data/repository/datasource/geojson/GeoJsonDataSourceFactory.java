@@ -46,6 +46,11 @@ public class GeoJsonDataSourceFactory {
         mGeoDatabaseHelper = geoJsonDatabaseHelper;
     }
 
+    /**
+     * Call this to set the GeoJson API service
+     *
+     * @param geoJsonService The GeoJsonService to use for fetching communicating with the API
+     */
     public void setGeoJsonService(@NonNull GeoJsonService geoJsonService) {
         mGeoJsonService = geoJsonService;
     }
@@ -55,7 +60,7 @@ public class GeoJsonDataSourceFactory {
         return new GeoJsonApiDataSource(geoJsonApi);
     }
 
-    public GeoJsonDataSource createGeoJsonDatabaseDataSource() {
-        return new GeoJsonDatabaseDataSource(mGeoDatabaseHelper);
+    public GeoJsonDataSource createGeoJsonDatabaseDataSource(Long deploymentId) {
+        return new GeoJsonDatabaseDataSource(deploymentId, mGeoDatabaseHelper);
     }
 }

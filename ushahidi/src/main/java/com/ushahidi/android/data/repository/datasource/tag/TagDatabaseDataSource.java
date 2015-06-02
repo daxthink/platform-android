@@ -17,22 +17,12 @@
 
 package com.ushahidi.android.data.repository.datasource.tag;
 
-import com.ushahidi.android.data.entity.TagEntity;
-
-import java.util.List;
-
-import rx.Observable;
-
 /**
- * Data source for {@link TagEntity}
+ * Data source for manipulating {@link com.ushahidi.android.data.entity.TagEntity} data to and from
+ * the database.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface TagDataSource {
+public class TagDatabaseDataSource {
 
-    Observable<List<TagEntity>> getTagList();
-
-    Observable<Long> putTag(TagEntity tag);
-
-    Observable<Long> deleteTag(Long id);
 }

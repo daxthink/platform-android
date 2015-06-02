@@ -30,10 +30,8 @@ public interface GeoJsonDataSource {
 
     /**
      * Get a list of {@link GeoJsonEntity}.
-     *
-     * @param deploymentId An {@link GeoJsonEntity}
      */
-    Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId);
+    Observable<GeoJsonEntity> getGeoJsonList();
 
     /**
      * Add/Update a {@link GeoJsonEntity}.

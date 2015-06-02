@@ -15,45 +15,45 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.repository;
+package com.ushahidi.android.data.repository.datasource.tag;
 
-import com.ushahidi.android.data.entity.mapper.TagEntityDataMapper;
-import com.ushahidi.android.domain.entity.From;
-import com.ushahidi.android.domain.entity.Tag;
-import com.ushahidi.android.domain.repository.TagRepository;
+import com.ushahidi.android.data.api.TagApi;
+import com.ushahidi.android.data.entity.TagEntity;
+
+import android.support.annotation.NonNull;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 
 /**
- * Implements {@link TagRepository} to provide tag data related manipulations
+ * Data source for manipulating {@link com.ushahidi.android.data.entity.TagEntity} data to and from
+ * the API.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagDataRepository implements TagRepository {
+public class TagApiDataSource implements TagDataSource {
 
-    private final TagEntityDataMapper mTagEntityDataMapper;
+    private final TagApi mTagApi;
 
-    @Inject
-    public TagDataRepository(TagEntityDataMapper tagEntityDataMapper) {
-        mTagEntityDataMapper = tagEntityDataMapper;
+    public TagApiDataSource(@NonNull TagApi tagApi) {
+        mTagApi = tagApi;
     }
 
     @Override
-    public Observable<List<Tag>> getTagList(Long deploymentId, From from) {
-        return null;
+    public Observable<List<TagEntity>> getTagList() {
+        return mTagApi.getGeoJson();
     }
 
     @Override
-    public Observable<Long> putTag(Tag entity) {
+    public Observable<Long> putTag(TagEntity tag) {
+        // Do nothing. For now we're posting tags via the API
         return null;
     }
 
     @Override
     public Observable<Long> deleteTag(Long id) {
+        // Do nothing. For now we're not deleting tags via the API
         return null;
     }
 }

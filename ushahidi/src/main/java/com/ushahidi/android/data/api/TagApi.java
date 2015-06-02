@@ -51,14 +51,12 @@ public class TagApi {
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
-     *
-     * @param deploymentId The ID of the deployment the GeoJson is fetched from.
      */
-    public Observable<GeoJsonEntity> getGeoJson(Long deploymentId) {
+    public Observable<List<TagEntity>> getGeoJson() {
         return Observable.create((subscriber) -> {
             if (isDeviceConnectedToInternet(mContext)) {
                 mTagService.getTags()
-                        .map((tags) -> setTags(tags, deploymentId));
+                        .map((tags) -> setTags(tags));
             } else {
                 subscriber.onError(new NetworkConnectionException());
             }
@@ -68,10 +66,9 @@ public class TagApi {
     /**
      * Sets the {@link GeoJsonEntity} entity properties from the {@link JsonElement}
      *
-     * @param deploymentId The ID of the deployment the GeoJson is fetched from.
-     * @param tags         The jsonElement to retrieve the raw JSON string from.
+     * @param tags The jsonElement to retrieve the raw JSON string from.
      */
-    private Observable<List<TagEntity>> setTags(Tags tags, Long deploymentId) {
+    private Observable<List<TagEntity>> setTags(Tags tags) {
         return Observable.create(subscriber -> {
             subscriber.onNext(tags.getTags());
             subscriber.onCompleted();
