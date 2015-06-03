@@ -53,7 +53,7 @@ public class PostModel extends Model {
 
     private transient Long mParent;
 
-    private UserModel mUser;
+    private UserProfileModel mUser;
 
     private Type mType;
 

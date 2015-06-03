@@ -48,8 +48,6 @@ public class TagEntityDataMapperTest {
 
     private static String TAG = "tag";
 
-    private static String SLUG = "slug";
-
     private static String COLOR = "color";
 
     private static TagEntity.Type TYPE = TagEntity.Type.CATEGORY;
@@ -85,11 +83,9 @@ public class TagEntityDataMapperTest {
         mTagEntity.setDescription(DESCRIPTION);
         mTagEntity.setParentId(PARENT_ID);
         mTagEntity.setPriority(PRIORITY);
-        mTagEntity.setSlug(SLUG);
         mTagEntity.setTag(TAG);
         mTagEntity.setType(TYPE);
         mTagEntity.setIcon(ICON);
-
         Tag tag = mTagEntityDataMapper.map(mTagEntity);
         assertThat(tag).isNotNull();
         assertThat(tag).isInstanceOf(Tag.class);
@@ -99,7 +95,6 @@ public class TagEntityDataMapperTest {
         assertThat(tag.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
         assertThat(tag.getColor()).isEqualTo(COLOR);
         assertThat(tag.getPriority()).isEqualTo(PRIORITY);
-        assertThat(tag.getSlug()).isEqualTo(SLUG);
         assertThat(tag.getTag()).isEqualTo(TAG);
         assertThat(tag.getType()).isEqualTo(Tag.Type.CATEGORY);
     }
@@ -114,11 +109,9 @@ public class TagEntityDataMapperTest {
         mTag.setDescription(DESCRIPTION);
         mTag.setParentId(PARENT_ID);
         mTag.setPriority(PRIORITY);
-        mTag.setSlug(SLUG);
         mTag.setTag(TAG);
         mTag.setType(Tag.Type.CATEGORY);
         mTag.setIcon(ICON);
-
         TagEntity tagEntity = mTagEntityDataMapper.map(mTag);
         assertThat(tagEntity).isNotNull();
         assertThat(tagEntity).isInstanceOf(TagEntity.class);
@@ -128,7 +121,6 @@ public class TagEntityDataMapperTest {
         assertThat(tagEntity.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
         assertThat(tagEntity.getColor()).isEqualTo(COLOR);
         assertThat(tagEntity.getPriority()).isEqualTo(PRIORITY);
-        assertThat(tagEntity.getSlug()).isEqualTo(SLUG);
         assertThat(tagEntity.getTag()).isEqualTo(TAG);
         assertThat(tagEntity.getType()).isEqualTo(TYPE);
     }
@@ -143,7 +135,6 @@ public class TagEntityDataMapperTest {
         mTagEntity.setDescription(DESCRIPTION);
         mTagEntity.setParentId(PARENT_ID);
         mTagEntity.setPriority(PRIORITY);
-        mTagEntity.setSlug(SLUG);
         mTagEntity.setTag(TAG);
         mTagEntity.setType(TYPE);
         mTagEntity.setIcon(ICON);
@@ -159,7 +150,6 @@ public class TagEntityDataMapperTest {
         assertThat(tagList.get(0).getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
         assertThat(tagList.get(0).getColor()).isEqualTo(COLOR);
         assertThat(tagList.get(0).getPriority()).isEqualTo(PRIORITY);
-        assertThat(tagList.get(0).getSlug()).isEqualTo(SLUG);
         assertThat(tagList.get(0).getTag()).isEqualTo(TAG);
         assertThat(tagList.get(0).getType()).isEqualTo(Tag.Type.CATEGORY);
     }

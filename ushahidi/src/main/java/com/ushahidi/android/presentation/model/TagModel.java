@@ -32,8 +32,6 @@ public class TagModel extends Model {
 
     private String mTag;
 
-    private String mSlug;
-
     private String mColor;
 
     private Type mType;
@@ -62,14 +60,6 @@ public class TagModel extends Model {
 
     public void setTag(String tag) {
         mTag = tag;
-    }
-
-    public String getSlug() {
-        return mSlug;
-    }
-
-    public void setSlug(String slug) {
-        mSlug = slug;
     }
 
     public Type getType() {
@@ -149,7 +139,6 @@ public class TagModel extends Model {
         return "Tag{" +
                 "mParentId=" + mParentId +
                 ", mTag='" + mTag + '\'' +
-                ", mSlug='" + mSlug + '\'' +
                 ", mColor='" + mColor + '\'' +
                 ", mType=" + mType +
                 ", mIcon='" + mIcon + '\'' +

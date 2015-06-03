@@ -22,11 +22,11 @@ import com.addhen.android.raiburari.presentation.model.Model;
 import java.util.Date;
 
 /**
- * UserModel
+ * UserProfileModel
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserModel extends Model {
+public class UserProfileModel extends Model {
 
     public enum Role {
         ADMIN("admin"),
@@ -42,16 +42,6 @@ public class UserModel extends Model {
         public String toString() {
             return value;
         }
-    }
-
-    private Long _id;
-
-    public Long getId() {
-        return _id;
-    }
-
-    public void setId(Long id) {
-        _id = id;
     }
 
     private String mEmail;
@@ -127,8 +117,8 @@ public class UserModel extends Model {
 
     @Override
     public String toString() {
-        return "UserModel {" +
-                "_id=" + getId() +
+        return "UserProfileModel {" +
+                "_id=" + _id +
                 ", mEmail='" + mEmail + '\'' +
                 ", mRealName='" + mRealName + '\'' +
                 ", mUsername='" + mUsername + '\'' +

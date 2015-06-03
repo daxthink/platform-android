@@ -135,7 +135,7 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "UserModel {" +
+        return "UserProfileModel {" +
                 "_id=" + getId() +
                 ", mEmail='" + mEmail + '\'' +
                 ", mRealName='" + mRealName + '\'' +

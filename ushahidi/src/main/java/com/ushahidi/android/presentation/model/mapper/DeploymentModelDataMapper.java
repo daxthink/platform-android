@@ -19,6 +19,8 @@ package com.ushahidi.android.presentation.model.mapper;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +43,7 @@ public class DeploymentModelDataMapper {
      * @param deployment The {@link Deployment} to be mapped
      * @return The {@link DeploymentModel} entity
      */
-    public DeploymentModel map(Deployment deployment) {
-        if (deployment == null) {
-            throw new IllegalArgumentException("Cannot map a null value");
-        }
-
+    public DeploymentModel map(@NonNull Deployment deployment) {
         DeploymentModel deploymentModel = new DeploymentModel();
         deploymentModel._id = deployment._id;
         deploymentModel.setStatus(DeploymentModel.Status.valueOf(deployment.getStatus().name()));
@@ -61,12 +59,7 @@ public class DeploymentModelDataMapper {
      * @return The {@link Deployment} entity
      */
 
-    public Deployment map(DeploymentModel deploymentModel) {
-
-        if (deploymentModel == null) {
-            throw new IllegalArgumentException("Cannot unmap a null value");
-        }
-
+    public Deployment map(@NonNull DeploymentModel deploymentModel) {
         Deployment deployment = new Deployment();
         deployment.setTitle(deploymentModel.getTitle());
         deployment.setStatus(Deployment.Status.valueOf(deploymentModel.getStatus().name()));
@@ -82,7 +75,7 @@ public class DeploymentModelDataMapper {
      * @param deploymentList List to be mapped.
      * @return {@link DeploymentModel}
      */
-    public List<DeploymentModel> map(List<Deployment> deploymentList) {
+    public List<DeploymentModel> map(@NonNull List<Deployment> deploymentList) {
         List<DeploymentModel> deploymentModels = new ArrayList<>();
 
         if (deploymentList != null && !deploymentList.isEmpty()) {
@@ -100,7 +93,7 @@ public class DeploymentModelDataMapper {
      * @param deploymentModels List to be unmapped.
      * @return {@link DeploymentModel}
      */
-    public List<Deployment> unmap(List<DeploymentModel> deploymentModels) {
+    public List<Deployment> unmap(@NonNull List<DeploymentModel> deploymentModels) {
         List<Deployment> deploymentModelList = new ArrayList<>();
 
         if (deploymentModels != null && !deploymentModels.isEmpty()) {
