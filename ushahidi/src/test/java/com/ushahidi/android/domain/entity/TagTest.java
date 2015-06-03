@@ -44,8 +44,6 @@ public class TagTest {
 
     private static String TAG = "tag";
 
-    private static String SLUG = "slug";
-
     private static String COLOR = "color";
 
     private static Tag.Type TYPE = Tag.Type.CATEGORY;
@@ -71,7 +69,6 @@ public class TagTest {
     public void shouldSetTag() {
         mTag._id = DUMMY_ID;
         mTag.setDeploymentId(DEPLOYMENT_ID);
-        mTag.setSlug(SLUG);
         mTag.setCreated(CREATED);
         mTag.setIcon(ICON);
         mTag.setPriority(PRIORITY);
@@ -83,8 +80,6 @@ public class TagTest {
 
         assertThat(mTag).isNotNull();
         assertThat(mTag).isInstanceOf(Tag.class);
-        assertThat(mTag.getSlug()).isNotNull();
-        assertThat(mTag.getSlug()).isEqualTo(SLUG);
         assertThat(mTag.getDeploymentId()).isNotNull();
         assertThat(mTag.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
         assertThat(mTag.getCreated()).isNotNull();

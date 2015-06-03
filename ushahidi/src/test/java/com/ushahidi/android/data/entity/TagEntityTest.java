@@ -44,8 +44,6 @@ public class TagEntityTest {
 
     private static String TAG = "tag";
 
-    private static String SLUG = "slug";
-
     private static String COLOR = "color";
 
     private static TagEntity.Type TYPE = TagEntity.Type.CATEGORY;
@@ -71,7 +69,6 @@ public class TagEntityTest {
     public void shouldSetTagEntity() {
         mTagEntity._id = DUMMY_ID;
         mTagEntity.setDeploymentId(DEPLOYMENT_ID);
-        mTagEntity.setSlug(SLUG);
         mTagEntity.setCreated(CREATED);
         mTagEntity.setIcon(ICON);
         mTagEntity.setPriority(PRIORITY);
@@ -83,8 +80,6 @@ public class TagEntityTest {
 
         assertThat(mTagEntity).isNotNull();
         assertThat(mTagEntity).isInstanceOf(TagEntity.class);
-        assertThat(mTagEntity.getSlug()).isNotNull();
-        assertThat(mTagEntity.getSlug()).isEqualTo(SLUG);
         assertThat(mTagEntity.getDeploymentId()).isNotNull();
         assertThat(mTagEntity.getDeploymentId()).isEqualTo(DEPLOYMENT_ID);
         assertThat(mTagEntity.getCreated()).isNotNull();

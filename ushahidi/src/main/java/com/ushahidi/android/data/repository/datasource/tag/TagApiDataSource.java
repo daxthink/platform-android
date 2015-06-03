@@ -48,7 +48,7 @@ public class TagApiDataSource implements TagDataSource {
 
     @Override
     public Observable<List<TagEntity>> getTagList(Long deploymentId) {
-        return mTagApi.getGeoJson()
+        return mTagApi.getTags()
                 .doOnNext(tag -> mTagDatabaseHelper.putTags(setDeploymentId(tag, deploymentId)));
     }
 

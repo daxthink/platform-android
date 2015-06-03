@@ -56,7 +56,6 @@ public class TagEntityDataMapper {
             tag.setColor(tagEntity.getColor());
             tag.setType(Tag.Type.valueOf(tagEntity.getType().name()));
             tag.setTag(tagEntity.getTag());
-            tag.setSlug(tagEntity.getSlug());
         }
 
         return tag;
@@ -77,7 +76,6 @@ public class TagEntityDataMapper {
             tagEntity.setTag(tag.getTag());
             tagEntity.setColor(tag.getColor());
             tagEntity.setType(TagEntity.Type.valueOf(tag.getType().name()));
-            tagEntity.setSlug(tag.getSlug());
         }
         return tagEntity;
     }
