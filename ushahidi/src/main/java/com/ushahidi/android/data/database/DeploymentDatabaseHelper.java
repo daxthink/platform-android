@@ -24,11 +24,6 @@ public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
         super(context);
     }
 
-    @Override
-    protected void setupTable() {
-        cupboard().register(DeploymentEntity.class);
-    }
-
     public Observable<DeploymentEntity> getByStatus(final DeploymentEntity.Status status) {
         return Observable.create((subscriber) -> {
             final DeploymentEntity deploymentEntity = get(status);

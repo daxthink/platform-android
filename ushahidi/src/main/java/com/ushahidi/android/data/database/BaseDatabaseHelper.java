@@ -1,6 +1,14 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.data.database.converter.EnumEntityFieldConverter;
+import com.ushahidi.android.data.database.converter.PostEntityConverter;
+import com.ushahidi.android.data.entity.DeploymentEntity;
+import com.ushahidi.android.data.entity.GeoJsonEntity;
+import com.ushahidi.android.data.entity.PostEntity;
+import com.ushahidi.android.data.entity.PostTagEntity;
+import com.ushahidi.android.data.entity.TagEntity;
+import com.ushahidi.android.data.entity.UserEntity;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,10 +19,14 @@ import android.util.Log;
 
 import java.util.List;
 
+import nl.qbusict.cupboard.Cupboard;
+import nl.qbusict.cupboard.CupboardBuilder;
+import nl.qbusict.cupboard.CupboardFactory;
 import nl.qbusict.cupboard.annotation.Index;
 import nl.qbusict.cupboard.convert.EntityConverter;
 import nl.qbusict.cupboard.convert.EntityConverter.Column;
 import nl.qbusict.cupboard.convert.EntityConverter.ColumnType;
+import nl.qbusict.cupboard.convert.EntityConverterFactory;
 import nl.qbusict.cupboard.internal.IndexStatement;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
@@ -36,7 +48,35 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
 
     private static final int LAST_DATABASE_NUKE_VERSION = 1;
 
-    protected abstract void setupTable();
+    private static final Class[] ENTITIES = new Class[]{DeploymentEntity.class, UserEntity.class,
+            TagEntity.class, PostTagEntity.class, PostEntity.class,
+            GeoJsonEntity.class};
+
+
+    static {
+        EntityConverterFactory factory = new EntityConverterFactory() {
+
+            @Override
+            public <T> EntityConverter<T> create(Cupboard cupboard, Class<T> type) {
+                if (type == PostEntity.class) {
+                    return (EntityConverter<T>) new PostEntityConverter(cupboard);
+                }
+                return null;
+            }
+        };
+        CupboardFactory.setCupboard(new CupboardBuilder()
+                .registerFieldConverter(UserEntity.Role.class,
+                        new EnumEntityFieldConverter<>(UserEntity.Role.class))
+                .registerFieldConverter(TagEntity.Type.class,
+                        new EnumEntityFieldConverter<>(TagEntity.Type.class))
+                .registerEntityConverterFactory(factory).useAnnotations().build());
+
+        // Register our entities
+        for (Class<?> clazz : ENTITIES) {
+            cupboard().register(clazz);
+        }
+    }
+
 
     public BaseDatabaseHelper(@NonNull Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,7 +86,6 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
     public final void onCreate(SQLiteDatabase db) {
         // This will ensure that all tables are created
         // Setup cupboard
-        setupTable();
         createTables(db);
     }
 

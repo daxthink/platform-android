@@ -41,11 +41,6 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
         super(context);
     }
 
-    @Override
-    protected void setupTable() {
-        cupboard().register(UserEntity.class);
-    }
-
     /**
      * Gets {@link UserEntity} from the database.
      *

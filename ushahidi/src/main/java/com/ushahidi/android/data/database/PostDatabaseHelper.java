@@ -45,11 +45,6 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         super(context);
     }
 
-    @Override
-    protected void setupTable() {
-
-    }
-
     public Observable<List<PostEntity>> getPostList(Long deploymentId) {
         return Observable.create(subscriber -> {
             final List<PostEntity> postEntities = getPosts(deploymentId);

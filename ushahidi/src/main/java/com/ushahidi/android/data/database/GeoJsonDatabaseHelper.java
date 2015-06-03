@@ -42,11 +42,6 @@ public class GeoJsonDatabaseHelper extends BaseDatabaseHelper {
         super(context);
     }
 
-    @Override
-    protected void setupTable() {
-        cupboard().register(GeoJsonEntity.class);
-    }
-
     /**
      * Gets {@link GeoJsonEntity} from the database.
      *

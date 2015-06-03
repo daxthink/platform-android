@@ -41,11 +41,6 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
         super(context);
     }
 
-    @Override
-    protected void setupTable() {
-        cupboard().register(TagEntity.class);
-    }
-
     public Observable<List<TagEntity>> getTags(Long deploymentId) {
         return Observable.create(subscriber -> {
             final List<TagEntity> tagEntityList = cupboard()
