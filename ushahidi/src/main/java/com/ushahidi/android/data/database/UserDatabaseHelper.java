@@ -17,7 +17,8 @@
 
 package com.ushahidi.android.data.database;
 
-import com.ushahidi.android.data.entity.TagEntity;
+import com.ushahidi.android.data.entity.UserEntity;
+import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
 
 import android.content.Context;
@@ -30,29 +31,47 @@ import rx.Observable;
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
- * Database helper for manipulating data cached on the device for {@link
- * com.ushahidi.android.data.entity.TagEntity}
+ * Users database helper
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagDatabaseHelper extends BaseDatabaseHelper {
+public class UserDatabaseHelper extends BaseDatabaseHelper {
 
-    public TagDatabaseHelper(@NonNull Context context) {
+    public UserDatabaseHelper(@NonNull Context context) {
         super(context);
     }
 
     @Override
     protected void setupTable() {
-        cupboard().register(TagEntity.class);
+        cupboard().register(UserEntity.class);
     }
 
-    public Observable<List<TagEntity>> getTags(Long deploymentId) {
+    /**
+     * Gets {@link UserEntity} from the database.
+     *
+     * @param deploymentId The deployment ID to be used for fetching the {@link UserEntity}
+     */
+    public Observable<UserEntity> getUserProfile(Long deploymentId) {
         return Observable.create(subscriber -> {
-            final List<TagEntity> tagEntityList = cupboard()
-                    .withDatabase(getReadableDatabase()).query(TagEntity.class)
+            final UserEntity userEntity = cupboard()
+                    .withDatabase(getReadableDatabase()).query(UserEntity.class)
+                    .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).get();
+            if (userEntity != null) {
+                subscriber.onNext(userEntity);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(new GeoJsonNotFoundException());
+            }
+        });
+    }
+
+    public Observable<List<UserEntity>> getUserProfiles(Long deploymentId) {
+        return Observable.create(subscriber -> {
+            final List<UserEntity> userEntityList = cupboard()
+                    .withDatabase(getReadableDatabase()).query(UserEntity.class)
                     .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
-            if (tagEntityList != null) {
-                subscriber.onNext(tagEntityList);
+            if (userEntityList != null) {
+                subscriber.onNext(userEntityList);
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(new TagNotFoundException());
@@ -60,27 +79,12 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
-    public Observable<Long> putTags(List<TagEntity> tags) {
-        return Observable.create(subscriber -> {
-            if (!isClosed()) {
-                try {
-                    cupboard().withDatabase(getWritableDatabase()).put(tags);
-                } catch (Exception e) {
-                    subscriber.onError(e);
-                }
-                // Pass 1 to fulfill the return type of the observable
-                subscriber.onNext(1l);
-                subscriber.onCompleted();
-            }
-        });
-    }
-
-    public Observable<Boolean> deleteTag(TagEntity tagEntity) {
+    public Observable<Boolean> deleteUserProfile(UserEntity userProfile) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
                 Boolean status = false;
                 try {
-                    status = cupboard().withDatabase(getWritableDatabase()).delete(tagEntity);
+                    status = cupboard().withDatabase(getWritableDatabase()).delete(userProfile);
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }

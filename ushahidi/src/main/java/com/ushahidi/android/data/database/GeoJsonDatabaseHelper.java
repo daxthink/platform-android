@@ -50,7 +50,7 @@ public class GeoJsonDatabaseHelper extends BaseDatabaseHelper {
     /**
      * Gets {@link GeoJsonEntity} from the database.
      *
-     * @param deploymentId The deployment ID to be used from fetching the {@link GeoJsonEntity}
+     * @param deploymentId The deployment ID to be used for fetching the {@link GeoJsonEntity}
      */
     public Observable<GeoJsonEntity> getGeoJson(Long deploymentId) {
         return Observable.create(subscriber -> {
