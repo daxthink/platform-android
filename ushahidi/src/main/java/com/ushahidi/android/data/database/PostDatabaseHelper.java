@@ -17,8 +17,22 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.PostEntity;
+import com.ushahidi.android.data.entity.PostTagEntity;
+import com.ushahidi.android.data.entity.TagEntity;
+import com.ushahidi.android.data.exception.PostNotFoundException;
+
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+
+import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
  * Posts database helper
@@ -34,5 +48,151 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     @Override
     protected void setupTable() {
 
+    }
+
+    public Observable<List<PostEntity>> getPostList(Long deploymentId) {
+        return Observable.create(subscriber -> {
+            final List<PostEntity> postEntities = getPosts(deploymentId);
+            if (postEntities != null) {
+                subscriber.onNext(setPostEntityList(postEntities));
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(new PostNotFoundException());
+            }
+        });
+    }
+
+    public Observable<PostEntity> getPostEntity(Long deploymentId, Long postId) {
+        return Observable.create(subscriber -> {
+            final PostEntity postEntity = get(deploymentId, postId);
+            if (postEntity != null) {
+                List<TagEntity> tags = getTagEntity(postEntity);
+                postEntity.setTags(tags);
+                subscriber.onNext(postEntity);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(new PostNotFoundException());
+            }
+        });
+
+    }
+
+    public Observable<Long> putPosts(List<PostEntity> postEntities) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                for (PostEntity postEntity : postEntities) {
+                    // Delete existing posttag entities
+                    // Lame way to avoid duplicates because the ID is auto generated upon insertion
+                    // and we wouldn't know by then so they can't be replaced with it already exist
+                    deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                    puts(postEntity, subscriber);
+                }
+            }
+        });
+    }
+
+    public Observable<Boolean> deletePost(PostEntity postEntity) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                Boolean status = false;
+                try {
+                    status = cupboard().withDatabase(getWritableDatabase()).delete(postEntity);
+                    if (status) {
+                        // Delete tags associated with the post to keep them from being
+                        // orphaned
+                        deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                    }
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+                subscriber.onNext(status);
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<List<PostEntity>> search(Long deploymentId, String query) {
+        return Observable.create(subscriber -> {
+            String selection = " mTitle like ? OR mContent like ? AND deploymentId = ?";
+            String args[] = {query + "%", query + "%", String.valueOf(deploymentId)};
+            // Post title holds the search term
+            List<PostEntity> postEntities = cupboard().withDatabase(getReadableDatabase()).query(
+                    PostEntity.class).withSelection(selection, args).list();
+            subscriber.onNext(setPostEntityList(postEntities));
+            subscriber.onCompleted();
+        });
+    }
+
+    private List<PostEntity> getPosts(final Long deploymentId) {
+        return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class)
+                .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
+    }
+
+    private PostEntity get(Long postId, Long deploymentId) {
+        return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class)
+                .byId(postId).withSelection("mDeploymentId = ? ", String.valueOf(deploymentId))
+                .get();
+    }
+
+    private List<TagEntity> getTagEntity(PostEntity postEntity) {
+        List<TagEntity> tagEntityList = new ArrayList<>();
+        // Fetch Tags attached to a post by querying the post entity
+        // table to get the tag IDs
+        List<PostTagEntity> postTagEntityList = cupboard().withDatabase(getReadableDatabase())
+                .query(PostTagEntity.class)
+                .withSelection("mDeploymentId = ?", String.valueOf(postEntity.getDeploymentId()))
+                .withSelection("mPostId = ?", String.valueOf(postEntity._id)).list();
+        // Iterate through the fetched post tag entity to fetch for the
+        // tags attached to the post. This is a manual way of dealing
+        // entity relationships
+        for (PostTagEntity postTagEntity : postTagEntityList) {
+            TagEntity tagEntity = cupboard().withDatabase(getReadableDatabase())
+                    .get(TagEntity.class, postTagEntity.getTagId());
+            tagEntityList.add(tagEntity);
+        }
+        return tagEntityList;
+    }
+
+    private void puts(final PostEntity postEntity, Subscriber subscribers) {
+        SQLiteDatabase db = getReadableDatabase();
+        try {
+            db.beginTransaction();
+            Long rows = cupboard().withDatabase(db).put(postEntity);
+            if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
+                    postEntity.getPostTagEntityList().size() > 0)) {
+                for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
+                    postTagEntity.setPostId(postEntity._id);
+                    postTagEntity.setDeploymentId(postEntity.getDeploymentId());
+                    cupboard().withDatabase(db).put(postTagEntity);
+                }
+            }
+            db.setTransactionSuccessful();
+            subscribers.onNext(rows);
+            subscribers.onCompleted();
+        } catch (Exception e) {
+            subscribers.onError(e);
+        } finally {
+            if (db != null) {
+                db.endTransaction();
+            }
+        }
+    }
+
+    private void deletePostTagEntity(Long deploymentId, Long postId) {
+        final String[] selectionArgs = {String.valueOf(deploymentId),
+                String.valueOf(postId)};
+        final String selection = "mDeploymentId = ? AND mPostId = ?";
+        cupboard().withDatabase(getWritableDatabase())
+                .delete(PostTagEntity.class, selection, selectionArgs);
+    }
+
+    private List<PostEntity> setPostEntityList(List<PostEntity> postEntities) {
+        final List<PostEntity> postEntityList = new ArrayList<>();
+        for (PostEntity postEntity : postEntities) {
+            List<TagEntity> tags = getTagEntity(postEntity);
+            postEntity.setTags(tags);
+            postEntityList.add(postEntity);
+        }
+        return postEntityList;
     }
 }

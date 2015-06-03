@@ -17,8 +17,6 @@
 
 package com.ushahidi.android.data.api;
 
-import com.google.gson.JsonElement;
-
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.service.TagService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
@@ -52,7 +50,7 @@ public class TagApi {
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
-    public Observable<List<TagEntity>> getGeoJson() {
+    public Observable<List<TagEntity>> getTags() {
         return Observable.create((subscriber) -> {
             if (isDeviceConnectedToInternet(mContext)) {
                 mTagService.getTags()

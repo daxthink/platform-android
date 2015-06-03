@@ -20,21 +20,21 @@ package com.ushahidi.android.data.exception;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagNotFoundException extends Exception {
+public class PostNotFoundException extends Exception {
 
-    public TagNotFoundException() {
+    public PostNotFoundException() {
         super();
     }
 
-    public TagNotFoundException(final String message) {
+    public PostNotFoundException(final String message) {
         super(message);
     }
 
-    public TagNotFoundException(final String message, final Throwable cause) {
+    public PostNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public TagNotFoundException(final Throwable cause) {
+    public PostNotFoundException(final Throwable cause) {
         super(cause);
     }
 }

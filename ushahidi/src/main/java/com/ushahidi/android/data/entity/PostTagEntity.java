@@ -31,6 +31,8 @@ public class PostTagEntity {
 
     private Long _id;
 
+    private long mDeploymentId;
+
     public Long getId() {
         return _id;
     }
@@ -55,11 +57,21 @@ public class PostTagEntity {
         mTagId = tagId;
     }
 
+    public long getDeploymentId() {
+        return mDeploymentId;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
     @Override
     public String toString() {
         return "PostTagEntity{" +
                 "mPostId=" + mPostId +
                 ", mTagId=" + mTagId +
+                ", _id=" + _id +
+                ", mDeploymentId=" + mDeploymentId +
                 '}';
     }
 }
