@@ -15,43 +15,14 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
-
-import com.addhen.android.raiburari.data.entity.DataEntity;
+package com.ushahidi.android.presentation.model;
 
 /**
- * GeoJson Data Entity
+ * Use to set where to pull data from
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonEntity extends DataEntity {
 
-    private String mGeoJson;
-
-    private Long mDeploymentId;
-
-    public String getGeoJson() {
-        return mGeoJson;
-    }
-
-    public void setGeoJson(String geoJson) {
-        mGeoJson = geoJson;
-    }
-
-    public Long getDeploymentId() {
-        return mDeploymentId;
-    }
-
-    public void setDeploymentId(Long deploymentId) {
-        mDeploymentId = deploymentId;
-    }
-
-    @Override
-    public String toString() {
-        return "GeoJsonModel{" +
-                "mID='" + _id + '\'' +
-                "mDeploymentId='" + mDeploymentId + '\'' +
-                ", geojson='" + mGeoJson + '\'' +
-                '}';
-    }
+public enum FromModel {
+    ONLINE, DATABASE
 }

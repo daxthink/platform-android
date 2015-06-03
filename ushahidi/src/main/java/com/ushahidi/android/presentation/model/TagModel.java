@@ -1,35 +1,38 @@
 /*
- * Copyright (c) 2015 Ushahidi.
+ * Copyright (c) 2015 Ushahidi Inc
+ *
  * This program is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License as published by the Free
- * Software Foundation, either version 3 of the License, or (at your option)
- * any later version.
+ *  the terms of the GNU Affero General Public License as published by the Free
+ *  Software Foundation, either version 3 of the License, or (at your option)
+ *  any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program in the file LICENSE-AGPL. If not, see
- * https://www.gnu.org/licenses/agpl-3.0.html
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program in the file LICENSE-AGPL. If not, see
+ *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.domain.entity;
+package com.ushahidi.android.presentation.model;
 
-import com.addhen.android.raiburari.domain.entity.Entity;
+import com.addhen.android.raiburari.presentation.model.Model;
 
 import java.util.Date;
 
 /**
- * Tag Entity
+ * Tag model
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Tag extends Entity {
+public class TagModel extends Model {
 
     private Long mParentId;
 
     private String mTag;
+
+    private String mSlug;
 
     private String mColor;
 
@@ -59,6 +62,14 @@ public class Tag extends Entity {
 
     public void setTag(String tag) {
         mTag = tag;
+    }
+
+    public String getSlug() {
+        return mSlug;
+    }
+
+    public void setSlug(String slug) {
+        mSlug = slug;
     }
 
     public Type getType() {
@@ -138,7 +149,7 @@ public class Tag extends Entity {
         return "Tag{" +
                 "mParentId=" + mParentId +
                 ", mTag='" + mTag + '\'' +
-                ", mId='" + _id + '\'' +
+                ", mSlug='" + mSlug + '\'' +
                 ", mColor='" + mColor + '\'' +
                 ", mType=" + mType +
                 ", mIcon='" + mIcon + '\'' +

@@ -17,9 +17,13 @@
 
 package com.ushahidi.android.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import com.addhen.android.raiburari.data.entity.DataEntity;
 
 import java.util.Date;
+
+import nl.qbusict.cupboard.annotation.Ignore;
 
 /**
  * Tag data entity
@@ -28,32 +32,42 @@ import java.util.Date;
  */
 public class TagEntity extends DataEntity {
 
-    private Long mParentId;
+    @SerializedName("parent")
+    @Ignore // Make cupboard ignore this field
+    //For some reasons gson expects this field otherwise it throws errros
+    private Parent parent;
 
+    private transient Long mParent;
+
+    @SerializedName("tag")
     private String mTag;
 
-    private String mSlug;
-
+    @SerializedName("color")
     private String mColor;
 
+    @SerializedName("type")
     private Type mType;
 
+    @SerializedName("icon")
     private String mIcon;
 
+    @SerializedName("description")
     private String mDescription;
 
+    @SerializedName("priority")
     private int mPriority;
 
+    @SerializedName("created")
     private Date mCreated;
 
     private Long mDeploymentId;
 
     public Long getParentId() {
-        return mParentId;
+        return mParent;
     }
 
     public void setParentId(Long parentId) {
-        mParentId = parentId;
+        mParent = parentId;
     }
 
     public String getTag() {
@@ -62,14 +76,6 @@ public class TagEntity extends DataEntity {
 
     public void setTag(String tag) {
         mTag = tag;
-    }
-
-    public String getSlug() {
-        return mSlug;
-    }
-
-    public void setSlug(String slug) {
-        mSlug = slug;
     }
 
     public Type getType() {
@@ -129,7 +135,9 @@ public class TagEntity extends DataEntity {
     }
 
     public enum Type {
+        @SerializedName("category")
         CATEGORY("category"),
+        @SerializedName("status")
         STATUS("status");
 
         public final String value;
@@ -144,12 +152,22 @@ public class TagEntity extends DataEntity {
         }
     }
 
+    public static class Parent {
+
+        @SerializedName("id")
+        private Long id;
+
+        public Long getId() {
+            return id;
+        }
+    }
+
     @Override
     public String toString() {
         return "Tag{" +
-                "mParentId=" + mParentId +
+                "mParent=" + mParent +
                 ", mTag='" + mTag + '\'' +
-                ", mSlug='" + mSlug + '\'' +
+                ", mId='" + _id + '\'' +
                 ", mColor='" + mColor + '\'' +
                 ", mType=" + mType +
                 ", mIcon='" + mIcon + '\'' +

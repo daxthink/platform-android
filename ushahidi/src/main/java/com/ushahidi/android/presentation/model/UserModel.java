@@ -15,22 +15,21 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.presentation.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.addhen.android.raiburari.presentation.model.Model;
 
 import java.util.Date;
 
 /**
+ * UserModel
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserEntity {
+public class UserModel extends Model {
 
     public enum Role {
-        @SerializedName("admin")
         ADMIN("admin"),
-
-        @SerializedName("user")
         USER("user");
 
         public final String value;
@@ -45,7 +44,6 @@ public class UserEntity {
         }
     }
 
-    @SerializedName("id")
     private Long _id;
 
     public Long getId() {
@@ -56,24 +54,18 @@ public class UserEntity {
         _id = id;
     }
 
-    @SerializedName("email")
     private String mEmail;
 
-    @SerializedName("realname")
     private String mRealName;
 
-    @SerializedName("username")
     private String mUsername;
 
-    @SerializedName("role")
     private Role mRole;
 
     private long mDeployment;
 
-    @SerializedName("created")
     private Date mCreated;
 
-    @SerializedName("updated")
     private Date mUpdated;
 
 

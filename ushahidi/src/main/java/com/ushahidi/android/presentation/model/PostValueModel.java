@@ -15,43 +15,42 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.presentation.model;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
+import com.addhen.android.raiburari.presentation.model.Model;
 
 /**
- * GeoJson Data Entity
+ * PostValue model
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonEntity extends DataEntity {
+public class PostValueModel extends Model {
 
-    private String mGeoJson;
+    private String mValues;
 
-    private Long mDeploymentId;
+    private long mDeploymentId;
 
-    public String getGeoJson() {
-        return mGeoJson;
+    public String getValues() {
+        return mValues;
     }
 
-    public void setGeoJson(String geoJson) {
-        mGeoJson = geoJson;
+    public void setValues(String values) {
+        mValues = values;
     }
 
-    public Long getDeploymentId() {
+    public long getDeploymentId() {
         return mDeploymentId;
     }
 
-    public void setDeploymentId(Long deploymentId) {
+    public void setDeploymentId(long deploymentId) {
         mDeploymentId = deploymentId;
     }
 
     @Override
     public String toString() {
-        return "GeoJsonModel{" +
-                "mID='" + _id + '\'' +
-                "mDeploymentId='" + mDeploymentId + '\'' +
-                ", geojson='" + mGeoJson + '\'' +
+        return "PostValue{" +
+                "mValues='" + mValues + '\'' +
+                ", mDeploymentId=" + mDeploymentId +
                 '}';
     }
 }

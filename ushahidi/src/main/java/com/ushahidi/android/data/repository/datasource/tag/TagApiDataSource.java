@@ -65,10 +65,10 @@ public class TagApiDataSource implements TagDataSource {
     }
 
     /**
-     * Set the deployment ID for the TagEntity since it's not set by the
+     * Set the deployment ID for the TagModel since it's not set by the
      * API
      *
-     * @param tagEntities  The TagEntity to set the deployment Id on
+     * @param tagEntities  The TagModel to set the deployment Id on
      * @param deploymentId The ID of the deployment to set
      * @return observable
      */

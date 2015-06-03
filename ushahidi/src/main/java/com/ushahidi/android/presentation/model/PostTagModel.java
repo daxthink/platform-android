@@ -15,43 +15,52 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.presentation.model;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
+import com.addhen.android.raiburari.presentation.model.Model;
 
 /**
- * GeoJson Data Entity
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonEntity extends DataEntity {
+public class PostTagModel extends Model {
 
-    private String mGeoJson;
+    private Long mPostId;
 
-    private Long mDeploymentId;
+    private Long mTagId;
 
-    public String getGeoJson() {
-        return mGeoJson;
+    private long mDeploymentId;
+
+    public Long getPostId() {
+        return mPostId;
     }
 
-    public void setGeoJson(String geoJson) {
-        mGeoJson = geoJson;
+    public void setPostId(Long postId) {
+        mPostId = postId;
     }
 
-    public Long getDeploymentId() {
+    public Long getTagId() {
+        return mTagId;
+    }
+
+    public void setTagId(Long tagId) {
+        mTagId = tagId;
+    }
+
+    public long getDeploymentId() {
         return mDeploymentId;
     }
 
-    public void setDeploymentId(Long deploymentId) {
+    public void setDeploymentId(long deploymentId) {
         mDeploymentId = deploymentId;
     }
 
     @Override
     public String toString() {
-        return "GeoJsonModel{" +
-                "mID='" + _id + '\'' +
-                "mDeploymentId='" + mDeploymentId + '\'' +
-                ", geojson='" + mGeoJson + '\'' +
+        return "PostTagModel{" +
+                "mPostId=" + mPostId +
+                ", mTagId=" + mTagId +
+                ", _id=" + _id +
+                ", mDeploymentId=" + mDeploymentId +
                 '}';
     }
 }

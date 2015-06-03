@@ -15,16 +15,16 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.presentation.model;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
+import com.addhen.android.raiburari.presentation.model.Model;
 
 /**
  * GeoJson Data Entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonEntity extends DataEntity {
+public class GeoJsonModel extends Model {
 
     private String mGeoJson;
 

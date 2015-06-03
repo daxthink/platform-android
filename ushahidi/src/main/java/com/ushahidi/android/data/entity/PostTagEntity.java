@@ -67,7 +67,7 @@ public class PostTagEntity {
 
     @Override
     public String toString() {
-        return "PostTagEntity{" +
+        return "PostTagModel{" +
                 "mPostId=" + mPostId +
                 ", mTagId=" + mTagId +
                 ", _id=" + _id +
