@@ -154,7 +154,7 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
         mIsClosed = true;
     }
 
-    public boolean isClosed() {
+    protected boolean isClosed() {
         return mIsClosed;
 
     }
