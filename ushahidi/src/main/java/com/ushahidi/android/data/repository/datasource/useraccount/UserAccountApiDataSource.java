@@ -18,11 +18,16 @@
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
 import com.ushahidi.android.data.api.UserApi;
+import com.ushahidi.android.data.api.auth.Payload;
 import com.ushahidi.android.data.entity.UserAccountEntity;
 
 import android.support.annotation.NonNull;
 
 import rx.Observable;
+
+import static com.ushahidi.android.data.api.Constant.OAUTH_CLIENT_ID;
+import static com.ushahidi.android.data.api.Constant.OAUTH_CLIENT_SECRET;
+import static com.ushahidi.android.data.api.Constant.SCOPE;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -38,6 +43,15 @@ public class UserAccountApiDataSource implements UserAccountDataSource {
     @Override
     public Observable<UserAccountEntity> loginUserAccountEntity(
             UserAccountEntity userAccountEntity) {
-        return null;
+        Payload payload = new Payload(userAccountEntity.getAccountName(),
+                userAccountEntity.getPassword(), userAccountEntity.getAuthTokenType(),
+                OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, SCOPE);
+        return Observable.create(subscriber -> mUserApi.loginUserAccount(payload).map(
+                accessToken -> {
+                    userAccountEntity.setAuthToken(accessToken.getAccessToken());
+                    userAccountEntity.setAuthTokenType(accessToken.getTokenType());
+                    return userAccountEntity;
+                }
+        ));
     }
 }

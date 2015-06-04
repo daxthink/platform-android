@@ -46,10 +46,11 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
      *
      * @param deploymentId The deployment ID to be used for fetching the {@link UserEntity}
      */
-    public Observable<UserEntity> getUserProfile(Long deploymentId) {
+    public Observable<UserEntity> getUserProfile(Long deploymentId, Long userEntityId) {
         return Observable.create(subscriber -> {
             final UserEntity userEntity = cupboard()
                     .withDatabase(getReadableDatabase()).query(UserEntity.class)
+                    .byId(userEntityId)
                     .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).get();
             if (userEntity != null) {
                 subscriber.onNext(userEntity);
@@ -84,6 +85,21 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
                     subscriber.onError(e);
                 }
                 subscriber.onNext(status);
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<Long> putUser(List<UserEntity> userEntities) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                try {
+                    cupboard().withDatabase(getWritableDatabase()).put(userEntities);
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+                // Pass 1 to fulfill the return type of the observable
+                subscriber.onNext(1l);
                 subscriber.onCompleted();
             }
         });
