@@ -49,7 +49,6 @@ public class PostEntityDataMapper {
      */
     public Post map(PostEntity postEntity) {
         Post post = null;
-
         if (postEntity != null) {
             post = new Post();
             post._id = postEntity._id;
@@ -67,13 +66,11 @@ public class PostEntityDataMapper {
             post.setParent(postEntity.getParent());
             post.setValues(mPostValueEntityMapper.map(postEntity.getValues()));
         }
-
         return post;
     }
 
     public PostEntity map(Post post) {
         PostEntity postEntity = null;
-
         if (post != null) {
             postEntity = new PostEntity();
             postEntity._id = post._id;
@@ -109,7 +106,24 @@ public class PostEntityDataMapper {
                 postList.add(post);
             }
         }
-
         return postList;
+    }
+
+    /**
+     * Maps a list {@link PostEntity} into a list of {@link Post}.
+     *
+     * @param postList List to be mapped.
+     * @return {@link Post}
+     */
+    public List<PostEntity> unmap(List<Post> postList) {
+        List<PostEntity> postEntityList = new ArrayList<>();
+        PostEntity postEntity;
+        for (Post post : postList) {
+            postEntity = map(post);
+            if (postEntity != null) {
+                postEntityList.add(postEntity);
+            }
+        }
+        return postEntityList;
     }
 }

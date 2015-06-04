@@ -37,6 +37,11 @@ public interface PostRepository {
     Observable<List<Post>> getPostList(Long deploymentId, From from);
 
     /**
+     * @param deploymentId @param deploymentId The deploymentId to be used for fetching the API
+     */
+    Observable<Post> getPost(Long deploymentId, Long postId);
+
+    /**
      * Search for a {@link Post}
      *
      * @param deploymentId The deploymentId to be used for fetching the API
@@ -47,14 +52,14 @@ public interface PostRepository {
     /**
      * Add / Update an {@link Post} to/in a storage.
      *
-     * @param post The entity to be added.
+     * @param postList The post entities to be added.
      */
-    Observable<Long> putPost(Post post);
+    Observable<Long> putPost(List<Post> postList);
 
     /**
-     * Delete an existing {@link Post} to/in a storage.
+     * Delete an existing {@link Post} form storage.
      *
-     * @param id The post's id to be deleted.
+     * @param post The post's id to be deleted.
      */
-    Observable<Long> deletePost(Long id);
+    Observable<Boolean> deletePost(Post post);
 }
