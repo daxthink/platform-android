@@ -90,4 +90,22 @@ public class UserProfileEntityDataMapper {
         }
         return userList;
     }
+
+    /**
+     * Maps a list {@link UserProfile} into a list of {@link UserEntity}.
+     *
+     * @param userProfileList List to be mapped.
+     * @return {@link UserProfile}
+     */
+    public List<UserEntity> unmap(List<UserProfile> userProfileList) {
+        List<UserEntity> userEntityList = new ArrayList<>();
+        UserEntity userEntity;
+        for (UserProfile userProfile : userProfileList) {
+            userEntity = unmap(userProfile);
+            if (userEntity != null) {
+                userEntityList.add(userEntity);
+            }
+        }
+        return userEntityList;
+    }
 }

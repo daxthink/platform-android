@@ -19,8 +19,6 @@ package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.entity.UserEntity;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**
@@ -33,17 +31,13 @@ public interface UserProfileDataSource {
      */
     Observable<UserEntity> getUserEntity(Long deploymentId, Long userEntityId);
 
-    /**
-     * @param deploymentId The deploymentId to be used for fetching the API
-     */
-    Observable<List<UserEntity>> getUserEntityList(Long deploymentId);
 
     /**
      * Add / Update an {@link UserEntity} to/in a storage.
      *
      * @param userEntities The entity to be added.
      */
-    Observable<Long> putUserEntity(List<UserEntity> userEntities);
+    Observable<Long> putUserEntity(UserEntity userEntities);
 
     /**
      * Delete an existing {@link UserEntity} in a storage.

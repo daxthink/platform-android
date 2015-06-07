@@ -23,8 +23,6 @@ import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**
@@ -44,21 +42,23 @@ public class UserProfileApiDataSource implements UserProfileDataSource {
 
     @Override
     public Observable<UserEntity> getUserEntity(Long deploymentId, Long userEntityId) {
-        return mUserApi.getUserProfile();
+        return mUserApi.getUserProfile()
+                .doOnNext(userEntity -> mUserDatabaseHelper
+                        .putUser(setDeploymentId(deploymentId, userEntity)));
     }
 
     @Override
-    public Observable<List<UserEntity>> getUserEntityList(Long deploymentId) {
-        return null;
-    }
-
-    @Override
-    public Observable<Long> putUserEntity(List<UserEntity> userEntities) {
+    public Observable<Long> putUserEntity(UserEntity userEntity) {
         return null;
     }
 
     @Override
     public Observable<Boolean> deleteUserEntity(UserEntity userEntity) {
         return null;
+    }
+
+    private UserEntity setDeploymentId(Long deploymentId, UserEntity userEntity) {
+        userEntity.setDeploymentId(deploymentId);
+        return userEntity;
     }
 }

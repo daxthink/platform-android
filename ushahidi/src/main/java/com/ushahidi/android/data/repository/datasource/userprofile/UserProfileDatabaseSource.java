@@ -22,8 +22,6 @@ import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**
@@ -43,13 +41,8 @@ public class UserProfileDatabaseSource implements UserProfileDataSource {
     }
 
     @Override
-    public Observable<List<UserEntity>> getUserEntityList(Long deploymentId) {
-        return mUserDatabaseHelper.getUserProfiles(deploymentId);
-    }
-
-    @Override
-    public Observable<Long> putUserEntity(List<UserEntity> userEntities) {
-        return mUserDatabaseHelper.putUser(userEntities);
+    public Observable<Long> putUserEntity(UserEntity userEntity) {
+        return mUserDatabaseHelper.putUser(userEntity);
     }
 
     @Override

@@ -90,11 +90,11 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
-    public Observable<Long> putUser(List<UserEntity> userEntities) {
+    public Observable<Long> putUser(UserEntity userEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
                 try {
-                    cupboard().withDatabase(getWritableDatabase()).put(userEntities);
+                    cupboard().withDatabase(getWritableDatabase()).put(userEntity);
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }

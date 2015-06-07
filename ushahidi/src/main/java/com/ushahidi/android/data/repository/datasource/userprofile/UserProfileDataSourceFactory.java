@@ -15,10 +15,11 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.repository.datasource.useraccount;
+package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.api.UserApi;
 import com.ushahidi.android.data.api.service.UserService;
+import com.ushahidi.android.data.database.UserDatabaseHelper;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -28,25 +29,39 @@ import javax.inject.Inject;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserAccountDataSourceFactory {
+public class UserProfileDataSourceFactory {
 
     private final Context mContext;
 
+    private final UserDatabaseHelper mUserDatabaseHelper;
+
     private UserService mUserService;
+
     @Inject
-    public UserAccountDataSourceFactory(@NonNull Context context) {
+    public UserProfileDataSourceFactory(@NonNull Context context,
+            @NonNull UserDatabaseHelper userDatabaseHelper) {
         mContext = context;
+        mUserDatabaseHelper = userDatabaseHelper;
     }
 
+    /**
+     * Sets the API services
+     *
+     * @param userService The user API service
+     */
     public void setUserService(@NonNull UserService userService) {
         mUserService = userService;
     }
 
-    public UserAccountDataSource createApiDataSource() {
+    public UserProfileDataSource createApiDataSource() {
         if (mUserService == null) {
             throw new RuntimeException("Please call setUserService(...)");
         }
         final UserApi userApi = new UserApi(mContext, mUserService);
-        return new UserAccountApiDataSource(userApi);
+        return new UserProfileApiDataSource(userApi, mUserDatabaseHelper);
+    }
+
+    public UserProfileDataSource createDatabaseSource() {
+        return new UserProfileDatabaseSource(mUserDatabaseHelper);
     }
 }
