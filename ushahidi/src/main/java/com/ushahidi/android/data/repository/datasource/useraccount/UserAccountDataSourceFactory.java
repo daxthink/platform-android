@@ -20,22 +20,21 @@ package com.ushahidi.android.data.repository.datasource.useraccount;
 import com.ushahidi.android.data.api.UserApi;
 import com.ushahidi.android.data.api.service.UserService;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class UserAccountDataSourceFactory {
 
-    private final Context mContext;
-
     private UserService mUserService;
+
     @Inject
-    public UserAccountDataSourceFactory(@NonNull Context context) {
-        mContext = context;
+    public UserAccountDataSourceFactory() {
     }
 
     public void setUserService(@NonNull UserService userService) {
@@ -46,7 +45,7 @@ public class UserAccountDataSourceFactory {
         if (mUserService == null) {
             throw new RuntimeException("Please call setUserService(...)");
         }
-        final UserApi userApi = new UserApi(mContext, mUserService);
+        final UserApi userApi = new UserApi(mUserService);
         return new UserAccountApiDataSource(userApi);
     }
 }

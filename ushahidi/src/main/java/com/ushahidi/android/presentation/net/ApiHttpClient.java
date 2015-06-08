@@ -15,7 +15,7 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.api;
+package com.ushahidi.android.presentation.net;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -34,7 +34,6 @@ import javax.inject.Inject;
 import retrofit.Endpoint;
 import retrofit.Endpoints;
 import retrofit.RestAdapter;
-import retrofit.client.Client;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -45,14 +44,14 @@ import retrofit.converter.GsonConverter;
  */
 public class ApiHttpClient {
 
-    private Client mClient;
-
     private UnauthorizedAccessErrorHandler mUnauthorizedAccessErrorHandler;
 
+    private HttpClientWrap mHttpClientWrap;
+
     @Inject
-    public ApiHttpClient(Client client,
+    public ApiHttpClient(HttpClientWrap httpClientWrap,
             UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler) {
-        mClient = client;
+        mHttpClientWrap = httpClientWrap;
         mUnauthorizedAccessErrorHandler = unauthorizedAccessErrorHandler;
     }
 
@@ -67,7 +66,7 @@ public class ApiHttpClient {
         Gson gson = builder.create();
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setConverter(new GsonConverter(gson))
-                .setClient(mClient)
+                .setClient(mHttpClientWrap)
                 .setEndpoint(endpoint)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setErrorHandler(mUnauthorizedAccessErrorHandler)

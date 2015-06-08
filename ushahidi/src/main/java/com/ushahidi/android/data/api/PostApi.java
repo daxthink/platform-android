@@ -20,9 +20,7 @@ package com.ushahidi.android.data.api;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.service.PostService;
 import com.ushahidi.android.data.entity.PostEntity;
-import com.ushahidi.android.data.exception.NetworkConnectionException;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -36,25 +34,15 @@ import rx.Observable;
  */
 public class PostApi {
 
-    private final Context mContext;
-
     private final PostService mPostService;
 
     @Inject
-    public PostApi(@NonNull Context context, @NonNull PostService postService) {
-        mContext = context;
+    public PostApi(@NonNull PostService postService) {
         mPostService = postService;
     }
 
     public Observable<List<PostEntity>> getPostList() {
-        return Observable.create((subscriber) -> {
-            if (isDeviceConnectedToInternet(mContext)) {
-                mPostService.posts()
-                        .map((tags) -> setPost(tags));
-            } else {
-                subscriber.onError(new NetworkConnectionException());
-            }
-        });
+        return Observable.create((subscriber) -> mPostService.posts().map((tags) -> setPost(tags)));
     }
 
     /**
@@ -67,11 +55,5 @@ public class PostApi {
             subscriber.onNext(posts.getPosts());
             subscriber.onCompleted();
         });
-    }
-
-    // Workaround for testing static method for checking status of data
-    // connection on the device.
-    public boolean isDeviceConnectedToInternet(Context context) {
-        return ApiUtil.isDeviceConnectedToInternet(context);
     }
 }

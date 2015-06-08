@@ -21,9 +21,7 @@ import com.ushahidi.android.data.api.auth.AccessToken;
 import com.ushahidi.android.data.api.auth.Payload;
 import com.ushahidi.android.data.api.service.UserService;
 import com.ushahidi.android.data.entity.UserEntity;
-import com.ushahidi.android.data.exception.NetworkConnectionException;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
@@ -37,38 +35,18 @@ import rx.Observable;
  */
 public class UserApi {
 
-    private final Context mContext;
-
     private final UserService mUserService;
 
     @Inject
-    public UserApi(@NonNull Context context, @NonNull UserService userService) {
-        mContext = context;
+    public UserApi(@NonNull UserService userService) {
         mUserService = userService;
     }
 
     public Observable<AccessToken> loginUserAccount(@NonNull Payload payload) {
-        return Observable.create(subscriber -> {
-            if (isDeviceConnectedToInternet(mContext)) {
-                mUserService.getAccessToken(payload);
-            } else {
-                subscriber.onError(new NetworkConnectionException());
-            }
-        });
+        return Observable.create(subscriber -> mUserService.getAccessToken(payload));
     }
 
     public Observable<UserEntity> getUserProfile() {
-        return Observable.create(subscriber -> {
-            if (isDeviceConnectedToInternet(mContext)) {
-                mUserService.getUser();
-            } else {
-                subscriber.onError(new NetworkConnectionException());
-            }
-        });
-    }
-
-    // Workaround for testing static methods
-    public boolean isDeviceConnectedToInternet(Context context) {
-        return ApiUtil.isDeviceConnectedToInternet(context);
+        return Observable.create(subscriber -> mUserService.getUser());
     }
 }

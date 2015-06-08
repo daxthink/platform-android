@@ -21,26 +21,24 @@ import com.ushahidi.android.data.api.UserApi;
 import com.ushahidi.android.data.api.service.UserService;
 import com.ushahidi.android.data.database.UserDatabaseHelper;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class UserProfileDataSourceFactory {
-
-    private final Context mContext;
 
     private final UserDatabaseHelper mUserDatabaseHelper;
 
     private UserService mUserService;
 
     @Inject
-    public UserProfileDataSourceFactory(@NonNull Context context,
+    public UserProfileDataSourceFactory(
             @NonNull UserDatabaseHelper userDatabaseHelper) {
-        mContext = context;
         mUserDatabaseHelper = userDatabaseHelper;
     }
 
@@ -57,7 +55,7 @@ public class UserProfileDataSourceFactory {
         if (mUserService == null) {
             throw new RuntimeException("Please call setUserService(...)");
         }
-        final UserApi userApi = new UserApi(mContext, mUserService);
+        final UserApi userApi = new UserApi(mUserService);
         return new UserProfileApiDataSource(userApi, mUserDatabaseHelper);
     }
 

@@ -21,10 +21,10 @@ import com.ushahidi.android.data.api.TagApi;
 import com.ushahidi.android.data.api.service.TagService;
 import com.ushahidi.android.data.database.TagDatabaseHelper;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Factory class for creating the various data source for the {@link
@@ -32,18 +32,16 @@ import javax.inject.Inject;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class TagDataSourceFactory {
-
-    private final Context mContext;
 
     private final TagDatabaseHelper mTagDatabaseHelper;
 
     private TagService mTagService;
 
     @Inject
-    public TagDataSourceFactory(@NonNull Context context,
+    public TagDataSourceFactory(
             @NonNull TagDatabaseHelper tagDatabaseHelper) {
-        mContext = context;
         mTagDatabaseHelper = tagDatabaseHelper;
     }
 
@@ -64,7 +62,7 @@ public class TagDataSourceFactory {
         if (mTagService == null) {
             throw new RuntimeException("Please call setTagService(...)");
         }
-        final TagApi tagApi = new TagApi(mContext, mTagService);
+        final TagApi tagApi = new TagApi(mTagService);
         return new TagApiDataSource(tagApi, mTagDatabaseHelper);
     }
 }

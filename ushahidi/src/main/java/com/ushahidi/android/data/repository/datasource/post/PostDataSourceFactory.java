@@ -21,25 +21,24 @@ import com.ushahidi.android.data.api.PostApi;
 import com.ushahidi.android.data.api.service.PostService;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+
+import javax.inject.Singleton;
 
 /**
  * Factory method for fetching post data source
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class PostDataSourceFactory {
-
-    private Context mContext;
 
     private PostDatabaseHelper mPostDatabaseHelper;
 
     private PostService mPostService;
 
-    public PostDataSourceFactory(@NonNull Context context,
+    public PostDataSourceFactory(
             @NonNull PostDatabaseHelper postDatabaseHelper) {
-        mContext = context;
         mPostDatabaseHelper = postDatabaseHelper;
     }
 
@@ -60,7 +59,7 @@ public class PostDataSourceFactory {
         if (mPostService == null) {
             throw new RuntimeException("Please call setPostService(...)");
         }
-        final PostApi postApi = new PostApi(mContext, mPostService);
+        final PostApi postApi = new PostApi(mPostService);
         return new PostApiDataSource(postApi, mPostDatabaseHelper);
     }
 }

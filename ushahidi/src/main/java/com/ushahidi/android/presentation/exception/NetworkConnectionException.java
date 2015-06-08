@@ -15,7 +15,7 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.exception;
+package com.ushahidi.android.presentation.exception;
 
 /**
  * This {@link Exception} is thrown when there is not network/data connection on the device

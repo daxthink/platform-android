@@ -21,9 +21,7 @@ import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.service.TagService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.TagEntity;
-import com.ushahidi.android.data.exception.NetworkConnectionException;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -37,13 +35,10 @@ import rx.Observable;
  */
 public class TagApi {
 
-    private final Context mContext;
-
     private final TagService mTagService;
 
     @Inject
-    public TagApi(@NonNull Context context, @NonNull TagService tagService) {
-        mContext = context;
+    public TagApi(@NonNull TagService tagService) {
         mTagService = tagService;
     }
 
@@ -51,14 +46,8 @@ public class TagApi {
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<List<TagEntity>> getTags() {
-        return Observable.create((subscriber) -> {
-            if (isDeviceConnectedToInternet(mContext)) {
-                mTagService.getTags()
-                        .map((tags) -> setTags(tags));
-            } else {
-                subscriber.onError(new NetworkConnectionException());
-            }
-        });
+        return Observable.create((subscriber) -> mTagService.getTags().map((tags) -> setTags(tags))
+        );
     }
 
     /**
@@ -71,11 +60,5 @@ public class TagApi {
             subscriber.onNext(tags.getTags());
             subscriber.onCompleted();
         });
-    }
-
-    // Workaround for testing static method for checking status of data
-    // connection on the device.
-    public boolean isDeviceConnectedToInternet(Context context) {
-        return ApiUtil.isDeviceConnectedToInternet(context);
     }
 }

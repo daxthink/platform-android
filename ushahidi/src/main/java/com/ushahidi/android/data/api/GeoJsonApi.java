@@ -21,9 +21,7 @@ import com.google.gson.JsonElement;
 
 import com.ushahidi.android.data.api.service.GeoJsonService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
-import com.ushahidi.android.data.exception.NetworkConnectionException;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
@@ -37,13 +35,10 @@ import rx.Observable;
  */
 public class GeoJsonApi {
 
-    private final Context mContext;
-
     private final GeoJsonService mGeoJsonService;
 
     @Inject
-    public GeoJsonApi(@NonNull Context context, @NonNull GeoJsonService geoJsonService) {
-        mContext = context;
+    public GeoJsonApi(@NonNull GeoJsonService geoJsonService) {
         mGeoJsonService = geoJsonService;
     }
 
@@ -51,27 +46,14 @@ public class GeoJsonApi {
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<GeoJsonEntity> getGeoJson() {
-        return Observable.create((subscriber) -> {
-            if (isDeviceConnectedToInternet(mContext)) {
-                mGeoJsonService.getGeoJson()
-                        .map((jsonElement) -> setGeoJson(jsonElement));
-            } else {
-                subscriber.onError(new NetworkConnectionException());
-            }
-        });
-    }
-
-    // Workaround for testing static method for checking status of data
-    // connection on the device.
-    public boolean isDeviceConnectedToInternet(Context context) {
-        return ApiUtil.isDeviceConnectedToInternet(context);
+        return Observable.create((subscriber) -> mGeoJsonService.getGeoJson().map(
+                (jsonElement) -> setGeoJson(jsonElement)));
     }
 
     /**
      * Sets the {@link GeoJsonEntity} entity properties from the {@link JsonElement}
      *
-     * @param deploymentId The ID of the deployment the GeoJson is fetched from.
-     * @param jsonElement  The jsonElement to retrieve the raw JSON string from.
+     * @param jsonElement The jsonElement to retrieve the raw JSON string from.
      */
     private Observable<GeoJsonEntity> setGeoJson(JsonElement jsonElement) {
         return Observable.create(subscriber -> {
