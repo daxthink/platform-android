@@ -37,6 +37,8 @@ public class ListUserProfileUsecase extends Usecase {
 
     private Long mDeploymentId = null;
 
+    private Long mUserProfileId = null;
+
     private From mFrom;
 
     protected ListUserProfileUsecase(UserProfileRepository userProfileRepository,
@@ -53,17 +55,18 @@ public class ListUserProfileUsecase extends Usecase {
      * @param deploymentId The deploymentId associated with the GeoJson
      * @param from         Whether to fetch through the API or the local storage
      */
-    public void setListUserProfile(Long deploymentId, From from) {
+    public void setListUserProfile(Long deploymentId, Long userProfileId, From from) {
         mDeploymentId = deploymentId;
+        mUserProfileId = userProfileId;
         mFrom = from;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeploymentId == null || mFrom == null) {
+        if (mDeploymentId == null || mUserProfileId == null || mFrom == null) {
             throw new RuntimeException(
                     "Deployment id and from cannot be null. You must call setListUserProfile(...)");
         }
-        return mUserProfileRepository.getUserProfile(mDeploymentId, mFrom);
+        return mUserProfileRepository.getUserProfile(mDeploymentId, mUserProfileId, mFrom);
     }
 }

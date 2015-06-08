@@ -66,10 +66,10 @@ public class ListUserProfileUsecaseTest {
 
     @Test
     public void shouldSuccessfullyFetchFromOnline() {
-        mUserProfileUsecase.setListUserProfile(1l, From.ONLINE);
+        mUserProfileUsecase.setListUserProfile(1l, 1l, From.ONLINE);
         mUserProfileUsecase.buildUseCaseObservable();
 
-        verify(mMockUserProfileRepository).getUserProfile(1l, From.ONLINE);
+        verify(mMockUserProfileRepository).getUserProfile(1l, 1l, From.ONLINE);
 
         verifyNoMoreInteractions(mMockUserProfileRepository);
         verifyNoMoreInteractions(mMockPostExecutionThread);
@@ -79,7 +79,7 @@ public class ListUserProfileUsecaseTest {
     @Test
     public void shouldThrowRuntimeException() {
         assertThat(mUserProfileUsecase).isNotNull();
-        mUserProfileUsecase.setListUserProfile(null, null);
+        mUserProfileUsecase.setListUserProfile(null, null, null);
         try {
             mUserProfileUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");
