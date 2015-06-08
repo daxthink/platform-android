@@ -127,9 +127,7 @@ public class ListDeploymentFragment
         mDeploymentRecyclerView.setDeleteDeploymentPresenter(mDeleteDeploymentPresenter);
         if (mFab != null) {
             setViewGone(mFab, false);
-            mFab.setOnClickListener(v -> {
-                mLauncher.launchAddDeployment();
-            });
+            mFab.setOnClickListener(v -> mLauncher.launchAddDeployment());
         }
         mDeploymentRecyclerView.setFocusable(true);
         mDeploymentRecyclerView.setFocusableInTouchMode(true);

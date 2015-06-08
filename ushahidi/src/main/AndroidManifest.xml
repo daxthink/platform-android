@@ -35,7 +35,8 @@
         </activity>
         <activity
                 android:name=".presentation.ui.activity.ListDeploymentActivity"
-                android:label="@string/deployment_management">
+                android:label="@string/deployment_management"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
