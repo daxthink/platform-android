@@ -45,11 +45,10 @@
                     android:textAppearance="@android:style/TextAppearance.Medium"
                     ushApp:fontFile="RobotoCondensed-Regular.ttf"/>
 
-            <com.addhen.android.raiburari.presentation.ui.widget.FloatLabelLayout
+            <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/view_spacing_normal"
-                    ushApp:floatLabelTextAppearance="@style/TextAppearance.FloatLabel">
+                    android:layout_marginTop="@dimen/view_spacing_normal">
 
                 <EditText
                         android:id="@+id/add_deployment_title"
@@ -58,13 +57,12 @@
                         android:imeOptions="actionNext"
                         android:nextFocusDown="@+id/add_deployment_url"/>
 
-            </com.addhen.android.raiburari.presentation.ui.widget.FloatLabelLayout>
+            </android.support.design.widget.TextInputLayout>
 
-            <com.addhen.android.raiburari.presentation.ui.widget.FloatLabelLayout
+            <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/view_spacing_normal"
-                    ushApp:floatLabelTextAppearance="@style/TextAppearance.FloatLabel">
+                    android:layout_marginTop="@dimen/view_spacing_normal">
 
                 <EditText
                         android:id="@+id/add_deployment_url"
@@ -72,7 +70,7 @@
                         android:hint="@string/add_deployment_url_hint"
                         android:layout_gravity="center"
                         android:imeOptions="actionDone"/>
-            </com.addhen.android.raiburari.presentation.ui.widget.FloatLabelLayout>
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </ScrollView>
 

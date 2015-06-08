@@ -30,15 +30,13 @@
             fab:recyclerviewEmptyView="@layout/list_empty_view"
             android:scrollbars="vertical"/>
 
-    <com.addhen.android.raiburari.presentation.ui.widget.MovableFab
+    <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:gravity="bottom|right"
-            fab:fab_icon="@drawable/ic_action_add"
-            fab:fab_colorNormal="@color/green"
-            fab:fab_colorPressed="@color/color_accent"
+            android:src="@drawable/ic_action_add"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"/>

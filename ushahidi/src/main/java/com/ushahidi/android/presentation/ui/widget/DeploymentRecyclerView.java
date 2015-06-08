@@ -18,11 +18,6 @@
 package com.ushahidi.android.presentation.ui.widget;
 
 import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
-import com.addhen.android.raiburari.presentation.ui.widget.MovableFab;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.listeners.ActionClickListener;
-import com.nispok.snackbar.listeners.EventListener;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.DeleteDeploymentPresenter;
@@ -31,6 +26,8 @@ import com.ushahidi.android.presentation.ui.adapter.DeploymentAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ActionMode;
@@ -38,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,11 +64,10 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
     private DeploymentAdapter mDeploymentAdapter;
 
-    private int mNumberOfItemsDeleted = 0;
+    private boolean mIsPermanentlyDeleted = true;
 
     private DeleteDeploymentPresenter mDeleteDeploymentPresenter;
 
-    private MovableFab mMovableFab;
 
     public DeploymentRecyclerView(Context context) {
         this(context, null, 0);
@@ -141,16 +138,6 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
     }
 
-    /**
-     * Set this so FAB can be moved up or down when snackbar shows up.
-     *
-     * @param movableFab The {@link MovableFab}
-     */
-    public void setMovableFab(MovableFab movableFab) {
-        mMovableFab = movableFab;
-    }
-
-
     public void initAdapter(DeploymentAdapter deploymentAdapter) {
         mDeploymentAdapter = deploymentAdapter;
     }
@@ -179,69 +166,40 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
     }
 
     public void deleteItems() {
-
         //Sort in ascending order for restoring deleted items
         Comparator cmp = Collections.reverseOrder();
         Collections.sort(mPendingDeletedDeployments, cmp);
-
-        SnackbarManager.show(Snackbar.with(getContext())
-                .text(mActivity
-                        .getString(R.string.items_deleted, mPendingDeletedDeployments.size()))
-                .actionLabel(getContext().getString(R.string.undo))
-                .actionColorResource(R.color.orange)
-                .attachToRecyclerView(recyclerView)
-                .actionListener(new ActionClickListener() {
-                    @Override
-                    public void onActionClicked(Snackbar snackbar) {
-                        // Restore items
-                        for (DeploymentRecyclerView.PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
-                            mDeploymentAdapter.addItem(pendingDeletedDeployment.deploymentModel,
-                                    pendingDeletedDeployment.position);
-                        }
-                        clearItems();
+        Snackbar snackbar = Snackbar.make(recyclerView, mActivity
+                        .getString(R.string.items_deleted, mPendingDeletedDeployments.size()),
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, e -> {
+                    mIsPermanentlyDeleted = false;
+                    // Restore items
+                    for (DeploymentRecyclerView.PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
+                        mDeploymentAdapter.addItem(pendingDeletedDeployment.deploymentModel,
+                                pendingDeletedDeployment.position);
                     }
-                })
-                .eventListener(new EventListener() {
-                    @Override
-                    public void onShow(Snackbar snackbar) {
-                        mMovableFab.moveUp(snackbar.getHeight());
+                    clearItems();
+                });
+
+        // Handler to time the dismissal of the snackbar so users can
+        // undo soft deletion or hard delete deployments
+        new Handler(mActivity.getMainLooper()).postDelayed(() -> {
+            if (mIsPermanentlyDeleted) {
+                if (mPendingDeletedDeployments.size() > 0) {
+                    for (PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
+                        mDeleteDeploymentPresenter
+                                .deleteDeployment(
+                                        pendingDeletedDeployment.deploymentModel._id);
                     }
-
-                    @Override
-                    public void onShowByReplace(Snackbar snackbar) {
-
-                    }
-
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-
-                    }
-
-                    @Override
-                    public void onDismiss(Snackbar snackbar) {
-                        mMovableFab.moveDown(0);
-                        if (!snackbar.isActionClicked()) {
-                            if (mPendingDeletedDeployments.size() > 0) {
-                                mNumberOfItemsDeleted = mPendingDeletedDeployments.size();
-                                for (PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
-                                    mDeleteDeploymentPresenter
-                                            .deleteDeployment(
-                                                    pendingDeletedDeployment.deploymentModel._id);
-                                }
-                                clearItems();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onDismissByReplace(Snackbar snackbar) {
-                    }
-
-                    @Override
-                    public void onDismissed(Snackbar snackbar) {
-
-                    }
-                }));
+                    clearItems();
+                }
+            }
+        }, (int) (snackbar.getDuration() * 1.05f));
+        View view = snackbar.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(mActivity.getResources().getColor(R.color.orange));
+        snackbar.show();
     }
 
     @Override
@@ -283,6 +241,10 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent ev) {
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
     }
 
@@ -315,8 +277,6 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
         @Override
         public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-            // Resets any previously selected number of items.
-            mNumberOfItemsDeleted = 0;
             return true;
         }
 

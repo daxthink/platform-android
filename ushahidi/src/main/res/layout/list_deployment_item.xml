@@ -47,7 +47,7 @@
             android:layout_toRightOf="@+id/deployment_selected"
             android:layout_toEndOf="@+id/deployment_selected">
 
-        <com.ushahidi.android.ui.widget.CapitalizedTextView
+        <com.addhen.android.raiburari.presentation.ui.widget.CapitalizedTextView
                 android:id="@+id/deployment_title"
                 style="@style/ListItemPrimaryText"
                 android:paddingRight="@dimen/view_spacing_large"/>

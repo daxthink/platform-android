@@ -20,11 +20,6 @@ package com.ushahidi.android.presentation.ui.fragment;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
-import com.addhen.android.raiburari.presentation.ui.widget.MovableFab;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.enums.SnackbarType;
-import com.nispok.snackbar.listeners.EventListener;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.ListDeploymentComponent;
@@ -41,6 +36,8 @@ import com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -63,7 +60,7 @@ public class ListDeploymentFragment
         RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
     @InjectView(R.id.fab)
-    MovableFab mFab;
+    FloatingActionButton mFab;
 
     @InjectView(android.R.id.empty)
     TextView mEmptyView;
@@ -152,7 +149,6 @@ public class ListDeploymentFragment
                         this);
         mDeploymentRecyclerView.recyclerView
                 .addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
-        mDeploymentRecyclerView.setMovableFab(mFab);
         mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
         swipeToDeleteUndo();
         setEmptyView();
@@ -247,44 +243,14 @@ public class ListDeploymentFragment
 
     @Override
     public void showError(String message) {
-        SnackbarManager.show(Snackbar.with(getAppContext())
-                .type(SnackbarType.MULTI_LINE)
-                .text(message)
-                .actionLabel(getAppContext().getString(R.string.retry))
-                .actionColorResource(R.color.orange)
-                .duration(Snackbar.SnackbarDuration.LENGTH_LONG)
-                .actionListener(snackbar -> mListDeploymentPresenter.loadDeployments())
-                .eventListener(new EventListener() {
-                    @Override
-                    public void onShow(Snackbar snackbar) {
-                        mFab.moveUp(snackbar.getHeight());
-                    }
-
-                    @Override
-                    public void onShowByReplace(Snackbar snackbar) {
-                        // Do nothing
-                    }
-
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-                        // Do nothing
-                    }
-
-                    @Override
-                    public void onDismiss(Snackbar snackbar) {
-                        mFab.moveDown(0);
-                    }
-
-                    @Override
-                    public void onDismissByReplace(Snackbar snackbar) {
-                        // Do nothing
-                    }
-
-                    @Override
-                    public void onDismissed(Snackbar snackbar) {
-
-                    }
-                }), getActivity());
+        Snackbar snackbar = Snackbar.make(getView(), R.string.retry,
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, e -> mListDeploymentPresenter.loadDeployments()
+                );
+        View view = snackbar.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
+        snackbar.show();
     }
 
     @Override
