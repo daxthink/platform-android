@@ -76,9 +76,7 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initialize();
-        url.setOnTouchListener((view, event) -> {
-            return setHttpProtocol();
-        });
+        url.setOnTouchListener((view, event) -> setHttpProtocol());
     }
 
     private boolean setHttpProtocol() {

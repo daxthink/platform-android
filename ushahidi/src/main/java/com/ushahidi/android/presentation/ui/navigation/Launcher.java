@@ -17,6 +17,7 @@
 package com.ushahidi.android.presentation.ui.navigation;
 
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
+import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,6 +40,11 @@ public class Launcher {
 
     public void launchAddDeployment() {
         final Intent intent = AddDeploymentActivity.getIntent(mActivity);
+        mActivity.startActivity(intent);
+    }
+
+    public void launchListDeployment() {
+        Intent intent = ListDeploymentActivity.getIntent(mActivity);
         mActivity.startActivity(intent);
     }
 }

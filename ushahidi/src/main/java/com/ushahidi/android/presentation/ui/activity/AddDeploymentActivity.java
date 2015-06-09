@@ -34,11 +34,14 @@ import android.os.Bundle;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class AddDeploymentActivity extends BaseActivity
-        implements HasComponent<AddDeploymentComponent> {
+        implements HasComponent<AddDeploymentComponent>,
+        AddDeploymentFragment.AddDeploymentListener {
 
     private AddDeploymentComponent mAddDeploymentComponent;
 
     private DeleteDeploymentComponent mDeleteDeploymentComponent;
+
+    private static final String FRAG_TAG = "add_deployment";
 
     public AddDeploymentActivity() {
         super(R.layout.activity_add_deployment, 0);
@@ -52,9 +55,13 @@ public class AddDeploymentActivity extends BaseActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
-        if (savedInstanceState == null) {
-            addFragment(R.id.add_fragment_container, AddDeploymentFragment.newInstance(),
-                    "addDeploymentFrag");
+        AddDeploymentFragment addDeploymentFragment
+                = (AddDeploymentFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAG_TAG);
+        if (addDeploymentFragment == null) {
+            addDeploymentFragment = AddDeploymentFragment.newInstance();
+            addFragment(R.id.add_fragment_container, addDeploymentFragment,
+                    FRAG_TAG);
         }
     }
 
@@ -72,5 +79,16 @@ public class AddDeploymentActivity extends BaseActivity
 
     public DeleteDeploymentComponent getDeleteCompnent() {
         return mDeleteDeploymentComponent;
+    }
+
+    @Override
+    public void onAddNavigateOrReloadList() {
+        mAddDeploymentComponent.launcher().launchListDeployment();
+        finish();
+    }
+
+    @Override
+    public void onCancelAdd() {
+        finish();
     }
 }

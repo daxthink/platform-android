@@ -31,12 +31,8 @@ import com.ushahidi.android.presentation.ui.navigation.Launcher;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 
 import javax.inject.Inject;
-
-import butterknife.InjectView;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -49,11 +45,10 @@ public class ListDeploymentActivity extends BaseActivity
 
     private DeleteDeploymentComponent mDeleteDeploymentComponent;
 
+    private static final String FRAG_TAG = "list_deployment";
+
     @Inject
     Launcher mLauncher;
-
-    @InjectView(R.id.toolbar)
-    Toolbar mToolbar;
 
     public ListDeploymentActivity() {
         super(R.layout.activity_list_deployment, R.menu.list_deployment);
@@ -66,13 +61,13 @@ public class ListDeploymentActivity extends BaseActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSupportActionBar(mToolbar);
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
         injector();
-        if (savedInstanceState == null) {
-            addFragment(R.id.add_fragment_container, ListDeploymentFragment.newInstance());
+        ListDeploymentFragment listDeploymentFragment
+                = (ListDeploymentFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAG_TAG);
+        if (listDeploymentFragment == null) {
+            listDeploymentFragment = ListDeploymentFragment.newInstance();
+            addFragment(R.id.add_fragment_container, listDeploymentFragment);
         }
     }
 

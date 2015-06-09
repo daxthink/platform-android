@@ -33,4 +33,5 @@
     <!-- Post items -->
     <dimen name="post_item_image_width">120dp</dimen>
     <dimen name="post_item_image_height">75dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

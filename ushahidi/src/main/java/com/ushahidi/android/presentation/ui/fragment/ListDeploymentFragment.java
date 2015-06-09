@@ -129,6 +129,7 @@ public class ListDeploymentFragment
             setViewGone(mFab, false);
             mFab.setOnClickListener(v -> mLauncher.launchAddDeployment());
         }
+        mDeploymentRecyclerView.setFloatingActionButton(mFab);
         mDeploymentRecyclerView.setFocusable(true);
         mDeploymentRecyclerView.setFocusableInTouchMode(true);
         mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);

@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -68,6 +69,7 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
     private DeleteDeploymentPresenter mDeleteDeploymentPresenter;
 
+    private FloatingActionButton mFloatingActionButton;
 
     public DeploymentRecyclerView(Context context) {
         this(context, null, 0);
@@ -165,11 +167,15 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
         deleteItems();
     }
 
+    public void setFloatingActionButton(FloatingActionButton floatingActionButton) {
+        mFloatingActionButton = floatingActionButton;
+    }
+
     public void deleteItems() {
         //Sort in ascending order for restoring deleted items
         Comparator cmp = Collections.reverseOrder();
         Collections.sort(mPendingDeletedDeployments, cmp);
-        Snackbar snackbar = Snackbar.make(recyclerView, mActivity
+        Snackbar snackbar = Snackbar.make(mFloatingActionButton, mActivity
                         .getString(R.string.items_deleted, mPendingDeletedDeployments.size()),
                 Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, e -> {
@@ -181,7 +187,10 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
                     }
                     clearItems();
                 });
-
+        View view = snackbar.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(mActivity.getResources().getColor(R.color.orange));
+        snackbar.show();
         // Handler to time the dismissal of the snackbar so users can
         // undo soft deletion or hard delete deployments
         new Handler(mActivity.getMainLooper()).postDelayed(() -> {
@@ -196,10 +205,6 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
                 }
             }
         }, (int) (snackbar.getDuration() * 1.05f));
-        View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(mActivity.getResources().getColor(R.color.orange));
-        snackbar.show();
     }
 
     @Override
