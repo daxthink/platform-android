@@ -18,6 +18,7 @@
 package com.ushahidi.android.presentation.ui.fragment;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
+import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
@@ -56,6 +57,9 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     @InjectView(R.id.add_deployment_url)
     EditText url;
 
+    @InjectView(R.id.textview_deployment_description)
+    FontSupportedTextView mHeader;
+
     private UpdateDeploymentListener mActionListener;
 
     @Inject
@@ -82,7 +86,7 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof UpdateDeploymentListener) {
-            this.mActionListener = (UpdateDeploymentListener) activity;
+            mActionListener = (UpdateDeploymentListener) activity;
         }
     }
 
@@ -91,6 +95,7 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
         super.onActivityCreated(savedInstanceState);
         initialize();
         url.setOnTouchListener((view, event) -> setHttpProtocol());
+        mHeader.setText(R.string.update_deployment_description_hint);
     }
 
     private boolean setHttpProtocol() {
