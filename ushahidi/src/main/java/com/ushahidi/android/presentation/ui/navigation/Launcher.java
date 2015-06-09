@@ -16,8 +16,10 @@
 
 package com.ushahidi.android.presentation.ui.navigation;
 
+import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
+import com.ushahidi.android.presentation.ui.activity.UpdateDeploymentActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -45,6 +47,16 @@ public class Launcher {
 
     public void launchListDeployment() {
         Intent intent = ListDeploymentActivity.getIntent(mActivity);
+        mActivity.startActivity(intent);
+    }
+
+    /**
+     * Launches update deployment activity for editing
+     *
+     * @param deploymentModel The deployment model to be edited
+     */
+    public void launchUpdateDeployment(DeploymentModel deploymentModel) {
+        final Intent intent = UpdateDeploymentActivity.getIntent(mActivity, deploymentModel);
         mActivity.startActivity(intent);
     }
 }

@@ -18,12 +18,15 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Deployment model
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeploymentModel extends Model {
+public class DeploymentModel extends Model implements Parcelable {
 
     private String mTitle;
 
@@ -61,7 +64,7 @@ public class DeploymentModel extends Model {
 
     @Override
     public String toString() {
-        return "Deployment{" +
+        return "DeploymentModel{" +
                 "_id=" + _id +
                 ", mTitle='" + mTitle + '\'' +
                 ", mStatus='" + mStatus + '\'' +
@@ -69,9 +72,43 @@ public class DeploymentModel extends Model {
                 '}';
     }
 
-    public enum Status {
-        ACTIVATED, DEACTIVATED;
+    public DeploymentModel(Parcel in) {
+        _id = in.readLong();
+        mTitle = in.readString();
+        mUrl = in.readString();
+        mStatus = Status.valueOf(in.readString());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
 
+    public static final Parcelable.Creator<DeploymentModel> CREATOR
+            = new Parcelable.Creator<DeploymentModel>() {
+
+        @Override
+        public DeploymentModel createFromParcel(Parcel source) {
+            return new DeploymentModel(source);
+        }
+
+        @Override
+        public DeploymentModel[] newArray(int size) {
+            return new DeploymentModel[size];
+        }
+    };
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(_id);
+        dest.writeString(getTitle());
+        dest.writeString(getUrl());
+        dest.writeString(getStatus().name());
+    }
+
+    public enum Status {
+        ACTIVATED, DEACTIVATED
+    }
 }

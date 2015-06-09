@@ -95,6 +95,6 @@ public class ListDeploymentActivity extends BaseActivity
 
     @Override
     public void onDeploymentClicked(DeploymentModel deploymentModel) {
-        showToast(deploymentModel.toString());
+        mListDeploymentComponent.launcher().launchUpdateDeployment(deploymentModel);
     }
 }

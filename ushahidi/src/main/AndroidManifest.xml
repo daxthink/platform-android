@@ -33,6 +33,14 @@
             </intent-filter>
         </activity>
         <activity
+                android:name=".presentation.ui.activity.UpdateDeploymentActivity"
+                android:label="@string/update_deployment">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
                 android:name=".presentation.ui.activity.ListDeploymentActivity"
                 android:label="@string/deployment_management">
             <intent-filter>
