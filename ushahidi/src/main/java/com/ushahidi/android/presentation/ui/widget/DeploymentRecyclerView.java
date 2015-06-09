@@ -239,13 +239,15 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
                 int mItemPosition = pointToPosition(ev);
                 if (mStartPosition != INVALID_POSITION) {
                     setItemChecked(mItemPosition);
+                    return true;
                 }
         }
-        return true;
+        return false;
     }
 
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent ev) {
+
     }
 
     @Override
@@ -302,6 +304,7 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
         @Override
         public void onDestroyActionMode(ActionMode actionMode) {
+            mDeploymentAdapter.clearSelections();
             mActionMode = null;
         }
     }
