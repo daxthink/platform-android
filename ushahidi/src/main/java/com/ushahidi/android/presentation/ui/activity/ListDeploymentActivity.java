@@ -51,7 +51,7 @@ public class ListDeploymentActivity extends BaseActivity
     Launcher mLauncher;
 
     public ListDeploymentActivity() {
-        super(R.layout.activity_list_deployment, R.menu.list_deployment);
+        super(R.layout.activity_list_deployment, 0);
     }
 
     public static Intent getIntent(final Context context) {

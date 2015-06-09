@@ -123,7 +123,6 @@ public class ListDeploymentFragment
 
     private void initRecyclerView() {
         mDeploymentAdapter = new DeploymentAdapter();
-        mDeploymentRecyclerView = (DeploymentRecyclerView) mDeploymentRecyclerView;
         mDeploymentRecyclerView.setDeleteDeploymentPresenter(mDeleteDeploymentPresenter);
         if (mFab != null) {
             setViewGone(mFab, false);
