@@ -22,17 +22,21 @@ import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentC
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.AddDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.view.AddDeploymentView;
+import com.ushahidi.android.presentation.validator.UrlValidator;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Fragment for adding a new deployment
@@ -128,11 +132,35 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @OnClick(R.id.add_deployment_add)
     public void onClickValidate() {
+        submit();
+    }
+
+    @OnEditorAction(R.id.add_deployment_url)
+    boolean onEditorAction(TextView textView, int actionId) {
+        if (textView == url) {
+            switch (actionId) {
+                case EditorInfo.IME_ACTION_DONE:
+                    submit();
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private void submit() {
+        url.setError(null);
+        if (TextUtils.isEmpty(title.getText().toString())) {
+            title.setError(getString(R.string.validation_message_no_deployment_title));
+            return;
+        }
+        if (!(new UrlValidator().isValid(url.getText().toString()))) {
+            url.setError(getString(R.string.validation_message_invalid_url));
+            return;
+        }
         DeploymentModel deploymentModel = new DeploymentModel();
         deploymentModel.setTitle(title.getText().toString());
         deploymentModel.setUrl(url.getText().toString());
         mAddDeploymentPresenter.addDeployment(deploymentModel);
-
     }
 
     @OnClick(R.id.add_deployment_cancel)

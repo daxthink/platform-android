@@ -55,6 +55,7 @@ dependencies {
     compile appDependencies.retrofit
     compile appDependencies.okhttp
     compile appDependencies.okhttpUrlConnection
+    compile appDependencies.qrCodeReaderView
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

@@ -23,18 +23,22 @@ import com.ushahidi.android.presentation.di.components.deployment.UpdateDeployme
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.UpdateDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.view.UpdateDeploymentView;
+import com.ushahidi.android.presentation.validator.UrlValidator;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Fragment for updating a existing deployment
@@ -136,13 +140,6 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
         showToast(message);
     }
 
-    @OnClick(R.id.add_deployment_add)
-    public void onClickValidate() {
-        mDeploymentModel.setTitle(title.getText().toString());
-        mDeploymentModel.setUrl(url.getText().toString());
-        mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
-    }
-
     @OnClick(R.id.add_deployment_cancel)
     public void onClickCancel() {
         if (mActionListener != null) {
@@ -162,6 +159,38 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
         mDeploymentModel = deploymentModel;
         title.setText(deploymentModel.getTitle());
         url.setText(deploymentModel.getUrl());
+    }
+
+    @OnClick(R.id.add_deployment_add)
+    public void onClickValidate() {
+        submit();
+    }
+
+    @OnEditorAction(R.id.add_deployment_url)
+    boolean onEditorAction(TextView textView, int actionId) {
+        if (textView == url) {
+            switch (actionId) {
+                case EditorInfo.IME_ACTION_DONE:
+                    submit();
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private void submit() {
+        url.setError(null);
+        if (TextUtils.isEmpty(title.getText().toString())) {
+            title.setError(getString(R.string.validation_message_no_deployment_title));
+            return;
+        }
+        if (!(new UrlValidator().isValid(url.getText().toString()))) {
+            url.setError(getString(R.string.validation_message_invalid_url));
+            return;
+        }
+        mDeploymentModel.setTitle(title.getText().toString());
+        mDeploymentModel.setUrl(url.getText().toString());
+        mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
     }
 
     @Override

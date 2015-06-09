@@ -22,7 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Deployment model
+ * A Parcelable Deployment model
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

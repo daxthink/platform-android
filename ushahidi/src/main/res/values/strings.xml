@@ -36,6 +36,10 @@
     <string name="add_deployment_empty_title">Please enter a title for your deployment</string>
     <string name="search_for_deployment_actionbar_title">Search for a deployment</string>
     <string name="update_deployment">Update Deployment</string>
+    <string name="validation_message_no_deployment_title">Please provide a title for the
+        deployment
+    </string>
+    <string name="validation_message_invalid_url">Please provide a URL fo your deployment</string>
     <!-- Posts  -->
     <string name="list_posts">List Posts</string>
 

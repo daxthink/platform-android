@@ -41,6 +41,7 @@ ext {
     retrofitVersion = '1.9.0'
     okhttpVersion = '2.3.0'
     okhttpUrlConnectionVersion = '2.3.0'
+    qrCodeReaderViewVersion = '1.0.0'
 
     //Testing
     jUnitVersion = '4.12'
@@ -63,6 +64,7 @@ ext {
             retrofit           : "com.squareup.retrofit:retrofit:${retrofitVersion}",
             okhttp             : "com.squareup.okhttp:okhttp:${okhttpVersion}",
             okhttpUrlConnection: "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
+            qrCodeReaderView   : "com.dlazaro66.qrcodereaderview.QRCodeReaderView:${qrCodeReaderViewVersion}",
     ]
 
     appTestDependencies = [
