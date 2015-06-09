@@ -64,7 +64,7 @@ ext {
             retrofit           : "com.squareup.retrofit:retrofit:${retrofitVersion}",
             okhttp             : "com.squareup.okhttp:okhttp:${okhttpVersion}",
             okhttpUrlConnection: "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
-            qrCodeReaderView   : "com.dlazaro66.qrcodereaderview.QRCodeReaderView:${qrCodeReaderViewVersion}",
+            qrCodeReaderView   : "com.dlazaro66.qrcodereaderview:qrcodereaderview:${qrCodeReaderViewVersion}",
     ]
 
     appTestDependencies = [

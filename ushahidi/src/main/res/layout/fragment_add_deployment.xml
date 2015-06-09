@@ -71,6 +71,13 @@
                         android:layout_gravity="center"
                         android:imeOptions="actionDone"/>
             </android.support.design.widget.TextInputLayout>
+            <ImageButton
+                    android:layout_width="@dimen/qr_code_icon_size"
+                    android:layout_height="@dimen/qr_code_icon_size"
+                    android:id="@+id/qr_code_scanner"
+                    android:src="@drawable/qr_code_icon"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_alignRight="@+id/searchBar"/>
         </LinearLayout>
     </ScrollView>
 

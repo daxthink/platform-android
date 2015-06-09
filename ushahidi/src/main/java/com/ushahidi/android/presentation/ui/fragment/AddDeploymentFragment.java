@@ -21,12 +21,14 @@ import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.AddDeploymentPresenter;
+import com.ushahidi.android.presentation.ui.navigation.Launcher;
 import com.ushahidi.android.presentation.ui.view.AddDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -55,6 +57,9 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Inject
     AddDeploymentPresenter mAddDeploymentPresenter;
+
+    @Inject
+    Launcher mLauncher;
 
     /**
      * Add Deployment  Fragment
@@ -168,6 +173,16 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
         if (mActionListener != null) {
             mActionListener.onCancelAdd();
         }
+    }
+
+    @OnClick(R.id.qr_code_scanner)
+    public void onQrCodeScannerClick() {
+        mLauncher.launchQrcodeReader();
+    }
+
+    public void setDeployment(@NonNull DeploymentModel deploymentModel) {
+        title.setText(deploymentModel.getTitle());
+        url.setText(deploymentModel.getUrl());
     }
 
     @Override

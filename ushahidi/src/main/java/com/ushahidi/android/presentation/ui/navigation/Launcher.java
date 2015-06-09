@@ -19,6 +19,7 @@ package com.ushahidi.android.presentation.ui.navigation;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
+import com.ushahidi.android.presentation.ui.activity.QrcodeReaderActivity;
 import com.ushahidi.android.presentation.ui.activity.UpdateDeploymentActivity;
 
 import android.app.Activity;
@@ -58,5 +59,13 @@ public class Launcher {
     public void launchUpdateDeployment(DeploymentModel deploymentModel) {
         final Intent intent = UpdateDeploymentActivity.getIntent(mActivity, deploymentModel);
         mActivity.startActivity(intent);
+    }
+
+    /**
+     * Launches the barcode reader
+     */
+    public void launchQrcodeReader() {
+        final Intent intent = QrcodeReaderActivity.getIntent(mActivity);
+        mActivity.startActivityForResult(intent, QrcodeReaderActivity.QRCODE_READER_REQUEST_CODE);
     }
 }

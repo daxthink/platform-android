@@ -30,7 +30,9 @@
 
     <!-- Deployments -->
     <string name="add_deployment_title_hint">The title of the deployment</string>
-    <string name="add_deployment_description_hint">Please enter details of the deployment.</string>
+    <string name="add_deployment_description_hint">Please enter details of the deployment or use the
+        QR code scanner to scan for details of the deployment.
+    </string>
     <string name="add_deployment_url_hint">The API URL of the deployment</string>
     <string name="add_deployment_title">Add Deployment</string>
     <string name="add_deployment_empty_title">Please enter a title for your deployment</string>
@@ -40,6 +42,7 @@
         deployment
     </string>
     <string name="validation_message_invalid_url">Please provide a URL fo your deployment</string>
+    <string name="no_qrcode_found">No valid deployment QR code was found in the reader.</string>
     <!-- Posts  -->
     <string name="list_posts">List Posts</string>
 

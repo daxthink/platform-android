@@ -21,7 +21,7 @@ import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.DaggerAddDeploymentComponent;
-import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
+import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.ui.fragment.AddDeploymentFragment;
 
 import android.content.Context;
@@ -39,9 +39,9 @@ public class AddDeploymentActivity extends BaseActivity
 
     private AddDeploymentComponent mAddDeploymentComponent;
 
-    private DeleteDeploymentComponent mDeleteDeploymentComponent;
-
     private static final String FRAG_TAG = "add_deployment";
+
+    private AddDeploymentFragment mAddDeploymentFragment;
 
     public AddDeploymentActivity() {
         super(R.layout.activity_add_deployment, 0);
@@ -55,13 +55,11 @@ public class AddDeploymentActivity extends BaseActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
-        AddDeploymentFragment addDeploymentFragment
-                = (AddDeploymentFragment) getSupportFragmentManager()
+        mAddDeploymentFragment = (AddDeploymentFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAG_TAG);
-        if (addDeploymentFragment == null) {
-            addDeploymentFragment = AddDeploymentFragment.newInstance();
-            addFragment(R.id.add_fragment_container, addDeploymentFragment,
-                    FRAG_TAG);
+        if (mAddDeploymentFragment == null) {
+            mAddDeploymentFragment = AddDeploymentFragment.newInstance();
+            addFragment(R.id.add_fragment_container, mAddDeploymentFragment, FRAG_TAG);
         }
     }
 
@@ -77,10 +75,6 @@ public class AddDeploymentActivity extends BaseActivity
         return mAddDeploymentComponent;
     }
 
-    public DeleteDeploymentComponent getDeleteCompnent() {
-        return mDeleteDeploymentComponent;
-    }
-
     @Override
     public void onAddNavigateOrReloadList() {
         mAddDeploymentComponent.launcher().launchListDeployment();
@@ -90,5 +84,18 @@ public class AddDeploymentActivity extends BaseActivity
     @Override
     public void onCancelAdd() {
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == QrcodeReaderActivity.QRCODE_READER_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                final DeploymentModel deploymentModel = data.getParcelableExtra(
+                        QrcodeReaderActivity.INTENT_EXTRA_PARAM_BARCODE_DEPLOYMENT_MODEL);
+                mAddDeploymentFragment.setDeployment(deploymentModel);
+            } else {
+                showToast(R.string.no_qrcode_found);
+            }
+        }
     }
 }
