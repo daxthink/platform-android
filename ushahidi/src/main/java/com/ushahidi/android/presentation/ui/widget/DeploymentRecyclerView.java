@@ -177,22 +177,24 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
         Collections.sort(mPendingDeletedDeployments, cmp);
         Snackbar snackbar = Snackbar.make(mFloatingActionButton, mActivity
                         .getString(R.string.items_deleted, mPendingDeletedDeployments.size()),
-                Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, e -> {
-                    mIsPermanentlyDeleted = false;
-                    // Restore items
-                    for (DeploymentRecyclerView.PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
-                        mDeploymentAdapter.addItem(pendingDeletedDeployment.deploymentModel,
-                                pendingDeletedDeployment.position);
-                    }
-                    clearItems();
-                });
+                Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.undo, e -> {
+            mIsPermanentlyDeleted = false;
+            // Restore items
+            for (DeploymentRecyclerView.PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
+                mDeploymentAdapter.addItem(pendingDeletedDeployment.deploymentModel,
+                        pendingDeletedDeployment.position);
+            }
+            clearItems();
+        });
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(mActivity.getResources().getColor(R.color.orange));
         snackbar.show();
         // Handler to time the dismissal of the snackbar so users can
         // undo soft deletion or hard delete deployments
+        // Hack: to complement Snackbar's limitation
+        // See; http://stackoverflow.com/questions/30639470/snackbar-in-support-library-doesnt-include-ondismisslistener
         new Handler(mActivity.getMainLooper()).postDelayed(() -> {
             if (mIsPermanentlyDeleted) {
                 if (mPendingDeletedDeployments.size() > 0) {
@@ -204,7 +206,7 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
                     clearItems();
                 }
             }
-        }, (int) (snackbar.getDuration() * 1.05f));
+        }, 3500);
     }
 
     @Override
