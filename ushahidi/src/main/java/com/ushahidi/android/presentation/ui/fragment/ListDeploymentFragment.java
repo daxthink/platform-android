@@ -93,10 +93,13 @@ public class ListDeploymentFragment
     }
 
     public static ListDeploymentFragment newInstance() {
-        if (mListDeploymentFragment == null) {
-            mListDeploymentFragment = new ListDeploymentFragment();
-        }
-        return mListDeploymentFragment;
+        return new ListDeploymentFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
@@ -147,7 +150,7 @@ public class ListDeploymentFragment
                         this);
         mDeploymentRecyclerView.recyclerView
                 .addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
-        mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
+        //mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
         swipeToDeleteUndo();
         setEmptyView();
     }
@@ -176,8 +179,8 @@ public class ListDeploymentFragment
                         for (SwipeToDismissTouchListener.PendingDismissData data : dismissData) {
                             mDeploymentRecyclerView.mPendingDeletedDeployments.add(
                                     new DeploymentRecyclerView.PendingDeletedDeployment(
-                                            data.position
-                                            , mDeploymentAdapter.getItem(data.position)));
+                                            data.position,
+                                            mDeploymentAdapter.getItem(data.position)));
                             mDeploymentAdapter.removeItem(
                                     mDeploymentAdapter.getItem(data.position));
                         }

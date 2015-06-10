@@ -27,8 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,8 +37,7 @@ import java.util.List;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> implements
-        Filterable {
+public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> {
 
     private SparseBooleanArray mSelectedItems;
 
@@ -61,8 +58,6 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
     public int getAdapterItemCount() {
         return getItems().size();
     }
-
-    private Filter mFilter = null;
 
     public DeploymentAdapter() {
         mSelectedItems = new SparseBooleanArray();
@@ -92,45 +87,6 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
             items.add(mSelectedItems.keyAt(i));
         }
         return items;
-    }
-
-    @Override
-    public Filter getFilter() {
-        if (mFilter == null) {
-            mFilter = new DeploymentFilter();
-        }
-        return mFilter;
-    }
-
-    private class DeploymentFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            constraint = constraint.toString().toLowerCase();
-            results.values = getItems();
-            results.count = getItems().size();
-            if (constraint != null && constraint.toString().length() > 0) {
-                ArrayList<DeploymentModel> filteredItems = new ArrayList<>();
-                //TODO: query the mItems from the database and use that for comparison
-                for (DeploymentModel deployment : getItems()) {
-                    if (deployment.getTitle().toLowerCase().contains(constraint.toString())) {
-                        filteredItems.add(deployment);
-                    }
-                }
-                results.count = filteredItems.size();
-                results.values = filteredItems;
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence,
-                Filter.FilterResults filterResults) {
-            List<DeploymentModel> deploymentModels
-                    = (ArrayList<DeploymentModel>) filterResults.values;
-            setItems(deploymentModels);
-        }
     }
 
     public class Widgets extends RecyclerView.ViewHolder {
