@@ -39,8 +39,7 @@ import javax.inject.Named;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
-public class ActivateDeploymentPresenter extends DefaultSubscriber<Deployment>
-        implements Presenter {
+public class ActivateDeploymentPresenter implements Presenter {
 
     private final Usecase mActivateDeploymentUsecase;
 
@@ -62,7 +61,25 @@ public class ActivateDeploymentPresenter extends DefaultSubscriber<Deployment>
 
     @Override
     public void resume() {
-        mActivateDeploymentUsecase.execute(this);
+        mActivateDeploymentUsecase.execute(new DefaultSubscriber<Deployment>() {
+            @Override
+            public void onCompleted() {
+                mActivateDeploymentView.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mActivateDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+                mActivateDeploymentView.showRetry();
+            }
+
+            @Override
+            public void onNext(Deployment deployment) {
+                mActivateDeploymentView
+                        .setActiveDeployment(mDeploymentModelDataMapper.map(deployment));
+            }
+        });
     }
 
     @Override
@@ -79,22 +96,5 @@ public class ActivateDeploymentPresenter extends DefaultSubscriber<Deployment>
         String errorMessage = ErrorMessageFactory.create(mActivateDeploymentView.getAppContext(),
                 errorHandler.getException());
         mActivateDeploymentView.showError(errorMessage);
-    }
-
-    @Override
-    public void onCompleted() {
-        mActivateDeploymentView.hideLoading();
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        mActivateDeploymentView.hideLoading();
-        showErrorMessage(new DefaultErrorHandler((Exception) e));
-        mActivateDeploymentView.showRetry();
-    }
-
-    @Override
-    public void onNext(Deployment deployment) {
-        mActivateDeploymentView.setActiveDeployment(mDeploymentModelDataMapper.map(deployment));
     }
 }

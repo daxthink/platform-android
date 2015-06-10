@@ -34,7 +34,7 @@ import javax.inject.Named;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AddDeploymentPresenter extends DefaultSubscriber<Long> implements Presenter {
+public class AddDeploymentPresenter implements Presenter {
 
     private final AddDeploymentUsecase mAddDeploymentUsecase;
 
@@ -72,29 +72,29 @@ public class AddDeploymentPresenter extends DefaultSubscriber<Long> implements P
         mAddDeploymentView.hideRetry();
         mAddDeploymentView.showLoading();
         mAddDeploymentUsecase.setDeployment(mDeploymentModelDataMapper.map(deploymentModel));
-        mAddDeploymentUsecase.execute(this);
+        mAddDeploymentUsecase.execute(new DefaultSubscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                mAddDeploymentView.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mAddDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+                mAddDeploymentView.showRetry();
+            }
+
+            @Override
+            public void onNext(Long row) {
+                mAddDeploymentView.onDeploymentSuccessfullyAdded(row);
+            }
+        });
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {
         String errorMessage = ErrorMessageFactory.create(mAddDeploymentView.getAppContext(),
                 errorHandler.getException());
         mAddDeploymentView.showError(errorMessage);
-    }
-
-    @Override
-    public void onCompleted() {
-        mAddDeploymentView.hideLoading();
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        mAddDeploymentView.hideLoading();
-        showErrorMessage(new DefaultErrorHandler((Exception) e));
-        mAddDeploymentView.showRetry();
-    }
-
-    @Override
-    public void onNext(Long row) {
-        mAddDeploymentView.onDeploymentSuccessfullyAdded(row);
     }
 }

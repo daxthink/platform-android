@@ -37,7 +37,7 @@ import javax.inject.Named;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListDeploymentPresenter extends DefaultSubscriber<List<Deployment>> implements
+public class ListDeploymentPresenter implements
         Presenter {
 
     private final ListDeploymentUsecase mUsecase;
@@ -74,25 +74,26 @@ public class ListDeploymentPresenter extends DefaultSubscriber<List<Deployment>>
     public void loadDeployments() {
         mListDeploymentView.hideRetry();
         mListDeploymentView.showLoading();
-        mUsecase.execute(this);
-    }
+        mUsecase.execute(new DefaultSubscriber<List<Deployment>>() {
+            @Override
+            public void onCompleted() {
+                mListDeploymentView.hideLoading();
+            }
 
-    @Override
-    public void onCompleted() {
-        mListDeploymentView.hideLoading();
-    }
+            @Override
+            public void onNext(List<Deployment> deploymentList) {
+                mListDeploymentView.hideLoading();
+                mListDeploymentView
+                        .renderDeploymentList(mDeploymentModelDataMapper.map(deploymentList));
+            }
 
-    @Override
-    public void onNext(List<Deployment> deploymentList) {
-        mListDeploymentView.hideLoading();
-        mListDeploymentView.renderDeploymentList(mDeploymentModelDataMapper.map(deploymentList));
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        mListDeploymentView.hideLoading();
-        showErrorMessage(new DefaultErrorHandler((Exception) e));
-        mListDeploymentView.showRetry();
+            @Override
+            public void onError(Throwable e) {
+                mListDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+                mListDeploymentView.showRetry();
+            }
+        });
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {

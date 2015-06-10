@@ -6,7 +6,6 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
-import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
 import com.ushahidi.android.presentation.ui.view.DeleteDeploymentView;
 
 import android.support.annotation.NonNull;
@@ -17,20 +16,16 @@ import javax.inject.Named;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeleteDeploymentPresenter extends DefaultSubscriber<Long> implements Presenter {
+public class DeleteDeploymentPresenter implements Presenter {
 
     private final DeleteDeploymentUsecase mDeleteDeploymentUsecase;
-
-    private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
     private DeleteDeploymentView mDeleteDeploymentView;
 
     @Inject
     public DeleteDeploymentPresenter(
-            @Named("categoryDelete") DeleteDeploymentUsecase deleteDeploymentUsecase,
-            DeploymentModelDataMapper deploymentModelDataMapper) {
+            @Named("categoryDelete") DeleteDeploymentUsecase deleteDeploymentUsecase) {
         mDeleteDeploymentUsecase = deleteDeploymentUsecase;
-        mDeploymentModelDataMapper = deploymentModelDataMapper;
     }
 
     @Override
@@ -54,25 +49,25 @@ public class DeleteDeploymentPresenter extends DefaultSubscriber<Long> implement
 
     public void deleteDeployment(Long deploymentId) {
         mDeleteDeploymentUsecase.setDeploymentId(deploymentId);
-        mDeleteDeploymentUsecase.execute(this);
+        mDeleteDeploymentUsecase.execute(new DefaultSubscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                mDeleteDeploymentView.hideLoading();
+                // TODO: Delete all saved items in the shared preferences
+            }
 
-    }
+            @Override
+            public void onNext(Long row) {
+                mDeleteDeploymentView.onDeploymentDeleted();
+            }
 
-    @Override
-    public void onCompleted() {
-        mDeleteDeploymentView.hideLoading();
-        // TODO: Delete all saved items in the shared preferences
-    }
+            @Override
+            public void onError(Throwable e) {
+                mDeleteDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+            }
+        });
 
-    @Override
-    public void onNext(Long row) {
-        mDeleteDeploymentView.onDeploymentDeleted();
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        mDeleteDeploymentView.hideLoading();
-        showErrorMessage(new DefaultErrorHandler((Exception) e));
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {

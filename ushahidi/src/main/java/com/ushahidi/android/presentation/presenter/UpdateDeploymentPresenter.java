@@ -35,7 +35,7 @@ import javax.inject.Named;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UpdateDeploymentPresenter extends DefaultSubscriber<Long> implements Presenter {
+public class UpdateDeploymentPresenter implements Presenter {
 
     private final UpdateDeploymentUsecase mUpdateDeploymentUsecase;
 
@@ -74,29 +74,29 @@ public class UpdateDeploymentPresenter extends DefaultSubscriber<Long> implement
         mUpdateDeploymentView.hideRetry();
         mUpdateDeploymentView.showLoading();
         mUpdateDeploymentUsecase.setDeployment(mDeploymentModelDataMapper.map(deploymentModel));
-        mUpdateDeploymentUsecase.execute(this);
+        mUpdateDeploymentUsecase.execute(new DefaultSubscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                mUpdateDeploymentView.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mUpdateDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+                mUpdateDeploymentView.showRetry();
+            }
+
+            @Override
+            public void onNext(Long row) {
+                mUpdateDeploymentView.onDeploymentSuccessfullyUpdated(row);
+            }
+        });
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {
         String errorMessage = ErrorMessageFactory.create(mUpdateDeploymentView.getAppContext(),
                 errorHandler.getException());
         mUpdateDeploymentView.showError(errorMessage);
-    }
-
-    @Override
-    public void onCompleted() {
-        mUpdateDeploymentView.hideLoading();
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        mUpdateDeploymentView.hideLoading();
-        showErrorMessage(new DefaultErrorHandler((Exception) e));
-        mUpdateDeploymentView.showRetry();
-    }
-
-    @Override
-    public void onNext(Long row) {
-        mUpdateDeploymentView.onDeploymentSuccessfullyUpdated(row);
     }
 }
