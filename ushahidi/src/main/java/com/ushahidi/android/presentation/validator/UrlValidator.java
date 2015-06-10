@@ -18,6 +18,7 @@
 package com.ushahidi.android.presentation.validator;
 
 import android.text.TextUtils;
+import android.util.Patterns;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,9 +30,6 @@ import java.util.regex.Pattern;
  */
 public class UrlValidator implements Validator {
 
-    private static final String URL_PATTERN
-            = "\\b(https?|ftp|file)://[-a-zA-Z0-9+\\$&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
-
     @Override
     public boolean isValid(CharSequence text) {
         return valid(text.toString());
@@ -41,7 +39,7 @@ public class UrlValidator implements Validator {
         if (TextUtils.isEmpty(url)) {
             return false;
         }
-        final Pattern pattern = Pattern.compile(URL_PATTERN);
+        final Pattern pattern = Patterns.WEB_URL;
         final Matcher matcher = pattern.matcher(url);
         if (matcher.matches()) {
             return true;
