@@ -58,7 +58,7 @@ public class AddDeploymentActivity extends BaseActivity
                 .findFragmentByTag(FRAG_TAG);
         if (mAddDeploymentFragment == null) {
             mAddDeploymentFragment = AddDeploymentFragment.newInstance();
-            addFragment(R.id.add_fragment_container, mAddDeploymentFragment, FRAG_TAG);
+            replaceFragment(R.id.add_fragment_container, mAddDeploymentFragment, FRAG_TAG);
         }
     }
 

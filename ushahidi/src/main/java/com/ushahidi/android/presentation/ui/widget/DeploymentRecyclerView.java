@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -67,6 +68,8 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
     private boolean mIsPermanentlyDeleted = true;
 
     private DeleteDeploymentPresenter mDeleteDeploymentPresenter;
+
+    private FloatingActionButton mFloatingActionButton;
 
     public DeploymentRecyclerView(Context context) {
         this(context, null, 0);
@@ -164,11 +167,15 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
         deleteItems();
     }
 
+    public void setFloatingActionButton(FloatingActionButton floatingActionButton) {
+        mFloatingActionButton = floatingActionButton;
+    }
+
     public void deleteItems() {
         //Sort in ascending order for restoring deleted items
         Comparator cmp = Collections.reverseOrder();
         Collections.sort(mPendingDeletedDeployments, cmp);
-        Snackbar snackbar = Snackbar.make(getRootView(), mActivity
+        Snackbar snackbar = Snackbar.make(mFloatingActionButton, mActivity
                         .getString(R.string.items_deleted, mPendingDeletedDeployments.size()),
                 Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, e -> {
@@ -268,6 +275,8 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
     class ActionBarModeCallback implements ActionMode.Callback {
 
+        boolean isDeleted = false;
+
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
             actionMode.getMenuInflater()
@@ -282,23 +291,23 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
         @Override
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-            boolean result = false;
 
             if (menuItem.getItemId() == R.id.list_deployment_delete) {
                 setItemsForDeletion();
-                result = true;
+                isDeleted = true;
             }
 
             if (mActionMode != null) {
                 mActionMode.finish();
             }
-            return result;
+            return isDeleted;
         }
 
         @Override
         public void onDestroyActionMode(ActionMode actionMode) {
-            clearItems();
-            mDeploymentAdapter.clearSelections();
+            if (!isDeleted) {
+                clearItems();
+            }
             mActionMode = null;
         }
     }

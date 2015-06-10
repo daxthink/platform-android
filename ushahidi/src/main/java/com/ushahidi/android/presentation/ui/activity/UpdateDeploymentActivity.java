@@ -75,7 +75,7 @@ public class UpdateDeploymentActivity extends BaseActivity
                 .findFragmentByTag(FRAG_TAG);
         if (mUpdateDeploymentFragment == null) {
             mUpdateDeploymentFragment = UpdateDeploymentFragment.newInstance(mDeploymentModel);
-            addFragment(R.id.update_fragment_container, mUpdateDeploymentFragment, FRAG_TAG);
+            replaceFragment(R.id.update_fragment_container, mUpdateDeploymentFragment, FRAG_TAG);
         }
     }
 

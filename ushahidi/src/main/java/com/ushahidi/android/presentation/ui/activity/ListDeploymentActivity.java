@@ -68,7 +68,7 @@ public class ListDeploymentActivity extends BaseActivity
                 .findFragmentByTag(FRAG_TAG);
         if (mListDeploymentFragment == null) {
             mListDeploymentFragment = ListDeploymentFragment.newInstance();
-            addFragment(R.id.add_fragment_container, mListDeploymentFragment);
+            replaceFragment(R.id.add_fragment_container, mListDeploymentFragment);
         }
     }
 

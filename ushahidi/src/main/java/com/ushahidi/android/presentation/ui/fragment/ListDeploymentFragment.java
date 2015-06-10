@@ -21,6 +21,7 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFra
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.AppUtils;
 import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.ListDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
@@ -86,8 +87,6 @@ public class ListDeploymentFragment
 
     private boolean isDismissToDelete = false;
 
-    private static ListDeploymentFragment mListDeploymentFragment;
-
     public ListDeploymentFragment() {
         super(DeploymentAdapter.class, R.layout.fragment_list_deployment, 0);
     }
@@ -99,7 +98,6 @@ public class ListDeploymentFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -131,6 +129,7 @@ public class ListDeploymentFragment
             setViewGone(mFab, false);
             mFab.setOnClickListener(v -> mLauncher.launchAddDeployment());
         }
+        mDeploymentRecyclerView.setFloatingActionButton(mFab);
         mDeploymentRecyclerView.setFocusable(true);
         mDeploymentRecyclerView.setFocusableInTouchMode(true);
         mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
@@ -214,7 +213,7 @@ public class ListDeploymentFragment
 
     @Override
     public void renderDeploymentList(List<DeploymentModel> deploymentModel) {
-        if (deploymentModel != null && mDeploymentAdapter != null) {
+        if (!AppUtils.isEmpty(deploymentModel)) {
             mDeploymentAdapter.setItems(deploymentModel);
         }
     }
