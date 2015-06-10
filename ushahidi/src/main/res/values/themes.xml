@@ -16,8 +16,19 @@
   -->
 
 <resources>
-    <style name="ActionBarThemeOverlay" parent="@style/ThemeOverlay.AppCompat.Dark">
-        <item name="popupTheme">@style/ActionBarPopupThemeOverlay</item>
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlHighlight">?colorAccent</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlHighlight">?colorAccent</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="actionModeBackground">@color/color_accent</item>
+    </style>
 </resources>

@@ -150,7 +150,6 @@ public class ListDeploymentFragment
                         this);
         mDeploymentRecyclerView.recyclerView
                 .addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
-        //mDeploymentRecyclerView.setAdapter(mDeploymentAdapter);
         swipeToDeleteUndo();
         setEmptyView();
     }

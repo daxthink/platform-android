@@ -20,7 +20,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".ui.DeploymentActivity">
+              tools:context=".presentation.ui.activity.ListDeploymentActivity">
     <FrameLayout
             android:id="@+id/add_fragment_container"
             android:layout_width="match_parent"
