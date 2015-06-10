@@ -162,7 +162,6 @@ public class ListDeploymentFragment
 
     private void swipeToDeleteUndo() {
         mDeploymentRecyclerView.initAdapter(mDeploymentAdapter);
-
         mDeploymentRecyclerView
                 .setSwipeToDismissCallback(new SwipeToDismissTouchListener.DismissCallbacks() {
                     @Override

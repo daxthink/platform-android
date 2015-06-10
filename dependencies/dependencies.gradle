@@ -35,7 +35,7 @@ ext {
     daggerVersion = '2.0'
     butterKnifeVersion = '6.0.0'
     javaxAnnotationVersion = '10.0-b28'
-    raiburariVersion = '2.0.0'
+    raiburariVersion = '2.1.0'
     materialdrawerVersion = '2.9.8'
     cupboardVersion = '2.1.1'
     retrofitVersion = '1.9.0'

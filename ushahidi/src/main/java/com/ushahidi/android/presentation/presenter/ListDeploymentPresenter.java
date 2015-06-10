@@ -60,7 +60,6 @@ public class ListDeploymentPresenter extends DefaultSubscriber<List<Deployment>>
 
     @Override
     public void pause() {
-        // Do nothing
     }
 
     @Override

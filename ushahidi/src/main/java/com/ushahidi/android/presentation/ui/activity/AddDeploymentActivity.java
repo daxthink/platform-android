@@ -34,8 +34,7 @@ import android.os.Bundle;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class AddDeploymentActivity extends BaseActivity
-        implements HasComponent<AddDeploymentComponent>,
-        AddDeploymentFragment.AddDeploymentListener {
+        implements HasComponent<AddDeploymentComponent> {
 
     private AddDeploymentComponent mAddDeploymentComponent;
 
@@ -73,17 +72,6 @@ public class AddDeploymentActivity extends BaseActivity
     @Override
     public AddDeploymentComponent getComponent() {
         return mAddDeploymentComponent;
-    }
-
-    @Override
-    public void onAddNavigateOrReloadList() {
-        mAddDeploymentComponent.launcher().launchListDeployment();
-        finish();
-    }
-
-    @Override
-    public void onCancelAdd() {
-        finish();
     }
 
     @Override

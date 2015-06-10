@@ -134,7 +134,6 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
         mUpdateDeploymentPresenter.setView(this);
     }
 
-
     @Override
     public Context getAppContext() {
         return getActivity().getApplication();

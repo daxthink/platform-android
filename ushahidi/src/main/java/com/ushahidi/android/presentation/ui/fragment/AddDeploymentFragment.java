@@ -25,7 +25,6 @@ import com.ushahidi.android.presentation.ui.navigation.Launcher;
 import com.ushahidi.android.presentation.ui.view.AddDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -53,8 +52,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     @InjectView(R.id.add_deployment_url)
     EditText url;
 
-    private AddDeploymentListener mActionListener;
-
     @Inject
     AddDeploymentPresenter mAddDeploymentPresenter;
 
@@ -71,14 +68,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     public static AddDeploymentFragment newInstance() {
         AddDeploymentFragment addDeploymentFragment = new AddDeploymentFragment();
         return addDeploymentFragment;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof AddDeploymentListener) {
-            this.mActionListener = (AddDeploymentListener) activity;
-        }
     }
 
     @Override
@@ -111,12 +100,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     public void onDestroy() {
         super.onDestroy();
         mAddDeploymentPresenter.destroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mActionListener = null;
     }
 
     private void initialize() {
@@ -170,9 +153,7 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @OnClick(R.id.add_deployment_cancel)
     public void onClickCancel() {
-        if (mActionListener != null) {
-            mActionListener.onCancelAdd();
-        }
+        getActivity().finish();
     }
 
     @OnClick(R.id.qr_code_scanner)
@@ -187,9 +168,7 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Override
     public void onDeploymentSuccessfullyAdded(Long row) {
-        if (mActionListener != null) {
-            mActionListener.onAddNavigateOrReloadList();
-        }
+        getActivity().finish();
     }
 
     @Override
@@ -210,22 +189,5 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     @Override
     public void hideRetry() {
         // Do nothing
-    }
-
-    /**
-     * Listens for Add Deployment events
-     */
-    public interface AddDeploymentListener {
-
-        /**
-         * Executes when a button is pressed to either navigate away from the screen or reload an
-         * existing list.
-         */
-        void onAddNavigateOrReloadList();
-
-        /**
-         * Executes when a button is pressed to either cancel.
-         */
-        void onCancelAdd();
     }
 }

@@ -17,6 +17,8 @@
 package com.ushahidi.android.presentation.di.components;
 
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.ushahidi.android.presentation.state.AppState;
+import com.ushahidi.android.presentation.state.UserState;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
 
 /**
@@ -26,4 +28,8 @@ import com.ushahidi.android.presentation.ui.navigation.Launcher;
 public interface AppComponent {
 
     Launcher launcher();
+
+    AppState appState();
+
+    UserState userState();
 }

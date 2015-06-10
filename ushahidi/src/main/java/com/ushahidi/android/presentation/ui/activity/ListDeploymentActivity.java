@@ -47,6 +47,8 @@ public class ListDeploymentActivity extends BaseActivity
 
     private static final String FRAG_TAG = "list_deployment";
 
+    ListDeploymentFragment mListDeploymentFragment;
+
     @Inject
     Launcher mLauncher;
 
@@ -62,12 +64,11 @@ public class ListDeploymentActivity extends BaseActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
-        ListDeploymentFragment listDeploymentFragment
-                = (ListDeploymentFragment) getSupportFragmentManager()
+        mListDeploymentFragment = (ListDeploymentFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAG_TAG);
-        if (listDeploymentFragment == null) {
-            listDeploymentFragment = ListDeploymentFragment.newInstance();
-            addFragment(R.id.add_fragment_container, listDeploymentFragment);
+        if (mListDeploymentFragment == null) {
+            mListDeploymentFragment = ListDeploymentFragment.newInstance();
+            addFragment(R.id.add_fragment_container, mListDeploymentFragment);
         }
     }
 

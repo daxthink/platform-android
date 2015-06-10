@@ -18,8 +18,11 @@ package com.ushahidi.android.presentation.di.modules;
 
 import com.addhen.android.raiburari.data.pref.RxSharedPreferences;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.squareup.otto.Bus;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.presentation.state.AppState;
+import com.ushahidi.android.presentation.state.UserState;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -55,5 +58,17 @@ public class AppModule {
     DeploymentRepository provideDeploymentRepository(
             DeploymentDataRepository deploymentDataRepository) {
         return deploymentDataRepository;
+    }
+
+    @Provides
+    @ActivityScope
+    public AppState provideApplicationState(Bus bus) {
+        return new AppState(bus);
+    }
+
+    @Provides
+    @ActivityScope
+    UserState provideUserState(AppState appState) {
+        return appState;
     }
 }
