@@ -47,8 +47,7 @@ public class DeleteDeploymentPresenterTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mDeleteDeploymentPresenter = new DeleteDeploymentPresenter(mMockDeleteDeploymentUsecase,
-                mMockDeploymentDataMapper);
+        mDeleteDeploymentPresenter = new DeleteDeploymentPresenter(mMockDeleteDeploymentUsecase);
         mDeleteDeploymentPresenter.setView(mMockDeleteDeploymentView);
     }
 
