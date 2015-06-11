@@ -1,4 +1,4 @@
-Ushahidi Android App [![Build Status](https://travis-ci.org/ushahidi/platform-android.svg?branch=develop)](https://travis-ci.org/ushahidi/platform-android)
+Ushahidi Android App [![Build Status](https://travis-ci.org/ushahidi/platform-android.svg?branch=develop)](https://travis-ci.org/ushahidi/platform-android) [![Stories in Ready](https://badge.waffle.io/ushahidi/platform-android.png?label=ready&title=Ready)](http://waffle.io/ushahidi/platform-android)
 ================
 
 Ushahidi is an open source web application for information collection, visualization, and interactive mapping. 
