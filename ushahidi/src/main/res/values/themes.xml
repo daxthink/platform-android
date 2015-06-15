@@ -23,6 +23,7 @@
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="photoItemForeground">?android:selectableItemBackground</item>
     </style>
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlHighlight">?colorAccent</item>

@@ -35,4 +35,8 @@
     <dimen name="post_item_image_height">75dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="qr_code_icon_size">80dp</dimen>
+    <!-- nav drawer -->
+    <dimen name="nav_drawer_user_profile_image_size">40dp</dimen>
+    <dimen name="nav_drawer_user_account_height">180dp</dimen>
+    <dimen name="nav_drawer_profile_pic_top_padding">38dp</dimen>
 </resources>
