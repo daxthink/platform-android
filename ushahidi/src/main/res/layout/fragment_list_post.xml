@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Ushahidi Inc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~  the terms of the GNU Affero General Public License as published by the Free
+  ~  Software Foundation, either version 3 of the License, or (at your option)
+  ~  any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT
+  ~  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU Affero General Public License
+  ~  along with this program in the file LICENSE-AGPL. If not, see
+  ~  https://www.gnu.org/licenses/agpl-3.0.html
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView
+            android:id="@id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:recyclerviewEmptyView="@layout/list_empty_view"
+            app:recyclerviewClipToPadding="true"
+            app:recyclerviewScrollbars="vertical"/>
+
+    <ProgressBar
+            android:id="@+id/list_post_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            style="?android:attr/progressBarStyle"/>
+</RelativeLayout>
