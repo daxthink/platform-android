@@ -26,6 +26,15 @@
             android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.CAMERA"/>
         <activity
+                android:name=".presentation.ui.activity.PostActivity"
+                android:label="@string/posts"
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
                 android:name=".presentation.ui.activity.AddDeploymentActivity"
                 android:label="@string/add_deployment_title">
             <intent-filter>
@@ -45,8 +54,8 @@
                 android:name=".presentation.ui.activity.ListDeploymentActivity"
                 android:label="@string/deployment_management">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.VIEW"/>
+                <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
