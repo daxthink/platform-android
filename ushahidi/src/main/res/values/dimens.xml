@@ -38,5 +38,7 @@
     <!-- nav drawer -->
     <dimen name="nav_drawer_user_profile_image_size">40dp</dimen>
     <dimen name="nav_drawer_user_account_height">180dp</dimen>
-    <dimen name="nav_drawer_profile_pic_top_padding">38dp</dimen>
+    <dimen name="nav_drawer_user_profile_pic_top_padding">38dp</dimen>
+    <dimen name="nav_drawer_user_profile_layout_height">56dp</dimen>
+    <dimen name="nav_drawer_user_profile_background_height">164dp</dimen>
 </resources>
