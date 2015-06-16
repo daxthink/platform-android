@@ -148,7 +148,7 @@ public class PostActivity extends BaseActivity {
     }
 
     private void setNavigationViewMenuItems(@NonNull Menu menu) {
-        // TODO: Use real deployment to populate this menu items
+        // TODO: Use real deployment to populate the menu items for deployments
         SubMenu subMenu = menu
                 .addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.deployments);
         subMenu.add(DEPLOYMENTS_MENU_ITEMS_ID, 1, 1, "Ebola watch doc")
