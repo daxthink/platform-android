@@ -22,6 +22,6 @@ import android.support.v4.app.Fragment;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListPostFragment extends Fragment {
+public class MapPostFragment extends Fragment {
 
 }

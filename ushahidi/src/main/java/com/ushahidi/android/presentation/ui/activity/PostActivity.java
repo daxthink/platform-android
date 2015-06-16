@@ -19,6 +19,8 @@ package com.ushahidi.android.presentation.ui.activity;
 
 import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
+import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -134,7 +136,8 @@ public class PostActivity extends BaseActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), viewPager);
-        // TODO: Setup fragments for the view pager
+        adapter.addFragment(new ListPostFragment(), getString(R.string.list));
+        adapter.addFragment(new MapPostFragment(), getString(R.string.map));
         viewPager.setAdapter(adapter);
     }
 

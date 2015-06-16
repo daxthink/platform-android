@@ -17,9 +17,10 @@
   -->
 
 <resources>
-    <dimen name="view_spacing_large">24dp</dimen>
-    <dimen name="tag_icon_color_normal">10dp</dimen>
-    <dimen name="tag_badge_color_normal">18dp</dimen>
+    <!-- Tags -->
+    <dimen name="tag_icon_color_size">10dp</dimen>
+    <dimen name="tag_badge_color_size">18dp</dimen>
+
     <!-- Post items -->
     <dimen name="post_item_image_width">150dp</dimen>
     <dimen name="post_item_image_height">94dp</dimen>
