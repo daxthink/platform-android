@@ -171,6 +171,7 @@ public class PostActivity extends BaseActivity {
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
 
         // Work around to get the menus items to show
+        // TODO: Remove the code snippet below when there is an official fix for it
         menu.add(0, 99, 0, "gone");
         menu.removeItem(99);
 
