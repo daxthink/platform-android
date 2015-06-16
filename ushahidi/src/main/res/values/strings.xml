@@ -75,6 +75,7 @@
     <string name="posts">Posts</string>
     <string name="deployment_management">Deployment Management</string>
     <string name="deployment">Deployment</string>
+    <string name="deployments">Deployments</string>
     <string name="search_hint">Search by deployment title</string>
     <string name="manage_deployments">Manage deployments</string>
     <string name="send_feedback">Send feedback</string>
@@ -115,4 +116,5 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="empty_list">Empty list</string>
+    <string name="actions">Actions</string>
 </resources>

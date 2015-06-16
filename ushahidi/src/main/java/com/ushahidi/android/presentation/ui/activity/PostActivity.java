@@ -21,6 +21,7 @@ import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -33,7 +34,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +50,10 @@ public class PostActivity extends BaseActivity {
 
     private static final String STATE_PARAM_SELECTED_TAB
             = "com.ushahidi.android.presentation.ui.activity.SELECTED_TAB";
+
+    private static final int DEPLOYMENTS_MENU_ITEMS_ID = 1;
+
+    private static final int MISC_MENU_ITEMS = 2;
 
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
@@ -94,6 +101,7 @@ public class PostActivity extends BaseActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         if (mNavigationView != null) {
+            setNavigationViewMenuItems(mNavigationView.getMenu());
             setupDrawerContent(mNavigationView);
         }
 
@@ -137,6 +145,32 @@ public class PostActivity extends BaseActivity {
                     mDrawerLayout.closeDrawers();
                     return true;
                 });
+    }
+
+    private void setNavigationViewMenuItems(@NonNull Menu menu) {
+        // TODO: Use real deployment to populate this menu items
+        SubMenu subMenu = menu
+                .addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.deployments);
+        subMenu.add(DEPLOYMENTS_MENU_ITEMS_ID, 1, 1, "Ebola watch doc")
+                .setIcon(R.drawable.ic_action_globe);
+        subMenu.add(DEPLOYMENTS_MENU_ITEMS_ID, 2, 2, "Catch him")
+                .setIcon(R.drawable.ic_action_globe);
+        subMenu.setGroupCheckable(DEPLOYMENTS_MENU_ITEMS_ID, true, true);
+
+        SubMenu subMenuMisc = menu
+                .addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.actions);
+        subMenuMisc.add(MISC_MENU_ITEMS, 1, 1, R.string.manage_deployments)
+                .setIcon(R.drawable.ic_action_map);
+        subMenuMisc.add(MISC_MENU_ITEMS, 2, 2, R.string.send_feedback)
+                .setIcon(R.drawable.ic_action_info);
+        subMenuMisc.add(MISC_MENU_ITEMS, 2, 2, R.string.settings)
+                .setIcon(R.drawable.ic_action_settings);
+        subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
+
+        // Work around to get the menus items to show
+        menu.add(0, 99, 0, "gone");
+        menu.removeItem(99);
+
     }
 
     static class TabPagerAdapter extends FragmentPagerAdapter {
