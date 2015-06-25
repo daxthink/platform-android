@@ -16,13 +16,11 @@
 
 package com.ushahidi.android.presentation.di.components.deployment;
 
-import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
-import com.ushahidi.android.presentation.di.components.AppComponent;
-import com.ushahidi.android.presentation.di.modules.AppModule;
+import com.ushahidi.android.presentation.di.component.AppComponent;
+import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.AddDeploymentModule;
-import com.ushahidi.android.presentation.presenter.AddDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
 import com.ushahidi.android.presentation.ui.fragment.AddDeploymentFragment;
 
@@ -32,14 +30,13 @@ import dagger.Component;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
-        AppModule.class,
+@Component(dependencies = AppComponent.class, modules = {ActivityModule.class,
         AddDeploymentModule.class})
-public interface AddDeploymentComponent extends AppComponent {
+public interface AddDeploymentComponent extends AppActivityComponent {
 
     void inject(AddDeploymentActivity addDeploymentActivity);
 
     void inject(AddDeploymentFragment addDeploymentFragment);
 
-    AddDeploymentPresenter addDeploymentPresenter();
+    //AddDeploymentPresenter addDeploymentPresenter();
 }

@@ -36,6 +36,12 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    productFlavors {
+        internal {
+            applicationId 'com.ushahidi.android.internal'
+        }
+    }
 }
 
 retrolambda {

@@ -17,18 +17,29 @@
 package com.ushahidi.android.presentation.di.modules;
 
 import com.addhen.android.raiburari.data.pref.RxSharedPreferences;
-import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.presentation.UshahidiApplication;
+import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
 import com.ushahidi.android.presentation.state.UserState;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.File;
+import java.net.CookieHandler;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
+import retrofit.client.OkClient;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -37,37 +48,64 @@ import static android.content.Context.MODE_PRIVATE;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Module
+@Module(includes = ApplicationModule.class)
 public class AppModule {
 
+    private UshahidiApplication mUshahidiApplication;
+
+    static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
+
+    public AppModule(UshahidiApplication ushahidiApplication) {
+        mUshahidiApplication = ushahidiApplication;
+    }
+
+    private static OkHttpClient createOkHttpClient(Context app) {
+        OkHttpClient client = new OkHttpClient();
+
+        File cacheDir = new File(app.getApplicationContext().getCacheDir(),
+                "ushahidi-android-http-cache");
+        Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
+        client.setCache(cache);
+        return client;
+    }
+
     @Provides
-    @ActivityScope
+    @Singleton
+    HttpClientWrap provideOkHttpClient(Context app) {
+        final OkHttpClient okHttpClient = createOkHttpClient(app.getApplicationContext());
+        okHttpClient.setCookieHandler(CookieHandler.getDefault());
+        okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        return new HttpClientWrap(app, new OkClient(okHttpClient));
+    }
+
+    @Provides
+    @Singleton
     SharedPreferences provideSharedPreferences(Context context) {
         return context.getApplicationContext().getSharedPreferences("ushahidi-android-shared-prefs",
                 MODE_PRIVATE);
     }
 
     @Provides
-    @ActivityScope
+    @Singleton
     RxSharedPreferences provideRxSharedPreferences(SharedPreferences sharedPreferences) {
         return new RxSharedPreferences(sharedPreferences);
     }
 
     @Provides
-    @ActivityScope
+    @Singleton
     DeploymentRepository provideDeploymentRepository(
             DeploymentDataRepository deploymentDataRepository) {
         return deploymentDataRepository;
     }
 
     @Provides
-    @ActivityScope
+    @Singleton
     public AppState provideApplicationState(Bus bus) {
         return new AppState(bus);
     }
 
     @Provides
-    @ActivityScope
+    @Singleton
     UserState provideUserState(AppState appState) {
         return appState;
     }

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Maps {@link com.ushahidi.android.domain.entity.Deployment} onto {@link
@@ -30,6 +31,7 @@ import javax.inject.Inject;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class DeploymentEntityDataMapper {
 
     @Inject

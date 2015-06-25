@@ -29,6 +29,8 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import rx.Observable;
 import rx.Subscriber;
 
@@ -39,6 +41,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class PostDatabaseHelper extends BaseDatabaseHelper {
 
     public PostDatabaseHelper(@NonNull Context context) {

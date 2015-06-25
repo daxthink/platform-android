@@ -17,7 +17,6 @@
 package com.ushahidi.android.presentation.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
-import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.DaggerAddDeploymentComponent;
@@ -33,7 +32,7 @@ import android.os.Bundle;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AddDeploymentActivity extends BaseActivity
+public class AddDeploymentActivity extends BaseAppActivity
         implements HasComponent<AddDeploymentComponent> {
 
     private AddDeploymentComponent mAddDeploymentComponent;
@@ -64,7 +63,7 @@ public class AddDeploymentActivity extends BaseActivity
 
     private void injector() {
         mAddDeploymentComponent = DaggerAddDeploymentComponent.builder()
-                .applicationComponent(getApplicationComponent())
+                .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
     }

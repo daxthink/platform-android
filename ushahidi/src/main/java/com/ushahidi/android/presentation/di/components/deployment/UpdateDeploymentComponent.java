@@ -17,11 +17,10 @@
 
 package com.ushahidi.android.presentation.di.components.deployment;
 
-import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
-import com.ushahidi.android.presentation.di.components.AppComponent;
-import com.ushahidi.android.presentation.di.modules.AppModule;
+import com.ushahidi.android.presentation.di.component.AppComponent;
+import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.UpdateDeploymentModule;
 import com.ushahidi.android.presentation.presenter.UpdateDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.UpdateDeploymentActivity;
@@ -33,10 +32,9 @@ import dagger.Component;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
-        AppModule.class,
+@Component(dependencies = AppComponent.class, modules = {ActivityModule.class,
         UpdateDeploymentModule.class})
-public interface UpdateDeploymentComponent extends AppComponent {
+public interface UpdateDeploymentComponent extends AppActivityComponent {
 
     void inject(UpdateDeploymentActivity updateDeploymentActivity);
 

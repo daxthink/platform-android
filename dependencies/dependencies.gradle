@@ -30,7 +30,7 @@ ext {
     androidCompileSdkVersion = 22
 
     //Libraries
-    daggerVersion = '2.0'
+    daggerVersion = '2.0.1'
     butterKnifeVersion = '6.0.0'
     daggerVersion = '2.0'
     butterKnifeVersion = '6.0.0'

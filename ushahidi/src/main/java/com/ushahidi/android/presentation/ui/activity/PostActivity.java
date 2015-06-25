@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.presentation.ui.activity;
 
-import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
@@ -48,7 +47,7 @@ import butterknife.InjectView;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostActivity extends BaseActivity {
+public class PostActivity extends BaseAppActivity {
 
     private static final String STATE_PARAM_SELECTED_TAB
             = "com.ushahidi.android.presentation.ui.activity.SELECTED_TAB";

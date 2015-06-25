@@ -21,12 +21,14 @@ import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * A factory class for creating the different datasource for {@link com.ushahidi.android.data.entity.DeploymentEntity}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class DeploymentDataSourceFactory {
 
     private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;

@@ -25,6 +25,7 @@ import com.ushahidi.android.domain.entity.UserProfile;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -33,6 +34,7 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class UserProfileDataRepository implements UserProfileRepository {
 
     private final UserProfileEntityDataMapper mUserProfileEntityDataMapper;

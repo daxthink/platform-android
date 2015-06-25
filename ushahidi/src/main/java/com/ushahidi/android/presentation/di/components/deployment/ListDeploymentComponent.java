@@ -17,14 +17,12 @@
 
 package com.ushahidi.android.presentation.di.components.deployment;
 
-import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
-import com.ushahidi.android.presentation.di.components.AppComponent;
-import com.ushahidi.android.presentation.di.modules.AppModule;
+import com.ushahidi.android.presentation.di.component.AppComponent;
+import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.DeleteDeploymentModule;
 import com.ushahidi.android.presentation.di.modules.deployment.ListDeploymentModule;
-import com.ushahidi.android.presentation.presenter.ListDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment;
 
@@ -34,15 +32,14 @@ import dagger.Component;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
-        AppModule.class,
+@Component(dependencies = AppComponent.class, modules = {ActivityModule.class,
         DeleteDeploymentModule.class,
         ListDeploymentModule.class})
-public interface ListDeploymentComponent extends AppComponent {
+public interface ListDeploymentComponent extends AppActivityComponent {
 
     void inject(ListDeploymentActivity listDeploymentActivity);
 
     void inject(ListDeploymentFragment listDeploymentFragment);
 
-    ListDeploymentPresenter listDeploymentPresenter();
+    //ListDeploymentPresenter listDeploymentPresenter();
 }

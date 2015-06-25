@@ -29,6 +29,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -37,6 +38,7 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class PostDataRepsitory implements PostRepository {
 
     private final PostEntityDataMapper mPostEntityDataMapper;
