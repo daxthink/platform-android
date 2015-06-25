@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2015 Ushahidi Inc
   ~
@@ -18,8 +17,6 @@
 
 <resources>
     <dimen name="view_spacing_large">64dp</dimen>
-    <dimen name="tag_icon_color_normal">15dp</dimen>
-    <dimen name="tag_badge_color_normal">20dp</dimen>
     <!-- Post items -->
     <dimen name="post_item_image_width">180dp</dimen>
     <dimen name="post_item_image_height">113dp</dimen>

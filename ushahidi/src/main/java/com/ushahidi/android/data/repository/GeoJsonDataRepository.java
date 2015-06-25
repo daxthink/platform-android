@@ -25,6 +25,7 @@ import com.ushahidi.android.domain.entity.GeoJson;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -34,6 +35,7 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class GeoJsonDataRepository implements GeoJsonRepository {
 
     private final GeoJsonEntityDataMapper mGeoJsonEntityDataMapper;

@@ -18,7 +18,6 @@
 package com.ushahidi.android.presentation.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
-import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.DaggerDeleteDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.DaggerListDeploymentComponent;
@@ -37,7 +36,7 @@ import javax.inject.Inject;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListDeploymentActivity extends BaseActivity
+public class ListDeploymentActivity extends BaseAppActivity
         implements HasComponent<ListDeploymentComponent>,
         ListDeploymentFragment.DeploymentListListener {
 
@@ -74,12 +73,12 @@ public class ListDeploymentActivity extends BaseActivity
 
     private void injector() {
         mDeleteDeploymentComponent = DaggerDeleteDeploymentComponent.builder()
-                .applicationComponent(getApplicationComponent())
+                .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
 
         mListDeploymentComponent = DaggerListDeploymentComponent.builder()
-                .applicationComponent(getApplicationComponent())
+                .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
     }

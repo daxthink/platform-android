@@ -24,24 +24,25 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "22.0.1"
+    androidBuildToolsVersion = "23.0.0 rc2"
     androidMinSdkVersion = 14
     androidTargetSdkVersion = 22
     androidCompileSdkVersion = 22
 
     //Libraries
-    daggerVersion = '2.0'
+    daggerVersion = '2.0.1'
     butterKnifeVersion = '6.0.0'
     daggerVersion = '2.0'
     butterKnifeVersion = '6.0.0'
     javaxAnnotationVersion = '10.0-b28'
-    raiburariVersion = '2.1.0'
+    raiburariVersion = '2.2.0'
     materialdrawerVersion = '2.9.8'
     cupboardVersion = '2.1.1'
     retrofitVersion = '1.9.0'
     okhttpVersion = '2.3.0'
     okhttpUrlConnectionVersion = '2.3.0'
     qrCodeReaderViewVersion = '1.0.0'
+    androidIconifyVersion = '1.0.9'
 
     //Testing
     jUnitVersion = '4.12'
@@ -65,6 +66,7 @@ ext {
             okhttp             : "com.squareup.okhttp:okhttp:${okhttpVersion}",
             okhttpUrlConnection: "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
             qrCodeReaderView   : "com.dlazaro66.qrcodereaderview:qrcodereaderview:${qrCodeReaderViewVersion}",
+            androidIconify     : "com.joanzapata.android:android-iconify:${androidIconifyVersion}",
     ]
 
     appTestDependencies = [

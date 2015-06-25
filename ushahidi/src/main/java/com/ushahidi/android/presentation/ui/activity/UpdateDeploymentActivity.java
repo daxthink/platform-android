@@ -18,7 +18,6 @@
 package com.ushahidi.android.presentation.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
-import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.DaggerUpdateDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
@@ -34,7 +33,7 @@ import android.os.Bundle;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UpdateDeploymentActivity extends BaseActivity
+public class UpdateDeploymentActivity extends BaseAppActivity
         implements HasComponent<UpdateDeploymentComponent>,
         UpdateDeploymentFragment.UpdateDeploymentListener {
 
@@ -95,7 +94,7 @@ public class UpdateDeploymentActivity extends BaseActivity
 
     private void injector() {
         mUpdateDeploymentComponent = DaggerUpdateDeploymentComponent.builder()
-                .applicationComponent(getApplicationComponent())
+                .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
     }

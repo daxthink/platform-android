@@ -26,6 +26,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import rx.Observable;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
@@ -35,6 +37,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class UserDatabaseHelper extends BaseDatabaseHelper {
 
     public UserDatabaseHelper(@NonNull Context context) {

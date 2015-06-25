@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Ushahidi Inc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~  the terms of the GNU Affero General Public License as published by the Free
+  ~  Software Foundation, either version 3 of the License, or (at your option)
+  ~  any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT
+  ~  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU Affero General Public License
+  ~  along with this program in the file LICENSE-AGPL. If not, see
+  ~  https://www.gnu.org/licenses/agpl-3.0.html
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/layout_user_login"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/nav_drawer_user_account_height"
+             android:background="?attr/colorAccent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/view_spacing_large"
+            android:paddingRight="@dimen/view_spacing_large"
+            android:paddingTop="@dimen/nav_drawer_user_profile_pic_top_padding">
+        <com.addhen.android.raiburari.presentation.ui.widget.BezelImageView
+                android:id="@+id/anonymous_user_image"
+                android:layout_width="@dimen/nav_drawer_user_profile_image_size"
+                android:layout_height="@dimen/nav_drawer_user_profile_image_size"
+                android:src="@drawable/user_profile_image_empty"
+                android:scaleType="centerCrop"
+                app:maskDrawable="@drawable/circle_mask"/>
+        <TextView
+                android:id="@+id/user_login_title"
+                style="@style/NavDrawerLogin"
+                android:text="@string/login"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="@dimen/view_spacing_large"
+                />
+    </RelativeLayout>
+</FrameLayout>

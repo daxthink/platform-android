@@ -36,6 +36,12 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    productFlavors {
+        internal {
+            applicationId 'com.ushahidi.android.internal'
+        }
+    }
 }
 
 retrolambda {
@@ -56,6 +62,7 @@ dependencies {
     compile appDependencies.okhttp
     compile appDependencies.okhttpUrlConnection
     compile appDependencies.qrCodeReaderView
+    compile appDependencies.androidIconify
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

@@ -27,6 +27,7 @@ import com.ushahidi.android.domain.repository.TagRepository;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -35,6 +36,7 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class TagDataRepository implements TagRepository {
 
     private final TagEntityDataMapper mTagEntityDataMapper;
