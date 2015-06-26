@@ -17,20 +17,41 @@
 
 package com.ushahidi.android.data.api.service;
 
-import com.ushahidi.android.data.api.model.Posts;
+import com.google.gson.JsonElement;
 
+import com.ushahidi.android.data.api.auth.AccessToken;
+import com.ushahidi.android.data.api.auth.Payload;
+import com.ushahidi.android.data.api.model.Posts;
+import com.ushahidi.android.data.api.model.Tags;
+import com.ushahidi.android.data.entity.UserEntity;
+
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import rx.Observable;
 
+import static com.ushahidi.android.data.api.Constant.GEOJSON;
 import static com.ushahidi.android.data.api.Constant.POSTS;
+import static com.ushahidi.android.data.api.Constant.TAGS;
+import static com.ushahidi.android.data.api.Constant.USERS_ME;
 
 /**
- * API service for posts
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface PostService {
+public interface RestfulService {
 
     @GET(POSTS)
     Observable<Posts> posts();
+
+    @GET(TAGS)
+    Observable<Tags> getTags();
+
+    @POST("/oauth/token")
+    Observable<AccessToken> getAccessToken(@Body Payload payload);
+
+    @GET(USERS_ME)
+    Observable<UserEntity> getUser();
+
+    @GET(GEOJSON)
+    Observable<JsonElement> getGeoJson();
 }

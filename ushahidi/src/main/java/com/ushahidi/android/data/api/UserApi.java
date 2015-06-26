@@ -19,7 +19,7 @@ package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.auth.AccessToken;
 import com.ushahidi.android.data.api.auth.Payload;
-import com.ushahidi.android.data.api.service.UserService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
@@ -35,10 +35,10 @@ import rx.Observable;
  */
 public class UserApi {
 
-    private final UserService mUserService;
+    private final RestfulService mUserService;
 
     @Inject
-    public UserApi(@NonNull UserService userService) {
+    public UserApi(@NonNull RestfulService userService) {
         mUserService = userService;
     }
 

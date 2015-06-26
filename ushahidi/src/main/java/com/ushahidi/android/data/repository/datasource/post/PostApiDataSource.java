@@ -55,10 +55,8 @@ public class PostApiDataSource implements PostDataSource {
 
     @Override
     public Observable<List<PostEntity>> getPostEntityList(Long deploymentId) {
-        mPostDatabaseHelper.getPostList(deploymentId)
-                .doOnNext(postEntities -> mPostDatabaseHelper
-                        .putPosts(setDeploymentId(postEntities, deploymentId)));
-        return null;
+        return mPostApi.getPostList().doOnNext(postEntities -> mPostDatabaseHelper
+                .putPosts(setDeploymentId(postEntities, deploymentId)));
     }
 
     @Override

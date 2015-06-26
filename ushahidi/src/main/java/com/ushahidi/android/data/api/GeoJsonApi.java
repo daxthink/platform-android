@@ -19,7 +19,7 @@ package com.ushahidi.android.data.api;
 
 import com.google.gson.JsonElement;
 
-import com.ushahidi.android.data.api.service.GeoJsonService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 
 import android.support.annotation.NonNull;
@@ -35,10 +35,10 @@ import rx.Observable;
  */
 public class GeoJsonApi {
 
-    private final GeoJsonService mGeoJsonService;
+    private final RestfulService mGeoJsonService;
 
     @Inject
-    public GeoJsonApi(@NonNull GeoJsonService geoJsonService) {
+    public GeoJsonApi(@NonNull RestfulService geoJsonService) {
         mGeoJsonService = geoJsonService;
     }
 

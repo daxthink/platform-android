@@ -53,6 +53,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Manages list of posts
  *
@@ -65,6 +68,13 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
     private int mLastPosition = -1;
 
     private float mFrom = 0f;
+
+    private final View mEmptyView;
+
+    public PostAdapter(final View emptyView) {
+        mEmptyView = emptyView;
+        onDataSetChanged();
+    }
 
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if (position < getItemCount() && (customHeaderView != null ? position <= getItems().size()
@@ -119,6 +129,20 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         return getItems().size();
     }
 
+    @Override
+    public void setItems(List<PostModel> items) {
+        super.setItems(items);
+        onDataSetChanged();
+    }
+
+    /**
+     * Sets an empty view when the adapter's data item gets to zero
+     */
+    private void onDataSetChanged() {
+        notifyDataSetChanged();
+        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
     public void sortByDate() {
         Collections
                 .sort(getItems(), (one, other) -> one.getCreated().compareTo(other.getCreated()));
@@ -148,18 +172,25 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     public class Widgets extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.post_title)
         TextView title;
 
+        @InjectView(R.id.post_content)
         TextView content;
 
+        @InjectView(R.id.post_date)
         TextView date;
 
+        @InjectView(R.id.post_status)
         CapitalizedTextView status;
 
+        @InjectView(R.id.post_image)
         ImageView postImage;
 
+        @InjectView(R.id.post_tags)
         LinearLayout tag;
 
+        @InjectView(R.id.post_tags_container)
         ViewGroup tagContainer;
 
         Context context;
@@ -170,18 +201,12 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
         public Widgets(Context ctxt, View convertView) {
             super(convertView);
+            ButterKnife.inject(convertView);
             this.context = ctxt;
             tagColorSize = this.context.getResources()
                     .getDimensionPixelSize(R.dimen.tag_badge_color_size);
             tagIconSize = this.context.getResources()
                     .getDimensionPixelSize(R.dimen.tag_icon_color_size);
-            title = (TextView) convertView.findViewById(R.id.post_title);
-            content = (TextView) convertView.findViewById(R.id.post_content);
-            postImage = (ImageView) convertView.findViewById(R.id.post_image);
-            date = (TextView) convertView.findViewById(R.id.post_date);
-            status = (CapitalizedTextView) convertView.findViewById(R.id.post_status);
-            tag = (LinearLayout) convertView.findViewById(R.id.post_tags);
-            tagContainer = (ViewGroup) convertView.findViewById(R.id.post_tags_container);
         }
 
         public void renderTagBadge(List<TagModel> tags) {

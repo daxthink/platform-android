@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.service.TagService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 
@@ -35,10 +35,10 @@ import rx.Observable;
  */
 public class TagApi {
 
-    private final TagService mTagService;
+    private final RestfulService mTagService;
 
     @Inject
-    public TagApi(@NonNull TagService tagService) {
+    public TagApi(@NonNull RestfulService tagService) {
         mTagService = tagService;
     }
 

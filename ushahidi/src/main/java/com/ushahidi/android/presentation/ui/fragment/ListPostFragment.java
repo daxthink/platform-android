@@ -27,16 +27,15 @@ import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
 import com.ushahidi.android.presentation.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.ui.adapter.PostAdapter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.post.ListPostView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -55,11 +54,14 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
     }
 
-    @InjectView(R.id.post_fab)
-    FloatingActionButton mPostFab;
+    @InjectView(R.id.list_post_progress_bar)
+    ProgressBar mProgressBar;
 
     @InjectView(android.R.id.list)
     BloatedRecyclerView mPostRecyclerView;
+
+    @InjectView(android.R.id.empty)
+    TextView mEmptyView;
 
     @Inject
     ListPostPresenter mListPostPresenter;
@@ -70,6 +72,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     private PostAdapter mPostAdapter;
 
     private static ListPostFragment mListPostFragment;
+
+    private LinearLayoutManager mLinearLayoutManager;
 
     public static ListPostFragment newInstance() {
         if (mListPostFragment == null) {
@@ -91,16 +95,23 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void initRecyclerView() {
-        mPostAdapter = new PostAdapter();
+        mPostAdapter = new PostAdapter(mEmptyView);
         mPostRecyclerView.setFocusable(true);
         mPostRecyclerView.setFocusableInTouchMode(true);
         mPostRecyclerView.setAdapter(mPostAdapter);
         mPostRecyclerView.setHasFixedSize(true);
-        mPostRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
         RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter =
                 new RecyclerViewItemTouchListenerAdapter(mPostRecyclerView.recyclerView,
                         this);
         mPostRecyclerView.recyclerView.addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
+        // Upon  successful refresh, disable swipe to refresh
+        mPostRecyclerView
+                .setDefaultOnRefreshListener(() -> {
+                    mListPostPresenter.loadPostViaApi();
+                    mLinearLayoutManager.scrollToPosition(0);
+                });
     }
 
     @Override
@@ -123,12 +134,15 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showLoading() {
-        // Do nothing
+        mPostRecyclerView.setRefreshing(true);
+        mEmptyView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        // Do nothing
+        mPostRecyclerView.setRefreshing(false);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -143,9 +157,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void renderPostList(List<PostModel> postModel) {
-        if (!Utility.isCollectionEmpty(postModel)) {
-            mPostAdapter.setItems(postModel);
-        }
+        mPostAdapter.setItems(postModel);
     }
 
     @Override

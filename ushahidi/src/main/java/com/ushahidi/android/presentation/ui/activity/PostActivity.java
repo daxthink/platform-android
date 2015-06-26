@@ -20,6 +20,7 @@ package com.ushahidi.android.presentation.ui.activity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
 import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
+import com.ushahidi.android.presentation.di.modules.ApiModule;
 import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
 
@@ -126,6 +127,7 @@ public class PostActivity extends BaseAppActivity {
         mListPostComponent = DaggerListPostComponent.builder()
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
+                .apiModule(new ApiModule("http://api.dev.platform.ushahidi.com", "xdkdkdsl"))
                 .build();
     }
 

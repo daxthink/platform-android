@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.service.UserService;
+import com.ushahidi.android.data.api.service.RestfulService;
 
 import android.support.annotation.NonNull;
 
@@ -31,13 +31,13 @@ import javax.inject.Singleton;
 @Singleton
 public class UserAccountDataSourceFactory {
 
-    private UserService mUserService;
+    private RestfulService mUserService;
 
     @Inject
     public UserAccountDataSourceFactory() {
     }
 
-    public void setUserService(@NonNull UserService userService) {
+    public void setUserService(@NonNull RestfulService userService) {
         mUserService = userService;
     }
 

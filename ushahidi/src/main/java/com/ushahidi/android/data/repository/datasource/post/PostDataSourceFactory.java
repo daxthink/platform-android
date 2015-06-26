@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.post;
 
 import com.ushahidi.android.data.api.PostApi;
-import com.ushahidi.android.data.api.service.PostService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -36,19 +36,12 @@ public class PostDataSourceFactory {
 
     private PostDatabaseHelper mPostDatabaseHelper;
 
-    private PostService mPostService;
+    private RestfulService mPostService;
+
     @Inject
     public PostDataSourceFactory(
-            @NonNull PostDatabaseHelper postDatabaseHelper) {
+            @NonNull PostDatabaseHelper postDatabaseHelper, @NonNull RestfulService postService) {
         mPostDatabaseHelper = postDatabaseHelper;
-    }
-
-    /**
-     * Call this to set the Post API service
-     *
-     * @param postService The post service
-     */
-    public void setPostService(@NonNull PostService postService) {
         mPostService = postService;
     }
 

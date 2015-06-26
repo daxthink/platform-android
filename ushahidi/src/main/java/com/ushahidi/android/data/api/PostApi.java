@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.model.Posts;
-import com.ushahidi.android.data.api.service.PostService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.PostEntity;
 
 import android.support.annotation.NonNull;
@@ -34,10 +34,10 @@ import rx.Observable;
  */
 public class PostApi {
 
-    private final PostService mPostService;
+    private final RestfulService mPostService;
 
     @Inject
-    public PostApi(@NonNull PostService postService) {
+    public PostApi(@NonNull RestfulService postService) {
         mPostService = postService;
     }
 

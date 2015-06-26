@@ -50,7 +50,7 @@ import static android.content.Context.MODE_PRIVATE;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Module(includes = ApplicationModule.class)
+@Module(includes = {ApplicationModule.class})
 public class AppModule {
 
     private UshahidiApplication mUshahidiApplication;
