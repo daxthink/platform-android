@@ -3,7 +3,7 @@ package com.ushahidi.android.presentation.presenter;
 import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
-import com.ushahidi.android.presentation.ui.view.DeleteDeploymentView;
+import com.ushahidi.android.presentation.view.DeleteDeploymentView;
 
 import org.junit.Before;
 import org.junit.Test;

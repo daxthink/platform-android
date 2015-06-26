@@ -15,22 +15,17 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.ui.view;
+package com.ushahidi.android.presentation.view;
 
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 
-import java.util.List;
-
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface ListDeploymentView extends LoadDataView {
+public interface UpdateDeploymentView extends LoadDataView {
 
-    /**
-     * Render a deployment list in the UI.
-     *
-     * @param deploymentModel The collection of {@link DeploymentModel} that will be shown.
-     */
-    void renderDeploymentList(List<DeploymentModel> deploymentModel);
+    void onDeploymentSuccessfullyUpdated(Long row);
+
+    void showDeployment(DeploymentModel deploymentModel);
 }

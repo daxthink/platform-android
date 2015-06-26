@@ -24,7 +24,7 @@ import com.ushahidi.android.domain.usecase.deployment.AddDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
-import com.ushahidi.android.presentation.ui.view.AddDeploymentView;
+import com.ushahidi.android.presentation.view.AddDeploymentView;
 
 import android.support.annotation.NonNull;
 

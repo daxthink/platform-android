@@ -23,7 +23,7 @@ import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.UpdateDeploymentPresenter;
-import com.ushahidi.android.presentation.ui.view.UpdateDeploymentView;
+import com.ushahidi.android.presentation.view.UpdateDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 
 import android.app.Activity;

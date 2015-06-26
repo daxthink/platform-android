@@ -27,7 +27,7 @@ import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.model.TagModel;
 import com.ushahidi.android.presentation.ui.animators.ViewHelper;
-import com.ushahidi.android.presentation.util.Util;
+import com.ushahidi.android.presentation.util.Utility;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -89,7 +89,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                         ((Widgets) viewHolder).context.getResources().getColor(R.color.red));
             }
             final List<TagModel> tags = getItem(position).getTags();
-            if (!Util.isCollectionEmpty(tags)) {
+            if (!Utility.isCollectionEmpty(tags)) {
                 ((Widgets) viewHolder).renderTagBadge(tags);
             } else {
                 //Don't show post that don't have tags. Hide the horizontal scroll view otherwise
@@ -205,7 +205,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                         .inflate(R.layout.include_tag_badge, tag, false);
                 tagBadge.setText(tagModel.getTag());
                 // Tag has both icon and color. Display both
-                if (!TextUtils.isEmpty(tagModel.getIcon()) && Util
+                if (!TextUtils.isEmpty(tagModel.getIcon()) && Utility
                         .validateHexColor(tagModel.getColor())) {
                     StringBuilder builder = new StringBuilder("fa_");
                     builder.append(tagModel.getIcon());
@@ -214,7 +214,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                             null, null, null);
 
                     //Tag has only color, display badge
-                } else if (Util.validateHexColor(tagModel.getColor())) {
+                } else if (Utility.validateHexColor(tagModel.getColor())) {
                     ShapeDrawable colorDrawable = new ShapeDrawable(new OvalShape());
                     colorDrawable.setIntrinsicWidth(tagColorSize);
                     colorDrawable.setIntrinsicHeight(tagColorSize);

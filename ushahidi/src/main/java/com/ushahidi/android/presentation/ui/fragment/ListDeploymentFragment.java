@@ -21,7 +21,6 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFra
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
 import com.ushahidi.android.R;
-import com.ushahidi.android.presentation.AppUtils;
 import com.ushahidi.android.presentation.di.components.deployment.DeleteDeploymentComponent;
 import com.ushahidi.android.presentation.di.components.deployment.ListDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
@@ -30,9 +29,10 @@ import com.ushahidi.android.presentation.presenter.ListDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.adapter.DeploymentAdapter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.ui.view.DeleteDeploymentView;
-import com.ushahidi.android.presentation.ui.view.ListDeploymentView;
 import com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView;
+import com.ushahidi.android.presentation.util.Utility;
+import com.ushahidi.android.presentation.view.DeleteDeploymentView;
+import com.ushahidi.android.presentation.view.ListDeploymentView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -213,7 +213,7 @@ public class ListDeploymentFragment
 
     @Override
     public void renderDeploymentList(List<DeploymentModel> deploymentModel) {
-        if (!AppUtils.isEmpty(deploymentModel)) {
+        if (!Utility.isCollectionEmpty(deploymentModel)) {
             mDeploymentAdapter.setItems(deploymentModel);
         }
     }

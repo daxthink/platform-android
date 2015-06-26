@@ -22,7 +22,7 @@ import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentC
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.AddDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.ui.view.AddDeploymentView;
+import com.ushahidi.android.presentation.view.AddDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 
 import android.content.Context;

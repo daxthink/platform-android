@@ -25,7 +25,7 @@ import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
-import com.ushahidi.android.presentation.ui.view.ActivateDeploymentView;
+import com.ushahidi.android.presentation.view.ActivateDeploymentView;
 
 import android.support.annotation.NonNull;
 

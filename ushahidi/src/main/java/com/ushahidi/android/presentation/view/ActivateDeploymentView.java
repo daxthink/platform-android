@@ -14,14 +14,19 @@
  * https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.ui.view;
+package com.ushahidi.android.presentation.view;
 
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
+import com.ushahidi.android.presentation.model.DeploymentModel;
 
 /**
+ * Add Category view
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface AddDeploymentView extends LoadDataView {
+public interface ActivateDeploymentView extends LoadDataView {
 
-    void onDeploymentSuccessfullyAdded(Long row);
+    void markStatus();
+
+    void setActiveDeployment(DeploymentModel deploymentModel);
 }

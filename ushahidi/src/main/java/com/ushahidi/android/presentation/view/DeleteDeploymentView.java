@@ -1,4 +1,4 @@
-package com.ushahidi.android.presentation.ui.view;
+package com.ushahidi.android.presentation.view;
 
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 
