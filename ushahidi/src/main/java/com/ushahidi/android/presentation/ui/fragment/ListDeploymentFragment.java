@@ -31,8 +31,8 @@ import com.ushahidi.android.presentation.ui.adapter.DeploymentAdapter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
 import com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView;
 import com.ushahidi.android.presentation.util.Utility;
-import com.ushahidi.android.presentation.view.DeleteDeploymentView;
-import com.ushahidi.android.presentation.view.ListDeploymentView;
+import com.ushahidi.android.presentation.view.deployment.DeleteDeploymentView;
+import com.ushahidi.android.presentation.view.deployment.ListDeploymentView;
 
 import android.app.Activity;
 import android.content.Context;

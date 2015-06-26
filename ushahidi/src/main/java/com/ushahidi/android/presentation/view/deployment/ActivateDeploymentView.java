@@ -14,7 +14,7 @@
  * https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.view;
+package com.ushahidi.android.presentation.view.deployment;
 
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 import com.ushahidi.android.presentation.model.DeploymentModel;

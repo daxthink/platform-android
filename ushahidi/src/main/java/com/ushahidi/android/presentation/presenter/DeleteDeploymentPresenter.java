@@ -6,7 +6,7 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
-import com.ushahidi.android.presentation.view.DeleteDeploymentView;
+import com.ushahidi.android.presentation.view.deployment.DeleteDeploymentView;
 
 import android.support.annotation.NonNull;
 
