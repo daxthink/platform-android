@@ -15,7 +15,7 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.presenter;
+package com.ushahidi.android.presentation.presenter.deployment;
 
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
@@ -83,8 +83,8 @@ public class ListDeploymentPresenter implements
             @Override
             public void onNext(List<Deployment> deploymentList) {
                 mListDeploymentView.hideLoading();
-                mListDeploymentView
-                        .renderDeploymentList(mDeploymentModelDataMapper.map(deploymentList));
+                mListDeploymentView.renderDeploymentList(
+                        mDeploymentModelDataMapper.map(deploymentList));
             }
 
             @Override

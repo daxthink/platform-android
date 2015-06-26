@@ -20,6 +20,7 @@ package com.ushahidi.android.presentation.di.component;
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.modules.AppModule;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
@@ -44,6 +45,8 @@ public interface AppComponent extends ApplicationComponent {
     UserState userState();
 
     DeploymentRepository deploymentRepository();
+
+    PostRepository postRepository();
 
     final class Initializer {
 

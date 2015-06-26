@@ -22,7 +22,9 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
+import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
@@ -96,6 +98,13 @@ public class AppModule {
     DeploymentRepository provideDeploymentRepository(
             DeploymentDataRepository deploymentDataRepository) {
         return deploymentDataRepository;
+    }
+
+    @Provides
+    @Singleton
+    PostRepository providePostRepository(
+            PostDataRepository postDataRepository) {
+        return postDataRepository;
     }
 
     @Provides

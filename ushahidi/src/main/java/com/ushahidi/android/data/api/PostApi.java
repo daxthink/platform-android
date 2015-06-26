@@ -42,7 +42,7 @@ public class PostApi {
     }
 
     public Observable<List<PostEntity>> getPostList() {
-        return Observable.create((subscriber) -> mPostService.posts().map((tags) -> setPost(tags)));
+        return Observable.create((subscriber) -> mPostService.posts().map((post) -> setPost(post)));
     }
 
     /**

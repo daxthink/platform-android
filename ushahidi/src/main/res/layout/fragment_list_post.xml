@@ -21,13 +21,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView
-            android:id="@id/android:list"
+    <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:recyclerviewEmptyView="@layout/list_empty_view"
-            app:recyclerviewClipToPadding="true"
-            app:recyclerviewScrollbars="vertical"/>
+            android:layout_height="match_parent">
+        <com.ushahidi.android.presentation.ui.widget.DeploymentRecyclerView
+                android:id="@id/android:list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@android:color/transparent"
+                app:recyclerviewEmptyView="@layout/list_empty_view"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/post_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_add"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_gravity="bottom|right"
+                android:gravity="bottom|right"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"/>
+    </android.support.design.widget.CoordinatorLayout>
 
     <ProgressBar
             android:id="@+id/list_post_progress_bar"

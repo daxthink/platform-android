@@ -22,7 +22,7 @@ import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.presenter.UpdateDeploymentPresenter;
+import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
 import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 
