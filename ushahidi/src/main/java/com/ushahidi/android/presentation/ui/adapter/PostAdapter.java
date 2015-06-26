@@ -48,7 +48,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -121,23 +120,14 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
     }
 
     public void sortByDate() {
-        Collections.sort(getItems(), new Comparator<PostModel>() {
-            @Override
-            public int compare(PostModel one, PostModel other) {
-                return one.getCreated().compareTo(other.getCreated());
-            }
-        });
+        Collections
+                .sort(getItems(), (one, other) -> one.getCreated().compareTo(other.getCreated()));
         notifyDataSetChanged();
     }
 
     public void sortByTitle() {
 
-        Collections.sort(getItems(), new Comparator<PostModel>() {
-            @Override
-            public int compare(PostModel one, PostModel other) {
-                return one.getTitle().compareTo(other.getTitle());
-            }
-        });
+        Collections.sort(getItems(), (one, other) -> one.getTitle().compareTo(other.getTitle()));
 
         notifyDataSetChanged();
     }
