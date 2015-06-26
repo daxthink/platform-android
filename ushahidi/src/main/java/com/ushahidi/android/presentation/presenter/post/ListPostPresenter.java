@@ -23,9 +23,7 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.Post;
-import com.ushahidi.android.domain.usecase.geojson.ListGeoJsonUsecase;
 import com.ushahidi.android.domain.usecase.post.ListPostUsecase;
-import com.ushahidi.android.domain.usecase.tag.ListTagUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.PostModelDataMapper;
 import com.ushahidi.android.presentation.view.post.ListPostView;
@@ -45,20 +43,13 @@ public class ListPostPresenter implements Presenter {
 
     private final ListPostUsecase mListPostUsecase;
 
-    private final ListTagUsecase mListTagUsecase;
-
-    private final ListGeoJsonUsecase mListGeoJsonUsecase;
-
     private ListPostView mListPostView;
 
     @Inject
     public ListPostPresenter(ListPostUsecase listPostUsecase,
-            PostModelDataMapper postModelDataMapper, ListTagUsecase listTagUsecase,
-            ListGeoJsonUsecase listGeoJsonUsecase) {
+            PostModelDataMapper postModelDataMapper) {
         mListPostUsecase = listPostUsecase;
         mPostModelDataMapper = postModelDataMapper;
-        mListTagUsecase = listTagUsecase;
-        mListGeoJsonUsecase = listGeoJsonUsecase;
     }
 
     @Override

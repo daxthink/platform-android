@@ -18,6 +18,8 @@
 package com.ushahidi.android.presentation.ui.activity;
 
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
+import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
 import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
 
@@ -76,6 +78,8 @@ public class PostActivity extends BaseAppActivity {
 
     private static int mCurrentItem;
 
+    private ListPostComponent mListPostComponent;
+
     public PostActivity() {
         super(R.layout.activity_post, 0);
     }
@@ -115,6 +119,13 @@ public class PostActivity extends BaseAppActivity {
                         .setAction("Action", null).show());
 
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void injector() {
+        mListPostComponent = DaggerListPostComponent.builder()
+                .appComponent(getAppComponent())
+                .activityModule(getActivityModule())
+                .build();
     }
 
     @Override
@@ -174,6 +185,10 @@ public class PostActivity extends BaseAppActivity {
         menu.add(0, 99, 0, "gone");
         menu.removeItem(99);
 
+    }
+
+    public ListPostComponent getListPostComponent() {
+        return mListPostComponent;
     }
 
     static class TabPagerAdapter extends FragmentPagerAdapter {

@@ -21,8 +21,10 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFra
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
+import com.ushahidi.android.presentation.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.ui.adapter.PostAdapter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
 import com.ushahidi.android.presentation.util.Utility;
@@ -83,6 +85,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void intialize() {
+        getListPostComponent(ListPostComponent.class).inject(this);
         mListPostPresenter.setView(this);
         initRecyclerView();
     }
@@ -120,22 +123,22 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showLoading() {
-
+        // Do nothing
     }
 
     @Override
     public void hideLoading() {
-
+        // Do nothing
     }
 
     @Override
     public void showRetry() {
-
+        // Do nothing
     }
 
     @Override
     public void hideRetry() {
-
+        // Do nothing
     }
 
     @Override
@@ -152,7 +155,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void onItemLongClick(RecyclerView recyclerView, View view, int i) {
-
+        // Do nothing
     }
 
     @Override
@@ -170,5 +173,9 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public Context getAppContext() {
         return getActivity().getApplicationContext();
+    }
+
+    protected <C> C getListPostComponent(Class<C> componentType) {
+        return componentType.cast(((PostActivity) getActivity()).getListPostComponent());
     }
 }

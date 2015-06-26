@@ -23,6 +23,7 @@ import com.ushahidi.android.data.database.PostDatabaseHelper;
 
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -36,7 +37,7 @@ public class PostDataSourceFactory {
     private PostDatabaseHelper mPostDatabaseHelper;
 
     private PostService mPostService;
-
+    @Inject
     public PostDataSourceFactory(
             @NonNull PostDatabaseHelper postDatabaseHelper) {
         mPostDatabaseHelper = postDatabaseHelper;
