@@ -87,6 +87,7 @@ public class PostActivity extends BaseAppActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injector();
         initViews();
         if (savedInstanceState != null) {
             mCurrentItem = savedInstanceState.getInt(STATE_PARAM_SELECTED_TAB);
