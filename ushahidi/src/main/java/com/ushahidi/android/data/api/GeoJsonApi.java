@@ -56,11 +56,8 @@ public class GeoJsonApi {
      * @param jsonElement The jsonElement to retrieve the raw JSON string from.
      */
     private Observable<GeoJsonEntity> setGeoJson(JsonElement jsonElement) {
-        return Observable.create(subscriber -> {
-            GeoJsonEntity geoJsonEntity = new GeoJsonEntity();
-            geoJsonEntity.setGeoJson(jsonElement.toString());
-            subscriber.onNext(geoJsonEntity);
-            subscriber.onCompleted();
-        });
+        GeoJsonEntity geoJsonEntity = new GeoJsonEntity();
+        geoJsonEntity.setGeoJson(jsonElement.toString());
+        return Observable.just(geoJsonEntity);
     }
 }

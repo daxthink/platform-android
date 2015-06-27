@@ -17,9 +17,15 @@
 
 package com.ushahidi.android.data.repository.datasource.post;
 
+import com.google.gson.JsonElement;
+
 import com.ushahidi.android.data.api.PostApi;
+import com.ushahidi.android.data.api.model.Posts;
+import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
+import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
+import com.ushahidi.android.data.entity.TagEntity;
 
 import android.support.annotation.NonNull;
 
@@ -41,8 +47,8 @@ public class PostApiDataSource implements PostDataSource {
 
     PostDatabaseHelper mPostDatabaseHelper;
 
-    public PostApiDataSource(@NonNull PostApi postApi, @NonNull PostDatabaseHelper
-            postDatabaseHelper) {
+    public PostApiDataSource(@NonNull PostApi postApi,
+            @NonNull PostDatabaseHelper postDatabaseHelper) {
         mPostApi = postApi;
         mPostDatabaseHelper = postDatabaseHelper;
     }
@@ -55,8 +61,12 @@ public class PostApiDataSource implements PostDataSource {
 
     @Override
     public Observable<List<PostEntity>> getPostEntityList(Long deploymentId) {
-        return mPostApi.getPostList().doOnNext(postEntities -> mPostDatabaseHelper
-                .putPosts(setDeploymentId(postEntities, deploymentId)));
+        return Observable.zip(mPostApi.getTags(), mPostApi.getPostList(),
+                mPostApi.getGeoJson(),
+                (tags, posts, geoJsons) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
+                        setTag(tags, deploymentId), setPost(posts, deploymentId),
+                        setGeoJson(geoJsons, deploymentId)));
+
     }
 
     @Override
@@ -81,17 +91,41 @@ public class PostApiDataSource implements PostDataSource {
      * Set the deployment ID for the TagModel since it's not set by the
      * API
      *
-     * @param postEntities The TagModel to set the deployment Id on
+     * @param posts        The TagModel to set the deployment Id on
      * @param deploymentId The ID of the deployment to set
      * @return observable
      */
-    private List<PostEntity> setDeploymentId(List<PostEntity> postEntities,
-            Long deploymentId) {
-        List<PostEntity> postEntityList = new ArrayList<>(postEntities.size());
-        for (PostEntity postEntity : postEntities) {
+    private List<PostEntity> setPost(Posts posts, Long deploymentId) {
+        List<PostEntity> postEntityList = new ArrayList<>(posts.getPosts().size());
+        for (PostEntity postEntity : posts.getPosts()) {
             postEntity.setDeploymentId(deploymentId);
             postEntityList.add(postEntity);
         }
         return postEntityList;
+    }
+
+    /**
+     * Set the deployment ID for the TagModel since it's not set by the
+     * API
+     *
+     * @param tags         The TagModel to set the deployment Id on
+     * @param deploymentId The ID of the deployment to set
+     * @return observable
+     */
+    private List<TagEntity> setTag(Tags tags,
+            Long deploymentId) {
+        List<TagEntity> tagEntityList = new ArrayList<>(tags.getTags().size());
+        for (TagEntity tagEntity : tags.getTags()) {
+            tagEntity.setDeploymentId(deploymentId);
+            tagEntityList.add(tagEntity);
+        }
+        return tagEntityList;
+    }
+
+    private GeoJsonEntity setGeoJson(JsonElement jsonElement, Long deploymentId) {
+        GeoJsonEntity geoJsonEntity = new GeoJsonEntity();
+        geoJsonEntity.setGeoJson(jsonElement.toString());
+        geoJsonEntity.setDeploymentId(deploymentId);
+        return geoJsonEntity;
     }
 }

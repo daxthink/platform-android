@@ -109,6 +109,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         // Upon  successful refresh, disable swipe to refresh
         mPostRecyclerView
                 .setDefaultOnRefreshListener(() -> {
+                    getListPostComponent(ListPostComponent.class).inject(this);
+                    mListPostPresenter.setView(this);
                     mListPostPresenter.loadPostViaApi();
                     mLinearLayoutManager.scrollToPosition(0);
                 });

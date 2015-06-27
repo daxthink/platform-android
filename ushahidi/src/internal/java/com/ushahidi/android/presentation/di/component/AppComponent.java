@@ -19,10 +19,11 @@ package com.ushahidi.android.presentation.di.component;
 
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
+import com.ushahidi.android.data.PrefsFactory;
+import com.ushahidi.android.data.api.ApiServiceFactory;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
-import com.ushahidi.android.presentation.di.modules.ApiModule;
 import com.ushahidi.android.presentation.di.modules.AppModule;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
@@ -36,7 +37,7 @@ import dagger.Component;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Singleton
-@Component(modules = {AppModule.class, ApiModule.class})
+@Component(modules = {AppModule.class})
 public interface AppComponent extends ApplicationComponent {
 
     HttpClientWrap httpClientWrap();
@@ -49,6 +50,10 @@ public interface AppComponent extends ApplicationComponent {
 
     PostRepository postRepository();
 
+    PrefsFactory prefsFactory();
+
+    ApiServiceFactory apiServiceFactory();
+
 
     final class Initializer {
 
@@ -58,7 +63,7 @@ public interface AppComponent extends ApplicationComponent {
         public static AppComponent init(UshahidiApplication app) {
             return DaggerAppComponent.builder()
                     .applicationModule(new ApplicationModule(app))
-                    .appModule(new AppModule(app))
+                    .appModule(new AppModule())
                     .build();
         }
     }

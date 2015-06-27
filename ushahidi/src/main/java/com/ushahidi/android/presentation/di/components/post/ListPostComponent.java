@@ -21,7 +21,6 @@ import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
-import com.ushahidi.android.presentation.di.modules.ApiModule;
 import com.ushahidi.android.presentation.di.modules.post.ListPostModule;
 import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
 import com.ushahidi.android.presentation.ui.activity.PostActivity;
@@ -34,7 +33,6 @@ import dagger.Component;
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class,
-        ApiModule.class,
         ListPostModule.class})
 public interface ListPostComponent extends AppActivityComponent {
 

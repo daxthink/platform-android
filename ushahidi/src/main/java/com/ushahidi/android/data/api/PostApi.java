@@ -17,7 +17,10 @@
 
 package com.ushahidi.android.data.api;
 
+import com.google.gson.JsonElement;
+
 import com.ushahidi.android.data.api.model.Posts;
+import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.PostEntity;
 
@@ -41,8 +44,16 @@ public class PostApi {
         mPostService = postService;
     }
 
-    public Observable<List<PostEntity>> getPostList() {
-        return Observable.create((subscriber) -> mPostService.posts().map((post) -> setPost(post)));
+    public Observable<Posts> getPostList() {
+        return mPostService.posts();
+    }
+
+    public Observable<Tags> getTags() {
+        return mPostService.getTags();
+    }
+
+    public Observable<JsonElement> getGeoJson() {
+        return mPostService.getGeoJson();
     }
 
     /**
@@ -51,9 +62,6 @@ public class PostApi {
      * @param posts The jsonElement to retrieve the raw JSON string from.
      */
     private Observable<List<PostEntity>> setPost(Posts posts) {
-        return Observable.create(subscriber -> {
-            subscriber.onNext(posts.getPosts());
-            subscriber.onCompleted();
-        });
+        return Observable.just(posts.getPosts());
     }
 }

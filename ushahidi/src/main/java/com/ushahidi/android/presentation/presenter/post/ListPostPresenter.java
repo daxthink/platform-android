@@ -21,6 +21,7 @@ import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
+import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.entity.Post;
 import com.ushahidi.android.domain.usecase.post.ListPostUsecase;
@@ -45,11 +46,14 @@ public class ListPostPresenter implements Presenter {
 
     private ListPostView mListPostView;
 
+    private PrefsFactory mPrefsFactory;
+
     @Inject
     public ListPostPresenter(ListPostUsecase listPostUsecase,
-            PostModelDataMapper postModelDataMapper) {
+            PostModelDataMapper postModelDataMapper, PrefsFactory prefsFactory) {
         mListPostUsecase = listPostUsecase;
         mPostModelDataMapper = postModelDataMapper;
+        mPrefsFactory = prefsFactory;
     }
 
     @Override
@@ -78,7 +82,7 @@ public class ListPostPresenter implements Presenter {
     private void loadPost(From from) {
         mListPostView.hideRetry();
         mListPostView.showLoading();
-        mListPostUsecase.setListPost(1l, from);
+        mListPostUsecase.setListPost(mPrefsFactory.getActiveDeploymentId().get(), from);
         mListPostUsecase.execute(new DefaultSubscriber<List<Post>>() {
             @Override
             public void onCompleted() {

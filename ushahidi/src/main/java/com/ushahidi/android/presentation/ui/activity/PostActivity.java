@@ -20,7 +20,7 @@ package com.ushahidi.android.presentation.ui.activity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
 import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
-import com.ushahidi.android.presentation.di.modules.ApiModule;
+import com.ushahidi.android.presentation.di.modules.post.ListPostModule;
 import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
 
@@ -127,7 +127,7 @@ public class PostActivity extends BaseAppActivity {
         mListPostComponent = DaggerListPostComponent.builder()
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
-                .apiModule(new ApiModule("http://api.dev.platform.ushahidi.com", "xdkdkdsl"))
+                .listPostModule(new ListPostModule())
                 .build();
     }
 
@@ -149,7 +149,7 @@ public class PostActivity extends BaseAppActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), viewPager);
-        adapter.addFragment(new ListPostFragment(), getString(R.string.list));
+        adapter.addFragment(ListPostFragment.newInstance(), getString(R.string.list));
         adapter.addFragment(new MapPostFragment(), getString(R.string.map));
         viewPager.setAdapter(adapter);
     }

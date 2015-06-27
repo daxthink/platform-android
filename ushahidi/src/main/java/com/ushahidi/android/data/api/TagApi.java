@@ -56,9 +56,6 @@ public class TagApi {
      * @param tags The Tags model to be set as tag entity.
      */
     private Observable<List<TagEntity>> setTags(Tags tags) {
-        return Observable.create(subscriber -> {
-            subscriber.onNext(tags.getTags());
-            subscriber.onCompleted();
-        });
+        return Observable.just(tags.getTags());
     }
 }

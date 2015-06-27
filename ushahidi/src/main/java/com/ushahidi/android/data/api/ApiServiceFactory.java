@@ -15,20 +15,16 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.util;
+package com.ushahidi.android.data.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import com.ushahidi.android.data.api.ApiHeader;
-import com.ushahidi.android.data.api.Date;
-import com.ushahidi.android.data.api.DateDeserializer;
-import com.ushahidi.android.data.api.ValueDeserializer;
+import com.ushahidi.android.data.PrefsFactory;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.PostValueEntity;
 import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
-
-import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -40,23 +36,27 @@ import retrofit.converter.GsonConverter;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ApiServiceUtil {
+public class ApiServiceFactory {
 
     private UnauthorizedAccessErrorHandler mUnauthorizedAccessErrorHandler;
 
     private HttpClientWrap mClient;
 
+    private PrefsFactory mPrefsFactory;
+
     @Inject
-    public ApiServiceUtil(HttpClientWrap client,
-            UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler) {
+    public ApiServiceFactory(HttpClientWrap client,
+            UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler,
+            PrefsFactory prefsFactory) {
         mClient = client;
         mUnauthorizedAccessErrorHandler = unauthorizedAccessErrorHandler;
+        mPrefsFactory = prefsFactory;
     }
 
-    public <T> T createService(@NonNull Class<T> serviceClass, String baseUrl,
-            final String accessToken) {
-        ApiHeader header = new ApiHeader(accessToken);
-        Endpoint endpoint = Endpoints.newFixedEndpoint(baseUrl);
+    public RestfulService getService() {
+        ApiHeader header = new ApiHeader(mPrefsFactory.getAccessToken().get());
+        Endpoint endpoint = Endpoints.newFixedEndpoint(mPrefsFactory.getActiveDeploymentUrl()
+                .get());
         GsonBuilder builder = new GsonBuilder();
         builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         builder.registerTypeAdapter(Date.class, new DateDeserializer());
@@ -71,6 +71,6 @@ public class ApiServiceUtil {
                 .setRequestInterceptor(header)
                 .build();
 
-        return restAdapter.create(serviceClass);
+        return restAdapter.create(RestfulService.class);
     }
 }
