@@ -25,14 +25,18 @@
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:recyclerviewEmptyView="@layout/list_empty_view"
-            app:recyclerviewClipToPadding="true"
-            app:recyclerviewScrollbars="vertical"/>
-
+            android:cacheColorHint="@android:color/transparent"
+            app:recyclerviewEmptyView="@layout/list_empty_view"/>
+    <TextView
+            android:id="@id/android:empty"
+            style="@style/TextView.Empty"
+            android:text="@string/empty_list"
+            android:layout_centerInParent="true"/>
     <ProgressBar
             android:id="@+id/list_post_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:visibility="gone"
             style="?android:attr/progressBarStyle"/>
 </RelativeLayout>

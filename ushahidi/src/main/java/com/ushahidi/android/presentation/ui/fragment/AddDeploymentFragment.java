@@ -20,9 +20,9 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.presenter.AddDeploymentPresenter;
+import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.ui.view.AddDeploymentView;
+import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 
 import android.content.Context;

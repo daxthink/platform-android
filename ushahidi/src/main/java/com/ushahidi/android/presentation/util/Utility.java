@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Util {
+public class Utility {
 
     public static boolean isCollectionEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();

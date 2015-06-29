@@ -19,7 +19,7 @@ package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.auth.AccessToken;
 import com.ushahidi.android.data.api.auth.Payload;
-import com.ushahidi.android.data.api.service.UserService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
@@ -29,24 +29,24 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * User API
+ * User API Services
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class UserApi {
 
-    private final UserService mUserService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public UserApi(@NonNull UserService userService) {
-        mUserService = userService;
+    public UserApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     public Observable<AccessToken> loginUserAccount(@NonNull Payload payload) {
-        return Observable.create(subscriber -> mUserService.getAccessToken(payload));
+        return Observable.create(subscriber -> mRestfulService.getAccessToken(payload));
     }
 
     public Observable<UserEntity> getUserProfile() {
-        return Observable.create(subscriber -> mUserService.getUser());
+        return Observable.create(subscriber -> mRestfulService.getUser());
     }
 }

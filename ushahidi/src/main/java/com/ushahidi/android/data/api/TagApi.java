@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.service.TagService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 
@@ -35,18 +35,18 @@ import rx.Observable;
  */
 public class TagApi {
 
-    private final TagService mTagService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public TagApi(@NonNull TagService tagService) {
-        mTagService = tagService;
+    public TagApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<List<TagEntity>> getTags() {
-        return Observable.create((subscriber) -> mTagService.getTags().map((tags) -> setTags(tags))
+        return Observable.create((subscriber) -> mRestfulService.getTags().map((tags) -> setTags(tags))
         );
     }
 
@@ -56,9 +56,6 @@ public class TagApi {
      * @param tags The Tags model to be set as tag entity.
      */
     private Observable<List<TagEntity>> setTags(Tags tags) {
-        return Observable.create(subscriber -> {
-            subscriber.onNext(tags.getTags());
-            subscriber.onCompleted();
-        });
+        return Observable.just(tags.getTags());
     }
 }

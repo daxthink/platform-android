@@ -17,38 +17,31 @@
 
 package com.ushahidi.android.data.repository.datasource.post;
 
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.PostApi;
-import com.ushahidi.android.data.api.service.PostService;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 
 import android.support.annotation.NonNull;
 
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
 /**
  * Factory method for fetching post data source
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Singleton
 public class PostDataSourceFactory {
 
     private PostDatabaseHelper mPostDatabaseHelper;
 
-    private PostService mPostService;
+    private PlatformService mApiServiceFactory;
 
+    @Inject
     public PostDataSourceFactory(
-            @NonNull PostDatabaseHelper postDatabaseHelper) {
+            @NonNull PostDatabaseHelper postDatabaseHelper,
+            PlatformService apiServiceFactory) {
         mPostDatabaseHelper = postDatabaseHelper;
-    }
-
-    /**
-     * Call this to set the Post API service
-     *
-     * @param postService The post service
-     */
-    public void setPostService(@NonNull PostService postService) {
-        mPostService = postService;
+        mApiServiceFactory = apiServiceFactory;
     }
 
     public PostDatabaseDataSource createPostDatabaseDataSource() {
@@ -56,10 +49,7 @@ public class PostDataSourceFactory {
     }
 
     public PostDataSource createPostApiDataSource() {
-        if (mPostService == null) {
-            throw new RuntimeException("Please call setPostService(...)");
-        }
-        final PostApi postApi = new PostApi(mPostService);
+        final PostApi postApi = new PostApi(mApiServiceFactory.getService());
         return new PostApiDataSource(postApi, mPostDatabaseHelper);
     }
 }

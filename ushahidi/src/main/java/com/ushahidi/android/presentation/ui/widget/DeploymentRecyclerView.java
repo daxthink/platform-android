@@ -20,7 +20,7 @@ package com.ushahidi.android.presentation.ui.widget;
 import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.presenter.DeleteDeploymentPresenter;
+import com.ushahidi.android.presentation.presenter.deployment.DeleteDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.adapter.DeploymentAdapter;
 
 import android.app.Activity;

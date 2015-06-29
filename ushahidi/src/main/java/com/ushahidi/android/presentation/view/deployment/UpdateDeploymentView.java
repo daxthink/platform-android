@@ -15,22 +15,17 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.api.service;
+package com.ushahidi.android.presentation.view.deployment;
 
-import com.ushahidi.android.data.api.model.Tags;
-
-import retrofit.http.GET;
-import rx.Observable;
-
-import static com.ushahidi.android.data.api.Constant.TAGS;
+import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
+import com.ushahidi.android.presentation.model.DeploymentModel;
 
 /**
- * Tag API related services
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface TagService {
+public interface UpdateDeploymentView extends LoadDataView {
 
-    @GET(TAGS)
-    Observable<Tags> getTags();
+    void onDeploymentSuccessfullyUpdated(Long row);
+
+    void showDeployment(DeploymentModel deploymentModel);
 }

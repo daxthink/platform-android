@@ -22,7 +22,7 @@ import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.UpdateDeploymentModule;
-import com.ushahidi.android.presentation.presenter.UpdateDeploymentPresenter;
+import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.UpdateDeploymentActivity;
 import com.ushahidi.android.presentation.ui.fragment.UpdateDeploymentFragment;
 

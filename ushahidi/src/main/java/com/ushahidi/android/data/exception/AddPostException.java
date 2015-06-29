@@ -15,17 +15,29 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.ui.view;
-
-import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
-import com.ushahidi.android.presentation.model.DeploymentModel;
+package com.ushahidi.android.data.exception;
 
 /**
+ * Exception thrown by the {@link com.ushahidi.android.data.database.PostDatabaseHelper} when a
+ * {@PostEntity} can't be added to the database.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface UpdateDeploymentView extends LoadDataView {
+public class AddPostException extends Exception {
 
-    void onDeploymentSuccessfullyUpdated(Long row);
+    public AddPostException() {
+        super();
+    }
 
-    void showDeployment(DeploymentModel deploymentModel);
+    public AddPostException(final String message) {
+        super(message);
+    }
+
+    public AddPostException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public AddPostException(final Throwable cause) {
+        super(cause);
+    }
 }

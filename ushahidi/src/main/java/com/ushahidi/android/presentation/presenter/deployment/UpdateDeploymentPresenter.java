@@ -5,31 +5,29 @@
  *  the terms of the GNU Affero General Public License as published by the Free
  *  Software Foundation, either version 3 of the License, or (at your option)
  *  any later version.
- *
+ *  
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
- *
+ *  
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program in the file LICENSE-AGPL. If not, see
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.presenter;
+package com.ushahidi.android.presentation.presenter.deployment;
 
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
-import com.ushahidi.android.domain.entity.Deployment;
-import com.ushahidi.android.domain.usecase.deployment.ListDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.deployment.UpdateDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
+import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
-import com.ushahidi.android.presentation.ui.view.ListDeploymentView;
+import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
 
 import android.support.annotation.NonNull;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,68 +35,68 @@ import javax.inject.Named;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListDeploymentPresenter implements
-        Presenter {
+public class UpdateDeploymentPresenter implements Presenter {
 
-    private final ListDeploymentUsecase mUsecase;
+    private final UpdateDeploymentUsecase mUpdateDeploymentUsecase;
 
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
-    private ListDeploymentView mListDeploymentView;
+    private UpdateDeploymentView mUpdateDeploymentView;
 
     @Inject
-    public ListDeploymentPresenter(@Named("categoryList") ListDeploymentUsecase usecase,
+    public UpdateDeploymentPresenter(
+            @Named("categoryUpdate") UpdateDeploymentUsecase updateDeploymentUsecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
-        mUsecase = usecase;
+        mUpdateDeploymentUsecase = updateDeploymentUsecase;
         mDeploymentModelDataMapper = deploymentModelDataMapper;
     }
 
     @Override
     public void resume() {
-        loadDeployments();
+        // Do nothing
     }
 
     @Override
     public void pause() {
+        // Do nothing
     }
 
     @Override
     public void destroy() {
-        mUsecase.unsubscribe();
+        mUpdateDeploymentUsecase.unsubscribe();
     }
 
-    public void setView(@NonNull ListDeploymentView listDeploymentView) {
-        mListDeploymentView = listDeploymentView;
+    public void setView(@NonNull UpdateDeploymentView addDeploymentView) {
+        mUpdateDeploymentView = addDeploymentView;
     }
 
-    public void loadDeployments() {
-        mListDeploymentView.hideRetry();
-        mListDeploymentView.showLoading();
-        mUsecase.execute(new DefaultSubscriber<List<Deployment>>() {
+    public void updateDeployment(DeploymentModel deploymentModel) {
+        mUpdateDeploymentView.hideRetry();
+        mUpdateDeploymentView.showLoading();
+        mUpdateDeploymentUsecase.setDeployment(mDeploymentModelDataMapper.map(deploymentModel));
+        mUpdateDeploymentUsecase.execute(new DefaultSubscriber<Long>() {
             @Override
             public void onCompleted() {
-                mListDeploymentView.hideLoading();
-            }
-
-            @Override
-            public void onNext(List<Deployment> deploymentList) {
-                mListDeploymentView.hideLoading();
-                mListDeploymentView
-                        .renderDeploymentList(mDeploymentModelDataMapper.map(deploymentList));
+                mUpdateDeploymentView.hideLoading();
             }
 
             @Override
             public void onError(Throwable e) {
-                mListDeploymentView.hideLoading();
+                mUpdateDeploymentView.hideLoading();
                 showErrorMessage(new DefaultErrorHandler((Exception) e));
-                mListDeploymentView.showRetry();
+                mUpdateDeploymentView.showRetry();
+            }
+
+            @Override
+            public void onNext(Long row) {
+                mUpdateDeploymentView.onDeploymentSuccessfullyUpdated(row);
             }
         });
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {
-        String errorMessage = ErrorMessageFactory.create(mListDeploymentView.getAppContext(),
+        String errorMessage = ErrorMessageFactory.create(mUpdateDeploymentView.getAppContext(),
                 errorHandler.getException());
-        mListDeploymentView.showError(errorMessage);
+        mUpdateDeploymentView.showError(errorMessage);
     }
 }

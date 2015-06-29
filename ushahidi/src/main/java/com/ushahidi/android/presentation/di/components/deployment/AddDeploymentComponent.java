@@ -21,6 +21,7 @@ import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.AddDeploymentModule;
+import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
 import com.ushahidi.android.presentation.ui.fragment.AddDeploymentFragment;
 
@@ -38,5 +39,5 @@ public interface AddDeploymentComponent extends AppActivityComponent {
 
     void inject(AddDeploymentFragment addDeploymentFragment);
 
-    //AddDeploymentPresenter addDeploymentPresenter();
+    AddDeploymentPresenter addDeploymentPresenter();
 }

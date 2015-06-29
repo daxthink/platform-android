@@ -15,20 +15,29 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.api.service;
-
-import com.google.gson.JsonElement;
-
-import retrofit.http.GET;
-import rx.Observable;
-
-import static com.ushahidi.android.data.api.Constant.GEOJSON;
+package com.ushahidi.android.data.exception;
 
 /**
+ * Exception thrown by the application when a {@link com.ushahidi.android.data.database.TagDatabaseHelper}
+ * when a {@link com.ushahidi.android.data.entity.TagEntity} can't be added to the database.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface GeoJsonService {
+public class AddTagException extends Exception {
 
-    @GET(GEOJSON)
-    Observable<JsonElement> getGeoJson();
+    public AddTagException() {
+        super();
+    }
+
+    public AddTagException(final String message) {
+        super(message);
+    }
+
+    public AddTagException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public AddTagException(final Throwable cause) {
+        super(cause);
+    }
 }

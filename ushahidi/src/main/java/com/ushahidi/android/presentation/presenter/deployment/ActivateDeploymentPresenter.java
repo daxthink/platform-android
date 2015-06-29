@@ -14,7 +14,7 @@
  * https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.presenter;
+package com.ushahidi.android.presentation.presenter.deployment;
 
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
@@ -25,7 +25,7 @@ import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
-import com.ushahidi.android.presentation.ui.view.ActivateDeploymentView;
+import com.ushahidi.android.presentation.view.deployment.ActivateDeploymentView;
 
 import android.support.annotation.NonNull;
 

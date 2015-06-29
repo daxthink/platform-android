@@ -18,6 +18,9 @@
 package com.ushahidi.android.data.exception;
 
 /**
+ * Exception thrown by {@link com.ushahidi.android.data.database.PostDatabaseHelper} when a
+ * {@link com.ushahidi.android.data.entity.PostEntity} can't be found from the database.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostNotFoundException extends Exception {

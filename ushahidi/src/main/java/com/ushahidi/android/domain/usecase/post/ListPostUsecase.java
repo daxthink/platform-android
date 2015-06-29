@@ -23,6 +23,8 @@ import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.PostRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -38,6 +40,7 @@ public class ListPostUsecase extends Usecase {
 
     private From mFrom;
 
+    @Inject
     protected ListPostUsecase(PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);

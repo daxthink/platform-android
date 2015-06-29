@@ -19,7 +19,7 @@ package com.ushahidi.android.data.api;
 
 import com.google.gson.JsonElement;
 
-import com.ushahidi.android.data.api.service.GeoJsonService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 
 import android.support.annotation.NonNull;
@@ -29,24 +29,24 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * GeoJson API related activities
+ * GeoJson API related services
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class GeoJsonApi {
 
-    private final GeoJsonService mGeoJsonService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public GeoJsonApi(@NonNull GeoJsonService geoJsonService) {
-        mGeoJsonService = geoJsonService;
+    public GeoJsonApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<GeoJsonEntity> getGeoJson() {
-        return Observable.create((subscriber) -> mGeoJsonService.getGeoJson().map(
+        return Observable.create((subscriber) -> mRestfulService.getGeoJson().map(
                 (jsonElement) -> setGeoJson(jsonElement)));
     }
 
@@ -56,11 +56,8 @@ public class GeoJsonApi {
      * @param jsonElement The jsonElement to retrieve the raw JSON string from.
      */
     private Observable<GeoJsonEntity> setGeoJson(JsonElement jsonElement) {
-        return Observable.create(subscriber -> {
-            GeoJsonEntity geoJsonEntity = new GeoJsonEntity();
-            geoJsonEntity.setGeoJson(jsonElement.toString());
-            subscriber.onNext(geoJsonEntity);
-            subscriber.onCompleted();
-        });
+        GeoJsonEntity geoJsonEntity = new GeoJsonEntity();
+        geoJsonEntity.setGeoJson(jsonElement.toString());
+        return Observable.just(geoJsonEntity);
     }
 }

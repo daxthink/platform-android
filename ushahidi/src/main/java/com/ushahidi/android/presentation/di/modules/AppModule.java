@@ -21,9 +21,13 @@ import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
+import com.ushahidi.android.data.PrefsFactory;
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
+import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
-import com.ushahidi.android.presentation.UshahidiApplication;
+import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
 import com.ushahidi.android.presentation.state.UserState;
@@ -48,16 +52,10 @@ import static android.content.Context.MODE_PRIVATE;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Module(includes = ApplicationModule.class)
+@Module(includes = {ApplicationModule.class})
 public class AppModule {
 
-    private UshahidiApplication mUshahidiApplication;
-
     static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
-
-    public AppModule(UshahidiApplication ushahidiApplication) {
-        mUshahidiApplication = ushahidiApplication;
-    }
 
     private static OkHttpClient createOkHttpClient(Context app) {
         OkHttpClient client = new OkHttpClient();
@@ -75,6 +73,8 @@ public class AppModule {
         final OkHttpClient okHttpClient = createOkHttpClient(app.getApplicationContext());
         okHttpClient.setCookieHandler(CookieHandler.getDefault());
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
         return new HttpClientWrap(app, new OkClient(okHttpClient));
     }
 
@@ -100,6 +100,13 @@ public class AppModule {
 
     @Provides
     @Singleton
+    PostRepository providePostRepository(
+            PostDataRepository postDataRepository) {
+        return postDataRepository;
+    }
+
+    @Provides
+    @Singleton
     public AppState provideApplicationState(Bus bus) {
         return new AppState(bus);
     }
@@ -108,5 +115,13 @@ public class AppModule {
     @Singleton
     UserState provideUserState(AppState appState) {
         return appState;
+    }
+
+    @Provides
+    @Singleton
+    PlatformService provideApiServiceFactory(HttpClientWrap htttWrap,
+            UnauthorizedAccessErrorHandler handler, PrefsFactory prefsFactory
+    ) {
+        return new PlatformService(htttWrap, handler, prefsFactory);
     }
 }

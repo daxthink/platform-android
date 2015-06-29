@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.tag;
 
 import com.ushahidi.android.data.api.TagApi;
-import com.ushahidi.android.data.api.service.TagService;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.database.TagDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -37,7 +37,7 @@ public class TagDataSourceFactory {
 
     private final TagDatabaseHelper mTagDatabaseHelper;
 
-    private TagService mTagService;
+    private RestfulService mTagService;
 
     @Inject
     public TagDataSourceFactory(
@@ -50,7 +50,7 @@ public class TagDataSourceFactory {
      *
      * @param tagService The tag service
      */
-    public void setTagService(@NonNull TagService tagService) {
+    public void setTagService(@NonNull RestfulService tagService) {
         mTagService = tagService;
     }
 

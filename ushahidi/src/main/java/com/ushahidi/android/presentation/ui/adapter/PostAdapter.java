@@ -27,7 +27,7 @@ import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.model.TagModel;
 import com.ushahidi.android.presentation.ui.animators.ViewHelper;
-import com.ushahidi.android.presentation.util.Util;
+import com.ushahidi.android.presentation.util.Utility;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -48,11 +48,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Manages list of posts
@@ -66,6 +68,13 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
     private int mLastPosition = -1;
 
     private float mFrom = 0f;
+
+    private final View mEmptyView;
+
+    public PostAdapter(final View emptyView) {
+        mEmptyView = emptyView;
+        onDataSetChanged();
+    }
 
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if (position < getItemCount() && (customHeaderView != null ? position <= getItems().size()
@@ -89,7 +98,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                         ((Widgets) viewHolder).context.getResources().getColor(R.color.red));
             }
             final List<TagModel> tags = getItem(position).getTags();
-            if (!Util.isCollectionEmpty(tags)) {
+            if (!Utility.isCollectionEmpty(tags)) {
                 ((Widgets) viewHolder).renderTagBadge(tags);
             } else {
                 //Don't show post that don't have tags. Hide the horizontal scroll view otherwise
@@ -120,24 +129,29 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         return getItems().size();
     }
 
+    @Override
+    public void setItems(List<PostModel> items) {
+        super.setItems(items);
+        onDataSetChanged();
+    }
+
+    /**
+     * Sets an empty view when the adapter's data item gets to zero
+     */
+    private void onDataSetChanged() {
+        notifyDataSetChanged();
+        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
     public void sortByDate() {
-        Collections.sort(getItems(), new Comparator<PostModel>() {
-            @Override
-            public int compare(PostModel one, PostModel other) {
-                return one.getCreated().compareTo(other.getCreated());
-            }
-        });
+        Collections
+                .sort(getItems(), (one, other) -> one.getCreated().compareTo(other.getCreated()));
         notifyDataSetChanged();
     }
 
     public void sortByTitle() {
 
-        Collections.sort(getItems(), new Comparator<PostModel>() {
-            @Override
-            public int compare(PostModel one, PostModel other) {
-                return one.getTitle().compareTo(other.getTitle());
-            }
-        });
+        Collections.sort(getItems(), (one, other) -> one.getTitle().compareTo(other.getTitle()));
 
         notifyDataSetChanged();
     }
@@ -158,18 +172,25 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     public class Widgets extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.post_title)
         TextView title;
 
+        @InjectView(R.id.post_content)
         TextView content;
 
+        @InjectView(R.id.post_date)
         TextView date;
 
+        @InjectView(R.id.post_status)
         CapitalizedTextView status;
 
+        @InjectView(R.id.post_image)
         ImageView postImage;
 
+        @InjectView(R.id.post_tags)
         LinearLayout tag;
 
+        @InjectView(R.id.post_tags_container)
         ViewGroup tagContainer;
 
         Context context;
@@ -180,18 +201,12 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
         public Widgets(Context ctxt, View convertView) {
             super(convertView);
+            ButterKnife.inject(convertView);
             this.context = ctxt;
             tagColorSize = this.context.getResources()
                     .getDimensionPixelSize(R.dimen.tag_badge_color_size);
             tagIconSize = this.context.getResources()
                     .getDimensionPixelSize(R.dimen.tag_icon_color_size);
-            title = (TextView) convertView.findViewById(R.id.post_title);
-            content = (TextView) convertView.findViewById(R.id.post_content);
-            postImage = (ImageView) convertView.findViewById(R.id.post_image);
-            date = (TextView) convertView.findViewById(R.id.post_date);
-            status = (CapitalizedTextView) convertView.findViewById(R.id.post_status);
-            tag = (LinearLayout) convertView.findViewById(R.id.post_tags);
-            tagContainer = (ViewGroup) convertView.findViewById(R.id.post_tags_container);
         }
 
         public void renderTagBadge(List<TagModel> tags) {
@@ -205,7 +220,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                         .inflate(R.layout.include_tag_badge, tag, false);
                 tagBadge.setText(tagModel.getTag());
                 // Tag has both icon and color. Display both
-                if (!TextUtils.isEmpty(tagModel.getIcon()) && Util
+                if (!TextUtils.isEmpty(tagModel.getIcon()) && Utility
                         .validateHexColor(tagModel.getColor())) {
                     StringBuilder builder = new StringBuilder("fa_");
                     builder.append(tagModel.getIcon());
@@ -214,7 +229,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                             null, null, null);
 
                     //Tag has only color, display badge
-                } else if (Util.validateHexColor(tagModel.getColor())) {
+                } else if (Utility.validateHexColor(tagModel.getColor())) {
                     ShapeDrawable colorDrawable = new ShapeDrawable(new OvalShape());
                     colorDrawable.setIntrinsicWidth(tagColorSize);
                     colorDrawable.setIntrinsicHeight(tagColorSize);

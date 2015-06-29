@@ -15,16 +15,22 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation;
+package com.ushahidi.android.presentation.view.post;
 
-import java.util.Collection;
+import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
+import com.ushahidi.android.presentation.model.PostModel;
+
+import java.util.List;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AppUtils {
+public interface ListPostView extends LoadDataView {
 
-    public static boolean isEmpty(Collection<?> collection) {
-        return collection == null || collection.isEmpty();
-    }
+    /**
+     * Render a post list in the UI.
+     *
+     * @param postModel The collection of {@link PostModel} that will be shown.
+     */
+    void renderPostList(List<PostModel> postModel);
 }
