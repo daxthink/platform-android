@@ -35,18 +35,18 @@ import rx.Observable;
  */
 public class TagApi {
 
-    private final RestfulService mTagService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public TagApi(@NonNull RestfulService tagService) {
-        mTagService = tagService;
+    public TagApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<List<TagEntity>> getTags() {
-        return Observable.create((subscriber) -> mTagService.getTags().map((tags) -> setTags(tags))
+        return Observable.create((subscriber) -> mRestfulService.getTags().map((tags) -> setTags(tags))
         );
     }
 

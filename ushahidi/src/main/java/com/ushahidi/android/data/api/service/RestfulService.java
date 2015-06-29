@@ -36,22 +36,28 @@ import static com.ushahidi.android.data.api.Constant.TAGS;
 import static com.ushahidi.android.data.api.Constant.USERS_ME;
 
 /**
+ * This interface aas all the Ushahidi Platform API services currently being used by the app
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface RestfulService {
 
+    // Post related APIs
     @GET(POSTS)
     Observable<Posts> posts();
 
+    // Tags related APIs
     @GET(TAGS)
     Observable<Tags> getTags();
 
+    //User/Authentication related APIs
     @POST("/oauth/token")
     Observable<AccessToken> getAccessToken(@Body Payload payload);
 
     @GET(USERS_ME)
     Observable<UserEntity> getUser();
 
+    // GeoJSON related APIs
     @GET(GEOJSON)
     Observable<JsonElement> getGeoJson();
 }

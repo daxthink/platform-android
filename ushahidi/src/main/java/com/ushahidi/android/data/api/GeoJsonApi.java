@@ -29,24 +29,24 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * GeoJson API related activities
+ * GeoJson API related services
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class GeoJsonApi {
 
-    private final RestfulService mGeoJsonService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public GeoJsonApi(@NonNull RestfulService geoJsonService) {
-        mGeoJsonService = geoJsonService;
+    public GeoJsonApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<GeoJsonEntity> getGeoJson() {
-        return Observable.create((subscriber) -> mGeoJsonService.getGeoJson().map(
+        return Observable.create((subscriber) -> mRestfulService.getGeoJson().map(
                 (jsonElement) -> setGeoJson(jsonElement)));
     }
 

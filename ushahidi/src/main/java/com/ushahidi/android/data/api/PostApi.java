@@ -37,23 +37,23 @@ import rx.Observable;
  */
 public class PostApi {
 
-    private final RestfulService mPostService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public PostApi(@NonNull RestfulService postService) {
-        mPostService = postService;
+    public PostApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     public Observable<Posts> getPostList() {
-        return mPostService.posts();
+        return mRestfulService.posts();
     }
 
     public Observable<Tags> getTags() {
-        return mPostService.getTags();
+        return mRestfulService.getTags();
     }
 
     public Observable<JsonElement> getGeoJson() {
-        return mPostService.getGeoJson();
+        return mRestfulService.getGeoJson();
     }
 
     /**

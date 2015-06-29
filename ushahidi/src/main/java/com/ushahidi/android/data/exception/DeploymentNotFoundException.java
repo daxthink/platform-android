@@ -17,7 +17,8 @@
 package com.ushahidi.android.data.exception;
 
 /**
- * Exception throw by the application when a {@DeploymentEntity} can't be found from the database
+ * Exception thrown by {@link com.ushahidi.android.data.database.DeploymentDatabaseHelper} when a
+ * {@link com.ushahidi.android.data.entity.DeploymentEntity} can't be found from the database.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

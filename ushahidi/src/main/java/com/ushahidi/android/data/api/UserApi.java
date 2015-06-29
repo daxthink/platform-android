@@ -29,24 +29,24 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * User API
+ * User API Services
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class UserApi {
 
-    private final RestfulService mUserService;
+    private final RestfulService mRestfulService;
 
     @Inject
-    public UserApi(@NonNull RestfulService userService) {
-        mUserService = userService;
+    public UserApi(@NonNull RestfulService restfulService) {
+        mRestfulService = restfulService;
     }
 
     public Observable<AccessToken> loginUserAccount(@NonNull Payload payload) {
-        return Observable.create(subscriber -> mUserService.getAccessToken(payload));
+        return Observable.create(subscriber -> mRestfulService.getAccessToken(payload));
     }
 
     public Observable<UserEntity> getUserProfile() {
-        return Observable.create(subscriber -> mUserService.getUser());
+        return Observable.create(subscriber -> mRestfulService.getUser());
     }
 }
