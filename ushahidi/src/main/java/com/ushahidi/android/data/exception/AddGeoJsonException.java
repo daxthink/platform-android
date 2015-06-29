@@ -15,22 +15,29 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.ui.view;
-
-import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
-import com.ushahidi.android.presentation.model.DeploymentModel;
-
-import java.util.List;
+package com.ushahidi.android.data.exception;
 
 /**
+ * Exception thrown by {@link com.ushahidi.android.data.database.GeoJsonDatabaseHelper} when a
+ * {@link com.ushahidi.android.data.entity.GeoJsonEntity} can't be added to the database.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface ListDeploymentView extends LoadDataView {
+public class AddGeoJsonException extends Exception {
 
-    /**
-     * Render a deployment list in the UI.
-     *
-     * @param deploymentModel The collection of {@link DeploymentModel} that will be shown.
-     */
-    void renderDeploymentList(List<DeploymentModel> deploymentModel);
+    public AddGeoJsonException() {
+        super();
+    }
+
+    public AddGeoJsonException(final String message) {
+        super(message);
+    }
+
+    public AddGeoJsonException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public AddGeoJsonException(final Throwable cause) {
+        super(cause);
+    }
 }

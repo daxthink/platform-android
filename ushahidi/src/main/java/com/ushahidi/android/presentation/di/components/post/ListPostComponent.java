@@ -15,17 +15,16 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.di.components.deployment;
+package com.ushahidi.android.presentation.di.components.post;
 
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
-import com.ushahidi.android.presentation.di.modules.deployment.DeleteDeploymentModule;
-import com.ushahidi.android.presentation.di.modules.deployment.ListDeploymentModule;
-import com.ushahidi.android.presentation.presenter.deployment.ListDeploymentPresenter;
-import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
-import com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment;
+import com.ushahidi.android.presentation.di.modules.post.ListPostModule;
+import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
+import com.ushahidi.android.presentation.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 
 import dagger.Component;
 
@@ -34,13 +33,12 @@ import dagger.Component;
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class,
-        DeleteDeploymentModule.class,
-        ListDeploymentModule.class})
-public interface ListDeploymentComponent extends AppActivityComponent {
+        ListPostModule.class})
+public interface ListPostComponent extends AppActivityComponent {
 
-    void inject(ListDeploymentActivity listDeploymentActivity);
+    void inject(PostActivity listPostActivity);
 
-    void inject(ListDeploymentFragment listDeploymentFragment);
+    void inject(ListPostFragment listPostFragment);
 
-    ListDeploymentPresenter listDeploymentPresenter();
+    ListPostPresenter listPostPresenter();
 }

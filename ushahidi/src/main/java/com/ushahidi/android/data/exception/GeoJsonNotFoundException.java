@@ -18,7 +18,8 @@
 package com.ushahidi.android.data.exception;
 
 /**
- * Exception throw by the application when a {@GeoJonEntity} can't be found from the database
+ * Exception thrown by {@link com.ushahidi.android.data.database.GeoJsonDatabaseHelper} when a
+ * {@link com.ushahidi.android.data.entity.GeoJsonEntity} can't be found from the database.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

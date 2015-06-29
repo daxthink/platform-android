@@ -18,6 +18,9 @@
 package com.ushahidi.android.presentation.ui.activity;
 
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
+import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
+import com.ushahidi.android.presentation.di.modules.post.ListPostModule;
 import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
 
@@ -76,6 +79,8 @@ public class PostActivity extends BaseAppActivity {
 
     private static int mCurrentItem;
 
+    private ListPostComponent mListPostComponent;
+
     public PostActivity() {
         super(R.layout.activity_post, 0);
     }
@@ -83,6 +88,7 @@ public class PostActivity extends BaseAppActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injector();
         initViews();
         if (savedInstanceState != null) {
             mCurrentItem = savedInstanceState.getInt(STATE_PARAM_SELECTED_TAB);
@@ -117,6 +123,14 @@ public class PostActivity extends BaseAppActivity {
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+    private void injector() {
+        mListPostComponent = DaggerListPostComponent.builder()
+                .appComponent(getAppComponent())
+                .activityModule(getActivityModule())
+                .listPostModule(new ListPostModule())
+                .build();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -135,7 +149,7 @@ public class PostActivity extends BaseAppActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), viewPager);
-        adapter.addFragment(new ListPostFragment(), getString(R.string.list));
+        adapter.addFragment(ListPostFragment.newInstance(), getString(R.string.list));
         adapter.addFragment(new MapPostFragment(), getString(R.string.map));
         viewPager.setAdapter(adapter);
     }
@@ -174,6 +188,10 @@ public class PostActivity extends BaseAppActivity {
         menu.add(0, 99, 0, "gone");
         menu.removeItem(99);
 
+    }
+
+    public ListPostComponent getListPostComponent() {
+        return mListPostComponent;
     }
 
     static class TabPagerAdapter extends FragmentPagerAdapter {

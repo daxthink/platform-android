@@ -20,6 +20,7 @@ package com.ushahidi.android.presentation.di.components;
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.ushahidi.android.presentation.di.modules.AppModule;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
 
 import dagger.Component;
@@ -30,7 +31,8 @@ import dagger.Component;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class})
+@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
+        AppModule.class})
 public interface AppActivityComponent {
 
     Launcher launcher();

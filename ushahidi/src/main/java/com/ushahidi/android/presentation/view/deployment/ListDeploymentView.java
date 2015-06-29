@@ -15,22 +15,22 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.api.service;
+package com.ushahidi.android.presentation.view.deployment;
 
-import com.ushahidi.android.data.api.model.Posts;
+import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
+import com.ushahidi.android.presentation.model.DeploymentModel;
 
-import retrofit.http.GET;
-import rx.Observable;
-
-import static com.ushahidi.android.data.api.Constant.POSTS;
+import java.util.List;
 
 /**
- * API service for posts
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface PostService {
+public interface ListDeploymentView extends LoadDataView {
 
-    @GET(POSTS)
-    Observable<Posts> posts();
+    /**
+     * Render a deployment list in the UI.
+     *
+     * @param deploymentModel The collection of {@link DeploymentModel} that will be shown.
+     */
+    void renderDeploymentList(List<DeploymentModel> deploymentModel);
 }

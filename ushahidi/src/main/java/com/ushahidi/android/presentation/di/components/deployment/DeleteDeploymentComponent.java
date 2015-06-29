@@ -23,6 +23,7 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.DeleteDeploymentModule;
 import com.ushahidi.android.presentation.di.modules.deployment.ListDeploymentModule;
+import com.ushahidi.android.presentation.presenter.deployment.DeleteDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment;
 
@@ -40,5 +41,5 @@ public interface DeleteDeploymentComponent extends AppActivityComponent {
 
     void inject(ListDeploymentFragment listDeploymentFragment);
 
-    //DeleteDeploymentPresenter deleteDeploymentPresenter();
+    DeleteDeploymentPresenter deleteDeploymentPresenter();
 }

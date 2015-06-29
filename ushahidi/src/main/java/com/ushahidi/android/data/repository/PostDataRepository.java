@@ -39,14 +39,14 @@ import rx.Observable;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Singleton
-public class PostDataRepsitory implements PostRepository {
+public class PostDataRepository implements PostRepository {
 
     private final PostEntityDataMapper mPostEntityDataMapper;
 
     private final PostDataSourceFactory mPostDataSourceFactory;
 
     @Inject
-    public PostDataRepsitory(@NonNull PostDataSourceFactory postDataSourceFactory,
+    public PostDataRepository(@NonNull PostDataSourceFactory postDataSourceFactory,
             @NonNull PostEntityDataMapper postEntityDataMapper) {
         mPostDataSourceFactory = postDataSourceFactory;
         mPostEntityDataMapper = postEntityDataMapper;

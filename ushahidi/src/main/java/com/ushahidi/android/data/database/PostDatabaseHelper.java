@@ -17,9 +17,11 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
 import com.ushahidi.android.data.entity.TagEntity;
+import com.ushahidi.android.data.exception.AddPostException;
 import com.ushahidi.android.data.exception.PostNotFoundException;
 
 import android.content.Context;
@@ -29,7 +31,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -41,9 +43,11 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Singleton
 public class PostDatabaseHelper extends BaseDatabaseHelper {
 
+    private AddPostException mException;
+
+    @Inject
     public PostDatabaseHelper(@NonNull Context context) {
         super(context);
     }
@@ -79,14 +83,32 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
                 for (PostEntity postEntity : postEntities) {
-                    // Delete existing posttag entities
+                    // Delete existing posttag entities.
                     // Lame way to avoid duplicates because the ID is auto generated upon insertion
-                    // and we wouldn't know by then so they can't be replaced with it already exist
+                    // and we wouldn't know by then to replace them.
                     deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
                     puts(postEntity, subscriber);
                 }
             }
         });
+    }
+
+    public List<PostEntity> putFetchedPosts(Long deploymentId,
+            List<TagEntity> tagEntities,
+            List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity) {
+        if (!isClosed()) {
+            cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
+            cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
+            for (PostEntity postEntity : postEntities) {
+                // Delete existing posttag entities.
+                // Lame way to avoid duplicates because the ID is auto generated upon insertion
+                // and we wouldn't know by then to replace them.
+                deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                puts(postEntity);
+            }
+        }
+        List<PostEntity> postEntityList = getPosts(deploymentId);
+        return setPostEntityList(postEntityList);
     }
 
     public Observable<Boolean> deletePost(PostEntity postEntity) {
@@ -152,10 +174,21 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     }
 
     private void puts(final PostEntity postEntity, Subscriber subscribers) {
+        Long rows = puts(postEntity);
+        if (rows != null) {
+            subscribers.onNext(rows);
+            subscribers.onCompleted();
+        } else {
+            subscribers.onError(mException);
+        }
+    }
+
+    private Long puts(final PostEntity postEntity) {
         SQLiteDatabase db = getReadableDatabase();
+        Long rows = null;
         try {
             db.beginTransaction();
-            Long rows = cupboard().withDatabase(db).put(postEntity);
+            rows = cupboard().withDatabase(db).put(postEntity);
             if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
                     postEntity.getPostTagEntityList().size() > 0)) {
                 for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
@@ -165,15 +198,14 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
                 }
             }
             db.setTransactionSuccessful();
-            subscribers.onNext(rows);
-            subscribers.onCompleted();
         } catch (Exception e) {
-            subscribers.onError(e);
+            mException = new AddPostException(e);
         } finally {
             if (db != null) {
                 db.endTransaction();
             }
         }
+        return rows;
     }
 
     private void deletePostTagEntity(Long deploymentId, Long postId) {

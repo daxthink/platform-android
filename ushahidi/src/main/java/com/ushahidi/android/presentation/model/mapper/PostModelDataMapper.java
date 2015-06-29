@@ -38,9 +38,10 @@ public class PostModelDataMapper {
     private PostValueModelDataMapper mValueModelDataMapper;
 
     @Inject
-    public PostModelDataMapper() {
-        mTagModelDataMapper = new TagModelDataMapper();
-        mValueModelDataMapper = new PostValueModelDataMapper();
+    public PostModelDataMapper(TagModelDataMapper tagModelDataMapper,
+            PostValueModelDataMapper postValueModelDataMapper) {
+        mTagModelDataMapper = tagModelDataMapper;
+        mValueModelDataMapper = postValueModelDataMapper;
     }
 
     /**

@@ -22,6 +22,8 @@ import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.repository.PostRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -37,6 +39,7 @@ public class GetPostUsecase extends Usecase {
 
     private Long mPostId;
 
+    @Inject
     public GetPostUsecase(PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
