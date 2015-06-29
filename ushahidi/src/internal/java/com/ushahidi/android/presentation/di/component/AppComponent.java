@@ -34,12 +34,16 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
+ * Provides Application specific dependencies including
+ * all internal releases specific dependencies.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent extends ApplicationComponent {
 
+    // Provide these to the sub-graph
     HttpClientWrap httpClientWrap();
 
     AppState appState();
@@ -52,7 +56,7 @@ public interface AppComponent extends ApplicationComponent {
 
     PrefsFactory prefsFactory();
 
-    PlatformService apiServiceFactory();
+    PlatformService platformService();
 
 
     final class Initializer {

@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.data;
 
-import com.addhen.android.raiburari.data.pref.BooleanPreference;
 import com.addhen.android.raiburari.data.pref.LongPreference;
 import com.addhen.android.raiburari.data.pref.StringPreference;
 
@@ -26,6 +25,10 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 
 /**
+ * Since the base library doesn't allow the different Type SharedPreferences to be injectable, use
+ * {@link PrefsFactory} to create new instances of them which are specific to this app's
+ * SharedPreferences
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PrefsFactory {
@@ -37,27 +40,43 @@ public class PrefsFactory {
         mSharedPreferences = sharedPreferences;
     }
 
+    /**
+     * Gets the value of the stored active deployment URL in the {@link SharedPreferences}. This
+     * makes it easier to get the active URL without making a query to the database.
+     *
+     * @return A string type preference.
+     */
     public StringPreference getActiveDeploymentUrl() {
         return new StringPreference(getSharedPreferences(), "active_deployment_url", null);
     }
 
+    /**
+     * Gets the value of the stored accessToken in the {@link SharedPreferences}.
+     * An easier and faster way to retrieve the accessToken without making unecessary
+     * database calls.
+     *
+     * @return A string type preference
+     */
     public StringPreference getAccessToken() {
         return new StringPreference(getSharedPreferences(), "access_token", null);
     }
 
+    /**
+     * Gets the value of the stored active deployment ID in the {@link SharedPreferences}. This
+     * makes it easier to get the active deployment ID without making a query to the database.
+     *
+     * @return A Long type preference
+     */
     public LongPreference getActiveDeploymentId() {
         return new LongPreference(getSharedPreferences(), "active_deployment_id", 0);
     }
 
+    /**
+     * Gets the application's {@link SharedPreferences}
+     *
+     * @return The SharedPreference being used by the application.
+     */
     public SharedPreferences getSharedPreferences() {
         return mSharedPreferences;
-    }
-
-    public BooleanPreference enableAutoSync() {
-        return new BooleanPreference(getSharedPreferences(), "AutoSync", false);
-    }
-
-    public StringPreference getActiveUserAccount() {
-        return new StringPreference(getSharedPreferences(), "active_user_account", null);
     }
 }
