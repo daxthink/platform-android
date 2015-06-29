@@ -83,9 +83,9 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
                 for (PostEntity postEntity : postEntities) {
-                    // Delete existing posttag entities
+                    // Delete existing posttag entities.
                     // Lame way to avoid duplicates because the ID is auto generated upon insertion
-                    // and we wouldn't know by then so they can't be replaced with it already exist
+                    // and we wouldn't know by then to replace them.
                     deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
                     puts(postEntity, subscriber);
                 }
@@ -100,9 +100,9 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
             for (PostEntity postEntity : postEntities) {
-                // Delete existing posttag entities
+                // Delete existing posttag entities.
                 // Lame way to avoid duplicates because the ID is auto generated upon insertion
-                // and we wouldn't know by then so they can't be replaced with it already exist
+                // and we wouldn't know by then to replace them.
                 deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
                 puts(postEntity);
             }
