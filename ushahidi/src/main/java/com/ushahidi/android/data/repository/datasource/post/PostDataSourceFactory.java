@@ -17,7 +17,7 @@
 
 package com.ushahidi.android.data.repository.datasource.post;
 
-import com.ushahidi.android.data.api.ApiServiceFactory;
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.PostApi;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 
@@ -34,12 +34,12 @@ public class PostDataSourceFactory {
 
     private PostDatabaseHelper mPostDatabaseHelper;
 
-    private ApiServiceFactory mApiServiceFactory;
+    private PlatformService mApiServiceFactory;
 
     @Inject
     public PostDataSourceFactory(
             @NonNull PostDatabaseHelper postDatabaseHelper,
-            ApiServiceFactory apiServiceFactory) {
+            PlatformService apiServiceFactory) {
         mPostDatabaseHelper = postDatabaseHelper;
         mApiServiceFactory = apiServiceFactory;
     }

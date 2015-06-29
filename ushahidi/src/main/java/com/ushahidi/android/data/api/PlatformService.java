@@ -34,9 +34,12 @@ import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
+ * Creates a Restful Service based on the active {@link com.ushahidi.android.domain.entity.Deployment}
+ * Active deployment is the one currently selected and its data being viewed.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ApiServiceFactory {
+public class PlatformService {
 
     private UnauthorizedAccessErrorHandler mUnauthorizedAccessErrorHandler;
 
@@ -45,7 +48,7 @@ public class ApiServiceFactory {
     private PrefsFactory mPrefsFactory;
 
     @Inject
-    public ApiServiceFactory(HttpClientWrap client,
+    public PlatformService(HttpClientWrap client,
             UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler,
             PrefsFactory prefsFactory) {
         mClient = client;
@@ -53,6 +56,12 @@ public class ApiServiceFactory {
         mPrefsFactory = prefsFactory;
     }
 
+    /**
+     * Creates {@link RestfulService} using the active deployments URL and the accessToken
+     * currently saved in the SharedPreferences.
+     *
+     * @return The {@link RestfulService}
+     */
     public RestfulService getService() {
         ApiHeader header = new ApiHeader(mPrefsFactory.getAccessToken().get());
         Endpoint endpoint = Endpoints.newFixedEndpoint(mPrefsFactory.getActiveDeploymentUrl()

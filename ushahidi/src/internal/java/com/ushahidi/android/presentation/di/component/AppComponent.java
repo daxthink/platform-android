@@ -20,7 +20,7 @@ package com.ushahidi.android.presentation.di.component;
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
 import com.ushahidi.android.data.PrefsFactory;
-import com.ushahidi.android.data.api.ApiServiceFactory;
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
@@ -52,7 +52,7 @@ public interface AppComponent extends ApplicationComponent {
 
     PrefsFactory prefsFactory();
 
-    ApiServiceFactory apiServiceFactory();
+    PlatformService apiServiceFactory();
 
 
     final class Initializer {

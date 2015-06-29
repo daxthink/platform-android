@@ -22,7 +22,7 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import com.ushahidi.android.data.PrefsFactory;
-import com.ushahidi.android.data.api.ApiServiceFactory;
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
@@ -119,9 +119,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-    ApiServiceFactory provideApiServiceFactory(HttpClientWrap htttWrap,
+    PlatformService provideApiServiceFactory(HttpClientWrap htttWrap,
             UnauthorizedAccessErrorHandler handler, PrefsFactory prefsFactory
     ) {
-        return new ApiServiceFactory(htttWrap, handler, prefsFactory);
+        return new PlatformService(htttWrap, handler, prefsFactory);
     }
 }
