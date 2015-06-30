@@ -15,30 +15,28 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.model;
+package com.ushahidi.android.presentation.di.modules.post;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.clustering.ClusterItem;
+import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.ushahidi.android.domain.usecase.geojson.ListGeoJsonUsecase;
 
-import com.addhen.android.raiburari.presentation.model.Model;
+import javax.inject.Named;
+
+import dagger.Module;
+import dagger.Provides;
 
 /**
- * Model for to render a clustered marker
+ * Provides injectable modules scoped with {@link ActivityScope} to map post related classes
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ClusterMarkerModel extends Model implements ClusterItem {
+@Module
+public class MapPostModule {
 
-    public String title;
-
-    public String description;
-
-    public double latitude;
-
-    public double longitude;
-
-    @Override
-    public LatLng getPosition() {
-        return new LatLng(latitude, longitude);
+    @Provides
+    @ActivityScope
+    @Named("mapList")
+    ListGeoJsonUsecase provideListGeoJsonUsecase(ListGeoJsonUsecase listGeoJsonUsecase) {
+        return listGeoJsonUsecase;
     }
 }

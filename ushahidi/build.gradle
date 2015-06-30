@@ -6,6 +6,16 @@ def globalConfiguration = rootProject.extensions.getByName("ext")
 
 def libVersion = globalConfiguration.getAt("androidVersionName")
 
+// Reads GoogleMap's Debug API key from `./gradle.properties`
+def readGoogleMapsDebugApiKey() {
+    return project.hasProperty('googleMapsDebugApiKey') ? googleMapsDebugApiKey : ''
+}
+
+// Reads GoogleMap's Release API key from `./gradle.properties`
+def readGoogleMapsReleaseApiKey() {
+    return project.hasProperty('googleMapsReleaseApiKey') ? googleMapsReleaseApiKey : ''
+}
+
 android {
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
@@ -54,15 +64,15 @@ dependencies {
 
     apt appDependencies.daggerCompiler
     compile appDependencies.raiburari
-    compile(appDependencies.materialdrawer) {
-        transitive = true
-    }
     compile appDependencies.cupboard
     compile appDependencies.retrofit
     compile appDependencies.okhttp
     compile appDependencies.okhttpUrlConnection
     compile appDependencies.qrCodeReaderView
     compile appDependencies.androidIconify
+    compile appDependencies.playServicesMaps
+    compile appDependencies.androidMapsUtils
+    compile appDependencies.cocoaheroGeoJson
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

@@ -23,95 +23,95 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.domain.entity.From;
-import com.ushahidi.android.domain.entity.Post;
-import com.ushahidi.android.domain.usecase.post.ListPostUsecase;
+import com.ushahidi.android.domain.entity.GeoJson;
+import com.ushahidi.android.domain.usecase.geojson.ListGeoJsonUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
-import com.ushahidi.android.presentation.model.mapper.PostModelDataMapper;
-import com.ushahidi.android.presentation.view.post.ListPostView;
-
-import android.support.annotation.NonNull;
+import com.ushahidi.android.presentation.model.mapper.GeoJsonModelDataMapper;
+import com.ushahidi.android.presentation.view.post.MapPostView;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 /**
+ * Presenter for fetching Post with GeoJson
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListPostPresenter implements Presenter {
+public class MapPostPresenter implements Presenter {
 
-    private final PostModelDataMapper mPostModelDataMapper;
+    private MapPostView mMapPostView;
 
-    private final ListPostUsecase mListPostUsecase;
+    private final ListGeoJsonUsecase mListGeoJsonUsecase;
 
-    private ListPostView mListPostView;
+    private final GeoJsonModelDataMapper mGeoJsonModelDataMapper;
 
     private final PrefsFactory mPrefsFactory;
 
     @Inject
-    public ListPostPresenter(ListPostUsecase listPostUsecase,
-            PostModelDataMapper postModelDataMapper, PrefsFactory prefsFactory) {
-        mListPostUsecase = listPostUsecase;
-        mPostModelDataMapper = postModelDataMapper;
+    public MapPostPresenter(ListGeoJsonUsecase listGeoJsonUsecase,
+            GeoJsonModelDataMapper geoJsonModelDataMapper, PrefsFactory prefsFactory) {
+        mListGeoJsonUsecase = listGeoJsonUsecase;
+        mGeoJsonModelDataMapper = geoJsonModelDataMapper;
         mPrefsFactory = prefsFactory;
     }
 
     @Override
     public void resume() {
-        loadLocalDatabase();
+        loadGeoJsonFromDb();
     }
 
     @Override
     public void pause() {
-        // Do nothing
+
     }
 
     @Override
     public void destroy() {
-        mListPostUsecase.unsubscribe();
+        mListGeoJsonUsecase.unsubscribe();
     }
 
-    public void loadLocalDatabase() {
-        loadPost(From.DATABASE);
+    public void setView(MapPostView mapPostView) {
+        mMapPostView = mapPostView;
     }
 
-    public void loadPostViaApi() {
-        loadPost(From.ONLINE);
+    public void loadGeoJsonFromDb() {
+        loadGeoJson(From.DATABASE);
     }
 
-    private void loadPost(From from) {
-        mListPostView.hideRetry();
-        mListPostView.showLoading();
-        mListPostUsecase.setListPost(mPrefsFactory.getActiveDeploymentId().get(), from);
-        mListPostUsecase.execute(new DefaultSubscriber<List<Post>>() {
+    public void loadGeoJsonFromOnline() {
+        loadGeoJson(From.ONLINE);
+    }
+
+    private void loadGeoJson(From from) {
+        mMapPostView.hideRetry();
+        mMapPostView.showLoading();
+        mListGeoJsonUsecase.setListGeoJson(mPrefsFactory.getActiveDeploymentId().get(), from);
+        mListGeoJsonUsecase.execute(new DefaultSubscriber<List<GeoJson>>() {
             @Override
             public void onCompleted() {
-                mListPostView.hideLoading();
+                mMapPostView.hideLoading();
             }
 
             @Override
-            public void onNext(List<Post> postList) {
-                mListPostView.hideLoading();
-                mListPostView.renderPostList(
-                        mPostModelDataMapper.map(postList));
+            public void onNext(List<GeoJson> geoJsons) {
+                mMapPostView.hideLoading();
+                // TODO: Implement UTIL class for converting to a UiObjects
+
             }
 
             @Override
             public void onError(Throwable e) {
-                mListPostView.hideLoading();
+                mMapPostView.hideLoading();
                 showErrorMessage(new DefaultErrorHandler((Exception) e));
-                mListPostView.showRetry();
+                mMapPostView.showRetry();
             }
         });
     }
 
-    public void setView(@NonNull ListPostView listPostView) {
-        mListPostView = listPostView;
-    }
-
     private void showErrorMessage(ErrorHandler errorHandler) {
         String errorMessage = ErrorMessageFactory
-                .create(mListPostView.getAppContext(), errorHandler.getException());
-        mListPostView.showError(errorMessage);
+                .create(mMapPostView.getAppContext(), errorHandler.getException());
+        mMapPostView.showError(errorMessage);
     }
 }

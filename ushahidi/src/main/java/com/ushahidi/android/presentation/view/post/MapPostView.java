@@ -15,30 +15,19 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.model;
+package com.ushahidi.android.presentation.view.post;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.clustering.ClusterItem;
+import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 
-import com.addhen.android.raiburari.presentation.model.Model;
+import java.util.ArrayList;
 
 /**
- * Model for to render a clustered marker
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ClusterMarkerModel extends Model implements ClusterItem {
+public interface MapPostView extends LoadDataView {
 
-    public String title;
-
-    public String description;
-
-    public double latitude;
-
-    public double longitude;
-
-    @Override
-    public LatLng getPosition() {
-        return new LatLng(latitude, longitude);
-    }
+    /**
+     * Renders {@link com.ushahidi.android.presentation.model.GeoJsonModel} on the map
+     */
+    void showGeoJson(ArrayList<Object> uiObjects);
 }

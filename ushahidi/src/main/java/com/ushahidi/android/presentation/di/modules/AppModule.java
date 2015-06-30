@@ -24,8 +24,10 @@ import com.squareup.otto.Bus;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
+import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
@@ -103,6 +105,14 @@ public class AppModule {
     PostRepository providePostRepository(
             PostDataRepository postDataRepository) {
         return postDataRepository;
+    }
+
+    @Provides
+    @Singleton
+    GeoJsonRepository provideGeoJsonRepository(
+            GeoJsonDataRepository geoJsonDataRepository
+    ) {
+        return geoJsonDataRepository;
     }
 
     @Provides
