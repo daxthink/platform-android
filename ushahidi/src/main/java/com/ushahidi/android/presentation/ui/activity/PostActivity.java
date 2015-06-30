@@ -19,8 +19,9 @@ package com.ushahidi.android.presentation.ui.activity;
 
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
+import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
 import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
-import com.ushahidi.android.presentation.di.modules.post.ListPostModule;
+import com.ushahidi.android.presentation.di.components.post.MapPostComponent;
 import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
 
@@ -81,6 +82,8 @@ public class PostActivity extends BaseAppActivity {
 
     private ListPostComponent mListPostComponent;
 
+    private MapPostComponent mMapPostComponent;
+
     public PostActivity() {
         super(R.layout.activity_post, 0);
     }
@@ -127,7 +130,11 @@ public class PostActivity extends BaseAppActivity {
         mListPostComponent = DaggerListPostComponent.builder()
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
-                .listPostModule(new ListPostModule())
+                .build();
+
+        mMapPostComponent = DaggerMapPostComponent.builder()
+                .appComponent(getAppComponent())
+                .activityModule(getActivityModule())
                 .build();
     }
 
@@ -150,7 +157,7 @@ public class PostActivity extends BaseAppActivity {
     private void setupViewPager(ViewPager viewPager) {
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), viewPager);
         adapter.addFragment(ListPostFragment.newInstance(), getString(R.string.list));
-        adapter.addFragment(new MapPostFragment(), getString(R.string.map));
+        adapter.addFragment(MapPostFragment.newInstance(), getString(R.string.map));
         viewPager.setAdapter(adapter);
     }
 
@@ -192,6 +199,10 @@ public class PostActivity extends BaseAppActivity {
 
     public ListPostComponent getListPostComponent() {
         return mListPostComponent;
+    }
+
+    public MapPostComponent getMapPostComponent() {
+        return mMapPostComponent;
     }
 
     static class TabPagerAdapter extends FragmentPagerAdapter {

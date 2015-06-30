@@ -36,13 +36,15 @@ ext {
     butterKnifeVersion = '6.0.0'
     javaxAnnotationVersion = '10.0-b28'
     raiburariVersion = '2.2.0'
-    materialdrawerVersion = '2.9.8'
     cupboardVersion = '2.1.1'
     retrofitVersion = '1.9.0'
     okhttpVersion = '2.3.0'
     okhttpUrlConnectionVersion = '2.3.0'
     qrCodeReaderViewVersion = '1.0.0'
     androidIconifyVersion = '1.0.9'
+    playServicesMapsVersion = '7.5.0'
+    cocoaheroGeoJsonVersion = '1.0.1'
+    androidMapsUtilsVersion = '0.3.4'
 
     //Testing
     jUnitVersion = '4.12'
@@ -60,13 +62,15 @@ ext {
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             javaxAnnotation    : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             raiburari          : "com.addhen.android:raiburari:${raiburariVersion}",
-            materialdrawer     : "com.mikepenz:materialdrawer:${materialdrawerVersion}",
             cupboard           : "nl.qbusict:cupboard:${cupboardVersion}",
             retrofit           : "com.squareup.retrofit:retrofit:${retrofitVersion}",
             okhttp             : "com.squareup.okhttp:okhttp:${okhttpVersion}",
             okhttpUrlConnection: "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
             qrCodeReaderView   : "com.dlazaro66.qrcodereaderview:qrcodereaderview:${qrCodeReaderViewVersion}",
             androidIconify     : "com.joanzapata.android:android-iconify:${androidIconifyVersion}",
+            playServicesMaps   : "com.google.android.gms:play-services-maps:${playServicesMapsVersion}",
+            cocoaheroGeoJson   : "com.cocoahero.android:geojson:${cocoaheroGeoJsonVersion}@jar",
+            androidMapsUtils   : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}"
     ]
 
     appTestDependencies = [

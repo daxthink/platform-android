@@ -22,6 +22,7 @@ import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.modules.AppModule;
@@ -53,6 +54,8 @@ public interface AppComponent extends ApplicationComponent {
     DeploymentRepository deploymentRepository();
 
     PostRepository postRepository();
+
+    GeoJsonRepository geoJsonRepsitory();
 
     PrefsFactory prefsFactory();
 

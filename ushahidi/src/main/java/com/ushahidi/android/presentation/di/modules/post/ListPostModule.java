@@ -17,12 +17,8 @@
 
 package com.ushahidi.android.presentation.di.modules.post;
 
-import com.addhen.android.raiburari.data.pref.LongPreference;
-import com.addhen.android.raiburari.data.pref.StringPreference;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.domain.usecase.post.ListPostUsecase;
-
-import android.content.SharedPreferences;
 
 import javax.inject.Named;
 
@@ -40,23 +36,5 @@ public class ListPostModule {
     @Named("postList")
     ListPostUsecase provideListPostUseCase(ListPostUsecase listPostUsecase) {
         return listPostUsecase;
-    }
-
-    @Provides
-    @Named("activeDeploymentPref")
-    StringPreference providesActiveDeploymentPref(SharedPreferences sharedPreferences) {
-        return new StringPreference(sharedPreferences, "active_deployment_url", null);
-    }
-
-    @Provides
-    @Named("accessTokenPref")
-    StringPreference provideAccessTokenPref(SharedPreferences sharedPreferences) {
-        return new StringPreference(sharedPreferences, "access_token", null);
-    }
-
-    @Provides
-    @Named("activeDeploymentIdPref")
-    LongPreference getActiveDeploymentIdPref(SharedPreferences sharedPreferences) {
-        return new LongPreference(sharedPreferences, "active_deployment_id", 0);
     }
 }
