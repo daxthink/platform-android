@@ -17,6 +17,9 @@
 
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
+import com.ushahidi.android.data.api.Constant;
+import com.ushahidi.android.data.api.PlatformAuthConfig;
+import com.ushahidi.android.data.api.PlatformAuthToken;
 import com.ushahidi.android.data.api.UserApi;
 import com.ushahidi.android.data.api.auth.Payload;
 import com.ushahidi.android.data.entity.UserAccountEntity;
@@ -25,10 +28,6 @@ import android.support.annotation.NonNull;
 
 import rx.Observable;
 
-import static com.ushahidi.android.data.api.Constant.OAUTH_CLIENT_ID;
-import static com.ushahidi.android.data.api.Constant.OAUTH_CLIENT_SECRET;
-import static com.ushahidi.android.data.api.Constant.SCOPE;
-
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -36,22 +35,21 @@ public class UserAccountApiDataSource implements UserAccountDataSource {
 
     private final UserApi mUserApi;
 
-    public UserAccountApiDataSource(@NonNull UserApi userApi) {
+    private PlatformAuthConfig mPlatformAuthConfig;
+
+    public UserAccountApiDataSource(@NonNull PlatformAuthConfig platformAuthConfig,
+            @NonNull UserApi userApi) {
         mUserApi = userApi;
+        mPlatformAuthConfig = platformAuthConfig;
     }
 
     @Override
-    public Observable<UserAccountEntity> loginUserAccountEntity(
+    public Observable<PlatformAuthToken> loginUserAccountEntity(
             UserAccountEntity userAccountEntity) {
         Payload payload = new Payload(userAccountEntity.getAccountName(),
-                userAccountEntity.getPassword(), userAccountEntity.getAuthTokenType(),
-                OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, SCOPE);
-        return Observable.create(subscriber -> mUserApi.loginUserAccount(payload).map(
-                accessToken -> {
-                    userAccountEntity.setAuthToken(accessToken.getAccessToken());
-                    userAccountEntity.setAuthTokenType(accessToken.getTokenType());
-                    return userAccountEntity;
-                }
-        ));
+                userAccountEntity.getPassword(), Constant.USHAHIDI_AUTHTOKEN_PASSWORD_TYPE,
+                mPlatformAuthConfig.clientId, mPlatformAuthConfig.clientSecret,
+                mPlatformAuthConfig.scope);
+        return mUserApi.loginUserAccount(payload);
     }
 }

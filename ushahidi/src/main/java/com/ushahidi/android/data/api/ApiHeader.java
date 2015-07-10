@@ -37,6 +37,6 @@ public final class ApiHeader implements RequestInterceptor {
     @Override
     public void intercept(RequestFacade request) {
         request.addHeader("Accept", "application/json");
-        request.addHeader("Authorization", authorizationValue);
+        request.addHeader(Constant.HEADER_AUTHORIZATION, authorizationValue);
     }
 }

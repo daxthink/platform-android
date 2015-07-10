@@ -68,9 +68,6 @@ public class UserAccountEntityDataMapperTest {
     public void shouldMapUserAccountEntityToUserAccount() {
         mUserAccountEntity = new UserAccountEntity();
         mUserAccountEntity._id = DUMMY_ID;
-        mUserAccountEntity.setDeploymentId(DEPLOYMENT_ID);
-        mUserAccountEntity.setAuthToken(AUTH_TOKEN);
-        mUserAccountEntity.setAuthTokenType(AUTH_TOKEN_TYPE);
         mUserAccountEntity.setPassword(PASSWORD);
         mUserAccountEntity.setAccountName(ACCOUNT_NAME);
 
@@ -78,12 +75,7 @@ public class UserAccountEntityDataMapperTest {
         assertThat(mUserAccount).isNotNull();
         assertThat(mUserAccount).isInstanceOf(UserAccount.class);
         assertThat(mUserAccount._id).isEqualTo(DUMMY_ID);
-        assertThat(mUserAccount.getAuthToken()).isNotNull();
         assertThat(mUserAccount.getAccountName()).isEqualTo(ACCOUNT_NAME);
-        assertThat(mUserAccount.getAuthToken()).isNotNull();
-        assertThat(mUserAccount.getAuthToken()).isEqualTo(AUTH_TOKEN);
-        assertThat(mUserAccount.getAuthTokenType()).isNotNull();
-        assertThat(mUserAccount.getAuthTokenType()).isEqualTo(AUTH_TOKEN_TYPE);
         assertThat(mUserAccount.getPassword()).isNotNull();
         assertThat(mUserAccount.getPassword()).isEqualTo(PASSWORD);
     }
@@ -92,9 +84,6 @@ public class UserAccountEntityDataMapperTest {
     public void shouldMapUserAccountToUserAccountEntity() {
         mUserAccount = new UserAccount();
         mUserAccount._id = DUMMY_ID;
-        mUserAccount.setDeploymentId(DEPLOYMENT_ID);
-        mUserAccount.setAuthToken(AUTH_TOKEN);
-        mUserAccount.setAuthTokenType(AUTH_TOKEN_TYPE);
         mUserAccount.setPassword(PASSWORD);
         mUserAccount.setAccountName(ACCOUNT_NAME);
 
@@ -102,12 +91,7 @@ public class UserAccountEntityDataMapperTest {
         assertThat(mUserAccountEntity).isNotNull();
         assertThat(mUserAccountEntity).isInstanceOf(UserAccountEntity.class);
         assertThat(mUserAccountEntity._id).isEqualTo(DUMMY_ID);
-        assertThat(mUserAccountEntity.getAuthToken()).isNotNull();
         assertThat(mUserAccountEntity.getAccountName()).isEqualTo(ACCOUNT_NAME);
-        assertThat(mUserAccountEntity.getAuthToken()).isNotNull();
-        assertThat(mUserAccountEntity.getAuthToken()).isEqualTo(AUTH_TOKEN);
-        assertThat(mUserAccountEntity.getAuthTokenType()).isNotNull();
-        assertThat(mUserAccountEntity.getAuthTokenType()).isEqualTo(AUTH_TOKEN_TYPE);
         assertThat(mUserAccountEntity.getPassword()).isNotNull();
         assertThat(mUserAccountEntity.getPassword()).isEqualTo(PASSWORD);
     }
@@ -116,9 +100,6 @@ public class UserAccountEntityDataMapperTest {
     public void shouldMapUserAccountEntityListToUserAccountList() {
         mUserAccountEntity = new UserAccountEntity();
         mUserAccountEntity._id = DUMMY_ID;
-        mUserAccountEntity.setDeploymentId(DEPLOYMENT_ID);
-        mUserAccountEntity.setAuthToken(AUTH_TOKEN);
-        mUserAccountEntity.setAuthTokenType(AUTH_TOKEN_TYPE);
         mUserAccountEntity.setPassword(PASSWORD);
         mUserAccountEntity.setAccountName(ACCOUNT_NAME);
         List<UserAccountEntity> userAccountEntityList = new ArrayList<>();
@@ -128,12 +109,7 @@ public class UserAccountEntityDataMapperTest {
         assertThat(userAccountList.get(0)).isNotNull();
         assertThat(userAccountList.get(0)).isInstanceOf(UserAccount.class);
         assertThat(userAccountList.get(0)._id).isEqualTo(DUMMY_ID);
-        assertThat(userAccountList.get(0).getAuthToken()).isNotNull();
         assertThat(userAccountList.get(0).getAccountName()).isEqualTo(ACCOUNT_NAME);
-        assertThat(userAccountList.get(0).getAuthToken()).isNotNull();
-        assertThat(userAccountList.get(0).getAuthToken()).isEqualTo(AUTH_TOKEN);
-        assertThat(userAccountList.get(0).getAuthTokenType()).isNotNull();
-        assertThat(userAccountList.get(0).getAuthTokenType()).isEqualTo(AUTH_TOKEN_TYPE);
         assertThat(userAccountList.get(0).getPassword()).isNotNull();
         assertThat(userAccountList.get(0).getPassword()).isEqualTo(PASSWORD);
     }

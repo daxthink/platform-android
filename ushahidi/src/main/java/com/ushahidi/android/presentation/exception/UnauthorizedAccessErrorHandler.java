@@ -33,7 +33,7 @@ import retrofit.client.Response;
 /**
  * ErrorHandler for when the API returns an {@link HttpURLConnection.HTTP_UNAUTHORIZED}
  *
- * Uses an event
+ * Uses an event bus to pass the state of the login
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

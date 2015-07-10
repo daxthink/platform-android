@@ -117,4 +117,5 @@
     <string name="cancel">Cancel</string>
     <string name="empty_list">Empty list</string>
     <string name="actions">Actions</string>
+    <string name="nav_drawer_accessibility_profile_image_background">Navigation Drawer Background Photo</string>
 </resources>

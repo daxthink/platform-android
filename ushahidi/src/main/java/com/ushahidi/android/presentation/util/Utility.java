@@ -48,7 +48,7 @@ public class Utility {
         }
 
         return text.substring(0, 1).toUpperCase(Locale.getDefault())
-            + text.substring(1).toLowerCase(Locale.getDefault());
+                + text.substring(1).toLowerCase(Locale.getDefault());
 
     }
 

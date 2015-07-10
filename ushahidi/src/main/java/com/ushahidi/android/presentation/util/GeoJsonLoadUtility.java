@@ -39,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -88,7 +89,8 @@ public class GeoJsonLoadUtility {
      * @return Collection of Mapbox SDK UI Objects
      */
     public static ArrayList<Object> createUIObjectsFromGeoJSONObjects(
-            final FeatureCollection featureCollection, final int fillColor, final int strokeColor)
+            final FeatureCollection featureCollection, @ColorInt final int fillColor,
+            @ColorInt final int strokeColor)
             throws JSONException {
         ArrayList<Object> uiObjects = new ArrayList<>();
 

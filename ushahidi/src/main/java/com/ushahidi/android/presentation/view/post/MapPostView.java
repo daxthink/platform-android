@@ -18,8 +18,7 @@
 package com.ushahidi.android.presentation.view.post;
 
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
-
-import java.util.ArrayList;
+import com.ushahidi.android.presentation.model.GeoJsonModel;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -29,5 +28,5 @@ public interface MapPostView extends LoadDataView {
     /**
      * Renders {@link com.ushahidi.android.presentation.model.GeoJsonModel} on the map
      */
-    void showGeoJson(ArrayList<Object> uiObjects);
+    void showGeoJson(GeoJsonModel geoJsonModel);
 }

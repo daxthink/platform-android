@@ -18,6 +18,7 @@ package com.ushahidi.android.presentation;
 
 import com.addhen.android.raiburari.presentation.BaseApplication;
 import com.ushahidi.android.presentation.di.component.AppComponent;
+import com.ushahidi.android.presentation.state.RxEventBus;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -25,6 +26,8 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 public class UshahidiApplication extends BaseApplication {
 
     AppComponent mAppComponent;
+
+    private static RxEventBus mRxEventBus;
 
     @Override
     public void onCreate() {
@@ -34,5 +37,12 @@ public class UshahidiApplication extends BaseApplication {
 
     public AppComponent getAppComponent() {
         return mAppComponent;
+    }
+
+    public static RxEventBus getRxEventBusInstance() {
+        if (mRxEventBus == null) {
+            mRxEventBus = new RxEventBus();
+        }
+        return mRxEventBus;
     }
 }

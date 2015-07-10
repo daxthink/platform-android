@@ -21,6 +21,7 @@
     <color name="color_primary_dark">#303F9F</color>
     <color name="primary_light">#C5CAE9</color>
     <color name="color_accent">#4CAF50</color>
+    <color name="color_accent_secondary">#ff0068</color>
 
     <!-- Color palette -->
     <color name="black_light">#212121</color>

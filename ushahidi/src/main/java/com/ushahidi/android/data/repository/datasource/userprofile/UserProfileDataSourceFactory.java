@@ -17,8 +17,8 @@
 
 package com.ushahidi.android.data.repository.datasource.userprofile;
 
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.database.UserDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -34,28 +34,17 @@ public class UserProfileDataSourceFactory {
 
     private final UserDatabaseHelper mUserDatabaseHelper;
 
-    private RestfulService mUserService;
+    private PlatformService mApiServiceFactory;
 
     @Inject
     public UserProfileDataSourceFactory(
-            @NonNull UserDatabaseHelper userDatabaseHelper) {
+            @NonNull UserDatabaseHelper userDatabaseHelper, PlatformService apiServiceFactory) {
         mUserDatabaseHelper = userDatabaseHelper;
-    }
-
-    /**
-     * Sets the API services
-     *
-     * @param userService The user API service
-     */
-    public void setUserService(@NonNull RestfulService userService) {
-        mUserService = userService;
+        mApiServiceFactory = apiServiceFactory;
     }
 
     public UserProfileDataSource createApiDataSource() {
-        if (mUserService == null) {
-            throw new RuntimeException("Please call setUserService(...)");
-        }
-        final UserApi userApi = new UserApi(mUserService);
+        final UserApi userApi = new UserApi(mApiServiceFactory.getService());
         return new UserProfileApiDataSource(userApi, mUserDatabaseHelper);
     }
 

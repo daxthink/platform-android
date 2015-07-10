@@ -48,6 +48,7 @@ public class ListPostPresenter implements Presenter {
 
     private final PrefsFactory mPrefsFactory;
 
+
     @Inject
     public ListPostPresenter(ListPostUsecase listPostUsecase,
             PostModelDataMapper postModelDataMapper, PrefsFactory prefsFactory) {
@@ -80,10 +81,16 @@ public class ListPostPresenter implements Presenter {
     }
 
     private void loadPost(From from) {
-        mListPostView.hideRetry();
-        mListPostView.showLoading();
+
         mListPostUsecase.setListPost(mPrefsFactory.getActiveDeploymentId().get(), from);
         mListPostUsecase.execute(new DefaultSubscriber<List<Post>>() {
+
+            @Override
+            public void onStart() {
+                mListPostView.hideRetry();
+                mListPostView.showLoading();
+            }
+
             @Override
             public void onCompleted() {
                 mListPostView.hideLoading();
@@ -92,8 +99,7 @@ public class ListPostPresenter implements Presenter {
             @Override
             public void onNext(List<Post> postList) {
                 mListPostView.hideLoading();
-                mListPostView.renderPostList(
-                        mPostModelDataMapper.map(postList));
+                mListPostView.renderPostList(mPostModelDataMapper.map(postList));
             }
 
             @Override

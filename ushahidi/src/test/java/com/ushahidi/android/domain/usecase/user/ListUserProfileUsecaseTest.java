@@ -20,7 +20,6 @@ package com.ushahidi.android.domain.usecase.user;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
-import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 
 import org.junit.Before;
@@ -37,7 +36,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
- * Tests {@link ListUserProfileUsecase}
+ * Tests {@link GetUserProfileUsecase}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -54,22 +53,22 @@ public class ListUserProfileUsecaseTest {
     @Mock
     private PostExecutionThread mMockPostExecutionThread;
 
-    private ListUserProfileUsecase mUserProfileUsecase;
+    private GetUserProfileUsecase mUserProfileUsecase;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mUserProfileUsecase = new ListUserProfileUsecase(mMockUserProfileRepository,
+        mUserProfileUsecase = new GetUserProfileUsecase(mMockUserProfileRepository,
                 mMockThreadExecutor,
                 mMockPostExecutionThread);
     }
 
     @Test
     public void shouldSuccessfullyFetchFromOnline() {
-        mUserProfileUsecase.setListUserProfile(1l, 1l, From.ONLINE);
+        mUserProfileUsecase.setListUserProfile(1l, 1l);
         mUserProfileUsecase.buildUseCaseObservable();
 
-        verify(mMockUserProfileRepository).getUserProfile(1l, 1l, From.ONLINE);
+        verify(mMockUserProfileRepository).getUserProfile(1l, 1l);
 
         verifyNoMoreInteractions(mMockUserProfileRepository);
         verifyNoMoreInteractions(mMockPostExecutionThread);
@@ -79,7 +78,7 @@ public class ListUserProfileUsecaseTest {
     @Test
     public void shouldThrowRuntimeException() {
         assertThat(mUserProfileUsecase).isNotNull();
-        mUserProfileUsecase.setListUserProfile(null, null, null);
+        mUserProfileUsecase.setListUserProfile(null, null);
         try {
             mUserProfileUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");

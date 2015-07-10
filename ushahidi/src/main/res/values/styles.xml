@@ -31,6 +31,19 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="AppTheme.Widget.Spinner.Base" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="overlapAnchor">true</item>
+    </style>
+
+    <style name="AppTheme.Widget.Spinner" parent="AppTheme.Widget.Spinner.Base"/>
+
+    <style name="AppTheme.Widget.Spinner.Item">
+        <item name="android:textColor">@color/color_accent_secondary</item>
+    </style>
+
     <style name="TextAppearance.FloatLabel" parent="android:Widget">
         <item name="android:textColor">@color/float_label</item>
         <item name="android:textSize">@dimen/text_size_small</item>
@@ -67,14 +80,16 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black_dark</item>
     </style>
-    <style name="ActionBarThemeOverlay" parent="@style/ThemeOverlay.AppCompat.Dark">
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-    </style>
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">@color/color_primary</item>
         <item name="android:theme">@style/ActionBarThemeOverlay</item>
+    </style>
+    <style name="ActionBarThemeOverlay">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlHighlight">@color/color_accent</item>
     </style>
     <style name="NavDrawerLogin" parent="android:Widget">
         <item name="android:textStyle">bold</item>

@@ -46,7 +46,7 @@ public class TagApi {
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<List<TagEntity>> getTags() {
-        return Observable.create((subscriber) -> mRestfulService.getTags().map((tags) -> setTags(tags))
+        return Observable.create((subscriber) -> mRestfulService.getTags().map(this::setTags)
         );
     }
 

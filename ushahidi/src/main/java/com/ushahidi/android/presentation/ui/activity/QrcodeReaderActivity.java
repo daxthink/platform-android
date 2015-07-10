@@ -32,7 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Activity for reading a barcode
@@ -47,7 +47,7 @@ public class QrcodeReaderActivity extends AppCompatActivity
 
     public static final int QRCODE_READER_REQUEST_CODE = 1;
 
-    @InjectView(R.id.qrdecoderview)
+    @Bind(R.id.qrdecoderview)
     QRCodeReaderView mQRCodeReaderView;
 
     public static Intent getIntent(final Context context) {
@@ -58,7 +58,7 @@ public class QrcodeReaderActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_reader);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mQRCodeReaderView.setOnQRCodeReadListener(this);
     }
 

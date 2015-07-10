@@ -15,28 +15,33 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.repository.datasource;
+package com.ushahidi.android.data.repository;
 
 import com.ushahidi.android.data.entity.mapper.UserAccountEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.useraccount.UserAccountDataSource;
 import com.ushahidi.android.data.repository.datasource.useraccount.UserAccountDataSourceFactory;
-import com.ushahidi.android.domain.entity.Tag;
 import com.ushahidi.android.domain.entity.UserAccount;
+import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 
 import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@Singleton
 public class UserAccountDataRepository implements UserAccountRepository {
 
     private final UserAccountDataSourceFactory mUserAccountDataSourceFactory;
 
     private final UserAccountEntityDataMapper mUserAccountEntityDataMapper;
 
+    @Inject
     public UserAccountDataRepository(
             @NonNull UserAccountDataSourceFactory userAccountDataSourceFactory, @NonNull
     UserAccountEntityDataMapper userAccountEntityDataMapper) {
@@ -45,22 +50,13 @@ public class UserAccountDataRepository implements UserAccountRepository {
     }
 
     @Override
-    public Observable login(UserAccount userAccount) {
+    public Observable<UserAuthToken> login(UserAccount userAccount) {
         final UserAccountDataSource userAccountDataSource = mUserAccountDataSourceFactory
                 .createApiDataSource();
-        return userAccountDataSource
-                .loginUserAccountEntity(mUserAccountEntityDataMapper.map(userAccount));
-    }
-
-    @Override
-    public Observable<Long> putUserAccount(Tag entity) {
-        // Do nothing
-        return null;
-    }
-
-    @Override
-    public Observable<Long> deleteUserAccount(Long id) {
-        // Do nothing
-        return null;
+        return userAccountDataSource.loginUserAccountEntity(
+                mUserAccountEntityDataMapper.map(userAccount))
+                .map(platformAuthToken -> new UserAuthToken(userAccount._id,
+                        platformAuthToken.getAccessToken(), platformAuthToken.getTokenType(),
+                        platformAuthToken.getRefreshToken(), platformAuthToken.getExpires()));
     }
 }

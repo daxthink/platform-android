@@ -69,6 +69,10 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
                         new EnumEntityFieldConverter<>(UserEntity.Role.class))
                 .registerFieldConverter(TagEntity.Type.class,
                         new EnumEntityFieldConverter<>(TagEntity.Type.class))
+                .registerFieldConverter(PostEntity.Status.class,
+                        new EnumEntityFieldConverter<>(PostEntity.Status.class))
+                .registerFieldConverter(PostEntity.Type.class,
+                        new EnumEntityFieldConverter<>(PostEntity.Type.class))
                 .registerEntityConverterFactory(factory).useAnnotations().build());
 
         // Register our entities

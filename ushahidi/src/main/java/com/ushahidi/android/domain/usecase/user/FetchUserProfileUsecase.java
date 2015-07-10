@@ -20,28 +20,26 @@ package com.ushahidi.android.domain.usecase.user;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
-import com.ushahidi.android.domain.entity.From;
+import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 
 /**
- * Usecase for listing {@link com.ushahidi.android.domain.entity.UserProfile} either from online
- * or the local store.
+ * Usecase for fetching user profiles from the internet
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListUserProfileUsecase extends Usecase {
+public class FetchUserProfileUsecase extends Usecase {
 
     private final UserProfileRepository mUserProfileRepository;
 
-    private Long mDeploymentId = null;
+    private UserAuthToken mUserAuthToken;
 
-    private Long mUserProfileId = null;
-
-    private From mFrom;
-
-    protected ListUserProfileUsecase(UserProfileRepository userProfileRepository,
+    @Inject
+    public FetchUserProfileUsecase(UserProfileRepository userProfileRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
@@ -52,21 +50,18 @@ public class ListUserProfileUsecase extends Usecase {
      * Sets the deployment ID to be used to fetch the {@link com.ushahidi.android.domain.entity.Tag}
      * and where to fetch it from.
      *
-     * @param deploymentId The deploymentId associated with the GeoJson
-     * @param from         Whether to fetch through the API or the local storage
+     * @param userAuthToken The user auth token
      */
-    public void setListUserProfile(Long deploymentId, Long userProfileId, From from) {
-        mDeploymentId = deploymentId;
-        mUserProfileId = userProfileId;
-        mFrom = from;
+    public void setUserAuthToken(UserAuthToken userAuthToken) {
+        mUserAuthToken = userAuthToken;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeploymentId == null || mUserProfileId == null || mFrom == null) {
+        if (mUserAuthToken == null) {
             throw new RuntimeException(
-                    "Deployment id and from cannot be null. You must call setListUserProfile(...)");
+                    "User auth token id and from cannot be null. You must call setUserAuthtoken(...)");
         }
-        return mUserProfileRepository.getUserProfile(mDeploymentId, mUserProfileId, mFrom);
+        return mUserProfileRepository.fetchUserProfile(mUserAuthToken);
     }
 }

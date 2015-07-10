@@ -22,11 +22,8 @@ import com.google.gson.JsonElement;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.service.RestfulService;
-import com.ushahidi.android.data.entity.PostEntity;
 
 import android.support.annotation.NonNull;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -54,14 +51,5 @@ public class PostApi {
 
     public Observable<JsonElement> getGeoJson() {
         return mRestfulService.getGeoJson();
-    }
-
-    /**
-     * Sets the {@link PostEntity} entity properties from the {@link Posts}
-     *
-     * @param posts The jsonElement to retrieve the raw JSON string from.
-     */
-    private Observable<List<PostEntity>> setPost(Posts posts) {
-        return Observable.just(posts.getPosts());
     }
 }

@@ -6,6 +6,19 @@ def globalConfiguration = rootProject.extensions.getByName("ext")
 
 def libVersion = globalConfiguration.getAt("androidVersionName")
 
+def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+
+def isTravis = "true".equals(System.getenv("TRAVIS"))
+
+def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+
+def getFeedbackEmailAddress() {
+
+    return project.hasProperty('feedbackEmail') ? feedbackEmail : ''
+}
+
 // Reads GoogleMap's Debug API key from `./gradle.properties`
 def readGoogleMapsDebugApiKey() {
     return project.hasProperty('googleMapsDebugApiKey') ? googleMapsDebugApiKey : ''
@@ -26,9 +39,18 @@ android {
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName = libVersion
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
+
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "String", "FEEDBACK_EMAIL_ADDRESS", "\"${getFeedbackEmailAddress()}\""
     }
     buildTypes {
+        debug {
+            resValue "string", "google_maps_api_key", "\"${readGoogleMapsDebugApiKey()}\""
+        }
+
         release {
+            resValue "string", "google_maps_api_key", "\"${readGoogleMapsReleaseApiKey()}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

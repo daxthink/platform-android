@@ -22,8 +22,8 @@ import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentC
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
+import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
@@ -46,10 +46,10 @@ import butterknife.OnEditorAction;
  */
 public class AddDeploymentFragment extends BaseFragment implements AddDeploymentView {
 
-    @InjectView(R.id.add_deployment_title)
+    @Bind(R.id.add_deployment_title)
     EditText title;
 
-    @InjectView(R.id.add_deployment_url)
+    @Bind(R.id.add_deployment_url)
     EditText url;
 
     @Inject

@@ -49,8 +49,6 @@ public class UserAccountEntityDataMapper {
         UserAccount userAccount = new UserAccount();
         if (userAccountEntity != null) {
             userAccount._id = userAccountEntity._id;
-            userAccount.setAuthToken(userAccountEntity.getAuthToken());
-            userAccount.setAuthTokenType(userAccountEntity.getAuthTokenType());
             userAccount.setAccountName(userAccountEntity.getAccountName());
             userAccount.setPassword(userAccountEntity.getPassword());
 
@@ -63,8 +61,6 @@ public class UserAccountEntityDataMapper {
 
         if (userAccount != null) {
             userAccountEntity._id = userAccount._id;
-            userAccountEntity.setAuthToken(userAccount.getAuthToken());
-            userAccountEntity.setAuthTokenType(userAccount.getAuthTokenType());
             userAccountEntity.setAccountName(userAccount.getAccountName());
             userAccountEntity.setPassword(userAccount.getPassword());
         }

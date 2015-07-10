@@ -46,7 +46,7 @@ public class ErrorMessageFactory {
         if (exception instanceof DeploymentNotFoundException) {
             message = context.getString(R.string.exception_message_deployment_not_found);
         }
-
+        exception.printStackTrace();
         return message;
     }
 }

@@ -18,9 +18,12 @@
 package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.database.UserDatabaseHelper;
+import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -48,5 +51,15 @@ public class UserProfileDatabaseSource implements UserProfileDataSource {
     @Override
     public Observable<Boolean> deleteUserEntity(UserEntity userEntity) {
         return mUserDatabaseHelper.deleteUserProfile(userEntity);
+    }
+
+    @Override
+    public Observable<List<UserEntity>> getUserEntityList(Long deploymentId) {
+        return mUserDatabaseHelper.getUserProfiles(deploymentId);
+    }
+
+    @Override
+    public Observable<UserEntity> fetchUserProfile(UserAuthTokenEntity userAuthTokenEntity) {
+        throw new UnsupportedOperationException();
     }
 }

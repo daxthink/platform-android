@@ -58,9 +58,6 @@ public class UserAccountTest {
     @Test
     public void shouldSetUserAccount() {
         mUserAccount._id = DUMMY_ID;
-        mUserAccount.setDeploymentId(DEPLOYMENT_ID);
-        mUserAccount.setAuthToken(AUTH_TOKEN);
-        mUserAccount.setAuthTokenType(AUTH_TOKEN_TYPE);
         mUserAccount.setPassword(PASSWORD);
         mUserAccount.setAccountName(ACCOUNT_NAME);
 
@@ -69,10 +66,6 @@ public class UserAccountTest {
         assertThat(mUserAccount._id).isEqualTo(DUMMY_ID);
         assertThat(mUserAccount.getAccountName()).isNotNull();
         assertThat(mUserAccount.getAccountName()).isEqualTo(ACCOUNT_NAME);
-        assertThat(mUserAccount.getAuthToken()).isNotNull();
-        assertThat(mUserAccount.getAuthToken()).isEqualTo(AUTH_TOKEN);
-        assertThat(mUserAccount.getAuthTokenType()).isNotNull();
-        assertThat(mUserAccount.getAuthTokenType()).isEqualTo(AUTH_TOKEN_TYPE);
         assertThat(mUserAccount.getPassword()).isNotNull();
         assertThat(mUserAccount.getPassword()).isEqualTo(PASSWORD);
     }

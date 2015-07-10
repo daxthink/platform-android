@@ -47,7 +47,7 @@ public class GeoJsonApi {
      */
     public Observable<GeoJsonEntity> getGeoJson() {
         return Observable.create((subscriber) -> mRestfulService.getGeoJson().map(
-                (jsonElement) -> setGeoJson(jsonElement)));
+                this::setGeoJson));
     }
 
     /**

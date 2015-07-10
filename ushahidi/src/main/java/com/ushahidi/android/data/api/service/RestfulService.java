@@ -27,10 +27,12 @@ import com.ushahidi.android.data.entity.UserEntity;
 
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 import rx.Observable;
 
 import static com.ushahidi.android.data.api.Constant.GEOJSON;
+import static com.ushahidi.android.data.api.Constant.HEADER_AUTHORIZATION;
 import static com.ushahidi.android.data.api.Constant.POSTS;
 import static com.ushahidi.android.data.api.Constant.TAGS;
 import static com.ushahidi.android.data.api.Constant.USERS_ME;
@@ -52,10 +54,10 @@ public interface RestfulService {
 
     //User/Authentication related APIs
     @POST("/oauth/token")
-    Observable<AccessToken> getAccessToken(@Body Payload payload);
+    AccessToken getAccessToken(@Body Payload payload);
 
     @GET(USERS_ME)
-    Observable<UserEntity> getUser();
+    UserEntity getUser(@Header(HEADER_AUTHORIZATION) String header);
 
     // GeoJSON related APIs
     @GET(GEOJSON)

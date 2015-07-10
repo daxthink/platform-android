@@ -29,8 +29,6 @@ import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.GeoJsonModelDataMapper;
 import com.ushahidi.android.presentation.view.post.MapPostView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 /**
@@ -84,19 +82,23 @@ public class MapPostPresenter implements Presenter {
     }
 
     private void loadGeoJson(From from) {
-        mMapPostView.hideRetry();
-        mMapPostView.showLoading();
         mListGeoJsonUsecase.setListGeoJson(mPrefsFactory.getActiveDeploymentId().get(), from);
-        mListGeoJsonUsecase.execute(new DefaultSubscriber<List<GeoJson>>() {
+        mListGeoJsonUsecase.execute(new DefaultSubscriber<GeoJson>() {
+            @Override
+            public void onStart() {
+                mMapPostView.hideRetry();
+                mMapPostView.showLoading();
+            }
+
             @Override
             public void onCompleted() {
                 mMapPostView.hideLoading();
             }
 
             @Override
-            public void onNext(List<GeoJson> geoJsons) {
+            public void onNext(GeoJson geoJsons) {
                 mMapPostView.hideLoading();
-                // TODO: Implement UTIL class for converting to a UiObjects
+                mMapPostView.showGeoJson(mGeoJsonModelDataMapper.map(geoJsons));
 
             }
 

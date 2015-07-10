@@ -61,15 +61,14 @@ public class DeploymentDataRepository implements DeploymentRepository {
         final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
                 .createDatabaseDataSource();
         return deploymentDataSource.getByStatus(mDeploymentEntityDataMapper.map(status))
-                .map((deployment) -> mDeploymentEntityDataMapper.map(deployment));
+                .map(mDeploymentEntityDataMapper::map);
     }
 
     @Override
     public Observable<List<Deployment>> getEntities() {
         final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
                 .createDatabaseDataSource();
-        return deploymentDataSource.getDeploymentEntityList().map((deploymentList) ->
-                        mDeploymentEntityDataMapper.map(deploymentList)
+        return deploymentDataSource.getDeploymentEntityList().map(mDeploymentEntityDataMapper::map
         );
     }
 
@@ -78,7 +77,7 @@ public class DeploymentDataRepository implements DeploymentRepository {
         final DeploymentDataSource deploymentDataSource = mDeploymentDataStoreFactory
                 .createDatabaseDataSource();
         return deploymentDataSource.getDeploymentEntity(id)
-                .map((deployment) -> mDeploymentEntityDataMapper.map(deployment));
+                .map(mDeploymentEntityDataMapper::map);
     }
 
     @Override
