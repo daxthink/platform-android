@@ -48,7 +48,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Fragment for showing list of deployments
@@ -60,13 +60,13 @@ public class ListDeploymentFragment
         implements ListDeploymentView, DeleteDeploymentView,
         RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
-    @InjectView(R.id.fab)
+    @Bind(R.id.fab)
     FloatingActionButton mFab;
 
-    @InjectView(android.R.id.empty)
+    @Bind(android.R.id.empty)
     TextView mEmptyView;
 
-    @InjectView(android.R.id.list)
+    @Bind(android.R.id.list)
     DeploymentRecyclerView mDeploymentRecyclerView;
 
     @Inject
@@ -83,9 +83,7 @@ public class ListDeploymentFragment
     // in the layout so the adapter is not created.
     private DeploymentAdapter mDeploymentAdapter;
 
-    DeploymentListListener mDeploymentListListener;
-
-    private boolean isDismissToDelete = false;
+    private DeploymentListListener mDeploymentListListener;
 
     public ListDeploymentFragment() {
         super(DeploymentAdapter.class, R.layout.fragment_list_deployment, 0);
@@ -93,11 +91,6 @@ public class ListDeploymentFragment
 
     public static ListDeploymentFragment newInstance() {
         return new ListDeploymentFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -278,9 +271,7 @@ public class ListDeploymentFragment
 
     @Override
     public void onDeploymentDeleted() {
-        if (!isDismissToDelete) {
-            mListDeploymentPresenter.loadDeployments();
-        }
+        mListDeploymentPresenter.loadDeployments();
     }
 
     /**

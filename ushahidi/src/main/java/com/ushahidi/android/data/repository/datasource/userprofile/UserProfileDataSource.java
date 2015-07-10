@@ -17,7 +17,10 @@
 
 package com.ushahidi.android.data.repository.datasource.userprofile;
 
+import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.UserEntity;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -45,4 +48,14 @@ public interface UserProfileDataSource {
      * @param userEntity The user profile to be deleted.
      */
     Observable<Boolean> deleteUserEntity(UserEntity userEntity);
+
+    /**
+     * @param deploymentId The deploymentId to be used for fetching the API
+     */
+    Observable<List<UserEntity>> getUserEntityList(Long deploymentId);
+
+    /**
+     * @param userAuthTokenEntity The auth token to be used for fetching user profile
+     */
+    Observable<UserEntity> fetchUserProfile(UserAuthTokenEntity userAuthTokenEntity);
 }

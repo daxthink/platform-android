@@ -59,7 +59,7 @@ public class GeoJsonDataRepository implements GeoJsonRepository {
                     .createGeoJsonDatabaseDataSource();
         }
         return geoJsonDataSource.getGeoJsonList(deploymentId)
-                .map((geojson) -> mGeoJsonEntityDataMapper.map(geojson));
+                .map(mGeoJsonEntityDataMapper::map);
     }
 
     @Override

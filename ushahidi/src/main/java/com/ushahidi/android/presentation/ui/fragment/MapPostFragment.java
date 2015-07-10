@@ -35,12 +35,20 @@ import com.google.maps.android.ui.IconGenerator;
 import com.google.maps.android.ui.SquareTextView;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
+import com.cocoahero.android.geojson.FeatureCollection;
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.MapPostComponent;
 import com.ushahidi.android.presentation.model.ClusterMarkerModel;
+import com.ushahidi.android.presentation.model.GeoJsonModel;
 import com.ushahidi.android.presentation.presenter.post.MapPostPresenter;
+import com.ushahidi.android.presentation.state.ReloadPostEvent;
+import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.util.GeoJsonLoadUtility;
 import com.ushahidi.android.presentation.view.post.MapPostView;
+
+import org.json.JSONException;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -60,6 +68,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+
+import rx.subscriptions.CompositeSubscription;
+
+import static rx.android.app.AppObservable.bindFragment;
 
 /**
  * Provides Google maps as a fragment in a {@link android.support.v4.view.ViewPager}. Has support
@@ -87,6 +99,10 @@ public class MapPostFragment extends BaseFragment
 
     private HashMap<Marker, ClusterMarkerModel> markers = new HashMap<>();
 
+    RxEventBus mRxEventBus;
+
+    private CompositeSubscription mSubscriptions;
+
     public MapPostFragment() {
         super(R.layout.map_post, 0);
     }
@@ -106,6 +122,24 @@ public class MapPostFragment extends BaseFragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mSubscriptions = new CompositeSubscription();
+
+        mSubscriptions
+                .add(bindFragment(this, mRxEventBus.toObserverable())
+                        .subscribe(event -> {
+                            if (event instanceof ReloadPostEvent) {
+                                ReloadPostEvent reloadPostEvent
+                                        = (ReloadPostEvent) event;
+                                if (reloadPostEvent != null) {
+                                    mMapPostPresenter.loadGeoJsonFromDb();
+                                }
+                            }
+                        }));
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mMapPostPresenter.pause();
@@ -121,6 +155,7 @@ public class MapPostFragment extends BaseFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         intialize();
+        mRxEventBus = UshahidiApplication.getRxEventBusInstance();
     }
 
     private void intialize() {
@@ -161,7 +196,7 @@ public class MapPostFragment extends BaseFragment
      *
      * @return boolean
      */
-    private boolean checkPlayServices() {
+    private void checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
@@ -170,13 +205,24 @@ public class MapPostFragment extends BaseFragment
             } else {
                 getActivity().finish();
             }
-            return false;
         }
-        return true;
     }
 
     @Override
-    public void showGeoJson(ArrayList<Object> uiObjects) {
+    public void showGeoJson(GeoJsonModel geoJsonModel) {
+        FeatureCollection featureCollection;
+        ArrayList<Object> uiObjects = new ArrayList<>();
+        try {
+            featureCollection = GeoJsonLoadUtility
+                    .parseGeoJson(geoJsonModel.getGeoJson());
+            uiObjects = GeoJsonLoadUtility
+                    .createUIObjectsFromGeoJSONObjects(featureCollection,
+                            getResources().getColor(R.color.white),
+                            getResources().getColor(R.color.red));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         for (Object uiObj : uiObjects) {
             if (uiObj instanceof PolylineOptions) {
                 mMap.addPolyline((PolylineOptions) uiObj);

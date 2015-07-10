@@ -37,7 +37,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
@@ -51,13 +51,13 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     private static final String ARGUMENT_KEY_DEPLOYMENT_MODEL
             = "com.ushahidi.android.ARGUMENT_DEPLOYMENT_MODEL";
 
-    @InjectView(R.id.add_deployment_title)
+    @Bind(R.id.add_deployment_title)
     EditText title;
 
-    @InjectView(R.id.add_deployment_url)
+    @Bind(R.id.add_deployment_url)
     EditText url;
 
-    @InjectView(R.id.textview_deployment_description)
+    @Bind(R.id.textview_deployment_description)
     FontSupportedTextView mHeader;
 
     private UpdateDeploymentListener mActionListener;

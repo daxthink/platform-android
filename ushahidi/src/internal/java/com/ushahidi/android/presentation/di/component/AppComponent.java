@@ -21,9 +21,13 @@ import com.addhen.android.raiburari.presentation.di.component.ApplicationCompone
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.PlatformService;
+import com.ushahidi.android.data.api.account.PlatformSession;
+import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.UserAccountRepository;
+import com.ushahidi.android.domain.repository.UserProfileRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.modules.AppModule;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
@@ -47,6 +51,8 @@ public interface AppComponent extends ApplicationComponent {
     // Provide these to the sub-graph
     HttpClientWrap httpClientWrap();
 
+    SessionManager<PlatformSession> platformSessionManager();
+
     AppState appState();
 
     UserState userState();
@@ -56,6 +62,10 @@ public interface AppComponent extends ApplicationComponent {
     PostRepository postRepository();
 
     GeoJsonRepository geoJsonRepsitory();
+
+    UserAccountRepository userAccountRepository();
+
+    UserProfileRepository userProfileRepository();
 
     PrefsFactory prefsFactory();
 

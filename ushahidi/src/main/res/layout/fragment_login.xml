@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Ushahidi Inc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~  the terms of the GNU Affero General Public License as published by the Free
+  ~  Software Foundation, either version 3 of the License, or (at your option)
+  ~  any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT
+  ~  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU Affero General Public License
+  ~  along with this program in the file LICENSE-AGPL. If not, see
+  ~  https://www.gnu.org/licenses/agpl-3.0.html
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/view_spacing_normal"
+                android:animateLayoutChanges="true">
+            <com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView
+                    android:id="@+id/textview_login_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/view_spacing_normal"
+                    android:text="@string/prompt_login"
+                    android:textStyle="bold"
+                    android:textAppearance="@android:style/TextAppearance.Medium"
+                    app:fontFile="RobotoCondensed-Regular.ttf"/>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_spacing_normal">
+                <EditText
+                        android:id="@+id/login_username"
+                        style="@style/EditText.Name"
+                        android:hint="@string/username"
+                        android:imeOptions="actionNext"
+                        android:nextFocusDown="@+id/login_password"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_spacing_normal">
+                <EditText
+                        android:id="@+id/login_password"
+                        style="@style/EditText.Password"
+                        android:hint="@string/password"
+                        android:imeOptions="actionDone" android:inputType="textPassword"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_spacing_normal">
+                <AutoCompleteTextView
+                        android:id="@+id/active_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email_address"
+                        android:inputType="textEmailAddress"
+                        android:selectAllOnFocus="true"/>
+            </android.support.design.widget.TextInputLayout>
+            <Spinner
+                    android:id="@+id/select_deployment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/select_deployment"
+                    style="@style/AppTheme.Widget.Spinner"
+                    android:spinnerMode="dropdown"
+                    android:prompt="@string/select_deployment"/>
+
+            <RadioGroup
+                    android:id="@+id/login_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/view_spacing_normal">
+
+                <RadioButton
+                        android:id="@+id/radio_btn_login"
+                        android:text="@string/login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <RadioButton
+                        android:id="@+id/radio_btn_register"
+                        android:text="@string/register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/dividerVertical"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:buttonBarStyle">
+
+        <Button
+                android:id="@+id/login_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:textColor="@color/color_accent_secondary"
+                style="?android:buttonBarButtonStyle"/>
+
+        <ProgressBar
+                android:id="@+id/login_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyle"/>
+
+    </LinearLayout>
+
+</LinearLayout>

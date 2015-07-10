@@ -22,13 +22,23 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import com.ushahidi.android.data.PrefsFactory;
+import com.ushahidi.android.data.api.Constant;
+import com.ushahidi.android.data.api.PlatformAuthConfig;
 import com.ushahidi.android.data.api.PlatformService;
+import com.ushahidi.android.data.api.account.PersistedSessionManager;
+import com.ushahidi.android.data.api.account.PlatformSession;
+import com.ushahidi.android.data.api.account.Session;
+import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
+import com.ushahidi.android.data.repository.UserAccountDataRepository;
+import com.ushahidi.android.data.repository.UserProfileDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.UserAccountRepository;
+import com.ushahidi.android.domain.repository.UserProfileRepository;
 import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
@@ -36,6 +46,7 @@ import com.ushahidi.android.presentation.state.UserState;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.net.CookieHandler;
@@ -59,6 +70,10 @@ public class AppModule {
 
     static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
 
+    static final String PREF_KEY_ACTIVE_PLATFORM_SESSION = "active_platform_session";
+
+    private static final String PREF_KEY_PLATFORM_SESSION = "platform_session";
+
     private static OkHttpClient createOkHttpClient(Context app) {
         OkHttpClient client = new OkHttpClient();
 
@@ -71,13 +86,40 @@ public class AppModule {
 
     @Provides
     @Singleton
-    HttpClientWrap provideOkHttpClient(Context app) {
+    PlatformAuthConfig providePlatformAuthConfig() {
+        // TODO: Get these values from build script
+        return new PlatformAuthConfig(Constant.OAUTH_CLIENT_ID, Constant.OAUTH_CLIENT_SECRET,
+                Constant.SCOPE);
+    }
+
+    @Provides
+    @Singleton
+    SessionManager<PlatformSession> providePlatformSessionManager(
+            SharedPreferences sharedPreferences) {
+        SessionManager<PlatformSession> sessionSessionManager = new PersistedSessionManager<>(
+                sharedPreferences, new PlatformSession.Serializer(),
+                PREF_KEY_ACTIVE_PLATFORM_SESSION,
+                PREF_KEY_PLATFORM_SESSION);
+
+        return sessionSessionManager;
+    }
+
+    @Provides
+    @Nullable
+    @Singleton
+    Session provideSession(SessionManager<PlatformSession> sessionManager) {
+        return sessionManager.getActiveSession();
+    }
+
+    @Provides
+    @Singleton
+    HttpClientWrap provideOkHttpClient(Context app, @Nullable Session session) {
         final OkHttpClient okHttpClient = createOkHttpClient(app.getApplicationContext());
         okHttpClient.setCookieHandler(CookieHandler.getDefault());
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
-        return new HttpClientWrap(app, new OkClient(okHttpClient));
+        return new HttpClientWrap(session, app, new OkClient(okHttpClient));
     }
 
     @Provides
@@ -117,6 +159,20 @@ public class AppModule {
 
     @Provides
     @Singleton
+    UserAccountRepository providesUserAccountRepository(
+            UserAccountDataRepository userAccountRepository) {
+        return userAccountRepository;
+    }
+
+    @Provides
+    @Singleton
+    UserProfileRepository provideUserRepository(
+            UserProfileDataRepository userProfileDataRepository) {
+        return userProfileDataRepository;
+    }
+
+    @Provides
+    @Singleton
     public AppState provideApplicationState(Bus bus) {
         return new AppState(bus);
     }
@@ -129,9 +185,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-    PlatformService provideApiServiceFactory(HttpClientWrap htttWrap,
+    PlatformService provideApiServiceFactory(HttpClientWrap httWrap,
             UnauthorizedAccessErrorHandler handler, PrefsFactory prefsFactory
     ) {
-        return new PlatformService(htttWrap, handler, prefsFactory);
+        return new PlatformService(httWrap, handler, prefsFactory);
     }
 }

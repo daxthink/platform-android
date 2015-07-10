@@ -53,8 +53,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Manages list of posts
@@ -172,25 +172,25 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     public class Widgets extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.post_title)
+        @Bind(R.id.post_title)
         TextView title;
 
-        @InjectView(R.id.post_content)
+        @Bind(R.id.post_content)
         TextView content;
 
-        @InjectView(R.id.post_date)
+        @Bind(R.id.post_date)
         TextView date;
 
-        @InjectView(R.id.post_status)
+        @Bind(R.id.post_status)
         CapitalizedTextView status;
 
-        @InjectView(R.id.post_image)
+        @Bind(R.id.post_image)
         ImageView postImage;
 
-        @InjectView(R.id.post_tags)
+        @Bind(R.id.post_tags)
         LinearLayout tag;
 
-        @InjectView(R.id.post_tags_container)
+        @Bind(R.id.post_tags_container)
         ViewGroup tagContainer;
 
         Context context;
@@ -201,7 +201,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
         public Widgets(Context ctxt, View convertView) {
             super(convertView);
-            ButterKnife.inject(convertView);
+            ButterKnife.bind(convertView);
             this.context = ctxt;
             tagColorSize = this.context.getResources()
                     .getDimensionPixelSize(R.dimen.tag_badge_color_size);
@@ -222,10 +222,9 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                 // Tag has both icon and color. Display both
                 if (!TextUtils.isEmpty(tagModel.getIcon()) && Utility
                         .validateHexColor(tagModel.getColor())) {
-                    StringBuilder builder = new StringBuilder("fa_");
-                    builder.append(tagModel.getIcon());
                     tagBadge.setCompoundDrawablesWithIntrinsicBounds(
-                            getFontAwesomeIconAsDrawable(builder.toString(), tagModel.getColor()),
+                            getFontAwesomeIconAsDrawable("fa_" + tagModel.getIcon(),
+                                    tagModel.getColor()),
                             null, null, null);
 
                     //Tag has only color, display badge
@@ -239,12 +238,14 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                             null, null, null);
 
                     // Tag has only icon, display it
-                } else if (!TextUtils.isEmpty(tagModel.getIcon())) {
-                    StringBuilder builder = new StringBuilder("fa_");
-                    builder.append(tagModel.getIcon());
-                    tagBadge.setCompoundDrawablesWithIntrinsicBounds(
-                            getFontAwesomeIconAsDrawable(builder.toString(), null),
-                            null, null, null);
+                } else {
+                    if (!TextUtils.isEmpty(tagModel.getIcon())) {
+                        StringBuilder builder = new StringBuilder("fa_");
+                        builder.append(tagModel.getIcon());
+                        tagBadge.setCompoundDrawablesWithIntrinsicBounds(
+                                getFontAwesomeIconAsDrawable(builder.toString(), null),
+                                null, null, null);
+                    }
                 }
 
                 tag.addView(tagBadge);

@@ -16,7 +16,7 @@
 
 package com.ushahidi.android.domain.repository;
 
-import com.ushahidi.android.domain.entity.From;
+import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.entity.UserProfile;
 
 import rx.Observable;
@@ -31,9 +31,8 @@ public interface UserProfileRepository {
     /**
      * @param deploymentId  The deploymentId to be used for fetching the API
      * @param userProfileId The ID of the user
-     * @param from          Where to fetch the user profile from. Either Online or Offline.
      */
-    Observable<UserProfile> getUserProfile(Long deploymentId, Long userProfileId, From from);
+    Observable<UserProfile> getUserProfile(Long deploymentId, Long userProfileId);
 
     /**
      * Add / Update an {@link UserProfile} to/in a storage.
@@ -48,4 +47,11 @@ public interface UserProfileRepository {
      * @param userProfile The user profile to be deleted.
      */
     Observable<Boolean> deleteUserProfile(UserProfile userProfile);
+
+    /**
+     * Fetches user profile via the API
+     *
+     * @param authToken The auth token to use to fetch user profile
+     */
+    Observable<UserProfile> fetchUserProfile(UserAuthToken authToken);
 }

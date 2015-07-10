@@ -50,8 +50,7 @@ public class GeoJsonApiDataSource implements GeoJsonDataSource {
 
     @Override
     public Observable<Long> putGeoJson(GeoJsonEntity geoJson) {
-        // Do nothing as posting GeoJson via the API isn't supported yet.
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     private GeoJsonEntity setDeploymentId(GeoJsonEntity geoJsonEntity, Long deploymentId) {

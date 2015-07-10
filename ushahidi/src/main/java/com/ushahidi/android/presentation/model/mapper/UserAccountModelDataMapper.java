@@ -49,8 +49,6 @@ public class UserAccountModelDataMapper {
     public UserAccountModel map(@NonNull UserAccount userAccount) {
         UserAccountModel userAccountModel = new UserAccountModel();
         userAccountModel._id = userAccount._id;
-        userAccountModel.setAuthToken(userAccount.getAuthToken());
-        userAccountModel.setAuthTokenType(userAccount.getAuthTokenType());
         userAccountModel.setAccountName(userAccount.getAccountName());
         userAccountModel.setPassword(userAccount.getPassword());
         return userAccountModel;
@@ -59,8 +57,6 @@ public class UserAccountModelDataMapper {
     public UserAccount map(@NonNull UserAccountModel userAccountModel) {
         UserAccount userAccount = new UserAccount();
         userAccount._id = userAccountModel._id;
-        userAccount.setAuthToken(userAccountModel.getAuthToken());
-        userAccount.setAuthTokenType(userAccountModel.getAuthTokenType());
         userAccount.setAccountName(userAccountModel.getAccountName());
         userAccount.setPassword(userAccountModel.getPassword());
         return userAccount;

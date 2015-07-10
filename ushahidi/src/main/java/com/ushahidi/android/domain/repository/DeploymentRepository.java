@@ -33,5 +33,5 @@ public interface DeploymentRepository extends Repository<Deployment> {
      *
      * @param status The deployment status to be used for retrieving deployment data.
      */
-    Observable<Deployment> getByStatus(final Deployment.Status status);
+    Observable<Deployment> getByStatus(Deployment.Status status);
 }

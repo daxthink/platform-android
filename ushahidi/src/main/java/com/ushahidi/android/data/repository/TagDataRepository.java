@@ -59,7 +59,7 @@ public class TagDataRepository implements TagRepository {
             tagDataSource = mTagDataSourceFactory.createTagDatabaseDataSource();
         }
         return tagDataSource.getTagList(deploymentId)
-                .map((tagEntities -> mTagEntityDataMapper.map(tagEntities)));
+                .map((mTagEntityDataMapper::map));
     }
 
     @Override

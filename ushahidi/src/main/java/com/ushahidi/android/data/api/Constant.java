@@ -22,12 +22,11 @@ package com.ushahidi.android.data.api;
  */
 public class Constant {
 
-    public static final String USHAHIDI_ACCOUNT_TYPE = "com.ushahidi.android.account";
-
     public static final String USHAHIDI_AUTHTOKEN_PASSWORD_TYPE = "password";
 
-    public static final String USHAHIDI_AUTHTOKEN_BEARER_TYPE = "Bearer";
+    public static final String HEADER_AUTHORIZATION = "Authorization";
 
+    // TODO: Securely store the client id and secret
     public static final String OAUTH_CLIENT_SECRET = "35e7f0bca957836d05ca0492211b0ac707671261";
 
     public static final String OAUTH_CLIENT_ID = "ushahidiui";

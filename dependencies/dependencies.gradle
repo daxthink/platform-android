@@ -31,12 +31,10 @@ ext {
 
     //Libraries
     daggerVersion = '2.0.1'
-    butterKnifeVersion = '6.0.0'
     daggerVersion = '2.0'
-    butterKnifeVersion = '6.0.0'
     javaxAnnotationVersion = '10.0-b28'
-    raiburariVersion = '2.2.0'
-    cupboardVersion = '2.1.1'
+    raiburariVersion = '2.4.0'
+    cupboardVersion = '2.1.2'
     retrofitVersion = '1.9.0'
     okhttpVersion = '2.3.0'
     okhttpUrlConnectionVersion = '2.3.0'
@@ -80,7 +78,6 @@ ext {
             espresso           : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
             testingSupportLib  : "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
             junit              : "junit:junit:${jUnitVersion}",
-            mockito            : "org.mockito:mockito-core:${mockitoVersion}",
             robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
             truth              : "com.google.truth:truth:${truthVersion}",
             retrofitMock       : "com.squareup.retrofit:retrofit-mock:${retrofitMockVersion}",

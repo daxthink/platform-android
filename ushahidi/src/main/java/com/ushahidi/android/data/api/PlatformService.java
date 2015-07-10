@@ -47,6 +47,8 @@ public class PlatformService {
 
     private PrefsFactory mPrefsFactory;
 
+    private GsonConverter mGsonConverter;
+
     @Inject
     public PlatformService(HttpClientWrap client,
             UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler,
@@ -54,6 +56,16 @@ public class PlatformService {
         mClient = client;
         mUnauthorizedAccessErrorHandler = unauthorizedAccessErrorHandler;
         mPrefsFactory = prefsFactory;
+        initializeGson();
+    }
+
+    private void initializeGson() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        builder.registerTypeAdapter(Date.class, new DateDeserializer());
+        builder.registerTypeAdapter(PostValueEntity.class, new ValueDeserializer());
+        Gson gson = builder.create();
+        mGsonConverter = new GsonConverter(gson);
     }
 
     /**
@@ -63,23 +75,15 @@ public class PlatformService {
      * @return The {@link RestfulService}
      */
     public RestfulService getService() {
-        ApiHeader header = new ApiHeader(mPrefsFactory.getAccessToken().get());
-        Endpoint endpoint = Endpoints.newFixedEndpoint(mPrefsFactory.getActiveDeploymentUrl()
-                .get());
-        GsonBuilder builder = new GsonBuilder();
-        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        builder.registerTypeAdapter(Date.class, new DateDeserializer());
-        builder.registerTypeAdapter(PostValueEntity.class, new ValueDeserializer());
-        Gson gson = builder.create();
+        Endpoint endpoint = Endpoints
+                .newFixedEndpoint(mPrefsFactory.getActiveDeploymentUrl().get());
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setConverter(new GsonConverter(gson))
+                .setConverter(mGsonConverter)
                 .setClient(mClient)
                 .setEndpoint(endpoint)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setErrorHandler(mUnauthorizedAccessErrorHandler)
-                .setRequestInterceptor(header)
                 .build();
-
         return restAdapter.create(RestfulService.class);
     }
 }

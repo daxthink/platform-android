@@ -26,6 +26,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
@@ -40,6 +41,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 @Singleton
 public class UserDatabaseHelper extends BaseDatabaseHelper {
 
+    @Inject
     public UserDatabaseHelper(@NonNull Context context) {
         super(context);
     }
@@ -54,7 +56,7 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
             final UserEntity userEntity = cupboard()
                     .withDatabase(getReadableDatabase()).query(UserEntity.class)
                     .byId(userEntityId)
-                    .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).get();
+                    .withSelection("mDeployment = ?", String.valueOf(deploymentId)).get();
             if (userEntity != null) {
                 subscriber.onNext(userEntity);
                 subscriber.onCompleted();
@@ -106,5 +108,15 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
                 subscriber.onCompleted();
             }
         });
+    }
+
+    public void put(UserEntity userEntity) {
+        if (!isClosed()) {
+            try {
+                cupboard().withDatabase(getWritableDatabase()).put(userEntity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

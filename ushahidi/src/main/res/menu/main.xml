@@ -17,11 +17,13 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      xmlns:ushahidiApp="http://schemas.android.com/apk/res-auto"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
       tools:context=".MainActivity">
     <item
-            android:id="@+id/action_settings"
-            android:title="@string/settings"
-            android:orderInCategory="100"
-            ushahidiApp:showAsAction="never"/>
+            android:id="@+id/menu_search_post"
+            android:icon="@drawable/ic_action_search"
+            android:title="@string/search"
+            android:orderInCategory="1"
+            app:actionViewClass="android.support.v7.widget.SearchView"
+            app:showAsAction="collapseActionView|always"/>
 </menu>

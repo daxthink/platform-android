@@ -58,21 +58,13 @@ public class UserAccountEntityTest {
     @Test
     public void shouldSetUserAccountEntity() {
         mUserAccountEntity._id = DUMMY_ID;
-        mUserAccountEntity.setDeploymentId(DEPLOYMENT_ID);
-        mUserAccountEntity.setAuthToken(AUTH_TOKEN);
-        mUserAccountEntity.setAuthTokenType(AUTH_TOKEN_TYPE);
         mUserAccountEntity.setPassword(PASSWORD);
         mUserAccountEntity.setAccountName(ACCOUNT_NAME);
 
         assertThat(mUserAccountEntity).isNotNull();
         assertThat(mUserAccountEntity).isInstanceOf(UserAccountEntity.class);
         assertThat(mUserAccountEntity._id).isEqualTo(DUMMY_ID);
-        assertThat(mUserAccountEntity.getAuthToken()).isNotNull();
         assertThat(mUserAccountEntity.getAccountName()).isEqualTo(ACCOUNT_NAME);
-        assertThat(mUserAccountEntity.getAuthToken()).isNotNull();
-        assertThat(mUserAccountEntity.getAuthToken()).isEqualTo(AUTH_TOKEN);
-        assertThat(mUserAccountEntity.getAuthTokenType()).isNotNull();
-        assertThat(mUserAccountEntity.getAuthTokenType()).isEqualTo(AUTH_TOKEN_TYPE);
         assertThat(mUserAccountEntity.getPassword()).isNotNull();
         assertThat(mUserAccountEntity.getPassword()).isEqualTo(PASSWORD);
     }

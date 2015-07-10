@@ -17,13 +17,15 @@
 package com.ushahidi.android.presentation.ui.navigation;
 
 import com.ushahidi.android.presentation.model.DeploymentModel;
+import com.ushahidi.android.presentation.ui.activity.AboutActivity;
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
+import com.ushahidi.android.presentation.ui.activity.FeedbackActivity;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
+import com.ushahidi.android.presentation.ui.activity.LoginActivity;
 import com.ushahidi.android.presentation.ui.activity.QrcodeReaderActivity;
 import com.ushahidi.android.presentation.ui.activity.UpdateDeploymentActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 
 import javax.inject.Inject;
 
@@ -42,13 +44,11 @@ public class Launcher {
     }
 
     public void launchAddDeployment() {
-        final Intent intent = AddDeploymentActivity.getIntent(mActivity);
-        mActivity.startActivity(intent);
+        mActivity.startActivity(AddDeploymentActivity.getIntent(mActivity));
     }
 
     public void launchListDeployment() {
-        Intent intent = ListDeploymentActivity.getIntent(mActivity);
-        mActivity.startActivity(intent);
+        mActivity.startActivity(ListDeploymentActivity.getIntent(mActivity));
     }
 
     /**
@@ -57,15 +57,35 @@ public class Launcher {
      * @param deploymentModel The deployment model to be edited
      */
     public void launchUpdateDeployment(DeploymentModel deploymentModel) {
-        final Intent intent = UpdateDeploymentActivity.getIntent(mActivity, deploymentModel);
-        mActivity.startActivity(intent);
+        mActivity.startActivity(UpdateDeploymentActivity.getIntent(mActivity, deploymentModel));
     }
 
     /**
      * Launches the barcode reader
      */
     public void launchQrcodeReader() {
-        final Intent intent = QrcodeReaderActivity.getIntent(mActivity);
-        mActivity.startActivityForResult(intent, QrcodeReaderActivity.QRCODE_READER_REQUEST_CODE);
+        mActivity.startActivityForResult(QrcodeReaderActivity.getIntent(mActivity),
+                QrcodeReaderActivity.QRCODE_READER_REQUEST_CODE);
+    }
+
+    /**
+     * Launches login activity
+     */
+    public void launchLogin() {
+        mActivity.startActivity(LoginActivity.getIntent(mActivity));
+    }
+
+    /**
+     * Launches about activity
+     */
+    public void launchAbout() {
+        mActivity.startActivity(AboutActivity.getIntent(mActivity));
+    }
+
+    /**
+     * Launches feedback activity
+     */
+    public void launchFeedback() {
+        mActivity.startActivity(FeedbackActivity.getIntent(mActivity));
     }
 }

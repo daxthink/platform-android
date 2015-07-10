@@ -30,12 +30,6 @@ public class UserAccountModel extends Model {
 
     private String mPassword;
 
-    private String mAuthToken;
-
-    private String mAuthTokenType;
-
-    private long mDeploymentId;
-
     public void setAccountName(String accountName) {
         mAccountName = accountName;
     }
@@ -44,13 +38,6 @@ public class UserAccountModel extends Model {
         mPassword = password;
     }
 
-    public void setAuthToken(String authToken) {
-        mAuthToken = authToken;
-    }
-
-    public void setAuthTokenType(String authTokenType) {
-        mAuthTokenType = authTokenType;
-    }
 
     public String getAccountName() {
         return mAccountName;
@@ -60,35 +47,11 @@ public class UserAccountModel extends Model {
         return mPassword;
     }
 
-    public long getDeploymentId() {
-        return mDeploymentId;
-    }
-
-    public void setDeploymentId(long deploymentId) {
-        mDeploymentId = deploymentId;
-    }
-
-    public void setAuthToken(String authToken, String type) {
-        mAuthToken = authToken;
-        mAuthTokenType = type;
-    }
-
-    public String getAuthToken() {
-        return mAuthToken;
-    }
-
-    public String getAuthTokenType() {
-        return mAuthTokenType;
-    }
-
     @Override
     public String toString() {
         return "UserAccount{" +
                 "mAccountName='" + mAccountName + '\'' +
-                ", mPassword='" + mPassword + '\'' +
-                ", mAuthToken='" + mAuthToken + '\'' +
-                ", mAuthTokenType='" + mAuthTokenType + '\'' +
-                ", mDeploymentId=" + mDeploymentId +
+                ", mPassword='" + mPassword +
                 '}';
     }
 }

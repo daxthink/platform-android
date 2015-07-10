@@ -21,9 +21,12 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFra
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
 import com.ushahidi.android.R;
+import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
+import com.ushahidi.android.presentation.state.ReloadPostEvent;
+import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.ui.adapter.PostAdapter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
@@ -42,7 +45,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
+import rx.subscriptions.CompositeSubscription;
+
+import static rx.android.app.AppObservable.bindFragment;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -54,13 +60,13 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
     }
 
-    @InjectView(R.id.list_post_progress_bar)
+    @Bind(R.id.list_post_progress_bar)
     ProgressBar mProgressBar;
 
-    @InjectView(android.R.id.list)
+    @Bind(android.R.id.list)
     BloatedRecyclerView mPostRecyclerView;
 
-    @InjectView(android.R.id.empty)
+    @Bind(android.R.id.empty)
     TextView mEmptyView;
 
     @Inject
@@ -74,6 +80,10 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     private static ListPostFragment mListPostFragment;
 
     private LinearLayoutManager mLinearLayoutManager;
+
+    RxEventBus mRxEventBus;
+
+    private CompositeSubscription mSubscriptions;
 
     public static ListPostFragment newInstance() {
         if (mListPostFragment == null) {
@@ -92,6 +102,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         getListPostComponent(ListPostComponent.class).inject(this);
         mListPostPresenter.setView(this);
         initRecyclerView();
+        mRxEventBus = UshahidiApplication.getRxEventBusInstance();
     }
 
     private void initRecyclerView() {
@@ -120,6 +131,30 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void onResume() {
         super.onResume();
         mListPostPresenter.resume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mSubscriptions = new CompositeSubscription();
+
+        mSubscriptions
+                .add(bindFragment(this, mRxEventBus.toObserverable())
+                        .subscribe(event -> {
+                            if (event instanceof ReloadPostEvent) {
+                                ReloadPostEvent reloadPostEvent
+                                        = (ReloadPostEvent) event;
+                                if (reloadPostEvent != null) {
+                                    mListPostPresenter.loadLocalDatabase();
+                                }
+                            }
+                        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSubscriptions.unsubscribe();
     }
 
     @Override
@@ -189,7 +224,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         return getActivity().getApplicationContext();
     }
 
-    protected <C> C getListPostComponent(Class<C> componentType) {
+    private <C> C getListPostComponent(Class<C> componentType) {
         return componentType.cast(((PostActivity) getActivity()).getListPostComponent());
     }
 }

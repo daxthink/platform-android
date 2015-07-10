@@ -17,10 +17,11 @@
 
 package com.ushahidi.android.data.repository;
 
+import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.mapper.UserProfileEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.userprofile.UserProfileDataSource;
 import com.ushahidi.android.data.repository.datasource.userprofile.UserProfileDataSourceFactory;
-import com.ushahidi.android.domain.entity.From;
+import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.entity.UserProfile;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 
@@ -49,16 +50,11 @@ public class UserProfileDataRepository implements UserProfileRepository {
     }
 
     @Override
-    public Observable<UserProfile> getUserProfile(Long deploymentId, Long userProfileId,
-            From from) {
-        UserProfileDataSource userProfileDataSource;
-        if (from.equals(From.ONLINE)) {
-            userProfileDataSource = mUserProfileDataSourceFactory.createApiDataSource();
-        } else {
-            userProfileDataSource = mUserProfileDataSourceFactory.createDatabaseSource();
-        }
+    public Observable<UserProfile> getUserProfile(Long deploymentId, Long userProfileId) {
+        UserProfileDataSource userProfileDataSource = mUserProfileDataSourceFactory
+                .createDatabaseSource();
         return userProfileDataSource.getUserEntity(deploymentId, userProfileId)
-                .map(userEntities -> mUserProfileEntityDataMapper.map(userEntities));
+                .map(mUserProfileEntityDataMapper::map);
     }
 
     @Override
@@ -75,5 +71,17 @@ public class UserProfileDataRepository implements UserProfileRepository {
                 .createDatabaseSource();
         return userProfileDataSource
                 .deleteUserEntity(mUserProfileEntityDataMapper.unmap(userProfile));
+    }
+
+    @Override
+    public Observable<UserProfile> fetchUserProfile(UserAuthToken authToken) {
+        UserProfileDataSource userProfileDataSource = mUserProfileDataSourceFactory
+                .createApiDataSource();
+
+        return userProfileDataSource.fetchUserProfile(
+                new UserAuthTokenEntity(authToken.getDeploymentId(), authToken.getAccessToken(),
+                        authToken.getTokenType(), authToken.getRefreshToken(),
+                        authToken.getExpires()))
+                .map(mUserProfileEntityDataMapper::map);
     }
 }

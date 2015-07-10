@@ -19,9 +19,12 @@ package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.api.UserApi;
 import com.ushahidi.android.data.database.UserDatabaseHelper;
+import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -42,19 +45,31 @@ public class UserProfileApiDataSource implements UserProfileDataSource {
 
     @Override
     public Observable<UserEntity> getUserEntity(Long deploymentId, Long userEntityId) {
-        return mUserApi.getUserProfile()
-                .doOnNext(userEntity -> mUserDatabaseHelper
-                        .putUser(setDeploymentId(deploymentId, userEntity)));
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Long> putUserEntity(UserEntity userEntity) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Boolean> deleteUserEntity(UserEntity userEntity) {
-        return null;
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Observable<List<UserEntity>> getUserEntityList(Long deploymentId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Observable<UserEntity> fetchUserProfile(UserAuthTokenEntity userAuthTokenEntity) {
+        return mUserApi.getUserProfile(
+                userAuthTokenEntity.getTokenType() + " " + userAuthTokenEntity.getAccessToken())
+                .doOnNext(userEntity -> mUserDatabaseHelper
+                        .put(setDeploymentId(userAuthTokenEntity.getDeploymentId(),
+                                userEntity)));
     }
 
     private UserEntity setDeploymentId(Long deploymentId, UserEntity userEntity) {

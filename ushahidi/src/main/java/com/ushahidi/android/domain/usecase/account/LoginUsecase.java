@@ -23,10 +23,12 @@ import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.entity.UserAccount;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
- * Usecase for loging a user to their account
+ * Usecase for logging in a user to their account
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -36,6 +38,7 @@ public class LoginUsecase extends Usecase {
 
     private UserAccount mUserAccount;
 
+    @Inject
     protected LoginUsecase(UserAccountRepository userAccountRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {

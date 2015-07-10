@@ -17,10 +17,9 @@
 
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
+import com.ushahidi.android.data.api.PlatformAuthConfig;
+import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.service.RestfulService;
-
-import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,21 +30,20 @@ import javax.inject.Singleton;
 @Singleton
 public class UserAccountDataSourceFactory {
 
-    private RestfulService mUserService;
+    private PlatformService mApiServiceFactory;
+
+    private PlatformAuthConfig mPlatformAuthConfig;
+
 
     @Inject
-    public UserAccountDataSourceFactory() {
-    }
-
-    public void setUserService(@NonNull RestfulService userService) {
-        mUserService = userService;
+    public UserAccountDataSourceFactory(PlatformAuthConfig platformAuthConfig,
+            PlatformService apiServiceFactory) {
+        mApiServiceFactory = apiServiceFactory;
+        mPlatformAuthConfig = platformAuthConfig;
     }
 
     public UserAccountDataSource createApiDataSource() {
-        if (mUserService == null) {
-            throw new RuntimeException("Please call setUserService(...)");
-        }
-        final UserApi userApi = new UserApi(mUserService);
-        return new UserAccountApiDataSource(userApi);
+        final UserApi userApi = new UserApi(mApiServiceFactory.getService());
+        return new UserAccountApiDataSource(mPlatformAuthConfig, userApi);
     }
 }

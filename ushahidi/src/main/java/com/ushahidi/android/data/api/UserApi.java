@@ -42,11 +42,30 @@ public class UserApi {
         mRestfulService = restfulService;
     }
 
-    public Observable<AccessToken> loginUserAccount(@NonNull Payload payload) {
-        return Observable.create(subscriber -> mRestfulService.getAccessToken(payload));
+    public Observable<PlatformAuthToken> loginUserAccount(@NonNull Payload payload) {
+        return Observable.create(subscriber -> {
+            try {
+                final AccessToken accessToken = mRestfulService.getAccessToken(payload);
+                PlatformAuthToken platformAuthToken = new PlatformAuthToken(
+                        accessToken.getAccessToken(), accessToken.getTokenType(),
+                        accessToken.getRefreshToken(), accessToken.getExpires());
+                subscriber.onNext(platformAuthToken);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
+        });
     }
 
-    public Observable<UserEntity> getUserProfile() {
-        return Observable.create(subscriber -> mRestfulService.getUser());
+    public Observable<UserEntity> getUserProfile(String header) {
+        return Observable.create(subscriber -> {
+            try {
+                UserEntity userAccountEntity = mRestfulService.getUser(header);
+                subscriber.onNext(userAccountEntity);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
+        });
     }
 }

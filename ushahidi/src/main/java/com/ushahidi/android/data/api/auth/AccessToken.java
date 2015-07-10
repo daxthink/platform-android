@@ -19,11 +19,15 @@ package com.ushahidi.android.data.api.auth;
 
 import com.google.gson.annotations.SerializedName;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
+ * Headers for authenticating protected resources
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AccessToken extends BaseResponse {
+public class AccessToken extends BaseResponse implements Parcelable {
 
     @SerializedName("access_token")
     private String accessToken;
@@ -66,6 +70,10 @@ public class AccessToken extends BaseResponse {
         return refreshTokenExpiresIn;
     }
 
+    public boolean isExpired() {
+        return System.currentTimeMillis() > getExpiresIn();
+    }
+
     @Override
     public String toString() {
 
@@ -83,5 +91,58 @@ public class AccessToken extends BaseResponse {
                 ", refreshTokenExpiresIn=" + refreshTokenExpiresIn +
                 '}';
     }
+
+    protected AccessToken(Parcel in) {
+        accessToken = in.readString();
+        tokenType = in.readString();
+        expires = in.readByte() == 0x00 ? null : in.readLong();
+        expiresIn = in.readByte() == 0x00 ? null : in.readLong();
+        refreshToken = in.readString();
+        refreshTokenExpiresIn = in.readByte() == 0x00 ? null : in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(accessToken);
+        dest.writeString(tokenType);
+        if (expires == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(expires);
+        }
+        if (expiresIn == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(expiresIn);
+        }
+        dest.writeString(refreshToken);
+        if (refreshTokenExpiresIn == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(refreshTokenExpiresIn);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<AccessToken> CREATOR
+            = new Parcelable.Creator<AccessToken>() {
+        @Override
+        public AccessToken createFromParcel(Parcel in) {
+            return new AccessToken(in);
+        }
+
+        @Override
+        public AccessToken[] newArray(int size) {
+            return new AccessToken[size];
+        }
+    };
 }
 
