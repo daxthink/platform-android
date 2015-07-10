@@ -1,20 +1,21 @@
+sudo: false
 language: android
 jdk: oraclejdk8
 before_install:
-  - export JAVA8_HOME=$JAVA_HOME
+- export JAVA8_HOME=$JAVA_HOME
+- android list sdk --no-ui --all --extended
 android:
   components:
-  - build-tools-23.0.0_rc2
+  - build-tools-23.0.0_rc3
   - android-22
   - extra-google-google_play_services
   - extra-google-m2repository
   - extra-android-support
   - extra-android-m2repository
   - addon-google_apis-google-22
-
 script:
-  - ./gradlew test -PdisablePreDex
+- "./gradlew test -PdisablePreDex"
 notifications:
   hipchat:
     rooms:
-      secure: KFRLdAAmWJ1tW0VxMAuh3NPJwSx5RnuTsvtd3hrmknYhAyKQ1mzi9leOLelXJ0Iix9DXsaC1/a7Syc7Q3pw79IyXOpIdY77Ls/uQY/y23XlnsTFYlmoEjzL7GDiZzTuPsG9ddpuBdzmVs3DknA2KCG5ZZBaG2IEJ/MHDu5IiNpo=
+      secure: WBxrL2ceIAXTtJjXG4Gs/IWX+HVJ1izU1Y5UW7chuJ5w2wBCjoPDsAbsJhkaXbhZWQ5haSbEOJXjGwxbUBWVnKhFihYF7Ozh60kpovbJOYKvc7x3/5HsBAgYK0dKUJj7HCVutps2r3lKCXP9YFoOsDZqQd0dRsmxulteigYxn48=
