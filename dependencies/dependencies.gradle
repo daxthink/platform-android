@@ -24,7 +24,7 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "23.0.0 rc2"
+    androidBuildToolsVersion = "23.0.0 rc3"
     androidMinSdkVersion = 14
     androidTargetSdkVersion = 22
     androidCompileSdkVersion = 22
@@ -50,7 +50,7 @@ ext {
     dexmakerVersion = '1.0'
     espressoVersion = '2.0'
     testingSupportLibVersion = '0.1'
-    robolectricVersion = '3.0-rc3'
+    robolectricVersion = '3.0'
     truthVersion = '0.26'
     retrofitMockVersion = '1.9.0'
     okhttpMockWebserver = '2.3.0'
