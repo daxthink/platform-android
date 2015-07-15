@@ -18,7 +18,6 @@
 package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.database.UserDatabaseHelper;
-import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
@@ -59,7 +58,7 @@ public class UserProfileDatabaseSource implements UserProfileDataSource {
     }
 
     @Override
-    public Observable<UserEntity> fetchUserProfile(UserAuthTokenEntity userAuthTokenEntity) {
+    public Observable<UserEntity> fetchUserProfile(Long deploymentId) {
         throw new UnsupportedOperationException();
     }
 }

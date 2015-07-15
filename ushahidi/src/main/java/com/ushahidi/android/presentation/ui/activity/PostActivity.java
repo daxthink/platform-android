@@ -20,6 +20,7 @@ package com.ushahidi.android.presentation.ui.activity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
@@ -66,6 +67,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -123,6 +125,9 @@ public class PostActivity extends BaseAppActivity implements PostView {
     private List<DeploymentModel> mDeploymentModelList;
 
     PostPresenter mPostPresenter;
+
+    @Inject
+    UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
     SessionManager<PlatformSession> mSessionManager;
@@ -209,7 +214,7 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
-        mSessionManager = getAppComponent().platformSessionManager();
+        mUshAccessTokenManager = getAppComponent().ushahidiTokenManager();
         mPostPresenter = postComponent.postPresenter();
         mPostPresenter.setPostView(this);
     }
@@ -347,11 +352,17 @@ public class PostActivity extends BaseAppActivity implements PostView {
     }
 
     public void showLoginUserProfile() {
-        if (mSessionManager.getActiveSession() == null) {
-            UshahidiApplication.getRxEventBusInstance().send(new LoadUserProfileEvent(null));
-        } else {
-            mPostPresenter.getUserProfile(mSessionManager.getActiveSession().getId());
-        }
+        mUshAccessTokenManager.getStorage().hasAccessToken()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(loggedIn -> {
+                    if (loggedIn) {
+                        UshahidiApplication.getRxEventBusInstance().send(
+                                new LoadUserProfileEvent(null));
+                    } else {
+                        mPostPresenter
+                                .getUserProfile(mSessionManager.getActiveSession().getId());
+                    }
+                }, x -> x.printStackTrace());
     }
 
     @Override

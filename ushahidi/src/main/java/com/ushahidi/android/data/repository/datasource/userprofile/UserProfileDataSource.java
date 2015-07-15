@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.data.repository.datasource.userprofile;
 
-import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import java.util.List;
@@ -55,7 +54,6 @@ public interface UserProfileDataSource {
     Observable<List<UserEntity>> getUserEntityList(Long deploymentId);
 
     /**
-     * @param userAuthTokenEntity The auth token to be used for fetching user profile
      */
-    Observable<UserEntity> fetchUserProfile(UserAuthTokenEntity userAuthTokenEntity);
+    Observable<UserEntity> fetchUserProfile(Long deploymentId);
 }

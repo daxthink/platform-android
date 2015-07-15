@@ -29,6 +29,9 @@ import com.ushahidi.android.data.api.account.PersistedSessionManager;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.Session;
 import com.ushahidi.android.data.api.account.SessionManager;
+import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
+import com.ushahidi.android.data.api.heimdalldroid.extras.SharedPreferencesOAuth2AccessTokenStorage;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
@@ -113,13 +116,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    HttpClientWrap provideOkHttpClient(Context app, @Nullable Session session) {
-        final OkHttpClient okHttpClient = createOkHttpClient(app.getApplicationContext());
+    HttpClientWrap provideOkHttpClient(Context context) {
+        final OkHttpClient okHttpClient = createOkHttpClient(context.getApplicationContext());
         okHttpClient.setCookieHandler(CookieHandler.getDefault());
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
-        return new HttpClientWrap(session, app, new OkClient(okHttpClient));
+        return new HttpClientWrap(context, new OkClient(okHttpClient));
     }
 
     @Provides
@@ -189,5 +192,19 @@ public class AppModule {
             UnauthorizedAccessErrorHandler handler, PrefsFactory prefsFactory
     ) {
         return new PlatformService(httWrap, handler, prefsFactory);
+    }
+
+    @Provides
+    @Singleton
+    UshAccessTokenManager provideUshAccessTokenManager(Context context,
+            PlatformService platformService, PlatformAuthConfig platformAuthConfig) {
+        // Define the shared preferences where we will save the access token
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                "UshahidiAccessTokenStorage", Context.MODE_PRIVATE);
+        // Define the storage using the the previously defined preferences
+        SharedPreferencesOAuth2AccessTokenStorage<OAuth2AccessToken> tokenStorage
+                = new SharedPreferencesOAuth2AccessTokenStorage<>(sharedPreferences,
+                OAuth2AccessToken.class);
+        return new UshAccessTokenManager(tokenStorage, platformService, platformAuthConfig);
     }
 }

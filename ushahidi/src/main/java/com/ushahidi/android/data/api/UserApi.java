@@ -17,14 +17,10 @@
 
 package com.ushahidi.android.data.api;
 
-import com.ushahidi.android.data.api.auth.AccessToken;
-import com.ushahidi.android.data.api.auth.Payload;
-import com.ushahidi.android.data.api.service.RestfulService;
+import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.entity.UserAccountEntity;
 import com.ushahidi.android.data.entity.UserEntity;
-
-import android.support.annotation.NonNull;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 
@@ -35,37 +31,22 @@ import rx.Observable;
  */
 public class UserApi {
 
-    private final RestfulService mRestfulService;
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
-    @Inject
-    public UserApi(@NonNull RestfulService restfulService) {
-        mRestfulService = restfulService;
+    public UserApi(UshAccessTokenManager ushAccessTokenManager) {
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
-    public Observable<PlatformAuthToken> loginUserAccount(@NonNull Payload payload) {
-        return Observable.create(subscriber -> {
-            try {
-                final AccessToken accessToken = mRestfulService.getAccessToken(payload);
-                PlatformAuthToken platformAuthToken = new PlatformAuthToken(
-                        accessToken.getAccessToken(), accessToken.getTokenType(),
-                        accessToken.getRefreshToken(), accessToken.getExpires());
-                subscriber.onNext(platformAuthToken);
-                subscriber.onCompleted();
-            } catch (Exception e) {
-                subscriber.onError(e);
-            }
-        });
+    public Observable<OAuth2AccessToken> loginUserAccount(UserAccountEntity userAccountEntity) {
+        return mUshAccessTokenManager.login(userAccountEntity).grantNewAccessToken()
+                .doOnNext(oAuth2AccessToken -> mUshAccessTokenManager.getStorage()
+                        .storeAccessToken(oAuth2AccessToken));
     }
 
-    public Observable<UserEntity> getUserProfile(String header) {
-        return Observable.create(subscriber -> {
-            try {
-                UserEntity userAccountEntity = mRestfulService.getUser(header);
-                subscriber.onNext(userAccountEntity);
-                subscriber.onCompleted();
-            } catch (Exception e) {
-                subscriber.onError(e);
-            }
-        });
+    public Observable<UserEntity> getUserProfile() {
+        return mUshAccessTokenManager.getValidAccessToken()
+                .concatMap(
+                        authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                                .getUser(authorizationHeader));
     }
 }

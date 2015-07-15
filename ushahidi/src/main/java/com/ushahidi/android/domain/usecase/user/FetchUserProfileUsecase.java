@@ -20,7 +20,6 @@ package com.ushahidi.android.domain.usecase.user;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
-import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 
 import javax.inject.Inject;
@@ -36,7 +35,7 @@ public class FetchUserProfileUsecase extends Usecase {
 
     private final UserProfileRepository mUserProfileRepository;
 
-    private UserAuthToken mUserAuthToken;
+    private Long mDeploymentId;
 
     @Inject
     public FetchUserProfileUsecase(UserProfileRepository userProfileRepository,
@@ -46,22 +45,12 @@ public class FetchUserProfileUsecase extends Usecase {
         mUserProfileRepository = userProfileRepository;
     }
 
-    /**
-     * Sets the deployment ID to be used to fetch the {@link com.ushahidi.android.domain.entity.Tag}
-     * and where to fetch it from.
-     *
-     * @param userAuthToken The user auth token
-     */
-    public void setUserAuthToken(UserAuthToken userAuthToken) {
-        mUserAuthToken = userAuthToken;
+    public void setDeploymentId(Long deploymentId) {
+        mDeploymentId = deploymentId;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mUserAuthToken == null) {
-            throw new RuntimeException(
-                    "User auth token id and from cannot be null. You must call setUserAuthtoken(...)");
-        }
-        return mUserProfileRepository.fetchUserProfile(mUserAuthToken);
+        return mUserProfileRepository.fetchUserProfile(mDeploymentId);
     }
 }

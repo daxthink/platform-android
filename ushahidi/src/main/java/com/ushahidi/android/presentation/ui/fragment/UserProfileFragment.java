@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.subscriptions.CompositeSubscription;
 
 import static android.view.View.GONE;
@@ -160,6 +161,17 @@ public class UserProfileFragment extends BaseFragment {
 
     private <C> C getUserProfileComponent(Class<C> componentType) {
         return componentType.cast(((PostActivity) getActivity()).getUserProfileComponent());
+    }
+
+    @OnClick(R.id.layout_user_profile)
+    void onUserProfileClick() {
+        mDrawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.layout_user_login)
+    void onLoginClick() {
+        mDrawerLayout.closeDrawers();
+        mLauncher.launchLogin();
     }
 
     @Override

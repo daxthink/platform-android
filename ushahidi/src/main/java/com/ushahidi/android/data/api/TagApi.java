@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.service.RestfulService;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 
@@ -35,19 +35,21 @@ import rx.Observable;
  */
 public class TagApi {
 
-    private final RestfulService mRestfulService;
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
-    public TagApi(@NonNull RestfulService restfulService) {
-        mRestfulService = restfulService;
+    public TagApi(@NonNull UshAccessTokenManager ushAccessTokenManager) {
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
      */
     public Observable<List<TagEntity>> getTags() {
-        return Observable.create((subscriber) -> mRestfulService.getTags().map(this::setTags)
-        );
+        return mUshAccessTokenManager.getValidAccessToken()
+                .concatMap(
+                        authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                                .getTags(authorizationHeader)).flatMap(this::setTags);
     }
 
     /**

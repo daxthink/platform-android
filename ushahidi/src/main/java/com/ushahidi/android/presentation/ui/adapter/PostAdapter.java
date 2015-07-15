@@ -80,7 +80,6 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         if (position < getItemCount() && (customHeaderView != null ? position <= getItems().size()
                 : position < getItems().size()) && (customHeaderView != null ? position > 0
                 : true)) {
-
             ((Widgets) viewHolder).title.setText(getItem(position).getTitle());
             ((Widgets) viewHolder).content.setText(getItem(position).getContent());
             //TODO: Remove this. Was for demo
@@ -201,7 +200,7 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
         public Widgets(Context ctxt, View convertView) {
             super(convertView);
-            ButterKnife.bind(convertView);
+            ButterKnife.bind(this, convertView);
             this.context = ctxt;
             tagColorSize = this.context.getResources()
                     .getDimensionPixelSize(R.dimen.tag_badge_color_size);

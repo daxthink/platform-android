@@ -17,11 +17,8 @@
 
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
-import com.ushahidi.android.data.api.Constant;
-import com.ushahidi.android.data.api.PlatformAuthConfig;
-import com.ushahidi.android.data.api.PlatformAuthToken;
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.auth.Payload;
+import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.entity.UserAccountEntity;
 
 import android.support.annotation.NonNull;
@@ -35,21 +32,13 @@ public class UserAccountApiDataSource implements UserAccountDataSource {
 
     private final UserApi mUserApi;
 
-    private PlatformAuthConfig mPlatformAuthConfig;
-
-    public UserAccountApiDataSource(@NonNull PlatformAuthConfig platformAuthConfig,
-            @NonNull UserApi userApi) {
+    public UserAccountApiDataSource(@NonNull UserApi userApi) {
         mUserApi = userApi;
-        mPlatformAuthConfig = platformAuthConfig;
     }
 
     @Override
-    public Observable<PlatformAuthToken> loginUserAccountEntity(
+    public Observable<OAuth2AccessToken> loginUserAccountEntity(
             UserAccountEntity userAccountEntity) {
-        Payload payload = new Payload(userAccountEntity.getAccountName(),
-                userAccountEntity.getPassword(), Constant.USHAHIDI_AUTHTOKEN_PASSWORD_TYPE,
-                mPlatformAuthConfig.clientId, mPlatformAuthConfig.clientSecret,
-                mPlatformAuthConfig.scope);
-        return mUserApi.loginUserAccount(payload);
+        return mUserApi.loginUserAccount(userAccountEntity);
     }
 }

@@ -17,7 +17,6 @@
 package com.ushahidi.android.domain.repository;
 
 import com.ushahidi.android.domain.entity.UserAccount;
-import com.ushahidi.android.domain.entity.UserAuthToken;
 
 import rx.Observable;
 
@@ -28,5 +27,5 @@ import rx.Observable;
  */
 public interface UserAccountRepository {
 
-    Observable<UserAuthToken> login(UserAccount userAccount);
+    Observable<Boolean> login(UserAccount userAccount);
 }

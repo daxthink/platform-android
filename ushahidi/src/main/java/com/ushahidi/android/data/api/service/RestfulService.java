@@ -19,8 +19,9 @@ package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
 
-import com.ushahidi.android.data.api.auth.AccessToken;
-import com.ushahidi.android.data.api.auth.Payload;
+import com.ushahidi.android.data.api.auth.AccessTokenRequestBody;
+import com.ushahidi.android.data.api.auth.RefreshTokenRequestBody;
+import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.entity.UserEntity;
@@ -32,7 +33,6 @@ import retrofit.http.POST;
 import rx.Observable;
 
 import static com.ushahidi.android.data.api.Constant.GEOJSON;
-import static com.ushahidi.android.data.api.Constant.HEADER_AUTHORIZATION;
 import static com.ushahidi.android.data.api.Constant.POSTS;
 import static com.ushahidi.android.data.api.Constant.TAGS;
 import static com.ushahidi.android.data.api.Constant.USERS_ME;
@@ -46,20 +46,23 @@ public interface RestfulService {
 
     // Post related APIs
     @GET(POSTS)
-    Observable<Posts> posts();
+    Observable<Posts> posts(@Header("Authorization") String authorizationHeader);
 
     // Tags related APIs
     @GET(TAGS)
-    Observable<Tags> getTags();
+    Observable<Tags> getTags(@Header("Authorization") String authorizationHeader);
 
     //User/Authentication related APIs
     @POST("/oauth/token")
-    AccessToken getAccessToken(@Body Payload payload);
+    Observable<OAuth2AccessToken> grantNewAccessToken(@Body AccessTokenRequestBody body);
+
+    @POST("/oauth/token")
+    Observable<OAuth2AccessToken> refreshAccessToken(@Body RefreshTokenRequestBody body);
 
     @GET(USERS_ME)
-    UserEntity getUser(@Header(HEADER_AUTHORIZATION) String header);
+    Observable<UserEntity> getUser(@Header("Authorization") String authorizationHeader);
 
     // GeoJSON related APIs
     @GET(GEOJSON)
-    Observable<JsonElement> getGeoJson();
+    Observable<JsonElement> getGeoJson(@Header("Authorization") String authorizationHeader);
 }

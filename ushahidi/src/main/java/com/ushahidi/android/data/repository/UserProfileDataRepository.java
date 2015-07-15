@@ -17,11 +17,9 @@
 
 package com.ushahidi.android.data.repository;
 
-import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.mapper.UserProfileEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.userprofile.UserProfileDataSource;
 import com.ushahidi.android.data.repository.datasource.userprofile.UserProfileDataSourceFactory;
-import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.entity.UserProfile;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 
@@ -74,14 +72,11 @@ public class UserProfileDataRepository implements UserProfileRepository {
     }
 
     @Override
-    public Observable<UserProfile> fetchUserProfile(UserAuthToken authToken) {
+    public Observable<UserProfile> fetchUserProfile(Long deploymentId) {
         UserProfileDataSource userProfileDataSource = mUserProfileDataSourceFactory
                 .createApiDataSource();
 
-        return userProfileDataSource.fetchUserProfile(
-                new UserAuthTokenEntity(authToken.getDeploymentId(), authToken.getAccessToken(),
-                        authToken.getTokenType(), authToken.getRefreshToken(),
-                        authToken.getExpires()))
+        return userProfileDataSource.fetchUserProfile(deploymentId)
                 .map(mUserProfileEntityDataMapper::map);
     }
 }

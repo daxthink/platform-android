@@ -22,18 +22,16 @@ import com.google.gson.annotations.SerializedName;
 import com.ushahidi.android.data.api.qualifier.ClientId;
 import com.ushahidi.android.data.api.qualifier.ClientSecret;
 import com.ushahidi.android.data.api.qualifier.GrantType;
-import com.ushahidi.android.data.api.qualifier.Password;
 import com.ushahidi.android.data.api.qualifier.Scope;
-import com.ushahidi.android.data.api.qualifier.Username;
+
+import java.io.Serializable;
 
 /**
+ * Body object used to exchange a code with an access token.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Payload {
-
-    private final String username;
-
-    private final String password;
+public class RefreshTokenRequestBody implements Serializable {
 
     @SerializedName("grant_type")
     private final String grantType;
@@ -46,23 +44,12 @@ public class Payload {
 
     private final String scope;
 
-    public Payload(@Username String username, @Password String password,
-            @GrantType String grantType, @ClientId String clientId,
+    public RefreshTokenRequestBody(@GrantType String grantType, @ClientId String clientId,
             @ClientSecret String clientSecret, @Scope String scope) {
-        this.username = username;
-        this.password = password;
         this.grantType = grantType;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.scope = scope;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getGrantType() {
@@ -84,8 +71,6 @@ public class Payload {
     @Override
     public String toString() {
         return "Payload{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", grantType='" + grantType + '\'' +
                 ", clientId='" + clientId + '\'' +
                 ", clientSecret='" + clientSecret + '\'' +

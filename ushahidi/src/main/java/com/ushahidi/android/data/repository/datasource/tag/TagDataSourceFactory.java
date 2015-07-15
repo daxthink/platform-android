@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.tag;
 
 import com.ushahidi.android.data.api.TagApi;
-import com.ushahidi.android.data.api.service.RestfulService;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.data.database.TagDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -37,32 +37,23 @@ public class TagDataSourceFactory {
 
     private final TagDatabaseHelper mTagDatabaseHelper;
 
-    private RestfulService mTagService;
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
     public TagDataSourceFactory(
-            @NonNull TagDatabaseHelper tagDatabaseHelper) {
+            @NonNull TagDatabaseHelper tagDatabaseHelper,
+            UshAccessTokenManager ushAccessTokenManager) {
+        mUshAccessTokenManager = ushAccessTokenManager;
         mTagDatabaseHelper = tagDatabaseHelper;
     }
 
-    /**
-     * Call this to set the Tag API service
-     *
-     * @param tagService The tag service
-     */
-    public void setTagService(@NonNull RestfulService tagService) {
-        mTagService = tagService;
-    }
 
     public TagDatabaseDataSource createTagDatabaseDataSource() {
         return new TagDatabaseDataSource(mTagDatabaseHelper);
     }
 
     public TagDataSource createTagApiDataSource() {
-        if (mTagService == null) {
-            throw new RuntimeException("Please call setTagService(...)");
-        }
-        final TagApi tagApi = new TagApi(mTagService);
+        final TagApi tagApi = new TagApi(mUshAccessTokenManager);
         return new TagApiDataSource(tagApi, mTagDatabaseHelper);
     }
 }

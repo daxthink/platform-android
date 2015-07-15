@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.data.entity;
 
-import com.ushahidi.android.data.api.PlatformAuthToken;
 import com.ushahidi.android.data.api.account.PlatformSession;
 
 /**

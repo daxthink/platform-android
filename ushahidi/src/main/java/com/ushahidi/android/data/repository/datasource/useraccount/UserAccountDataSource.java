@@ -17,7 +17,7 @@
 
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
-import com.ushahidi.android.data.api.PlatformAuthToken;
+import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.entity.UserAccountEntity;
 
 import rx.Observable;
@@ -32,5 +32,5 @@ public interface UserAccountDataSource {
      *
      * @param userAccountEntity The user to be logged.
      */
-    Observable<PlatformAuthToken> loginUserAccountEntity(UserAccountEntity userAccountEntity);
+    Observable<OAuth2AccessToken> loginUserAccountEntity(UserAccountEntity userAccountEntity);
 }

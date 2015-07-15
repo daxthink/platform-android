@@ -19,7 +19,6 @@ package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.api.UserApi;
 import com.ushahidi.android.data.database.UserDatabaseHelper;
-import com.ushahidi.android.data.entity.UserAuthTokenEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import android.support.annotation.NonNull;
@@ -64,12 +63,9 @@ public class UserProfileApiDataSource implements UserProfileDataSource {
     }
 
     @Override
-    public Observable<UserEntity> fetchUserProfile(UserAuthTokenEntity userAuthTokenEntity) {
-        return mUserApi.getUserProfile(
-                userAuthTokenEntity.getTokenType() + " " + userAuthTokenEntity.getAccessToken())
-                .doOnNext(userEntity -> mUserDatabaseHelper
-                        .put(setDeploymentId(userAuthTokenEntity.getDeploymentId(),
-                                userEntity)));
+    public Observable<UserEntity> fetchUserProfile(Long deploymentId) {
+        return mUserApi.getUserProfile().doOnNext(userEntity -> mUserDatabaseHelper
+                .put(setDeploymentId(deploymentId, userEntity)));
     }
 
     private UserEntity setDeploymentId(Long deploymentId, UserEntity userEntity) {
