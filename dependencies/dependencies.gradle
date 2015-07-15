@@ -19,6 +19,7 @@
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -43,6 +44,7 @@ ext {
     playServicesMapsVersion = '7.5.0'
     cocoaheroGeoJsonVersion = '1.0.1'
     androidMapsUtilsVersion = '0.3.4'
+    heimdallDroidVersion = '1.0.2'
 
     //Testing
     jUnitVersion = '4.12'
@@ -68,7 +70,8 @@ ext {
             androidIconify     : "com.joanzapata.android:android-iconify:${androidIconifyVersion}",
             playServicesMaps   : "com.google.android.gms:play-services-maps:${playServicesMapsVersion}",
             cocoaheroGeoJson   : "com.cocoahero.android:geojson:${cocoaheroGeoJsonVersion}@jar",
-            androidMapsUtils   : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}"
+            androidMapsUtils   : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}",
+            heimdallDroid      : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
     ]
 
     appTestDependencies = [
