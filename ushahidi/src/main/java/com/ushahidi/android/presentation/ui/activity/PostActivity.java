@@ -68,8 +68,6 @@ import android.view.animation.OvershootInterpolator;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
@@ -137,10 +135,9 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     private boolean mPendingIntroAnimation;
 
-    @Inject
+
     UshAccessTokenManager mUshAccessTokenManager;
 
-    @Inject
     SessionManager<PlatformSession> mSessionManager;
 
     public PostActivity() {
@@ -253,6 +250,7 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .activityModule(getActivityModule())
                 .build();
         mUshAccessTokenManager = getAppComponent().ushahidiTokenManager();
+        mSessionManager = getAppComponent().platformSessionManager();
         mPostPresenter = postComponent.postPresenter();
         mPostPresenter.setPostView(this);
     }
@@ -404,7 +402,8 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loggedIn -> {
                     if (loggedIn) {
-                        mPostPresenter.getUserProfile(mSessionManager.getActiveSession().getId());
+                        Long profileId = mSessionManager.getActiveSession().getId();
+                        mPostPresenter.getUserProfile(profileId);
                     } else {
                         UshahidiApplication.getRxEventBusInstance()
                                 .send(new LoadUserProfileEvent(null));

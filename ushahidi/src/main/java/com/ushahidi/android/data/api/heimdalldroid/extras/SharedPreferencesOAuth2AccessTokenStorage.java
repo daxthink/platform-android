@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessTokenStorage;
+import com.ushahidi.android.presentation.exception.NoAccessTokenFoundException;
 
 import android.content.SharedPreferences;
 
@@ -61,9 +62,8 @@ public class SharedPreferencesOAuth2AccessTokenStorage<TAccessToken extends OAut
                 .just(mSharedPreferences.getString(ACCESS_TOKEN_PREFERENCES_KEY, null))
                 .filter(accessToken -> {
                     if (accessToken == null) {
-                        throw new RuntimeException("No access token found.");
+                        throw new NoAccessTokenFoundException("No access token found.");
                     }
-
                     return true;
                 })
                 .map(json -> (TAccessToken) new Gson().fromJson(json, mTokenClass));

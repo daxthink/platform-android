@@ -51,6 +51,10 @@ public class FetchUserProfileUsecase extends Usecase {
 
     @Override
     protected Observable buildUseCaseObservable() {
+        if (mDeploymentId == null) {
+            throw new RuntimeException(
+                    "Deployment id and from cannot be null. You must call setDeploymentId(...)");
+        }
         return mUserProfileRepository.fetchUserProfile(mDeploymentId);
     }
 }

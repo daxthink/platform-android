@@ -144,7 +144,6 @@ public class UserProfileFragment extends BaseFragment {
 
         mLoginLayout.setVisibility(GONE);
         mUserProfileLayout.setVisibility(VISIBLE);
-        mUserProfileLayout.setOnClickListener(view -> view.setVisibility(GONE));
 
         AppCompatTextView
                 usernameTextView = findById(mUserProfileLayout, R.id.user_username);

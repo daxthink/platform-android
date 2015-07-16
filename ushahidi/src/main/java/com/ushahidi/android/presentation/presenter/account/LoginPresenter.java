@@ -158,6 +158,7 @@ public class LoginPresenter implements Presenter {
     }
 
     public void getUserProfile() {
+        mGetUserProfileUsecase.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
         mGetUserProfileUsecase.execute(new DefaultSubscriber<UserProfile>() {
             @Override
             public void onStart() {
