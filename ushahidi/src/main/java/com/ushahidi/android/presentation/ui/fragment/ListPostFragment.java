@@ -95,6 +95,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
         intialize();
     }
 
@@ -112,6 +113,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         mPostRecyclerView.setAdapter(mPostAdapter);
         mPostRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mPostRecyclerView.addItemDividerDecoration(getActivity());
         mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
         RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter =
                 new RecyclerViewItemTouchListenerAdapter(mPostRecyclerView.recyclerView,
@@ -137,18 +139,16 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void onStart() {
         super.onStart();
         mSubscriptions = new CompositeSubscription();
-
-        mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObserverable())
-                        .subscribe(event -> {
-                            if (event instanceof ReloadPostEvent) {
-                                ReloadPostEvent reloadPostEvent
-                                        = (ReloadPostEvent) event;
-                                if (reloadPostEvent != null) {
-                                    mListPostPresenter.loadLocalDatabase();
-                                }
-                            }
-                        }));
+        mSubscriptions.add(bindFragment(this, mRxEventBus.toObserverable())
+                .subscribe(event -> {
+                    if (event instanceof ReloadPostEvent) {
+                        ReloadPostEvent reloadPostEvent
+                                = (ReloadPostEvent) event;
+                        if (reloadPostEvent != null) {
+                            mListPostPresenter.loadLocalDatabase();
+                        }
+                    }
+                }));
     }
 
     @Override

@@ -81,7 +81,6 @@ public class OAuth2AccessTokenManager<TAccessToken extends OAuth2AccessToken> {
                         expirationDate.add(Calendar.SECOND, accessToken.expiresIn);
                         accessToken.expirationDate = expirationDate;
                     }
-
                     mStorage.storeAccessToken(accessToken);
                 });
     }
