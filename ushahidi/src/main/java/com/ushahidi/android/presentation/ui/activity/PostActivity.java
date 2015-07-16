@@ -404,11 +404,10 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loggedIn -> {
                     if (loggedIn) {
-                        UshahidiApplication.getRxEventBusInstance().send(
-                                new LoadUserProfileEvent(null));
+                        mPostPresenter.getUserProfile(mSessionManager.getActiveSession().getId());
                     } else {
-                        mPostPresenter
-                                .getUserProfile(mSessionManager.getActiveSession().getId());
+                        UshahidiApplication.getRxEventBusInstance()
+                                .send(new LoadUserProfileEvent(null));
                     }
                 }, x -> x.printStackTrace());
     }

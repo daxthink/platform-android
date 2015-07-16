@@ -96,7 +96,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
-        intialize();
+        initialize();
         subscribeToRxEventBus();
     }
 
@@ -114,7 +114,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                 }));
     }
 
-    private void intialize() {
+    private void initialize() {
         getListPostComponent(ListPostComponent.class).inject(this);
         mListPostPresenter.setView(this);
         initRecyclerView();
