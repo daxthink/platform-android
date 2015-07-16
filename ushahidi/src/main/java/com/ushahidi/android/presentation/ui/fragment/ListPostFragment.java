@@ -123,7 +123,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                     getListPostComponent(ListPostComponent.class).inject(this);
                     mListPostPresenter.setView(this);
                     mListPostPresenter.loadPostViaApi();
-                    mLinearLayoutManager.scrollToPosition(0);
+                    mPostRecyclerView.recyclerView.smoothScrollToPosition(0);
                 });
     }
 

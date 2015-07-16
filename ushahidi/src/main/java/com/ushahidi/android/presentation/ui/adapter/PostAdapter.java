@@ -43,6 +43,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,6 +64,12 @@ import butterknife.ButterKnife;
  */
 public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
+    private static final int ANIMATED_ITEMS_COUNT = 2;
+
+    private int lastAnimatedPosition = -1;
+
+    private int itemsCount = 0;
+
     private int mDuration = 300;
 
     private int mLastPosition = -1;
@@ -80,31 +87,33 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         if (position < getItemCount() && (customHeaderView != null ? position <= getItems().size()
                 : position < getItems().size()) && (customHeaderView != null ? position > 0
                 : true)) {
-            ((Widgets) viewHolder).title.setText(getItem(position).getTitle());
-            ((Widgets) viewHolder).content.setText(getItem(position).getContent());
+            animateLoadedListItems(viewHolder.itemView, position);
+            Widgets widgets = (Widgets) viewHolder;
+            widgets.title.setText(getItem(position).getTitle());
+            widgets.content.setText(getItem(position).getContent());
             //TODO: Remove this. Was for demo
-            ((Widgets) viewHolder).renderImage(position);
+            widgets.renderImage(position);
 
-            ((Widgets) viewHolder).date.setText(getRelativeTimeDisplay(
+            widgets.date.setText(getRelativeTimeDisplay(
                     getItem(position).getCreated()));
-            ((Widgets) viewHolder).status.setText(getItem(position).getStatus().name());
+            widgets.status.setText(getItem(position).getStatus().name());
             //TODO: change hardcoded status type to an enum
             if (getItem(position).getStatus() == PostModel.Status.PUBLISHED) {
-                ((Widgets) viewHolder).status.setTextColor(
-                        ((Widgets) viewHolder).context.getResources().getColor(R.color.green));
+                widgets.status.setTextColor(widgets.context.getResources().getColor(R.color.green));
             } else {
-                ((Widgets) viewHolder).status.setBackgroundColor(
-                        ((Widgets) viewHolder).context.getResources().getColor(R.color.red));
+                widgets.status
+                        .setBackgroundColor(widgets.context.getResources().getColor(R.color.red));
             }
             final List<TagModel> tags = getItem(position).getTags();
             if (!Utility.isCollectionEmpty(tags)) {
-                ((Widgets) viewHolder).renderTagBadge(tags);
+                widgets.renderTagBadge(tags);
             } else {
                 //Don't show post that don't have tags. Hide the horizontal scroll view otherwise
                 // It shows tags from previous posts.
-                ((Widgets) viewHolder).tagContainer.setVisibility(View.GONE);
+                widgets.tagContainer.setVisibility(View.GONE);
             }
 
+            // Fade in items as user scrolls down the list
             if (position > mLastPosition) {
                 for (Animator anim : getAnimators(viewHolder.itemView)) {
                     anim.setDuration(mDuration).start();
@@ -116,6 +125,23 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         }
 
     }
+
+    private void animateLoadedListItems(View view, int position) {
+        if (position >= ANIMATED_ITEMS_COUNT - 1) {
+            return;
+        }
+
+        if (position > lastAnimatedPosition) {
+            lastAnimatedPosition = position;
+            view.setTranslationY(Utility.getScreenHeight(view.getContext()));
+            view.animate()
+                    .translationY(0)
+                    .setInterpolator(new DecelerateInterpolator(3.f))
+                    .setDuration(700)
+                    .start();
+        }
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup) {

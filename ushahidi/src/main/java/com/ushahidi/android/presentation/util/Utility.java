@@ -17,7 +17,11 @@
 
 package com.ushahidi.android.presentation.util;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.text.TextUtils;
+import android.view.Display;
+import android.view.WindowManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,6 +62,14 @@ public class Utility {
         }
         final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
         return Pattern.compile(HEX_PATTERN).matcher(hexColor).matches();
+    }
+
+    public static int getScreenHeight(Context c) {
+        WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.y;
     }
 
     public static void writeDbToSDCard() {
