@@ -59,7 +59,7 @@ public class ListPostPresenter implements Presenter {
 
     @Override
     public void resume() {
-        // Do nothing
+        loadLocalDatabase();
     }
 
     @Override

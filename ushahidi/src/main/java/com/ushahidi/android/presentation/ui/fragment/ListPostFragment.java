@@ -97,6 +97,21 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
         intialize();
+        subscribeToRxEventBus();
+    }
+
+    private void subscribeToRxEventBus() {
+        mSubscriptions = new CompositeSubscription();
+        mSubscriptions.add(bindFragment(this, mRxEventBus.toObserverable())
+                .subscribe(event -> {
+                    if (event instanceof ReloadPostEvent) {
+                        ReloadPostEvent reloadPostEvent
+                                = (ReloadPostEvent) event;
+                        if (reloadPostEvent != null) {
+                            mListPostPresenter.loadLocalDatabase();
+                        }
+                    }
+                }));
     }
 
     private void intialize() {
@@ -138,17 +153,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void onStart() {
         super.onStart();
-        mSubscriptions = new CompositeSubscription();
-        mSubscriptions.add(bindFragment(this, mRxEventBus.toObserverable())
-                .subscribe(event -> {
-                    if (event instanceof ReloadPostEvent) {
-                        ReloadPostEvent reloadPostEvent
-                                = (ReloadPostEvent) event;
-                        if (reloadPostEvent != null) {
-                            mListPostPresenter.loadLocalDatabase();
-                        }
-                    }
-                }));
     }
 
     @Override
@@ -211,8 +215,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void showError(String s) {
         Snackbar snackbar = Snackbar.make(getView(), R.string.retry,
                 Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, e -> mListPostPresenter.loadPostViaApi()
-                );
+                .setAction(R.string.undo, e -> mListPostPresenter.loadPostViaApi());
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
