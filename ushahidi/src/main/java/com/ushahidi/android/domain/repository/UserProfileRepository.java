@@ -16,7 +16,6 @@
 
 package com.ushahidi.android.domain.repository;
 
-import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.entity.UserProfile;
 
 import rx.Observable;
@@ -50,8 +49,6 @@ public interface UserProfileRepository {
 
     /**
      * Fetches user profile via the API
-     *
-     * @param authToken The auth token to use to fetch user profile
      */
-    Observable<UserProfile> fetchUserProfile(UserAuthToken authToken);
+    Observable<UserProfile> fetchUserProfile(Long deploymentId);
 }

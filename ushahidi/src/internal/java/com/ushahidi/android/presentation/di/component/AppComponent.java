@@ -23,6 +23,7 @@ import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
@@ -70,6 +71,8 @@ public interface AppComponent extends ApplicationComponent {
     PrefsFactory prefsFactory();
 
     PlatformService platformService();
+
+    UshAccessTokenManager ushahidiTokenManager();
 
 
     final class Initializer {

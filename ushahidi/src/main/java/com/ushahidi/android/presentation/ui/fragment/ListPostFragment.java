@@ -30,6 +30,7 @@ import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.ui.adapter.PostAdapter;
 import com.ushahidi.android.presentation.ui.navigation.Launcher;
+import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.post.ListPostView;
 
 import android.content.Context;
@@ -37,6 +38,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -93,12 +95,34 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        intialize();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
-    private void intialize() {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
+        initialize();
+        subscribeToRxEventBus();
+    }
+
+    private void subscribeToRxEventBus() {
+        mSubscriptions = new CompositeSubscription();
+        mSubscriptions.add(bindFragment(this, mRxEventBus.toObserverable())
+                .subscribe(event -> {
+                    if (event instanceof ReloadPostEvent) {
+                        ReloadPostEvent reloadPostEvent
+                                = (ReloadPostEvent) event;
+                        if (reloadPostEvent != null) {
+                            mListPostPresenter.loadLocalDatabase();
+                        }
+                    }
+                }));
+    }
+
+    private void initialize() {
         getListPostComponent(ListPostComponent.class).inject(this);
         mListPostPresenter.setView(this);
         initRecyclerView();
@@ -112,6 +136,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         mPostRecyclerView.setAdapter(mPostAdapter);
         mPostRecyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mPostRecyclerView.addItemDividerDecoration(getActivity());
         mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
         RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter =
                 new RecyclerViewItemTouchListenerAdapter(mPostRecyclerView.recyclerView,
@@ -120,10 +145,9 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         // Upon  successful refresh, disable swipe to refresh
         mPostRecyclerView
                 .setDefaultOnRefreshListener(() -> {
-                    getListPostComponent(ListPostComponent.class).inject(this);
-                    mListPostPresenter.setView(this);
+                    mPostRecyclerView.setRefreshing(true);
                     mListPostPresenter.loadPostViaApi();
-                    mLinearLayoutManager.scrollToPosition(0);
+                    mPostRecyclerView.recyclerView.smoothScrollToPosition(0);
                 });
     }
 
@@ -136,19 +160,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void onStart() {
         super.onStart();
-        mSubscriptions = new CompositeSubscription();
-
-        mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObserverable())
-                        .subscribe(event -> {
-                            if (event instanceof ReloadPostEvent) {
-                                ReloadPostEvent reloadPostEvent
-                                        = (ReloadPostEvent) event;
-                                if (reloadPostEvent != null) {
-                                    mListPostPresenter.loadLocalDatabase();
-                                }
-                            }
-                        }));
     }
 
     @Override
@@ -171,7 +182,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showLoading() {
-        mPostRecyclerView.setRefreshing(true);
         mEmptyView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
     }
@@ -180,6 +190,32 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void hideLoading() {
         mPostRecyclerView.setRefreshing(false);
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_sort_by_title) {
+            sortByTitle();
+            return true;
+        } else if (id == R.id.menu_sort_by_date) {
+            sortByDate();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void sortByDate() {
+        if (mPostAdapter != null) {
+            mPostAdapter.sortByDate();
+        }
+    }
+
+    public void sortByTitle() {
+        if (mPostAdapter != null) {
+            mPostAdapter.sortByTitle();
+        }
     }
 
     @Override
@@ -194,7 +230,9 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void renderPostList(List<PostModel> postModel) {
-        mPostAdapter.setItems(postModel);
+        if (!Utility.isCollectionEmpty(postModel)) {
+            mPostAdapter.setItems(postModel);
+        }
     }
 
     @Override
@@ -209,10 +247,9 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showError(String s) {
-        Snackbar snackbar = Snackbar.make(getView(), R.string.retry,
+        Snackbar snackbar = Snackbar.make(getView(), s,
                 Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, e -> mListPostPresenter.loadPostViaApi()
-                );
+                .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi());
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));

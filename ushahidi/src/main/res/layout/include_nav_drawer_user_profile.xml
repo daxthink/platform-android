@@ -21,7 +21,7 @@
         android:id="@+id/layout_user_profile"
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_drawer_user_account_height"
-        android:visibility="visible"
+        android:visibility="gone"
         android:fitsSystemWindows="true">
 
     <ImageView

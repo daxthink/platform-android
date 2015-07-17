@@ -19,31 +19,21 @@ package com.ushahidi.android.data.api.account;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.ushahidi.android.data.api.AuthToken;
-
 /**
  * Platform Session
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Session<T extends AuthToken> {
-
-    @SerializedName("auth_token")
-    private T authToken;
+public class Session {
 
     private long id;
 
     @SerializedName("deployment_id")
     private long deploymentId;
 
-    public Session(T authToken, long id, long deploymentId) {
-        this.authToken = authToken;
+    public Session(long id, long deploymentId) {
         this.id = id;
         this.deploymentId = deploymentId;
-    }
-
-    public T getAuthToken() {
-        return authToken;
     }
 
     public long getDeploymentId() {
@@ -73,16 +63,12 @@ public class Session<T extends AuthToken> {
             return false;
         }
 
-        if (authToken != null ? !authToken.equals(session.authToken) : session.authToken != null) {
-            return false;
-        }
-
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = authToken != null ? authToken.hashCode() : 0;
+        int result = id != 0 ? (int) id : 0;
         result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
     }

@@ -20,8 +20,6 @@ package com.ushahidi.android.data.api.account;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import com.ushahidi.android.data.api.PlatformAuthToken;
-
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -30,20 +28,19 @@ import android.text.TextUtils;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PlatformSession extends Session<PlatformAuthToken> {
+public class PlatformSession extends Session {
 
     @SerializedName("user_name")
     private final String userName;
 
     /**
-     * @param token    Auth token
      * @param userId   User ID
      * @param userName User Name
      * @throws {@link java.lang.IllegalArgumentException} if token argument is null
      */
-    public PlatformSession(@NonNull PlatformAuthToken token, long userId, @NonNull String userName,
+    public PlatformSession(@NonNull long userId, @NonNull String userName,
             long deploymentId) {
-        super(token, userId, deploymentId);
+        super(userId, deploymentId);
         this.userName = userName;
     }
 
@@ -89,7 +86,7 @@ public class PlatformSession extends Session<PlatformAuthToken> {
 
         @Override
         public String serialize(PlatformSession session) {
-            if (session != null && session.getAuthToken() != null) {
+            if (session != null) {
                 try {
                     return gson.toJson(session);
                 } catch (Exception e) {

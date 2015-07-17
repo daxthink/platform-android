@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.data.entity;
 
-import com.ushahidi.android.data.api.PlatformAuthToken;
 import com.ushahidi.android.data.api.account.PlatformSession;
 
 /**
@@ -29,7 +28,6 @@ public class TestEntityFixtures {
 
     private static PlatformSession mPlatformSession;
 
-    private static PlatformAuthToken mPlatformAuthToken;
 
     private TestEntityFixtures() {
         // No instances
@@ -47,15 +45,8 @@ public class TestEntityFixtures {
 
     public static PlatformSession getPlatformSession() {
         if (mPlatformSession == null) {
-            mPlatformSession = new PlatformSession(getPlatformAuthToken(), 1, "user_name", 1);
+            mPlatformSession = new PlatformSession(1, "user_name", 1);
         }
         return mPlatformSession;
-    }
-
-    public static PlatformAuthToken getPlatformAuthToken() {
-        if (mPlatformAuthToken == null) {
-            mPlatformAuthToken = new PlatformAuthToken("token", "type", "refresh_toke", 2);
-        }
-        return mPlatformAuthToken;
     }
 }

@@ -17,8 +17,8 @@
 
 package com.ushahidi.android.data.repository.datasource.post;
 
-import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.PostApi;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -34,14 +34,14 @@ public class PostDataSourceFactory {
 
     private PostDatabaseHelper mPostDatabaseHelper;
 
-    private PlatformService mApiServiceFactory;
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
     public PostDataSourceFactory(
             @NonNull PostDatabaseHelper postDatabaseHelper,
-            PlatformService apiServiceFactory) {
+            @NonNull UshAccessTokenManager ushAccessTokenManager) {
         mPostDatabaseHelper = postDatabaseHelper;
-        mApiServiceFactory = apiServiceFactory;
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
     public PostDatabaseDataSource createPostDatabaseDataSource() {
@@ -49,7 +49,7 @@ public class PostDataSourceFactory {
     }
 
     public PostDataSource createPostApiDataSource() {
-        final PostApi postApi = new PostApi(mApiServiceFactory.getService());
+        final PostApi postApi = new PostApi(mUshAccessTokenManager);
         return new PostApiDataSource(postApi, mPostDatabaseHelper);
     }
 }

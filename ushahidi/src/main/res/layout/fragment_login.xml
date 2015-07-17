@@ -47,7 +47,7 @@
                     android:layout_marginTop="@dimen/view_spacing_normal">
                 <EditText
                         android:id="@+id/login_username"
-                        style="@style/EditText.Name"
+                        style="@style/EditText"
                         android:hint="@string/username"
                         android:imeOptions="actionNext"
                         android:nextFocusDown="@+id/login_password"/>

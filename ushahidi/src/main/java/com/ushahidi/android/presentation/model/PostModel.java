@@ -30,7 +30,7 @@ import java.util.List;
 public class PostModel extends Model {
 
     public enum Status {
-        DRAFT("draft"), PUBLISHED("published"), PENDING("pending");
+        DRAFT("draft"), PUBLISHED("published"), PENDING("pending"), UNKNOWN("unknown");
 
         public String value;
 
@@ -40,7 +40,7 @@ public class PostModel extends Model {
     }
 
     public enum Type {
-        REPORT("report"), UPDATE("update"), REVISION("revision");
+        REPORT("report"), UPDATE("update"), REVISION("revision"), UNKNOWN("unknown");
 
         public String value;
 

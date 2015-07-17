@@ -27,6 +27,8 @@
     <string name="exception_message_no_connection">There is no internet connection</string>
     <string name="exception_message_deployment_not_found">Deployment not found.</string>
     <string name="exception_message_deployment_not_added">Could not add the deployment.</string>
+    <string name="exception_message_tag_not_found">Tag not found.</string>
+    <string name="exception_message_not_logged_in">User not logged in</string>
 
     <!-- Deployments -->
     <string name="add_deployment_title_hint">The title of the deployment</string>
@@ -117,5 +119,7 @@
     <string name="cancel">Cancel</string>
     <string name="empty_list">Empty list</string>
     <string name="actions">Actions</string>
-    <string name="nav_drawer_accessibility_profile_image_background">Navigation Drawer Background Photo</string>
+    <string name="nav_drawer_accessibility_profile_image_background">Navigation Drawer Background
+        Photo
+    </string>
 </resources>

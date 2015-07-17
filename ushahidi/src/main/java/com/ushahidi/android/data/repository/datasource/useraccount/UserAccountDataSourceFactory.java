@@ -17,9 +17,8 @@
 
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
-import com.ushahidi.android.data.api.PlatformAuthConfig;
-import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.UserApi;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,20 +29,15 @@ import javax.inject.Singleton;
 @Singleton
 public class UserAccountDataSourceFactory {
 
-    private PlatformService mApiServiceFactory;
-
-    private PlatformAuthConfig mPlatformAuthConfig;
-
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
-    public UserAccountDataSourceFactory(PlatformAuthConfig platformAuthConfig,
-            PlatformService apiServiceFactory) {
-        mApiServiceFactory = apiServiceFactory;
-        mPlatformAuthConfig = platformAuthConfig;
+    public UserAccountDataSourceFactory(UshAccessTokenManager ushAccessTokenManager) {
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
     public UserAccountDataSource createApiDataSource() {
-        final UserApi userApi = new UserApi(mApiServiceFactory.getService());
-        return new UserAccountApiDataSource(mPlatformAuthConfig, userApi);
+        final UserApi userApi = new UserApi(mUshAccessTokenManager);
+        return new UserAccountApiDataSource(userApi);
     }
 }

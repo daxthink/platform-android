@@ -54,11 +54,19 @@ public class PostEntityDataMapper {
         if (postEntity != null) {
             post = new Post();
             post._id = postEntity._id;
-            post.setStatus(Post.Status.valueOf(postEntity.getStatus().name()));
+            if (postEntity.getStatus() != null) {
+                post.setStatus(Post.Status.valueOf(postEntity.getStatus().name()));
+            } else {
+                post.setStatus(Post.Status.UNKNOWN);
+            }
             post.setTitle(postEntity.getTitle());
             post.setCreated(postEntity.getCreated());
             post.setUpdated(postEntity.getUpdated());
-            post.setType(Post.Type.valueOf(postEntity.getType().name()));
+            if (postEntity.getType() != null) {
+                post.setType(Post.Type.valueOf(postEntity.getType().name()));
+            } else {
+                post.setType(Post.Type.UNKNOWN);
+            }
             post.setSlug(postEntity.getSlug());
             post.setTags(mTagEntityMapper.map(postEntity.getTags()));
             post.setAuthorEmail(postEntity.getAuthorEmail());
@@ -76,11 +84,19 @@ public class PostEntityDataMapper {
         if (post != null) {
             postEntity = new PostEntity();
             postEntity._id = post._id;
-            postEntity.setStatus(PostEntity.Status.valueOf(post.getStatus().name()));
+            if (post.getStatus() != null) {
+                postEntity.setStatus(PostEntity.Status.valueOf(post.getStatus().name()));
+            } else {
+                postEntity.setStatus(PostEntity.Status.UNKNOWN);
+            }
             postEntity.setTitle(post.getTitle());
             postEntity.setCreated(post.getCreated());
             postEntity.setUpdated(post.getUpdated());
-            postEntity.setType(PostEntity.Type.valueOf(post.getType().name()));
+            if (post.getType() != null) {
+                postEntity.setType(PostEntity.Type.valueOf(post.getType().name()));
+            } else {
+                postEntity.setType(PostEntity.Type.UNKNOWN);
+            }
             postEntity.setSlug(post.getSlug());
             postEntity.setTags(mTagEntityMapper.unmap(post.getTags()));
             postEntity.setAuthorEmail(post.getAuthorEmail());

@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.geojson;
 
 import com.ushahidi.android.data.api.GeoJsonApi;
-import com.ushahidi.android.data.api.service.RestfulService;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.data.database.GeoJsonDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -36,25 +36,19 @@ public class GeoJsonDataSourceFactory {
 
     private final GeoJsonDatabaseHelper mGeoDatabaseHelper;
 
-    private RestfulService mGeoJsonService;
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
     public GeoJsonDataSourceFactory(
-            @NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
+            @NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper, @NonNull UshAccessTokenManager
+            ushAccessTokenManager) {
         mGeoDatabaseHelper = geoJsonDatabaseHelper;
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
-    /**
-     * Call this to set the GeoJson API service
-     *
-     * @param geoJsonService The GeoJsonService to use for fetching communicating with the API
-     */
-    public void setGeoJsonService(@NonNull RestfulService geoJsonService) {
-        mGeoJsonService = geoJsonService;
-    }
 
     public GeoJsonDataSource createGeoJsonApiDataSource() {
-        final GeoJsonApi geoJsonApi = new GeoJsonApi(mGeoJsonService);
+        final GeoJsonApi geoJsonApi = new GeoJsonApi(mUshAccessTokenManager);
         return new GeoJsonApiDataSource(geoJsonApi, mGeoDatabaseHelper);
     }
 

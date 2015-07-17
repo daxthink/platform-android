@@ -15,22 +15,28 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.repository.datasource.useraccount;
-
-import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
-import com.ushahidi.android.data.entity.UserAccountEntity;
-
-import rx.Observable;
+package com.ushahidi.android.presentation.exception;
 
 /**
+ * This {@link Exception} is thrown when there is no access token found
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface UserAccountDataSource {
+public class NoAccessTokenFoundException extends RuntimeException {
 
-    /**
-     * Login a {@link com.ushahidi.android.data.entity.UserEntity}
-     *
-     * @param userAccountEntity The user to be logged.
-     */
-    Observable<OAuth2AccessToken> loginUserAccountEntity(UserAccountEntity userAccountEntity);
+    public NoAccessTokenFoundException() {
+        super();
+    }
+
+    public NoAccessTokenFoundException(final String message) {
+        super(message);
+    }
+
+    public NoAccessTokenFoundException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public NoAccessTokenFoundException(final Throwable cause) {
+        super(cause);
+    }
 }

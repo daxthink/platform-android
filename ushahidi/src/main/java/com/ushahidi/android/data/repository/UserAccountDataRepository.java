@@ -21,7 +21,6 @@ import com.ushahidi.android.data.entity.mapper.UserAccountEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.useraccount.UserAccountDataSource;
 import com.ushahidi.android.data.repository.datasource.useraccount.UserAccountDataSourceFactory;
 import com.ushahidi.android.domain.entity.UserAccount;
-import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 
 import android.support.annotation.NonNull;
@@ -50,13 +49,16 @@ public class UserAccountDataRepository implements UserAccountRepository {
     }
 
     @Override
-    public Observable<UserAuthToken> login(UserAccount userAccount) {
+    public Observable<Boolean> login(UserAccount userAccount) {
         final UserAccountDataSource userAccountDataSource = mUserAccountDataSourceFactory
                 .createApiDataSource();
         return userAccountDataSource.loginUserAccountEntity(
                 mUserAccountEntityDataMapper.map(userAccount))
-                .map(platformAuthToken -> new UserAuthToken(userAccount._id,
-                        platformAuthToken.getAccessToken(), platformAuthToken.getTokenType(),
-                        platformAuthToken.getRefreshToken(), platformAuthToken.getExpires()));
+                .map(platformAuthToken -> {
+                    if (platformAuthToken != null) {
+                        return Boolean.TRUE;
+                    }
+                    return Boolean.FALSE;
+                });
     }
 }

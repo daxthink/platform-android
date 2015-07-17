@@ -21,7 +21,7 @@ import com.google.gson.JsonElement;
 
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.service.RestfulService;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 
 import android.support.annotation.NonNull;
 
@@ -34,22 +34,29 @@ import rx.Observable;
  */
 public class PostApi {
 
-    private final RestfulService mRestfulService;
+    private final UshAccessTokenManager mUshAccessTokenManager;
 
     @Inject
-    public PostApi(@NonNull RestfulService restfulService) {
-        mRestfulService = restfulService;
+    public PostApi(@NonNull UshAccessTokenManager ushAccessTokenManager) {
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
     public Observable<Posts> getPostList() {
-        return mRestfulService.posts();
+        return mUshAccessTokenManager.getValidAccessToken().concatMap(
+                authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                        .posts(authorizationHeader));
     }
 
     public Observable<Tags> getTags() {
-        return mRestfulService.getTags();
+        return mUshAccessTokenManager.getValidAccessToken().concatMap(
+                authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                        .getTags(authorizationHeader)
+        );
     }
 
     public Observable<JsonElement> getGeoJson() {
-        return mRestfulService.getGeoJson();
+        return mUshAccessTokenManager.getValidAccessToken().concatMap(
+                authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                        .getGeoJson(authorizationHeader));
     }
 }

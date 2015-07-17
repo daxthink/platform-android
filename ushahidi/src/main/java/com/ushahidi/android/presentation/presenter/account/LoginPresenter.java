@@ -23,12 +23,10 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.data.PrefsFactory;
-import com.ushahidi.android.data.api.PlatformAuthToken;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.domain.entity.UserAccount;
-import com.ushahidi.android.domain.entity.UserAuthToken;
 import com.ushahidi.android.domain.entity.UserProfile;
 import com.ushahidi.android.domain.usecase.account.LoginUsecase;
 import com.ushahidi.android.domain.usecase.user.FetchUserProfileUsecase;
@@ -66,8 +64,6 @@ public class LoginPresenter implements Presenter {
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
     private final SessionManager<PlatformSession> mSessionManager;
-
-    private PlatformAuthToken mPlatformAuthToken;
 
     private PrefsFactory mPrefsFactory;
 
@@ -121,17 +117,14 @@ public class LoginPresenter implements Presenter {
         // Auth token
         userAccount._id = mPrefsFactory.getActiveDeploymentId().get();
         mLoginUsecase.setUserAccount(userAccount);
-        mLoginUsecase.execute(new DefaultSubscriber<UserAuthToken>() {
+        mLoginUsecase.execute(new DefaultSubscriber<Boolean>() {
             @Override
             public void onCompleted() {
                 mLoginView.hideLoading();
             }
 
             @Override
-            public void onNext(UserAuthToken userAuthTokenEntity) {
-                mPlatformAuthToken = new PlatformAuthToken(userAuthTokenEntity.getAccessToken(),
-                        userAuthTokenEntity.getTokenType(),
-                        userAuthTokenEntity.getRefreshToken(), userAuthTokenEntity.getExpires());
+            public void onNext(Boolean status) {
                 getUserProfile();
             }
 
@@ -165,11 +158,7 @@ public class LoginPresenter implements Presenter {
     }
 
     public void getUserProfile() {
-        mGetUserProfileUsecase.setUserAuthToken(
-                new UserAuthToken(mPrefsFactory.getActiveDeploymentId().get(),
-                        mPlatformAuthToken.getAccessToken(),
-                        mPlatformAuthToken.getTokenType(), mPlatformAuthToken.getRefreshToken(),
-                        mPlatformAuthToken.getExpires()));
+        mGetUserProfileUsecase.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
         mGetUserProfileUsecase.execute(new DefaultSubscriber<UserProfile>() {
             @Override
             public void onStart() {
@@ -184,9 +173,9 @@ public class LoginPresenter implements Presenter {
 
             @Override
             public void onNext(UserProfile userProfile) {
-                mSessionManager
-                        .setActiveSession(new PlatformSession(mPlatformAuthToken, userProfile._id,
-                                userProfile.getUsername(), userProfile.getDeploymentId()));
+                mSessionManager.setActiveSession(
+                        new PlatformSession(userProfile._id, userProfile.getUsername(),
+                                userProfile.getDeploymentId()));
                 mLoginView.loginCompleted();
             }
 

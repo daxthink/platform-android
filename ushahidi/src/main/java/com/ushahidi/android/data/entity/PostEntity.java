@@ -34,7 +34,17 @@ import nl.qbusict.cupboard.annotation.Ignore;
 public class PostEntity extends DataEntity {
 
     public enum Status {
-        DRAFT("draft"), PUBLISHED("published"), PENDING("pending");
+        @SerializedName("draft")
+        DRAFT("draft"),
+
+        @SerializedName("published")
+        PUBLISHED("published"),
+
+        @SerializedName("pending")
+        PENDING("pending"),
+
+        @SerializedName("unknown")
+        UNKNOWN("unknown");
 
         public String value;
 
@@ -44,7 +54,14 @@ public class PostEntity extends DataEntity {
     }
 
     public enum Type {
-        REPORT("report"), UPDATE("update"), REVISION("revision");
+        @SerializedName("report")
+        REPORT("report"),
+        @SerializedName("update")
+        UPDATE("update"),
+        @SerializedName("revision")
+        REVISION("revision"),
+        @SerializedName("unknown")
+        UNKNOWN("unknown");
 
         public String value;
 

@@ -20,6 +20,7 @@ package com.ushahidi.android.presentation.ui.activity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
+import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
@@ -40,6 +41,8 @@ import com.ushahidi.android.presentation.ui.fragment.UserProfileFragment;
 import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.post.PostView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -59,13 +62,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
+import android.view.animation.OvershootInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
+import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -90,6 +95,10 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     private static final int ABOUT_MENU_ID = -3;
 
+    private static final int START_DELAY_ANIM = 300;
+
+    private static final int DURATION_ANIM = 400;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -103,7 +112,7 @@ public class PostActivity extends BaseAppActivity implements PostView {
     ViewPager mViewPager;
 
     @Bind(R.id.post_fab)
-    FloatingActionButton fab;
+    FloatingActionButton mFab;
 
     @Bind(R.id.post_tabs)
     TabLayout mTabLayout;
@@ -124,7 +133,11 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     PostPresenter mPostPresenter;
 
-    @Inject
+    private boolean mPendingIntroAnimation;
+
+
+    UshAccessTokenManager mUshAccessTokenManager;
+
     SessionManager<PlatformSession> mSessionManager;
 
     public PostActivity() {
@@ -140,6 +153,8 @@ public class PostActivity extends BaseAppActivity implements PostView {
             mCurrentItem = savedInstanceState.getInt(STATE_PARAM_SELECTED_TAB);
             mCurrentMenu = savedInstanceState
                     .getInt(BUNDLE_STATE_PARAM_CURRENT_MENU, 0);
+        } else {
+            mPendingIntroAnimation = true;
         }
         UserProfileFragment userProfileFragment = (UserProfileFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.user_profile_fragment);
@@ -149,21 +164,50 @@ public class PostActivity extends BaseAppActivity implements PostView {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt(STATE_PARAM_SELECTED_TAB, mCurrentItem);
+        savedInstanceState.putInt(BUNDLE_STATE_PARAM_CURRENT_MENU, mCurrentMenu);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         mPostPresenter.resume();
         showLoginUserProfile();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mCurrentItem = mViewPager.getCurrentItem();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mPostPresenter.destroy();
     }
 
+
     @Override
-    public void onPause() {
-        super.onPause();
-        mCurrentItem = mViewPager.getCurrentItem();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        if (mPendingIntroAnimation) {
+            mPendingIntroAnimation = false;
+            startIntroAnimation();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initViews() {
@@ -181,10 +225,6 @@ public class PostActivity extends BaseAppActivity implements PostView {
         if (mViewPager != null) {
             setupViewPager(mViewPager);
         }
-
-        fab.setOnClickListener(
-                view -> Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show());
 
         mTabLayout.setupWithViewPager(mViewPager);
     }
@@ -209,26 +249,10 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
+        mUshAccessTokenManager = getAppComponent().ushahidiTokenManager();
         mSessionManager = getAppComponent().platformSessionManager();
         mPostPresenter = postComponent.postPresenter();
         mPostPresenter.setPostView(this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt(STATE_PARAM_SELECTED_TAB, mCurrentItem);
-        savedInstanceState.putInt(BUNDLE_STATE_PARAM_CURRENT_MENU, mCurrentMenu);
-        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -346,13 +370,53 @@ public class PostActivity extends BaseAppActivity implements PostView {
         }
     }
 
-    public void showLoginUserProfile() {
-        if (mSessionManager.getActiveSession() == null) {
-            UshahidiApplication.getRxEventBusInstance().send(new LoadUserProfileEvent(null));
-        } else {
-            mPostPresenter.getUserProfile(mSessionManager.getActiveSession().getId());
-        }
+    private void startIntroAnimation() {
+        mFab.setTranslationY(2 * mFab.getHeight());
+        mToolbar.setTranslationY(-mToolbar.getHeight());
+        mToolbar.animate()
+                .translationY(0)
+                .setDuration(DURATION_ANIM)
+                .setStartDelay(START_DELAY_ANIM)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        startContentAnimation();
+                    }
+                })
+                .start();
     }
+
+    private void startContentAnimation() {
+        mFab.animate()
+                .translationY(0)
+                .setInterpolator(new OvershootInterpolator(1.f))
+                .setStartDelay(START_DELAY_ANIM)
+                .setDuration(DURATION_ANIM)
+                .start();
+        // Cause the post list to reload
+        UshahidiApplication.getRxEventBusInstance().send(new ReloadPostEvent(null));
+    }
+
+    private void showLoginUserProfile() {
+        mUshAccessTokenManager.getStorage().hasAccessToken()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(loggedIn -> {
+                    if (loggedIn) {
+                        Long profileId = mSessionManager.getActiveSession().getId();
+                        mPostPresenter.getUserProfile(profileId);
+                    } else {
+                        UshahidiApplication.getRxEventBusInstance()
+                                .send(new LoadUserProfileEvent(null));
+                    }
+                }, x -> x.printStackTrace());
+    }
+
+    @OnClick(R.id.post_fab)
+    void onFabClick(View view) {
+        Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null)
+                .show();
+    }
+
 
     @Override
     public void setActiveUserProfile(UserProfileModel userProfile) {
