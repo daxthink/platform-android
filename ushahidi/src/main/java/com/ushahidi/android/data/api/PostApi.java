@@ -21,7 +21,7 @@ import com.google.gson.JsonElement;
 
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 
 import android.support.annotation.NonNull;
 
@@ -30,23 +30,40 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
+ * Provides post related API
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostApi {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param ushAccessTokenManager The access token manager. Cannot be a null value
+     */
     @Inject
     public PostApi(@NonNull UshAccessTokenManager ushAccessTokenManager) {
         mUshAccessTokenManager = ushAccessTokenManager;
     }
 
+    /**
+     * Gets a {@link Posts}
+     *
+     * @return An Observable that emits {@link Posts}
+     */
     public Observable<Posts> getPostList() {
         return mUshAccessTokenManager.getValidAccessToken().concatMap(
                 authorizationHeader -> mUshAccessTokenManager.getRestfulService()
                         .posts(authorizationHeader));
     }
 
+    /**
+     * Gets a {@link Tags}
+     *
+     * @return An Observable that emits {@link Tags}
+     */
     public Observable<Tags> getTags() {
         return mUshAccessTokenManager.getValidAccessToken().concatMap(
                 authorizationHeader -> mUshAccessTokenManager.getRestfulService()
@@ -54,6 +71,11 @@ public class PostApi {
         );
     }
 
+    /**
+     * Gets a {@link JsonElement}
+     *
+     * @return An Observable that emits {@link JsonElement}
+     */
     public Observable<JsonElement> getGeoJson() {
         return mUshAccessTokenManager.getValidAccessToken().concatMap(
                 authorizationHeader -> mUshAccessTokenManager.getRestfulService()

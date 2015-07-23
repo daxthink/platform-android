@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.userprofile;
 
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.database.UserDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -36,6 +36,12 @@ public class UserProfileDataSourceFactory {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param userDatabaseHelper    The user database helper
+     * @param ushAccessTokenManager The access token manager
+     */
     @Inject
     public UserProfileDataSourceFactory(
             @NonNull UserDatabaseHelper userDatabaseHelper,
@@ -44,11 +50,21 @@ public class UserProfileDataSourceFactory {
         mUshAccessTokenManager = ushAccessTokenManager;
     }
 
+    /**
+     * Creates {@link UserProfileApiDataSource}
+     *
+     * @return The user profile data source
+     */
     public UserProfileDataSource createApiDataSource() {
         final UserApi userApi = new UserApi(mUshAccessTokenManager);
         return new UserProfileApiDataSource(userApi, mUserDatabaseHelper);
     }
 
+    /**
+     * Creates {@link UserProfileDatabaseSource}
+     *
+     * @return The user profile data source
+     */
     public UserProfileDataSource createDatabaseSource() {
         return new UserProfileDatabaseSource(mUserDatabaseHelper);
     }

@@ -43,6 +43,12 @@ public class UpdateDeploymentPresenter implements Presenter {
 
     private UpdateDeploymentView mUpdateDeploymentView;
 
+    /**
+     * Default use case.
+     *
+     * @param updateDeploymentUsecase   The update deployment use case
+     * @param deploymentModelDataMapper The deployment model data mapper
+     */
     @Inject
     public UpdateDeploymentPresenter(
             @Named("categoryUpdate") UpdateDeploymentUsecase updateDeploymentUsecase,
@@ -70,6 +76,11 @@ public class UpdateDeploymentPresenter implements Presenter {
         mUpdateDeploymentView = addDeploymentView;
     }
 
+    /**
+     * Updates {@link DeploymentModel}
+     *
+     * @param deploymentModel The deployment model to be updated
+     */
     public void updateDeployment(DeploymentModel deploymentModel) {
         mUpdateDeploymentView.hideRetry();
         mUpdateDeploymentView.showLoading();

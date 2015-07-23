@@ -33,6 +33,11 @@ public class UserProfileDatabaseSource implements UserProfileDataSource {
 
     private UserDatabaseHelper mUserDatabaseHelper;
 
+    /**
+     * Default constructor
+     *
+     * @param userDatabaseHelper The user database helper
+     */
     public UserProfileDatabaseSource(@NonNull UserDatabaseHelper userDatabaseHelper) {
         mUserDatabaseHelper = userDatabaseHelper;
     }

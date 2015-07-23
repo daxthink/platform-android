@@ -40,9 +40,9 @@ public class Posts extends Response implements Serializable {
 
     @Override
     public String toString() {
-        return "Posts{" +
-                "response=" + super.toString() +
-                "posts=" + posts +
-                '}';
+        return "Posts{"
+                + "response=" + super.toString()
+                + "posts=" + posts
+                + '}';
     }
 }

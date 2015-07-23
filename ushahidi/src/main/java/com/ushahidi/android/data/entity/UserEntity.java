@@ -22,39 +22,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
+ * User entity. Not extend from the DataEntity class because the id value can't serialized
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class UserEntity {
 
-    public enum Role {
-        @SerializedName("admin")
-        ADMIN("admin"),
-
-        @SerializedName("user")
-        USER("user");
-
-        public final String value;
-
-        Role(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return value;
-        }
-    }
-
     @SerializedName("id")
     private Long _id;
-
-    public Long getId() {
-        return _id;
-    }
-
-    public void setId(Long id) {
-        _id = id;
-    }
 
     @SerializedName("email")
     private String mEmail;
@@ -76,6 +51,13 @@ public class UserEntity {
     @SerializedName("updated")
     private Date mUpdated;
 
+    public Long getId() {
+        return _id;
+    }
+
+    public void setId(Long id) {
+        _id = id;
+    }
 
     public String getEmail() {
         return mEmail;
@@ -135,15 +117,52 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "UserProfileModel {" +
-                "_id=" + getId() +
-                ", mEmail='" + mEmail + '\'' +
-                ", mRealName='" + mRealName + '\'' +
-                ", mUsername='" + mUsername + '\'' +
-                ", mRole=" + mRole +
-                ", mDeployment=" + mDeployment +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                '}';
+        return "UserProfileModel {"
+                + "_id=" + getId()
+                + ", mEmail='" + mEmail + '\''
+                + ", mRealName='" + mRealName + '\''
+                + ", mUsername='" + mUsername + '\''
+                + ", mRole=" + mRole
+                + ", mDeployment=" + mDeployment
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + '}';
+    }
+
+    /**
+     * Enum representing the different roles a user has
+     */
+    public enum Role {
+        /**
+         * The admin role
+         */
+        @SerializedName("admin")
+        ADMIN("admin"),
+
+        /**
+         * The user role
+         */
+        @SerializedName("user")
+        USER("user");
+
+        private final String value;
+
+        /**
+         * Default constructor
+         *
+         * @param value The role's value
+         */
+        Role(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 }

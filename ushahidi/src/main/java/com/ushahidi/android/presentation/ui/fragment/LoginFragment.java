@@ -62,6 +62,8 @@ import rx.android.widget.WidgetObservable;
 public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener,
         LoginView {
 
+    private static LoginFragment mLoginFragment;
+
     @Bind(R.id.login_username)
     EditText mUsername;
 
@@ -88,8 +90,6 @@ public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedC
 
     @Bind(R.id.login_progress_bar)
     ProgressBar mProgressBar;
-
-    private static LoginFragment mLoginFragment;
 
     @Inject
     LoginPresenter mLoginPresenter;
@@ -160,12 +160,15 @@ public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedC
                 userAccountModel.setPassword(mPassword.getText().toString().trim());
                 mLoginPresenter.performLogin(userAccountModel);
                 break;
+            default:
+                // do nothing
         }
     }
 
     /*private void validate() {
         mSubscribe = Observable.combineLatest(mUsernameText, mPasswordText,
-                (Func2<OnTextChangeEvent, OnTextChangeEvent, Boolean>) (onTextChangeEvent, onTextChangeEvent2) -> false);
+                (Func2<OnTextChangeEvent, OnTextChangeEvent, Boolean>)
+                (onTextChangeEvent, onTextChangeEvent2) -> false);
     }*/
 
     @Override
@@ -196,6 +199,8 @@ public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedC
                             android.R.layout.simple_spinner_dropdown_item, emails));
                 }
                 break;
+            default:
+                // do nothing
         }
     }
 

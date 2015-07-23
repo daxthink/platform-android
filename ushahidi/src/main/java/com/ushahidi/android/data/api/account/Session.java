@@ -31,6 +31,12 @@ public class Session {
     @SerializedName("deployment_id")
     private long deploymentId;
 
+    /**
+     * Default constructor
+     *
+     * @param id           The user Id
+     * @param deploymentId The deployment id
+     */
     public Session(long id, long deploymentId) {
         this.id = id;
         this.deploymentId = deploymentId;

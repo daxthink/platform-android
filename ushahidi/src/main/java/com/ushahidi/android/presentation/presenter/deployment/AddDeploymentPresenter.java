@@ -42,6 +42,12 @@ public class AddDeploymentPresenter implements Presenter {
 
     private AddDeploymentView mAddDeploymentView;
 
+    /**
+     * Default constructor
+     *
+     * @param addDeploymentUsecase      The add deployment use case
+     * @param deploymentModelDataMapper the deployment model data mapper
+     */
     @Inject
     public AddDeploymentPresenter(@Named("categoryAdd") AddDeploymentUsecase addDeploymentUsecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
@@ -68,6 +74,11 @@ public class AddDeploymentPresenter implements Presenter {
         mAddDeploymentView = addDeploymentView;
     }
 
+    /**
+     * Save a deployment model into storage
+     *
+     * @param deploymentModel The deployment model to be saved
+     */
     public void addDeployment(DeploymentModel deploymentModel) {
         mAddDeploymentView.hideRetry();
         mAddDeploymentView.showLoading();

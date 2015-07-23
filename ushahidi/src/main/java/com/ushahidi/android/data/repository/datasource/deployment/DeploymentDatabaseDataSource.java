@@ -34,6 +34,11 @@ public class DeploymentDatabaseDataSource implements DeploymentDataSource {
 
     private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;
 
+    /**
+     * Default constructor
+     *
+     * @param deploymentDatabaseHelper The deployment database helper
+     */
     public DeploymentDatabaseDataSource(
             @NonNull DeploymentDatabaseHelper deploymentDatabaseHelper) {
         mDeploymentDatabaseHelper = deploymentDatabaseHelper;

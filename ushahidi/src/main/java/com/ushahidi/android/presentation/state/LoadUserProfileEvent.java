@@ -20,13 +20,24 @@ package com.ushahidi.android.presentation.state;
 import com.ushahidi.android.presentation.model.UserProfileModel;
 
 /**
+ * Event class used by {@link RxEventBus} to trigger the app to load user profile
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class LoadUserProfileEvent {
 
-    public UserProfileModel userProfileModel;
+    private UserProfileModel mUserProfileModel;
 
+    /**
+     * Default constructor
+     *
+     * @param userProfileModel The user profile to be passed to the event listener
+     */
     public LoadUserProfileEvent(UserProfileModel userProfileModel) {
-        this.userProfileModel = userProfileModel;
+        mUserProfileModel = userProfileModel;
+    }
+
+    public UserProfileModel getUserProfileModel() {
+        return mUserProfileModel;
     }
 }

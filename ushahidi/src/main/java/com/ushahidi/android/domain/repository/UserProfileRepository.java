@@ -28,8 +28,11 @@ import rx.Observable;
 public interface UserProfileRepository {
 
     /**
+     * Gets user profile
+     *
      * @param deploymentId  The deploymentId to be used for fetching the API
      * @param userProfileId The ID of the user
+     * @return The user profile
      */
     Observable<UserProfile> getUserProfile(Long deploymentId, Long userProfileId);
 
@@ -37,6 +40,7 @@ public interface UserProfileRepository {
      * Add / Update an {@link UserProfile} to/in a storage.
      *
      * @param userProfile The entity to be added.
+     * @return The user profile
      */
     Observable<Long> putUserProfile(UserProfile userProfile);
 
@@ -44,11 +48,15 @@ public interface UserProfileRepository {
      * Delete an existing {@link UserProfile} in a storage.
      *
      * @param userProfile The user profile to be deleted.
+     * @return True if successfully deleted
      */
     Observable<Boolean> deleteUserProfile(UserProfile userProfile);
 
     /**
      * Fetches user profile via the API
+     *
+     * @param deploymentId The deployment ID
+     * @return The user profile
      */
     Observable<UserProfile> fetchUserProfile(Long deploymentId);
 }

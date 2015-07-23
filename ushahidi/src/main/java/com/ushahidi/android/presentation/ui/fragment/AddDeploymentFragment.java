@@ -130,6 +130,8 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
                 case EditorInfo.IME_ACTION_DONE:
                     submit();
                     return true;
+                default:
+                    return false;
             }
         }
         return false;

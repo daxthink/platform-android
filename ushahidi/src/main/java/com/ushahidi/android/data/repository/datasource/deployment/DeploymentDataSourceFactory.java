@@ -33,12 +33,21 @@ public class DeploymentDataSourceFactory {
 
     private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;
 
-
+    /**
+     * Default constructor that constructs {@link DeploymentDataSourceFactory}
+     *
+     * @param deploymentDatabaseHelper The deployment database helper
+     */
     @Inject
     DeploymentDataSourceFactory(@NonNull DeploymentDatabaseHelper deploymentDatabaseHelper) {
         mDeploymentDatabaseHelper = deploymentDatabaseHelper;
     }
 
+    /**
+     * Creates {@link DeploymentDatabaseDataSource}
+     *
+     * @return The deployment database source
+     */
     public DeploymentDataSource createDatabaseDataSource() {
         return new DeploymentDatabaseDataSource(mDeploymentDatabaseHelper);
     }

@@ -18,8 +18,7 @@
 package com.ushahidi.android.data.api;
 
 import com.ushahidi.android.data.api.model.Tags;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
-import com.ushahidi.android.data.entity.GeoJsonEntity;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.entity.TagEntity;
 
 import android.support.annotation.NonNull;
@@ -37,13 +36,20 @@ public class TagApi {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param ushAccessTokenManager The access token manager
+     */
     @Inject
     public TagApi(@NonNull UshAccessTokenManager ushAccessTokenManager) {
         mUshAccessTokenManager = ushAccessTokenManager;
     }
 
     /**
-     * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
+     * Retrieves an {@link rx.Observable} which will emit a {@link TagEntity}.
+     *
+     * @return The list of tag entity emitted by the observable
      */
     public Observable<List<TagEntity>> getTags() {
         return mUshAccessTokenManager.getValidAccessToken()

@@ -43,18 +43,28 @@ public class UpdateDeploymentActivity extends BaseAppActivity
     private static final String INTENT_STATE_PARAM_DEPLOYMENT
             = "com.ushahidi.android.STATE_PARAM_DEPLOYMENT_MODEL";
 
+    private static final String FRAG_TAG = "update_deployment";
+
     private DeploymentModel mDeploymentModel;
 
     private UpdateDeploymentComponent mUpdateDeploymentComponent;
 
-    private static final String FRAG_TAG = "update_deployment";
-
     private UpdateDeploymentFragment mUpdateDeploymentFragment;
 
+    /**
+     * Default constructor
+     */
     public UpdateDeploymentActivity() {
         super(R.layout.activity_update_deployment, 0);
     }
 
+    /**
+     * Provides {@link Intent} launching this activity
+     *
+     * @param context         The calling context
+     * @param deploymentModel The deployment model
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context, DeploymentModel deploymentModel) {
         Intent intent = new Intent(context, UpdateDeploymentActivity.class);
         intent.putExtra(INTENT_EXTRA_PARAM_DEPLOYMENT_MODEL, deploymentModel);

@@ -22,13 +22,21 @@ import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.MenuRes;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public abstract class BaseAppActivity extends BaseActivity {
 
-    public BaseAppActivity(int layout, int menu) {
+    /**
+     * Default constructor
+     *
+     * @param layout The layout to be loaded
+     * @param menu   The menu
+     */
+    public BaseAppActivity(@LayoutRes int layout, @MenuRes int menu) {
         super(layout, menu);
     }
 

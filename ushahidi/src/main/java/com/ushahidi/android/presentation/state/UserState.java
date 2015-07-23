@@ -20,23 +20,14 @@ package com.ushahidi.android.presentation.state;
 import com.addhen.android.raiburari.presentation.state.State;
 
 /**
- * {@link Otto} bus events for Users
+ * Bus events for Users
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface UserState extends State {
 
+    /**
+     * To be implemented when the app attempts to access a protected resource from the API
+     */
     void unauthorized();
-
-    class AccountChangedEvent {
-
-    }
-
-    class UserProfileChangedEvent {
-
-    }
-
-    class UnauthorizedAccessEvent {
-
-    }
 }

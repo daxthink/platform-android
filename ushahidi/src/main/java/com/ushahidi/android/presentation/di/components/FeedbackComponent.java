@@ -27,15 +27,33 @@ import com.ushahidi.android.presentation.ui.fragment.FeedbackFragment;
 import dagger.Component;
 
 /**
+ * * Provides {@link ActivityScope} based components to {@link FeedbackFragment} and the host
+ * activity {@link FeedbackActivity}
+ *
  * @author Henry Addo
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface FeedbackComponent extends AppActivityComponent {
 
+    /**
+     * Injects dependencies to {@link FeedbackActivity}
+     *
+     * @param feedbackActivity The feedback activity
+     */
     void inject(FeedbackActivity feedbackActivity);
 
+    /**
+     * Injects dependencies to {@link FeedbackFragment}
+     *
+     * @param feedbackFragment The feedback fragment
+     */
     void inject(FeedbackFragment feedbackFragment);
 
+    /**
+     * Provides {@link FeedbackPresenter} to the sub-graph
+     *
+     * @return The feedback presenter
+     */
     FeedbackPresenter feedbackPresenter();
 }

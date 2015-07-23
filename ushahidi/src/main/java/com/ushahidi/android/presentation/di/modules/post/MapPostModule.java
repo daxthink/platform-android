@@ -33,6 +33,12 @@ import dagger.Provides;
 @Module
 public class MapPostModule {
 
+    /**
+     * Provides {@link ListGeoJsonUsecase} object annotated with the name "mapList"
+     *
+     * @param listGeoJsonUsecase The list GeoJson use case
+     * @return The list geo json use case
+     */
     @Provides
     @ActivityScope
     @Named("mapList")

@@ -32,6 +32,9 @@ import javax.inject.Singleton;
 @Singleton
 public class GeoJsonEntityDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public GeoJsonEntityDataMapper() {
         // Do nothing

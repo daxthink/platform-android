@@ -35,16 +35,25 @@ import android.os.Bundle;
 public class AddDeploymentActivity extends BaseAppActivity
         implements HasComponent<AddDeploymentComponent> {
 
-    private AddDeploymentComponent mAddDeploymentComponent;
-
     private static final String FRAG_TAG = "add_deployment";
+
+    private AddDeploymentComponent mAddDeploymentComponent;
 
     private AddDeploymentFragment mAddDeploymentFragment;
 
+    /**
+     * Default constructor
+     */
     public AddDeploymentActivity() {
         super(R.layout.activity_add_deployment, 0);
     }
 
+    /**
+     * Provides {@link Intent} launching this activity
+     *
+     * @param context The calling context
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context) {
         return new Intent(context, AddDeploymentActivity.class);
     }

@@ -31,6 +31,9 @@ public class DeploymentEntity extends DataEntity {
 
     private String mUrl;
 
+    /**
+     * Default constructor
+     */
     public DeploymentEntity() {
         mStatus = Status.DEACTIVATED;
     }
@@ -60,17 +63,20 @@ public class DeploymentEntity extends DataEntity {
         mUrl = url;
     }
 
-    public enum Status {
-        ACTIVATED, DEACTIVATED
-    }
-
     @Override
     public String toString() {
-        return "Deployment{" +
-                "_id=" + _id +
-                ", mTitle='" + mTitle + '\'' +
-                ", mStatus='" + mStatus + '\'' +
-                ", mUrl='" + mUrl + '\'' +
-                '}';
+        return "Deployment{"
+                + "_id=" + _id
+                + ", mTitle='" + mTitle + '\''
+                + ", mStatus='" + mStatus + '\''
+                + ", mUrl='" + mUrl + '\''
+                + '}';
+    }
+
+    public enum Status {
+        /** Represents an activated deployment **/
+        ACTIVATED,
+        /** Represents de-activated deployment **/
+        DEACTIVATED
     }
 }

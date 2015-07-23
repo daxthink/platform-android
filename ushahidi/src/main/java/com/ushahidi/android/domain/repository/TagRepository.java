@@ -31,8 +31,11 @@ import rx.Observable;
 public interface TagRepository {
 
     /**
+     * Get an {@link Observable} that a emits a list of {@link Tag}
+     *
      * @param deploymentId @param deploymentId The deploymentId to be used for fetching the API
      * @param from         Where to fetch the deployment from. Either Online or Offline.
+     * @return List of tags
      */
     Observable<List<Tag>> getTagList(Long deploymentId, From from);
 
@@ -40,6 +43,7 @@ public interface TagRepository {
      * Add / Update an {@link Tag} to a storage.
      *
      * @param entity The entity to be added.
+     * @return The row affected
      */
     Observable<Long> putTag(List<Tag> entity);
 
@@ -47,6 +51,7 @@ public interface TagRepository {
      * Delete an existing {@link Tag} in a storage.
      *
      * @param tag The tag to be deleted.
+     * @return True if successfully deleted otherwise false
      */
     Observable<Boolean> deleteTag(Tag tag);
 }

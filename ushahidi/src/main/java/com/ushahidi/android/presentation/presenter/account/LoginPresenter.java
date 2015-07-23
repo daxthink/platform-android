@@ -57,16 +57,27 @@ public class LoginPresenter implements Presenter {
 
     private final FetchUserProfileUsecase mGetUserProfileUsecase;
 
-    private LoginView mLoginView;
-
     private final UserAccountModelDataMapper mUserAccountModelDataMapper;
 
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
     private final SessionManager<PlatformSession> mSessionManager;
 
+    private LoginView mLoginView;
+
     private PrefsFactory mPrefsFactory;
 
+    /**
+     * Default presenter
+     *
+     * @param loginUsecase               The login use case
+     * @param listDeploymentUsecase      The list deployment use case
+     * @param userProfileUsecase         The user profile use case
+     * @param sessionManager             The session manager
+     * @param prefsFactory               The preference factory
+     * @param userAccountModelDataMapper The user account model data mapper
+     * @param deploymentModelDataMapper  The deployment model data mapper
+     */
     @Inject
     public LoginPresenter(@Named("accountLogin") LoginUsecase loginUsecase,
             @Named("deploymentList") Usecase listDeploymentUsecase,
@@ -137,6 +148,9 @@ public class LoginPresenter implements Presenter {
         });
     }
 
+    /**
+     * Gets user deployment list by executing the list deployment use case
+     */
     public void getDeploymentList() {
         mListDeploymentUsecase.execute(new DefaultSubscriber<List<Deployment>>() {
             @Override
@@ -157,6 +171,9 @@ public class LoginPresenter implements Presenter {
         });
     }
 
+    /**
+     * Get user profile
+     */
     public void getUserProfile() {
         mGetUserProfileUsecase.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
         mGetUserProfileUsecase.execute(new DefaultSubscriber<UserProfile>() {

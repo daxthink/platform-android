@@ -35,6 +35,11 @@ public class PrefsFactory {
 
     private SharedPreferences mSharedPreferences;
 
+    /**
+     * Provide various Typed SharedPreferences
+     *
+     * @param sharedPreferences The sharedPreference
+     */
     @Inject
     public PrefsFactory(SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;

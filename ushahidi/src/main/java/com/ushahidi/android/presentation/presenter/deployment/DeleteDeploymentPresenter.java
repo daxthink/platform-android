@@ -22,6 +22,11 @@ public class DeleteDeploymentPresenter implements Presenter {
 
     private DeleteDeploymentView mDeleteDeploymentView;
 
+    /**
+     * Default constructor
+     *
+     * @param deleteDeploymentUsecase The delete deployment use case
+     */
     @Inject
     public DeleteDeploymentPresenter(
             @Named("categoryDelete") DeleteDeploymentUsecase deleteDeploymentUsecase) {
@@ -47,6 +52,11 @@ public class DeleteDeploymentPresenter implements Presenter {
         mDeleteDeploymentView = deleteDeploymentView;
     }
 
+    /**
+     * Deletes a deployment model from storage
+     *
+     * @param deploymentId The deployment ID to be used for deletion
+     */
     public void deleteDeployment(Long deploymentId) {
         mDeleteDeploymentUsecase.setDeploymentId(deploymentId);
         mDeleteDeploymentUsecase.execute(new DefaultSubscriber<Long>() {

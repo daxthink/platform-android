@@ -28,8 +28,18 @@ import java.util.List;
  */
 public interface PostView extends LoadDataView {
 
+    /**
+     * Sets the active user's profile
+     *
+     * @param userProfile The details of the user profile
+     */
     void setActiveUserProfile(UserProfileModel userProfile);
 
+    /**
+     * Sets the active deployment
+     *
+     * @param deployment The deployment model
+     */
     void setActiveDeployment(DeploymentModel deployment);
 
     /**

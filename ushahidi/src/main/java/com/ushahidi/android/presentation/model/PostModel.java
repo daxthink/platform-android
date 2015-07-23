@@ -17,6 +17,8 @@
 
 package com.ushahidi.android.presentation.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import com.addhen.android.raiburari.presentation.model.Model;
 
 import java.util.Date;
@@ -28,26 +30,6 @@ import java.util.List;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostModel extends Model {
-
-    public enum Status {
-        DRAFT("draft"), PUBLISHED("published"), PENDING("pending"), UNKNOWN("unknown");
-
-        public String value;
-
-        Status(String value) {
-            this.value = value;
-        }
-    }
-
-    public enum Type {
-        REPORT("report"), UPDATE("update"), REVISION("revision"), UNKNOWN("unknown");
-
-        public String value;
-
-        Type(String value) {
-            this.value = value;
-        }
-    }
 
     private Parent parent;
 
@@ -193,6 +175,108 @@ public class PostModel extends Model {
         mDeploymentId = deploymentId;
     }
 
+    @Override
+    public String toString() {
+        return "Post{"
+                + "mParent=" + mParent
+                + ", mType=" + mType
+                + ", mTitle='" + mTitle + '\''
+                + ", mSlug='" + mSlug + '\''
+                + ", mContent='" + mContent + '\''
+                + ", mAuthorEmail='" + mAuthorEmail + '\''
+                + ", mAuthorRealname='" + mAuthorRealname + '\''
+                + ", mStatus=" + mStatus
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + ", mDeploymentId=" + mDeploymentId
+                + ", mValues=" + mValues
+                + ", mTags=" + mTags
+                + '}';
+    }
+
+    public enum Status {
+        /**
+         * A draft status
+         */
+        @SerializedName("draft")
+        DRAFT("draft"),
+
+        /**
+         * A published status
+         */
+        @SerializedName("published")
+        PUBLISHED("published"),
+
+        /**
+         * A pending status
+         */
+        @SerializedName("pending")
+        PENDING("pending"),
+
+        /**
+         * An unknown status
+         */
+        @SerializedName("unknown")
+        UNKNOWN("unknown");
+
+        private String value;
+
+        /**
+         * The value property of the post
+         *
+         * @param value The value
+         */
+        Status(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets value
+         *
+         * @return The value
+         */
+        public String getValue() {
+            return value;
+        }
+    }
+
+    public enum Type {
+        /**
+         * Report type
+         */
+        REPORT("report"),
+        /**
+         * Updated type
+         */
+        UPDATE("update"),
+        /**
+         * Revision
+         */
+        REVISION("revision"),
+        /**
+         * Unknown
+         */
+        UNKNOWN("unknown");
+
+        private String value;
+
+        /**
+         * Default constructor
+         *
+         * @param value The value
+         */
+        Type(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * Represents the parent property of the a post
+     */
     public static class Parent {
 
         private Long id;
@@ -200,24 +284,5 @@ public class PostModel extends Model {
         public Long getId() {
             return id;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "mParent=" + mParent +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mValues=" + mValues +
-                ", mTags=" + mTags +
-                '}';
     }
 }

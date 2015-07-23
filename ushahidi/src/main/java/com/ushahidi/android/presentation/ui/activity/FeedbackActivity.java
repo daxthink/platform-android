@@ -34,10 +34,19 @@ public class FeedbackActivity extends BaseAppActivity implements HasComponent<Fe
 
     private FeedbackComponent mFeedbackComponent;
 
+    /**
+     * Default constructor
+     */
     public FeedbackActivity() {
         super(R.layout.activity_feedback, 0);
     }
 
+    /**
+     * Provides {@link Intent} launching this activity
+     *
+     * @param context The calling context
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context) {
         return new Intent(context, FeedbackActivity.class);
     }
@@ -46,14 +55,14 @@ public class FeedbackActivity extends BaseAppActivity implements HasComponent<Fe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
-        final String feedback_tag = "feedback_tag";
+        final String feedbackTag = "feedback_tag";
         FeedbackFragment feedbackFragment = (FeedbackFragment) getSupportFragmentManager()
-                .findFragmentByTag(feedback_tag);
+                .findFragmentByTag(feedbackTag);
         if (feedbackFragment == null) {
             feedbackFragment = FeedbackFragment.newInstance();
         }
 
-        replaceFragment(R.id.feedback_fragment_container, feedbackFragment, feedback_tag);
+        replaceFragment(R.id.feedback_fragment_container, feedbackFragment, feedbackTag);
     }
 
     private void injector() {

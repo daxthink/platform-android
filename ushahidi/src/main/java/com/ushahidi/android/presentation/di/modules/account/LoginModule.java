@@ -29,11 +29,19 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * Dagger modules that provides login related objects
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Module
 public class LoginModule {
 
+    /**
+     * Provides {@link LoginUsecase}  with annotated name "accountLogin"
+     *
+     * @param loginUsecase The login usecase
+     * @return The login use case
+     */
     @Provides
     @ActivityScope
     @Named("accountLogin")
@@ -41,6 +49,12 @@ public class LoginModule {
         return loginUsecase;
     }
 
+    /**
+     * Provides {@link FetchUserProfileUsecase} with annotated name "userprofileFetch"
+     *
+     * @param fetchUserProfileUsecase The fetch user profile use case
+     * @return The fetch user profile
+     */
     @Provides
     @ActivityScope
     @Named("userprofileFetch")
@@ -49,6 +63,12 @@ public class LoginModule {
         return fetchUserProfileUsecase;
     }
 
+    /**
+     * Provides {@link Usecase} with annotated name "deploymentList"
+     *
+     * @param listDeploymentUsecase The list deployment use case to be provided
+     * @return The provided use case
+     */
     @Provides
     @ActivityScope
     @Named("deploymentList")

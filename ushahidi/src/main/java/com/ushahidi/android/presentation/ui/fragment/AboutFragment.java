@@ -37,13 +37,13 @@ import butterknife.Bind;
  */
 public class AboutFragment extends BaseFragment {
 
+    private static AboutFragment mAboutFragment;
+
     @Bind(R.id.app_version)
     AppCompatTextView version;
 
     @Bind(R.id.build_date)
     AppCompatTextView buildDateView;
-
-    private static AboutFragment mAboutFragment;
 
     public AboutFragment() {
         super(R.layout.fragment_about, 0);
@@ -63,7 +63,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     private void initialize() {
-        final DateFormat DATE_DISPLAY_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
         StringBuilder sBuilder = new StringBuilder("v");
         sBuilder.append(BuildConfig.VERSION_NAME);
         sBuilder.append("-");
@@ -82,7 +82,7 @@ public class AboutFragment extends BaseFragment {
             DateFormat inFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
             inFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date buildTime = inFormat.parse(BuildConfig.BUILD_TIME);
-            bBuilder.append(DATE_DISPLAY_FORMAT.format(buildTime));
+            bBuilder.append(dateFormat.format(buildTime));
             buildDateView.setText(bBuilder.toString());
         } catch (ParseException e) {
             throw new RuntimeException("Unable to decode build time: " + BuildConfig.BUILD_TIME,

@@ -24,33 +24,97 @@ package com.ushahidi.android.data.api.model;
  */
 public abstract class Response {
 
-    public int limit;
+    private int limit;
 
-    public int offset;
+    private int offset;
 
-    public String order;
+    private String order;
 
-    public String created;
+    private String created;
 
-    public String curr;
+    private String curr;
 
-    public String next;
+    private String next;
 
-    public String prev;
+    private String prev;
 
-    public int count;
+    private int count;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getCurr() {
+        return curr;
+    }
+
+    public void setCurr(String curr) {
+        this.curr = curr;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
+
+    public String getPrev() {
+        return prev;
+    }
+
+    public void setPrev(String prev) {
+        this.prev = prev;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     @Override
     public String toString() {
-        return "Response{" +
-                "limit=" + limit +
-                ", offset=" + offset +
-                ", order='" + order + '\'' +
-                ", created='" + created + '\'' +
-                ", curr='" + curr + '\'' +
-                ", next='" + next + '\'' +
-                ", prev='" + prev + '\'' +
-                ", count=" + count +
-                '}';
+        return "Response{"
+                + "limit=" + limit
+                + ", offset=" + offset
+                + ", order='" + order + '\''
+                + ", created='" + created + '\''
+                + ", curr='" + curr + '\''
+                + ", next='" + next + '\''
+                + ", prev='" + prev + '\''
+                + ", count=" + count
+                + '}';
     }
 }

@@ -38,14 +38,21 @@ import javax.inject.Inject;
  */
 public class MapPostPresenter implements Presenter {
 
-    private MapPostView mMapPostView;
-
     private final ListGeoJsonUsecase mListGeoJsonUsecase;
 
     private final GeoJsonModelDataMapper mGeoJsonModelDataMapper;
 
     private final PrefsFactory mPrefsFactory;
 
+    private MapPostView mMapPostView;
+
+    /**
+     * Default constructor
+     *
+     * @param listGeoJsonUsecase     The list GeoJson use case
+     * @param geoJsonModelDataMapper The GeoJson data mapper
+     * @param prefsFactory           The prefs factory
+     */
     @Inject
     public MapPostPresenter(ListGeoJsonUsecase listGeoJsonUsecase,
             GeoJsonModelDataMapper geoJsonModelDataMapper, PrefsFactory prefsFactory) {
@@ -73,10 +80,16 @@ public class MapPostPresenter implements Presenter {
         mMapPostView = mapPostView;
     }
 
+    /**
+     * Loads {@link com.ushahidi.android.presentation.model.GeoJsonModel} from local storage
+     */
     public void loadGeoJsonFromDb() {
         loadGeoJson(From.DATABASE);
     }
 
+    /**
+     * Loads {@link com.ushahidi.android.presentation.model.GeoJsonModel} from online storage
+     */
     public void loadGeoJsonFromOnline() {
         loadGeoJson(From.ONLINE);
     }

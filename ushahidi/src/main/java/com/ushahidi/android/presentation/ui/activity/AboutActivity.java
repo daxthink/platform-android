@@ -29,14 +29,25 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 /**
+ * About Activity
+ *
  * @author Henry Addo
  */
 public class AboutActivity extends BaseAppActivity {
 
+    /**
+     * Default constructor
+     */
     public AboutActivity() {
         super(R.layout.activity_about, 0);
     }
 
+    /**
+     * Provides {@link Intent} launching this activity
+     *
+     * @param context The calling context
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context) {
         return new Intent(context, AboutActivity.class);
     }
@@ -50,21 +61,26 @@ public class AboutActivity extends BaseAppActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final String about_tag = "about_tag";
+        final String aboutTag = "about_tag";
         AboutFragment aboutFragment = (AboutFragment) getSupportFragmentManager()
-                .findFragmentByTag(about_tag);
+                .findFragmentByTag(aboutTag);
         if (aboutFragment == null) {
             aboutFragment = AboutFragment.newInstance();
         }
-        replaceFragment(R.id.about_fragment_container, aboutFragment, about_tag);
+        replaceFragment(R.id.about_fragment_container, aboutFragment, aboutTag);
         if (isTablet(this)) {
             showAsPopup(this);
         }
     }
 
-
+    /**
+     * Show the activity as an popup
+     *
+     * @param activity The calling activity
+     */
     public void showAsPopup(Activity activity) {
-        //To show activity as dialog and dim the background, you need to declare android:theme="@style/PopupTheme" on for the chosen activity on the manifest
+        // To show activity as dialog and dim the background, you need to declare
+        // android:theme="@style/PopupTheme" on for the chosen activity on the manifest
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         WindowManager.LayoutParams params = activity.getWindow().getAttributes();

@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Usecase for getting a {@link Post}
+ * Usecase for getting a Post
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -39,6 +39,13 @@ public class GetPostUsecase extends Usecase {
 
     private Long mPostId;
 
+    /**
+     * Default constructor
+     *
+     * @param postRepository      The post repository
+     * @param threadExecutor      The thread executor
+     * @param postExecutionThread The post execution thread
+     */
     @Inject
     public GetPostUsecase(PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
@@ -46,6 +53,12 @@ public class GetPostUsecase extends Usecase {
         mPostRepository = postRepository;
     }
 
+    /**
+     * Sets post
+     *
+     * @param deploymentId The deployment Id
+     * @param postId       The post id
+     */
     public void setGetPost(Long deploymentId, Long postId) {
         mDeploymentId = deploymentId;
         mPostId = postId;

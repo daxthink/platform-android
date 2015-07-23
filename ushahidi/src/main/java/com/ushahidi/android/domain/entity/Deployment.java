@@ -32,6 +32,9 @@ public class Deployment extends Entity {
 
     private String mUrl;
 
+    /**
+     * Default constructor that constructs {@link Deployment}
+     */
     public Deployment() {
         mStatus = Status.DEACTIVATED;
     }
@@ -62,15 +65,23 @@ public class Deployment extends Entity {
 
     @Override
     public String toString() {
-        return "Deployment{" +
-                "_id=" + getStatus() +
-                ", mTitle='" + mTitle + '\'' +
-                ", mStatus='" + mStatus + '\'' +
-                ", mUrl='" + mUrl + '\'' +
-                '}';
+        return "Deployment{"
+                + "_id="
+                + getStatus()
+                + ", mTitle='" + mTitle + '\''
+                + ", mStatus='" + mStatus + '\''
+                + ", mUrl='" + mUrl + '\''
+                + '}';
     }
 
     public enum Status {
-        ACTIVATED, DEACTIVATED
+        /**
+         * Indicates that deployment status is activated
+         */
+        ACTIVATED,
+        /**
+         * Indicates that deployment status is deactivated
+         */
+        DEACTIVATED
     }
 }

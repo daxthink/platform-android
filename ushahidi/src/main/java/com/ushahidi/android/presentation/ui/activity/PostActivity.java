@@ -20,7 +20,7 @@ package com.ushahidi.android.presentation.ui.activity;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
@@ -99,6 +99,8 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     private static final int DURATION_ANIM = 400;
 
+    private static int mCurrentItem;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -117,7 +119,11 @@ public class PostActivity extends BaseAppActivity implements PostView {
     @Bind(R.id.post_tabs)
     TabLayout mTabLayout;
 
-    private static int mCurrentItem;
+    PostPresenter mPostPresenter;
+
+    UshAccessTokenManager mUshAccessTokenManager;
+
+    SessionManager<PlatformSession> mSessionManager;
 
     private ListPostComponent mListPostComponent;
 
@@ -131,15 +137,11 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     private List<DeploymentModel> mDeploymentModelList;
 
-    PostPresenter mPostPresenter;
-
     private boolean mPendingIntroAnimation;
 
-
-    UshAccessTokenManager mUshAccessTokenManager;
-
-    SessionManager<PlatformSession> mSessionManager;
-
+    /**
+     * Default constructor
+     */
     public PostActivity() {
         super(R.layout.activity_post, R.menu.main);
     }
@@ -206,8 +208,9 @@ public class PostActivity extends BaseAppActivity implements PostView {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void initViews() {
@@ -337,14 +340,29 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     }
 
+    /**
+     * Gets the list post component
+     *
+     * @return The list component
+     */
     public ListPostComponent getListPostComponent() {
         return mListPostComponent;
     }
 
+    /**
+     * Gets the map post component
+     *
+     * @return The map component
+     */
     public MapPostComponent getMapPostComponent() {
         return mMapPostComponent;
     }
 
+    /**
+     * User profile component
+     *
+     * @return The user profile component
+     */
     public UserProfileComponent getUserProfileComponent() {
         return mUserProfileComponent;
     }
@@ -411,6 +429,11 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 }, x -> x.printStackTrace());
     }
 
+    /**
+     * Handles FAB clicks
+     *
+     * @param view The FAB view
+     */
     @OnClick(R.id.post_fab)
     void onFabClick(View view) {
         Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null)
@@ -468,6 +491,9 @@ public class PostActivity extends BaseAppActivity implements PostView {
         return getApplicationContext();
     }
 
+    /**
+     * An adapter that provides fragments for {@link ViewPager}
+     */
     static class TabPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragments = new ArrayList<>();
@@ -476,11 +502,23 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
         private ViewPager mPager;
 
+        /**
+         * Default constructor
+         *
+         * @param fm        The fragment manager
+         * @param viewPager The view pager
+         */
         public TabPagerAdapter(FragmentManager fm, ViewPager viewPager) {
             super(fm);
             mPager = viewPager;
         }
 
+        /**
+         * Adds a fragment to the view pager
+         *
+         * @param fragment The fragment to be added
+         * @param title    The title of the view pager
+         */
         public void addFragment(Fragment fragment, String title) {
             mFragments.add(fragment);
             mFragmentTitles.add(title);

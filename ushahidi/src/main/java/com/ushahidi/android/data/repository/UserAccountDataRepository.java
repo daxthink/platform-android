@@ -40,6 +40,12 @@ public class UserAccountDataRepository implements UserAccountRepository {
 
     private final UserAccountEntityDataMapper mUserAccountEntityDataMapper;
 
+    /**
+     * Default constructor that constructs {@link UserAccountDataRepository}
+     *
+     * @param userAccountDataSourceFactory The user account data source factory
+     * @param userAccountEntityDataMapper  The user entity data mapper
+     */
     @Inject
     public UserAccountDataRepository(
             @NonNull UserAccountDataSourceFactory userAccountDataSourceFactory, @NonNull

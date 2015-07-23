@@ -40,10 +40,21 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 @Singleton
 public class TagDatabaseHelper extends BaseDatabaseHelper {
 
+    /**
+     * Default constructor
+     *
+     * @param context The calling context. Cannot be a null value
+     */
     public TagDatabaseHelper(@NonNull Context context) {
         super(context);
     }
 
+    /**
+     * Gets a list of {@link TagEntity}
+     *
+     * @param deploymentId The deployment Id
+     * @return An observable that emits a list of {@link TagEntity}
+     */
     public Observable<List<TagEntity>> getTags(Long deploymentId) {
         return Observable.create(subscriber -> {
             final List<TagEntity> tagEntityList = cupboard()
@@ -58,6 +69,12 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Saves tags into a db
+     *
+     * @param tags The tags to be saved
+     * @return The row affected
+     */
     public Observable<Long> putTags(List<TagEntity> tags) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
@@ -73,6 +90,12 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Deletes a Tag
+     *
+     * @param tagEntity The tag to be deleted
+     * @return True if it successfully deletes the tag otherwise false
+     */
     public Observable<Boolean> deleteTag(TagEntity tagEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {

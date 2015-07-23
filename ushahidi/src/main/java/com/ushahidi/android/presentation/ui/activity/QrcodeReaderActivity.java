@@ -31,8 +31,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Activity for reading a barcode
@@ -42,14 +42,22 @@ import butterknife.Bind;
 public class QrcodeReaderActivity extends AppCompatActivity
         implements QRCodeReaderView.OnQRCodeReadListener {
 
+    /** Intent extra's name to be used to retrieved the shared {@link DeploymentModel} */
     public static final String INTENT_EXTRA_PARAM_BARCODE_DEPLOYMENT_MODEL
             = "com.ushahidi.android.INTENT_PARAM_BARCODE_DEPLOYMENT_MODEL";
 
+    /** The request code number to determine if the result was sent by this activity */
     public static final int QRCODE_READER_REQUEST_CODE = 1;
 
     @Bind(R.id.qrdecoderview)
     QRCodeReaderView mQRCodeReaderView;
 
+    /**
+     * Provides {@link Intent} launching this activity
+     *
+     * @param context The calling context
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context) {
         return new Intent(context, QrcodeReaderActivity.class);
     }

@@ -40,21 +40,31 @@ public class ListDeploymentActivity extends BaseAppActivity
         implements HasComponent<ListDeploymentComponent>,
         ListDeploymentFragment.DeploymentListListener {
 
-    private ListDeploymentComponent mListDeploymentComponent;
-
-    private DeleteDeploymentComponent mDeleteDeploymentComponent;
-
     private static final String FRAG_TAG = "list_deployment";
-
-    ListDeploymentFragment mListDeploymentFragment;
 
     @Inject
     Launcher mLauncher;
 
+    private ListDeploymentFragment mListDeploymentFragment;
+
+    private ListDeploymentComponent mListDeploymentComponent;
+
+    private DeleteDeploymentComponent mDeleteDeploymentComponent;
+
+
+    /**
+     * Default constructor
+     */
     public ListDeploymentActivity() {
         super(R.layout.activity_list_deployment, 0);
     }
 
+    /**
+     * Provides {@link Intent} launching this activity
+     *
+     * @param context The calling context
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context) {
         return new Intent(context, ListDeploymentActivity.class);
     }

@@ -39,6 +39,13 @@ public class ListTagUsecase extends Usecase {
 
     private From mFrom;
 
+    /**
+     * The list of tag use case
+     *
+     * @param tagRepository       The tag repository
+     * @param threadExecutor      The thread executor
+     * @param postExecutionThread The post execution thread
+     */
     protected ListTagUsecase(TagRepository tagRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);

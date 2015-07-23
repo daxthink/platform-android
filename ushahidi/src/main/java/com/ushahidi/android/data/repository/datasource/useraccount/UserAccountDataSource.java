@@ -17,12 +17,14 @@
 
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
-import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.entity.UserAccountEntity;
 
+import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import rx.Observable;
 
 /**
+ * Data source for user account
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface UserAccountDataSource {
@@ -31,6 +33,7 @@ public interface UserAccountDataSource {
      * Login a {@link com.ushahidi.android.data.entity.UserEntity}
      *
      * @param userAccountEntity The user to be logged.
+     * @return the access token
      */
     Observable<OAuth2AccessToken> loginUserAccountEntity(UserAccountEntity userAccountEntity);
 }

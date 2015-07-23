@@ -44,7 +44,9 @@ ext {
     playServicesMapsVersion = '7.5.0'
     cocoaheroGeoJsonVersion = '1.0.1'
     androidMapsUtilsVersion = '0.3.4'
-    heimdallDroidVersion = '1.0.2'
+    heimdallDroidVersion = '1.0.3'
+    stethoVersion = '1.1.1'
+    stethoOkHttpVersion = '1.1.1'
 
     //Testing
     jUnitVersion = '4.12'
@@ -72,6 +74,8 @@ ext {
             cocoaheroGeoJson   : "com.cocoahero.android:geojson:${cocoaheroGeoJsonVersion}@jar",
             androidMapsUtils   : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}",
             heimdallDroid      : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
+            stetho             : "com.facebook.stetho:stetho:${stethoVersion}",
+            stethoOkHttp       : "com.facebook.stetho:stetho-okhttp:${stethoOkHttpVersion}",
     ]
 
     appTestDependencies = [

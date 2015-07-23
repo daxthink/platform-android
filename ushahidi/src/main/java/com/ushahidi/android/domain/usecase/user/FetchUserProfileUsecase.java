@@ -37,6 +37,13 @@ public class FetchUserProfileUsecase extends Usecase {
 
     private Long mDeploymentId;
 
+    /**
+     * Default constructor
+     *
+     * @param userProfileRepository The user profile repository
+     * @param threadExecutor        The thread executor
+     * @param postExecutionThread   The post execution thread
+     */
     @Inject
     public FetchUserProfileUsecase(UserProfileRepository userProfileRepository,
             ThreadExecutor threadExecutor,
@@ -45,6 +52,11 @@ public class FetchUserProfileUsecase extends Usecase {
         mUserProfileRepository = userProfileRepository;
     }
 
+    /**
+     * Sets the deployment Id
+     *
+     * @param deploymentId The deployment Id to be set
+     */
     public void setDeploymentId(Long deploymentId) {
         mDeploymentId = deploymentId;
     }

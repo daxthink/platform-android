@@ -20,6 +20,14 @@ public class GetDeploymentUsecase extends Usecase {
 
     private final Long mDeploymentId;
 
+    /**
+     * Default constructor
+     *
+     * @param deploymentId         The deployment Id
+     * @param deploymentRepository The deployment repository
+     * @param threadExecutor       The thread executor
+     * @param postExecutionThread  The post execution thread
+     */
     @Inject
     protected GetDeploymentUsecase(Long deploymentId, DeploymentRepository deploymentRepository,
             ThreadExecutor threadExecutor,

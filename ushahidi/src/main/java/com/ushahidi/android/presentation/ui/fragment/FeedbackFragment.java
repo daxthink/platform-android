@@ -39,6 +39,8 @@ import butterknife.OnClick;
  */
 public class FeedbackFragment extends BaseFragment implements FeedbackView {
 
+    private static FeedbackFragment mFeedbackFragment;
+
     @Inject
     FeedbackPresenter mSendFeedbackPresenter;
 
@@ -50,8 +52,6 @@ public class FeedbackFragment extends BaseFragment implements FeedbackView {
 
     @Bind(R.id.select_subject)
     Spinner mSubject;
-
-    private static FeedbackFragment mFeedbackFragment;
 
     public FeedbackFragment() {
         super(R.layout.fragment_feedback, 0);

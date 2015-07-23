@@ -33,10 +33,19 @@ import dagger.Provides;
 @Module
 public class DeleteDeploymentModule {
 
+    /**
+     * The default constructor
+     */
     public DeleteDeploymentModule() {
 
     }
 
+    /**
+     * Provides {@link DeleteDeploymentUsecase} object with the annotated name "categoryDelete"
+     *
+     * @param listDeploymentUsecase The delete deployment use case
+     * @return The delete deployment use case
+     */
     @Provides
     @ActivityScope
     @Named("categoryDelete")

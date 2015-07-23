@@ -29,15 +29,33 @@ import com.ushahidi.android.presentation.ui.fragment.LoginFragment;
 import dagger.Component;
 
 /**
+ * Provides {@link ActivityScope} based components to {@link LoginFragment} and the host activity
+ * {@link LoginActivity}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class, LoginModule.class})
 public interface LoginComponent extends AppActivityComponent {
 
+    /**
+     * Inject dependencies into {@link LoginActivity}
+     *
+     * @param loginActivity The login activity
+     */
     void inject(LoginActivity loginActivity);
 
+    /**
+     * Inject dependencies into {@link LoginFragment}
+     *
+     * @param loginFragment The login fragment
+     */
     void inject(LoginFragment loginFragment);
 
+    /**
+     * Provides {@link LoginPresenter} to sub-graph
+     *
+     * @return The login presenter
+     */
     LoginPresenter loginPresenter();
 }

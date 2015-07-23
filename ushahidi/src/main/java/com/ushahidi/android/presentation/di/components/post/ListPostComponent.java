@@ -29,6 +29,9 @@ import com.ushahidi.android.presentation.ui.fragment.ListPostFragment;
 import dagger.Component;
 
 /**
+ * Provides {@link ActivityScope} based components that injects {@link ListPostFragment} and the
+ * host activity {@link PostActivity}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
@@ -36,9 +39,24 @@ import dagger.Component;
         ListPostModule.class})
 public interface ListPostComponent extends AppActivityComponent {
 
+    /**
+     * Injects {@link PostActivity}
+     *
+     * @param listPostActivity The post activity
+     */
     void inject(PostActivity listPostActivity);
 
+    /**
+     * Injects {@link ListPostFragment}
+     *
+     * @param listPostFragment The list post fragment
+     */
     void inject(ListPostFragment listPostFragment);
 
+    /**
+     * Provides {@link ListPostPresenter} to the sub-graph
+     *
+     * @return The list post presenter
+     */
     ListPostPresenter listPostPresenter();
 }

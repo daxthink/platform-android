@@ -23,7 +23,7 @@ import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.PlatformService;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
@@ -50,36 +50,105 @@ import dagger.Component;
 public interface AppComponent extends ApplicationComponent {
 
     // Provide these to the sub-graph
+
+    /**
+     * Provide {@link HttpClientWrap} to the sub-graph
+     *
+     * @return The Http client
+     */
     HttpClientWrap httpClientWrap();
 
+    /**
+     * Provide @{@link SessionManager} to the sub-graph
+     *
+     * @return The session manager
+     */
     SessionManager<PlatformSession> platformSessionManager();
 
+    /**
+     * Provide {@link AppState} to the sub-graph
+     *
+     * @return The app state
+     */
     AppState appState();
 
+    /**
+     * Provide {@link UserState} to the sub-graph
+     *
+     * @return The user state
+     */
     UserState userState();
 
+    /**
+     * Provide {@link DeploymentRepository} to the sub-graph
+     *
+     * @return The deployment repository
+     */
     DeploymentRepository deploymentRepository();
 
+    /**
+     * Provide {@link PostRepository} to the sub-graph
+     *
+     * @return The post repository
+     */
     PostRepository postRepository();
 
+    /**
+     * Provide {@link GeoJsonRepository} to the sub-graph
+     *
+     * @return The geojson repository
+     */
     GeoJsonRepository geoJsonRepsitory();
 
+    /**
+     * Provide {@link UserAccountRepository} to the sub-graph
+     *
+     * @return The user account repository
+     */
     UserAccountRepository userAccountRepository();
 
+    /**
+     * Provide {@link UserProfileRepository} to the sub-graph
+     *
+     * @return The user profile repository
+     */
     UserProfileRepository userProfileRepository();
 
+    /**
+     * Provide {@link PrefsFactory} to the sub-graph
+     *
+     * @return The prefs factory
+     */
     PrefsFactory prefsFactory();
 
+    /**
+     * Provide {@link PlatformService} to the sub-graph
+     *
+     * @return The platform service
+     */
     PlatformService platformService();
 
+    /**
+     * Provide {@link UshAccessTokenManager} to the sub-graph
+     *
+     * @return the ushahidi access token manager
+     */
     UshAccessTokenManager ushahidiTokenManager();
 
-
+    /**
+     * Initializes Application's level dagger component
+     */
     final class Initializer {
 
         private Initializer() {
         } // No instances.
 
+        /**
+         * Initializes Application's level dagger component
+         *
+         * @param app The {@link UshahidiApplication}
+         * @return The dagger component
+         */
         public static AppComponent init(UshahidiApplication app) {
             return DaggerAppComponent.builder()
                     .applicationModule(new ApplicationModule(app))

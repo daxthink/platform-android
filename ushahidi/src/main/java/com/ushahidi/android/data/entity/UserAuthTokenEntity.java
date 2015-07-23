@@ -34,6 +34,15 @@ public class UserAuthTokenEntity {
 
     private Long mDeploymentId;
 
+    /**
+     * Default constructor
+     *
+     * @param deploymentId The deployment id
+     * @param accessToken  The access token
+     * @param tokenType    The access token type
+     * @param refreshToken The refresh token
+     * @param expires      The date it expires
+     */
     public UserAuthTokenEntity(Long deploymentId, String accessToken, String tokenType,
             String refreshToken,
             long expires) {

@@ -136,9 +136,9 @@ public class ListDeploymentFragment
             }
         });
 
-        RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter =
-                new RecyclerViewItemTouchListenerAdapter(mDeploymentRecyclerView.recyclerView,
-                        this);
+        RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter
+                = new RecyclerViewItemTouchListenerAdapter(mDeploymentRecyclerView.recyclerView,
+                this);
         mDeploymentRecyclerView.recyclerView
                 .addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
         swipeToDeleteUndo();

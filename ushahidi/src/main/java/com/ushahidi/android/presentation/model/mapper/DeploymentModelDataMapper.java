@@ -33,6 +33,9 @@ import javax.inject.Inject;
  */
 public class DeploymentModelDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public DeploymentModelDataMapper() {
     }

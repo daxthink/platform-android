@@ -19,7 +19,7 @@ package com.ushahidi.android.data.api;
 
 import com.google.gson.JsonElement;
 
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 
 import android.support.annotation.NonNull;
@@ -37,6 +37,11 @@ public class GeoJsonApi {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param ushAccessTokenManager The access token manager
+     */
     @Inject
     public GeoJsonApi(@NonNull UshAccessTokenManager ushAccessTokenManager) {
         mUshAccessTokenManager = ushAccessTokenManager;
@@ -44,6 +49,8 @@ public class GeoJsonApi {
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link GeoJsonEntity}.
+     *
+     * @return {@link GeoJsonEntity} Observable
      */
     public Observable<GeoJsonEntity> getGeoJson() {
         return mUshAccessTokenManager.getValidAccessToken()

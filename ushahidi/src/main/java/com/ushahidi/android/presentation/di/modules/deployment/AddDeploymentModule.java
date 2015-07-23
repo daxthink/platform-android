@@ -34,14 +34,27 @@ public class AddDeploymentModule {
 
     private Long mDeploymentId;
 
+    /**
+     * Default constructor
+     */
     public AddDeploymentModule() {
     }
 
+    /**
+     * Constructs an {@link AddDeploymentModule} with an initialized deployment id
+     *
+     * @param deploymentId The deployment id to be initialized
+     */
     public AddDeploymentModule(Long deploymentId) {
         mDeploymentId = deploymentId;
     }
 
-
+    /**
+     * Provides {@link AddDeploymentUsecase} object with annotated name "categoryAdd"
+     *
+     * @param addDeploymentUsecase The add deployment use case
+     * @return The add deployment use case
+     */
     @Provides
     @ActivityScope
     @Named("categoryAdd")

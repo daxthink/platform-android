@@ -23,5 +23,12 @@ package com.ushahidi.android.domain.entity;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public enum From {
-    ONLINE, DATABASE
+    /**
+     * Indicates to fetch data via the API
+     */
+    ONLINE,
+    /**
+     * Indicates to fetch data via the local database
+     */
+    DATABASE
 }

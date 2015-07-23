@@ -25,18 +25,37 @@ package com.ushahidi.android.data.exception;
  */
 public class AddGeoJsonException extends Exception {
 
+    /**
+     * Default constructor
+     */
     public AddGeoJsonException() {
         super();
     }
 
+    /**
+     * Initialize the exception with a custom message
+     *
+     * @param message The message be shown when the exception is thrown
+     */
     public AddGeoJsonException(final String message) {
         super(message);
     }
 
+    /**
+     * Initialize the exception with a custom message and the cause of the exception
+     *
+     * @param message The message to be shown when the exception is thrown
+     * @param cause   The cause of the exception
+     */
     public AddGeoJsonException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Initialize the exception with a the cause of the exception
+     *
+     * @param cause The cause of the exception
+     */
     public AddGeoJsonException(final Throwable cause) {
         super(cause);
     }

@@ -30,6 +30,9 @@ import com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment;
 import dagger.Component;
 
 /**
+ * Provides {@link ActivityScope} based components to {@link ListDeploymentFragment} and the host
+ * activity {@link ListDeploymentActivity}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
@@ -37,9 +40,24 @@ import dagger.Component;
         ListDeploymentModule.class, DeleteDeploymentModule.class})
 public interface DeleteDeploymentComponent extends AppActivityComponent {
 
+    /**
+     * Injects dependencies into {@link ListDeploymentActivity}
+     *
+     * @param listDeploymentActivity The list deployment activity
+     */
     void inject(ListDeploymentActivity listDeploymentActivity);
 
+    /**
+     * Injects dependencies into {@link ListDeploymentFragment}
+     *
+     * @param listDeploymentFragment THe list deployment fragment
+     */
     void inject(ListDeploymentFragment listDeploymentFragment);
 
+    /**
+     * Provides {@link DeleteDeploymentPresenter}
+     *
+     * @return The delete deployment presenter
+     */
     DeleteDeploymentPresenter deleteDeploymentPresenter();
 }

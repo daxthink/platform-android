@@ -40,6 +40,13 @@ public class ListGeoJsonUsecase extends Usecase {
 
     private From mFrom;
 
+    /**
+     * Default constructor
+     *
+     * @param geoJsonRepository   The GeoJson Repository
+     * @param threadExecutor      The thread executor
+     * @param postExecutionThread The post execution thread
+     */
     @Inject
     protected ListGeoJsonUsecase(GeoJsonRepository geoJsonRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {

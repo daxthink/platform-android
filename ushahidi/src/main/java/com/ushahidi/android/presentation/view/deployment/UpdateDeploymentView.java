@@ -21,11 +21,23 @@ import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 
 /**
+ * Update deployment View
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface UpdateDeploymentView extends LoadDataView {
 
+    /**
+     * Shows when a deployment has been successfully updated
+     *
+     * @param row The affacted row
+     */
     void onDeploymentSuccessfullyUpdated(Long row);
 
+    /**
+     * Renders a {@link DeploymentModel}
+     *
+     * @param deploymentModel The deployment model to be rendered
+     */
     void showDeployment(DeploymentModel deploymentModel);
 }

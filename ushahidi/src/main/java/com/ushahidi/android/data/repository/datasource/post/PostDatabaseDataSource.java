@@ -35,8 +35,13 @@ import rx.Observable;
  */
 public class PostDatabaseDataSource implements PostDataSource {
 
-    PostDatabaseHelper mPostDatabaseHelper;
+    private PostDatabaseHelper mPostDatabaseHelper;
 
+    /**
+     * Default constructor
+     *
+     * @param postDatabaseHelper The post database helper
+     */
     public PostDatabaseDataSource(@NonNull PostDatabaseHelper postDatabaseHelper) {
         mPostDatabaseHelper = postDatabaseHelper;
     }

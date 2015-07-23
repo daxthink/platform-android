@@ -23,10 +23,6 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -36,16 +32,38 @@ import java.util.regex.Pattern;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Utility {
+public final class Utility {
 
+    private Utility() {
+        // No instance
+    }
+
+    /**
+     * Checks if collection is empty
+     *
+     * @param collection The collection to be checked
+     * @return True if empty otherwise false
+     */
     public static boolean isCollectionEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
 
+    /**
+     * The collection size
+     *
+     * @param collection The collection to check it's size
+     * @return The size of the collection
+     */
     public static int collectionSize(Collection<?> collection) {
         return collection != null ? collection.size() : 0;
     }
 
+    /**
+     * Capitalize the first letter
+     *
+     * @param text The letter to be capitalized
+     * @return The capitalized letter
+     */
     public static String capitalizeFirstLetter(String text) {
         if (text.length() == 0) {
             return text;
@@ -56,52 +74,31 @@ public class Utility {
 
     }
 
+    /**
+     * Validate a string to make sure it's in the appropriate hex color format
+     *
+     * @param hexColor The string containing the hex color
+     * @return True if it's in the appropriate format otherwise false
+     */
     public static boolean validateHexColor(String hexColor) {
         if (TextUtils.isEmpty(hexColor)) {
             return false;
         }
-        final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
-        return Pattern.compile(HEX_PATTERN).matcher(hexColor).matches();
+        final String hexPattern = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+        return Pattern.compile(hexPattern).matcher(hexColor).matches();
     }
 
-    public static int getScreenHeight(Context c) {
-        WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+    /**
+     * To get the screen height
+     *
+     * @param context The calling context
+     * @return The screen height
+     */
+    public static int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         return size.y;
     }
-
-    public static void writeDbToSDCard() {
-        File f = new File("/data/data/com.ushahidi.android/databases/ushahidi.db");
-        FileInputStream fis = null;
-        FileOutputStream fos = null;
-
-        try {
-            fis = new FileInputStream(f);
-            fos = new FileOutputStream("/mnt/sdcard/ush_dump.db");
-            while (true) {
-                int i = fis.read();
-                if (i != -1) {
-                    fos.write(i);
-                } else {
-                    break;
-                }
-            }
-            fos.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-                if (fis != null) {
-                    fis.close();
-                }
-            } catch (IOException ioe) {
-            }
-        }
-    }
-
 }

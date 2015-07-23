@@ -34,8 +34,9 @@ import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 /**
- * Creates a Restful Service based on the active {@link com.ushahidi.android.domain.entity.Deployment}
- * Active deployment is the one currently selected and its data being viewed.
+ * Creates a Restful Service based on the active
+ * {@link com.ushahidi.android.domain.entity.Deployment} Active deployment is the one currently
+ * selected and its data being viewed.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -49,6 +50,13 @@ public class PlatformService {
 
     private GsonConverter mGsonConverter;
 
+    /**
+     * Default constructor
+     *
+     * @param client                         The http client
+     * @param unauthorizedAccessErrorHandler The unauthorized access error handler
+     * @param prefsFactory                   The SharedPreference factory
+     */
     @Inject
     public PlatformService(HttpClientWrap client,
             UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler,

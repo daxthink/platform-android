@@ -56,11 +56,11 @@ public class PostTagModel extends Model {
 
     @Override
     public String toString() {
-        return "PostTagModel{" +
-                "mPostId=" + mPostId +
-                ", mTagId=" + mTagId +
-                ", _id=" + _id +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "PostTagModel{"
+                + "mPostId=" + mPostId
+                + ", mTagId=" + mTagId
+                + ", _id=" + _id
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 }

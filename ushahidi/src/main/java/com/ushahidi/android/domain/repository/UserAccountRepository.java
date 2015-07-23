@@ -27,5 +27,11 @@ import rx.Observable;
  */
 public interface UserAccountRepository {
 
+    /**
+     * Performs a user login
+     *
+     * @param userAccount The user account to login
+     * @return True if it successfully logs the user in
+     */
     Observable<Boolean> login(UserAccount userAccount);
 }

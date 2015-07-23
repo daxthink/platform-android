@@ -42,6 +42,12 @@ public class GeoJsonDataRepository implements GeoJsonRepository {
 
     private final GeoJsonDataSourceFactory mGeoJsonDataSourceFactory;
 
+    /**
+     * Default constructor that constructs {@link GeoJsonRepository}
+     *
+     * @param geoJsonDataSourceFactory The geojson data source factory
+     * @param geoJsonEntityDataMapper  The geojson entity data mapper
+     */
     @Inject
     public GeoJsonDataRepository(GeoJsonDataSourceFactory geoJsonDataSourceFactory,
             GeoJsonEntityDataMapper geoJsonEntityDataMapper) {

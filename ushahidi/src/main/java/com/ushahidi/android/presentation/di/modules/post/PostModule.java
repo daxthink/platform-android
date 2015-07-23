@@ -29,11 +29,19 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * Dagger modules that provides post related objects
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Module
 public class PostModule {
 
+    /**
+     * Provides {@link Usecase} annotated with the name "deploymentList"
+     *
+     * @param listDeploymentUsecase The list deployment use case
+     * @return The list deployment use case
+     */
     @Provides
     @ActivityScope
     @Named("deploymentList")
@@ -41,6 +49,12 @@ public class PostModule {
         return listDeploymentUsecase;
     }
 
+    /**
+     * Provides {@link GetUserProfileUsecase} object annotated with the name "userprofileGet"
+     *
+     * @param getUserProfileUsecase The get user profile use case
+     * @return The get user profile use case
+     */
     @Provides
     @ActivityScope
     @Named("userprofileGet")
@@ -49,6 +63,13 @@ public class PostModule {
         return getUserProfileUsecase;
     }
 
+    /**
+     * Provides {@link ActivateDeploymentUsecase} object annotated with the name
+     * "deploymentActivate"
+     *
+     * @param activateDeploymentUsecase The activate deployment use case
+     * @return The activate deployment use case
+     */
     @Provides
     @ActivityScope
     @Named("deploymentActivate")

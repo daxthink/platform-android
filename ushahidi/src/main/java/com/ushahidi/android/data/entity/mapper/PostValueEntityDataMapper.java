@@ -17,9 +17,7 @@
 
 package com.ushahidi.android.data.entity.mapper;
 
-import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
-import com.ushahidi.android.domain.entity.Post;
 import com.ushahidi.android.domain.entity.PostValue;
 
 import java.util.ArrayList;
@@ -34,11 +32,20 @@ import javax.inject.Singleton;
 @Singleton
 public class PostValueEntityDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public PostValueEntityDataMapper() {
         // Do nothing
     }
 
+    /**
+     * Maps {@link PostValueEntity} onto {@link PostValue}
+     *
+     * @param postEntity The post entity to be mapped
+     * @return The post value
+     */
     public PostValue map(PostValueEntity postEntity) {
         PostValue postValue = null;
         if (postEntity != null) {
@@ -49,6 +56,12 @@ public class PostValueEntityDataMapper {
         return postValue;
     }
 
+    /**
+     * Maps {@link PostValue} onto {@link PostValueEntity}
+     *
+     * @param postValue The post value entity
+     * @return The post value
+     */
     public PostValueEntity map(PostValue postValue) {
         PostValueEntity postValueEntity = null;
         if (postValue != null) {
@@ -60,10 +73,10 @@ public class PostValueEntityDataMapper {
     }
 
     /**
-     * Maps a list {@link PostEntity} into a list of {@link Post}.
+     * Maps a list {@link PostValueEntity} into a list of {@link PostValue}.
      *
      * @param postEntityList List to be mapped.
-     * @return {@link Post}
+     * @return {@link PostValue}
      */
     public List<PostValue> map(List<PostValueEntity> postEntityList) {
         List<PostValue> postValueList = new ArrayList<>();

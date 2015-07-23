@@ -40,6 +40,13 @@ public class ListPostUsecase extends Usecase {
 
     private From mFrom;
 
+    /**
+     * Default constructor
+     *
+     * @param postRepository      The post repository
+     * @param threadExecutor      The thread executor
+     * @param postExecutionThread The post execution thread
+     */
     @Inject
     protected ListPostUsecase(PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {

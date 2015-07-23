@@ -28,7 +28,7 @@ import android.content.Context;
  *
  * @author @author Ushahidi Team <team@ushahidi.com>
  */
-public class ErrorMessageFactory {
+public final class ErrorMessageFactory {
 
     private ErrorMessageFactory() {
         // Do nothing

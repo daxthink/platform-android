@@ -32,6 +32,9 @@ import javax.inject.Singleton;
 @Singleton
 public class TagEntityDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public TagEntityDataMapper() {
         // Do nothing
@@ -63,6 +66,12 @@ public class TagEntityDataMapper {
         return tag;
     }
 
+    /**
+     * Maps a {@link Tag} into a list of {@link TagEntity}.
+     *
+     * @param tag Tag to be mapped.
+     * @return {@link Tag}
+     */
     public TagEntity map(Tag tag) {
         TagEntity tagEntity = null;
 

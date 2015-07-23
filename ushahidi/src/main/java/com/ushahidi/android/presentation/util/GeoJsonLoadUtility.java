@@ -40,6 +40,7 @@ import org.json.JSONException;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -52,13 +53,18 @@ import timber.log.Timber;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonLoadUtility {
+public final class GeoJsonLoadUtility {
+
+    private GeoJsonLoadUtility() {
+        // No instance
+    }
 
     /**
      * Load GeoJSON from URL (in synchronous manner) and return GeoJSON FeatureCollection
      *
      * @param geojsonText of file in assets directory
      * @return the parsed getGeoJson as a featurecollection
+     * @throws JSONException The json exception to be thrown
      */
     public static FeatureCollection parseGeoJson(
             final String geojsonText) throws JSONException {
@@ -81,12 +87,14 @@ public class GeoJsonLoadUtility {
     }
 
     /**
+     * /**
      * Converts GeoJSON objects into UI Objects to be rendered on Google Maps
      *
      * @param featureCollection Parsed GeoJSON Objects
      * @param fillColor         Optional fill color
      * @param strokeColor       Optional stroke color
      * @return Collection of Mapbox SDK UI Objects
+     * @throws JSONException The JSON exception to be thrown
      */
     public static ArrayList<Object> createUIObjectsFromGeoJSONObjects(
             final FeatureCollection featureCollection, @ColorInt final int fillColor,
@@ -121,45 +129,78 @@ public class GeoJsonLoadUtility {
     private static void deserializeGeometry(Geometry geometry, long id, String title,
             String description, ArrayList<Object> uiObjects, final int fillColor,
             final int strokeColor) throws JSONException {
-        int j;
-
         if (geometry instanceof Point) {
-            JSONArray coordinates = (JSONArray) geometry.toJSON().get("coordinates");
+            setPoint(geometry, id, title, description, uiObjects);
+        } else if (geometry instanceof MultiPoint) {
+            setMultiPoint(geometry, id, title, description, uiObjects);
+        } else if (geometry instanceof LineString) {
+            setLineString(geometry, uiObjects, strokeColor);
+        } else if (geometry instanceof MultiLineString) {
+            setMultiLineString(geometry, uiObjects, strokeColor);
+        } else if (geometry instanceof Polygon) {
+            setPolygon(geometry, uiObjects, fillColor, strokeColor);
+        } else if (geometry instanceof MultiPolygon) {
+            setMultiPloygon(geometry, uiObjects, fillColor, strokeColor);
+        }
+    }
+
+    private static void setPoint(Geometry geometry, long id, String title, String description,
+            ArrayList<Object> uiObjects) throws JSONException {
+        JSONArray coordinates = (JSONArray) geometry.toJSON().get("coordinates");
+        ClusterMarkerModel clusterMarkerModel = getClusterMarkerModel(coordinates, id, title,
+                description);
+        uiObjects.add(clusterMarkerModel);
+    }
+
+    private static void setMultiPoint(Geometry geometry, long id, String title, String description,
+            ArrayList<Object> uiObjects) throws JSONException {
+        int j;
+        JSONArray points = (JSONArray) geometry.toJSON().get("coordinates");
+        for (j = 0; j < points.length(); j++) {
+            JSONArray coordinates = (JSONArray) points.get(j);
+            ClusterMarkerModel clusterMarkerModel = getClusterMarkerModel(coordinates, id,
+                    title, description);
+            uiObjects.add(clusterMarkerModel);
+        }
+    }
+
+    private static void setLineString(Geometry geometry, ArrayList<Object> uiObjects,
+            int strokeColor) throws JSONException {
+        int j;
+        List<LatLng> latLngs = new ArrayList<>();
+        JSONArray points = (JSONArray) geometry.toJSON().get("coordinates");
+        JSONArray coordinates;
+        for (j = 0; j < points.length(); j++) {
+            coordinates = (JSONArray) points.get(j);
             double lon = coordinates.getDouble(0);
             double lat = coordinates.getDouble(1);
-            ClusterMarkerModel clusterMarkerModel = new ClusterMarkerModel();
-            clusterMarkerModel._id = id;
-            clusterMarkerModel.latitude = lat;
-            clusterMarkerModel.longitude = lon;
-            clusterMarkerModel.title = title;
-            clusterMarkerModel.description = description;
-            uiObjects.add(clusterMarkerModel);
-        } else if (geometry instanceof MultiPoint) {
-            JSONArray points = (JSONArray) geometry.toJSON().get("coordinates");
-            for (j = 0; j < points.length(); j++) {
-                JSONArray coordinates = (JSONArray) points.get(j);
-                double lon = coordinates.getDouble(0);
-                double lat = coordinates.getDouble(1);
-                ClusterMarkerModel clusterMarkerModel = new ClusterMarkerModel();
-                clusterMarkerModel._id = id;
-                clusterMarkerModel.latitude = lat;
-                clusterMarkerModel.longitude = lon;
-                clusterMarkerModel.title = title;
-                clusterMarkerModel.description = description;
-                uiObjects.add(clusterMarkerModel);
-            }
-        } else if (geometry instanceof LineString) {
-            List<LatLng> latLngs = new ArrayList<>();
-            JSONArray points = (JSONArray) geometry.toJSON().get("coordinates");
+            latLngs.add(new LatLng(lat, lon));
+        }
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.addAll(latLngs);
+        polylineOptions.width(5);
+        if (strokeColor > 0) {
+            polylineOptions.color(strokeColor);
+        } else {
+            polylineOptions.color(Color.RED);
+        }
+        uiObjects.add(polylineOptions);
+    }
+
+    private static void setMultiLineString(Geometry geometry, ArrayList<Object> uiObjects,
+            int strokeColor) throws JSONException {
+        int j;
+        JSONArray lines = (JSONArray) geometry.toJSON().get("coordinates");
+        for (int k = 0; k < lines.length(); k++) {
+            PolylineOptions polylineOptions = new PolylineOptions();
+            JSONArray points = (JSONArray) lines.get(k);
             JSONArray coordinates;
             for (j = 0; j < points.length(); j++) {
                 coordinates = (JSONArray) points.get(j);
                 double lon = coordinates.getDouble(0);
                 double lat = coordinates.getDouble(1);
-                latLngs.add(new LatLng(lat, lon));
+                polylineOptions.add(new LatLng(lat, lon));
             }
-            PolylineOptions polylineOptions = new PolylineOptions();
-            polylineOptions.addAll(latLngs);
             polylineOptions.width(5);
             if (strokeColor > 0) {
                 polylineOptions.color(strokeColor);
@@ -167,30 +208,64 @@ public class GeoJsonLoadUtility {
                 polylineOptions.color(Color.RED);
             }
             uiObjects.add(polylineOptions);
-        } else if (geometry instanceof MultiLineString) {
-            JSONArray lines = (JSONArray) geometry.toJSON().get("coordinates");
-            for (int k = 0; k < lines.length(); k++) {
-                PolylineOptions polylineOptions = new PolylineOptions();
-                JSONArray points = (JSONArray) lines.get(k);
-                JSONArray coordinates;
-                for (j = 0; j < points.length(); j++) {
-                    coordinates = (JSONArray) points.get(j);
+        }
+    }
+
+    private static void setPolygon(Geometry geometry, ArrayList<Object> uiObjects, int fillColor,
+            int strokeColor) throws JSONException {
+        int j;
+        PolygonOptions polygonOptions = new PolygonOptions();
+        JSONArray points = (JSONArray) geometry.toJSON().get("coordinates");
+
+        for (int r = 0; r < points.length(); r++) {
+            JSONArray ring = (JSONArray) points.get(r);
+            JSONArray coordinates;
+
+            // we re-wind inner rings of GeoJSON polygons in order
+            // to render them as transparent in the canvas layer.
+
+            // first ring should have windingOrder = true,
+            // all others should have winding order == false
+            if ((r == 0 && !windingOrder(ring)) || (r != 0 && windingOrder(ring))) {
+                for (j = 0; j < ring.length(); j++) {
+                    coordinates = (JSONArray) ring.get(j);
                     double lon = coordinates.getDouble(0);
                     double lat = coordinates.getDouble(1);
-                    polylineOptions.add(new LatLng(lat, lon));
+                    polygonOptions.add(new LatLng(lat, lon));
                 }
-                polylineOptions.width(5);
-                if (strokeColor > 0) {
-                    polylineOptions.color(strokeColor);
-                } else {
-                    polylineOptions.color(Color.RED);
+            } else {
+                for (j = ring.length() - 1; j >= 0; j--) {
+                    coordinates = (JSONArray) ring.get(j);
+                    double lon = coordinates.getDouble(0);
+                    double lat = coordinates.getDouble(1);
+                    polygonOptions.add(new LatLng(lat, lon));
                 }
-                uiObjects.add(polylineOptions);
             }
-        } else if (geometry instanceof Polygon) {
-            PolygonOptions polygonOptions = new PolygonOptions();
-            JSONArray points = (JSONArray) geometry.toJSON().get("coordinates");
 
+            if (strokeColor > 0) {
+                polygonOptions.strokeColor(fillColor);
+            } else {
+                polygonOptions.strokeColor(Color.RED);
+            }
+
+            if (fillColor > 0) {
+                polygonOptions.fillColor(fillColor);
+            } else {
+                polygonOptions.fillColor(Color.RED);
+            }
+
+            uiObjects.add(polygonOptions);
+        }
+    }
+
+    private static void setMultiPloygon(Geometry geometry, ArrayList<Object> uiObjects,
+            int fillColor, int strokeColor) throws JSONException {
+        int j;
+        PolygonOptions polygonOptions = new PolygonOptions();
+        JSONArray polygons = (JSONArray) geometry.toJSON().get("coordinates");
+
+        for (int p = 0; p < polygons.length(); p++) {
+            JSONArray points = (JSONArray) polygons.get(p);
             for (int r = 0; r < points.length(); r++) {
                 JSONArray ring = (JSONArray) points.get(r);
                 JSONArray coordinates;
@@ -227,55 +302,23 @@ public class GeoJsonLoadUtility {
                 } else {
                     polygonOptions.fillColor(Color.RED);
                 }
-
                 uiObjects.add(polygonOptions);
             }
-        } else if (geometry instanceof MultiPolygon) {
-            PolygonOptions polygonOptions = new PolygonOptions();
-            JSONArray polygons = (JSONArray) geometry.toJSON().get("coordinates");
-
-            for (int p = 0; p < polygons.length(); p++) {
-                JSONArray points = (JSONArray) polygons.get(p);
-                for (int r = 0; r < points.length(); r++) {
-                    JSONArray ring = (JSONArray) points.get(r);
-                    JSONArray coordinates;
-
-                    // we re-wind inner rings of GeoJSON polygons in order
-                    // to render them as transparent in the canvas layer.
-
-                    // first ring should have windingOrder = true,
-                    // all others should have winding order == false
-                    if ((r == 0 && !windingOrder(ring)) || (r != 0 && windingOrder(ring))) {
-                        for (j = 0; j < ring.length(); j++) {
-                            coordinates = (JSONArray) ring.get(j);
-                            double lon = coordinates.getDouble(0);
-                            double lat = coordinates.getDouble(1);
-                            polygonOptions.add(new LatLng(lat, lon));
-                        }
-                    } else {
-                        for (j = ring.length() - 1; j >= 0; j--) {
-                            coordinates = (JSONArray) ring.get(j);
-                            double lon = coordinates.getDouble(0);
-                            double lat = coordinates.getDouble(1);
-                            polygonOptions.add(new LatLng(lat, lon));
-                        }
-                    }
-
-                    if (strokeColor > 0) {
-                        polygonOptions.strokeColor(fillColor);
-                    } else {
-                        polygonOptions.strokeColor(Color.RED);
-                    }
-
-                    if (fillColor > 0) {
-                        polygonOptions.fillColor(fillColor);
-                    } else {
-                        polygonOptions.fillColor(Color.RED);
-                    }
-                    uiObjects.add(polygonOptions);
-                }
-            }
         }
+    }
+
+    @NonNull
+    private static ClusterMarkerModel getClusterMarkerModel(JSONArray coordinates, long id,
+            String title, String description) throws JSONException {
+        double lon = coordinates.getDouble(0);
+        double lat = coordinates.getDouble(1);
+        ClusterMarkerModel clusterMarkerModel = new ClusterMarkerModel();
+        clusterMarkerModel._id = id;
+        clusterMarkerModel.setLatitude(lat);
+        clusterMarkerModel.setLongitude(lon);
+        clusterMarkerModel.setTitle(title);
+        clusterMarkerModel.setDescription(description);
+        return clusterMarkerModel;
     }
 
     private static boolean windingOrder(JSONArray ring) throws JSONException {

@@ -32,6 +32,9 @@ import javax.inject.Singleton;
 @Singleton
 public class UserAccountEntityDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public UserAccountEntityDataMapper() {
         // Do nothing
@@ -56,6 +59,13 @@ public class UserAccountEntityDataMapper {
         return userAccount;
     }
 
+    /**
+     * Maps a list {@link UserAccount} into a list of {@link
+     * UserAccountEntity}.
+     *
+     * @param userAccount to be mapped.
+     * @return {@link UserAccountEntity}
+     */
     public UserAccountEntity map(UserAccount userAccount) {
         UserAccountEntity userAccountEntity = new UserAccountEntity();
 

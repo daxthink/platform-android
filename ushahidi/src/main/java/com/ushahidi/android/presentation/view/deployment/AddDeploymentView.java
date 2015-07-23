@@ -19,9 +19,16 @@ package com.ushahidi.android.presentation.view.deployment;
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 
 /**
+ * Add deployment view
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface AddDeploymentView extends LoadDataView {
 
+    /**
+     * Show the status of {@link com.ushahidi.android.presentation.model.DeploymentModel} deletion
+     *
+     * @param row The affected row
+     */
     void onDeploymentSuccessfullyAdded(Long row);
 }

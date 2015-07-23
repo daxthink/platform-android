@@ -36,6 +36,12 @@ public class UserProfileApiDataSource implements UserProfileDataSource {
 
     private final UserDatabaseHelper mUserDatabaseHelper;
 
+    /**
+     * Default constructor
+     *
+     * @param userApi            The user API
+     * @param userDatabaseHelper The user database helper
+     */
     public UserProfileApiDataSource(@NonNull UserApi userApi,
             @NonNull UserDatabaseHelper userDatabaseHelper) {
         mUserApi = userApi;

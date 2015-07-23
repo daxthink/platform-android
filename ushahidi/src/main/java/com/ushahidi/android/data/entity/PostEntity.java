@@ -33,43 +33,6 @@ import nl.qbusict.cupboard.annotation.Ignore;
  */
 public class PostEntity extends DataEntity {
 
-    public enum Status {
-        @SerializedName("draft")
-        DRAFT("draft"),
-
-        @SerializedName("published")
-        PUBLISHED("published"),
-
-        @SerializedName("pending")
-        PENDING("pending"),
-
-        @SerializedName("unknown")
-        UNKNOWN("unknown");
-
-        public String value;
-
-        Status(String value) {
-            this.value = value;
-        }
-    }
-
-    public enum Type {
-        @SerializedName("report")
-        REPORT("report"),
-        @SerializedName("update")
-        UPDATE("update"),
-        @SerializedName("revision")
-        REVISION("revision"),
-        @SerializedName("unknown")
-        UNKNOWN("unknown");
-
-        public String value;
-
-        Type(String value) {
-            this.value = value;
-        }
-    }
-
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
     private Parent parent;
@@ -229,6 +192,112 @@ public class PostEntity extends DataEntity {
         mDeploymentId = deploymentId;
     }
 
+    @Override
+    public String toString() {
+        return "Post{"
+                + "mParent=" + mParent
+                + ", mType=" + mType
+                + ", mTitle='" + mTitle + '\''
+                + ", mSlug='" + mSlug + '\''
+                + ", mContent='" + mContent + '\''
+                + ", mAuthorEmail='" + mAuthorEmail + '\''
+                + ", mAuthorRealname='" + mAuthorRealname + '\''
+                + ", mStatus=" + mStatus
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + ", mDeploymentId=" + mDeploymentId
+                + ", mValues=" + mValues
+                + ", mTags=" + mTags
+                + '}';
+    }
+
+    public enum Status {
+        /**
+         * A draft status
+         */
+        @SerializedName("draft")
+        DRAFT("draft"),
+
+        /**
+         * A published status
+         */
+        @SerializedName("published")
+        PUBLISHED("published"),
+
+        /**
+         * A pending status
+         */
+        @SerializedName("pending")
+        PENDING("pending"),
+
+        /**
+         * An unknown status
+         */
+        @SerializedName("unknown")
+        UNKNOWN("unknown");
+
+        private String value;
+
+        /**
+         * The value property of the post
+         *
+         * @param value The value
+         */
+        Status(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets value
+         *
+         * @return The value
+         */
+        public String getValue() {
+            return value;
+        }
+    }
+
+    public enum Type {
+        /**
+         * Report type
+         */
+        @SerializedName("report")
+        REPORT("report"),
+        /**
+         * Updated type
+         */
+        @SerializedName("update")
+        UPDATE("update"),
+        /**
+         * Revision
+         */
+        @SerializedName("revision")
+        REVISION("revision"),
+        /**
+         * Unknown
+         */
+        @SerializedName("unknown")
+        UNKNOWN("unknown");
+
+        private String value;
+
+        /**
+         * Default constructor
+         *
+         * @param value The value
+         */
+        Type(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * Represents the parent property of the a post
+     */
     public static class Parent {
 
         @SerializedName("id")
@@ -237,24 +306,5 @@ public class PostEntity extends DataEntity {
         public Long getId() {
             return id;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "mParent=" + mParent +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mValues=" + mValues +
-                ", mTags=" + mTags +
-                '}';
     }
 }

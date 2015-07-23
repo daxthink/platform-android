@@ -33,10 +33,18 @@ import dagger.Provides;
 @Module
 public class UpdateDeploymentModule {
 
+    /**
+     * Default constructor
+     */
     public UpdateDeploymentModule() {
     }
 
-
+    /**
+     * Provides {@link UpdateDeploymentUsecase} object
+     *
+     * @param updateDeploymentUsecase The update deployment use case
+     * @return The update deployment use case
+     */
     @Provides
     @ActivityScope
     @Named("categoryUpdate")

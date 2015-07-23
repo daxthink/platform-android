@@ -17,11 +17,11 @@
 
 package com.ushahidi.android.data.api;
 
-import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.entity.UserAccountEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
+import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import rx.Observable;
 
 /**
@@ -33,20 +33,35 @@ public class UserApi {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param ushAccessTokenManager The access token manager
+     */
     public UserApi(UshAccessTokenManager ushAccessTokenManager) {
         mUshAccessTokenManager = ushAccessTokenManager;
     }
 
+    /**
+     * Retrieves an {@link rx.Observable} which will emit an {@link OAuth2AccessToken}.
+     *
+     * @param userAccountEntity The user account entity to get it's access token
+     * @return The OAuth access token to be emitted
+     */
     public Observable<OAuth2AccessToken> loginUserAccount(UserAccountEntity userAccountEntity) {
         return mUshAccessTokenManager.login(userAccountEntity).grantNewAccessToken()
                 .doOnNext(oAuth2AccessToken -> mUshAccessTokenManager.getStorage()
                         .storeAccessToken(oAuth2AccessToken));
     }
 
+    /**
+     * Retrieves an {@link rx.Observable} which will emit an {@link UserEntity}.
+     *
+     * @return The user entity to be emitted
+     */
     public Observable<UserEntity> getUserProfile() {
         return mUshAccessTokenManager.getValidAccessToken()
-                .concatMap(
-                        authorizationHeader -> mUshAccessTokenManager.getRestfulService()
-                                .getUser(authorizationHeader));
+                .concatMap(authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                        .getUser(authorizationHeader));
     }
 }

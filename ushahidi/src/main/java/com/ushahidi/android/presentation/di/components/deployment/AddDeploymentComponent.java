@@ -28,6 +28,9 @@ import com.ushahidi.android.presentation.ui.fragment.AddDeploymentFragment;
 import dagger.Component;
 
 /**
+ * Provides {@link ActivityScope} based components to {@link AddDeploymentFragment} and the host
+ * activity {@link AddDeploymentActivity}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
@@ -35,9 +38,24 @@ import dagger.Component;
         AddDeploymentModule.class})
 public interface AddDeploymentComponent extends AppActivityComponent {
 
+    /**
+     * Injects {@link AddDeploymentActivity}
+     *
+     * @param addDeploymentActivity The deployment activity
+     */
     void inject(AddDeploymentActivity addDeploymentActivity);
 
+    /**
+     * Injects {@link AddDeploymentFragment}
+     *
+     * @param addDeploymentFragment The deployment fragment
+     */
     void inject(AddDeploymentFragment addDeploymentFragment);
 
+    /**
+     * Provides {@link AddDeploymentPresenter} to sub-graph
+     *
+     * @return The add deployment presenter
+     */
     AddDeploymentPresenter addDeploymentPresenter();
 }

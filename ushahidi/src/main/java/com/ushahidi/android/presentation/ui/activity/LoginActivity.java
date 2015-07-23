@@ -23,12 +23,13 @@ import com.ushahidi.android.presentation.di.components.account.LoginComponent;
 import com.ushahidi.android.presentation.ui.fragment.LoginFragment;
 
 import android.accounts.AccountAuthenticatorResponse;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 /**
+ * Login activity
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class LoginActivity extends BaseAppActivity {
@@ -37,14 +38,21 @@ public class LoginActivity extends BaseAppActivity {
 
     private AccountAuthenticatorResponse mAccountAuthenticatorResponse = null;
 
-    private Bundle mResultBundle = null;
-
     private LoginComponent mLoginComponent;
 
+    /**
+     * Default constructor
+     */
     public LoginActivity() {
         super(R.layout.activity_login, 0);
     }
 
+    /**
+     * Provides {@link Intent} for launching this activity
+     *
+     * @param context The calling context
+     * @return The intent to be launched
+     */
     public static Intent getIntent(final Context context) {
         return new Intent(context, LoginActivity.class);
     }
@@ -54,12 +62,6 @@ public class LoginActivity extends BaseAppActivity {
         super.onCreate(savedInstanceState);
         injector();
         initFragment();
-        mAccountAuthenticatorResponse = getIntent().getParcelableExtra(
-                AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
-
-        if (mAccountAuthenticatorResponse != null) {
-            mAccountAuthenticatorResponse.onRequestContinued();
-        }
     }
 
     private void injector() {
@@ -68,19 +70,11 @@ public class LoginActivity extends BaseAppActivity {
                 .activityModule(getActivityModule())
                 .build();
     }
-    
-    public void finish() {
-        if (mAccountAuthenticatorResponse != null) {
-            // send the result bundle back if set, otherwise send an error.
-            if (mResultBundle != null) {
-                mAccountAuthenticatorResponse.onResult(mResultBundle);
 
-            } else {
-                mAccountAuthenticatorResponse
-                        .onError(AccountManager.ERROR_CODE_CANCELED, "canceled");
-            }
-            mAccountAuthenticatorResponse = null;
-        }
+    /**
+     * Finishes this activity
+     */
+    public void finish() {
         super.finish();
     }
 

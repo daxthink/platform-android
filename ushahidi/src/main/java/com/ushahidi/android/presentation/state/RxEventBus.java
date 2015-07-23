@@ -33,14 +33,29 @@ public class RxEventBus {
 
     private final Subject<Object, Object> mBus = new SerializedSubject<>(PublishSubject.create());
 
+    /**
+     * Triggers an event
+     *
+     * @param o The object to be passed to the event listeners
+     */
     public void send(Object o) {
         mBus.onNext(o);
     }
 
-    public Observable<Object> toObserverable() {
+    /**
+     * An Observable that emits {@link Subject}
+     *
+     * @return The observable
+     */
+    public Observable<Object> toObservable() {
         return mBus;
     }
 
+    /**
+     * Determines if the {@link Subject} has on observable
+     *
+     * @return True if it has observers
+     */
     public boolean hasObservers() {
         return mBus.hasObservers();
     }

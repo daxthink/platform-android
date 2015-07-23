@@ -67,11 +67,11 @@ public class PostTagEntity {
 
     @Override
     public String toString() {
-        return "PostTagModel{" +
-                "mPostId=" + mPostId +
-                ", mTagId=" + mTagId +
-                ", _id=" + _id +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "PostTagModel{"
+                + "mPostId=" + mPostId
+                + ", mTagId=" + mTagId
+                + ", _id=" + _id
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 }

@@ -117,12 +117,43 @@ public class Tag extends Entity {
         mDeploymentId = deploymentId;
     }
 
+    @Override
+    public String toString() {
+        return "Tag{"
+                + "mParentId=" + mParentId
+                + ", mTag='" + mTag + '\''
+                + ", mId='" + _id + '\''
+                + ", mColor='" + mColor + '\''
+                + ", mType=" + mType
+                + ", mIcon='" + mIcon + '\''
+                + ", mDescription='" + mDescription + '\''
+                + ", mPriority=" + mPriority
+                + ", mCreated=" + mCreated
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
+    }
+
+    /**
+     * Represents the tag entity type
+     */
     public enum Type {
+        /**
+         * The category
+         */
         CATEGORY("category"),
+
+        /**
+         * The status
+         */
         STATUS("status");
 
-        public final String value;
+        private final String value;
 
+        /**
+         * Default constructor
+         *
+         * @param value The value
+         */
         Type(String value) {
             this.value = value;
         }
@@ -131,21 +162,9 @@ public class Tag extends Entity {
         public String toString() {
             return value;
         }
-    }
 
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "mParentId=" + mParentId +
-                ", mTag='" + mTag + '\'' +
-                ", mId='" + _id + '\'' +
-                ", mColor='" + mColor + '\'' +
-                ", mType=" + mType +
-                ", mIcon='" + mIcon + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mPriority=" + mPriority +
-                ", mCreated=" + mCreated +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        public String getValue() {
+            return value;
+        }
     }
 }

@@ -22,6 +22,7 @@ import java.util.Map;
 /**
  * Interface to provide auth management
  *
+ * @param <T> The platform session
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface SessionManager<T extends Session> {
@@ -33,6 +34,8 @@ public interface SessionManager<T extends Session> {
 
     /**
      * Sets the active session.
+     *
+     * @param session The session
      */
     void setActiveSession(T session);
 
@@ -42,6 +45,8 @@ public interface SessionManager<T extends Session> {
     void clearActiveSession();
 
     /**
+     * @param id           The session ID
+     * @param deploymentId The deployment ID
      * @return the session associated with the id.
      */
     T getSession(long id, long deploymentId);
@@ -49,15 +54,22 @@ public interface SessionManager<T extends Session> {
     /**
      * Sets the session to associate with the id. If there is no active session, this session also
      * becomes the active session.
+     *
+     * @param session The session
      */
     void setSession(T session);
 
     /**
      * Clears the session associated with the id.
+     *
+     * @param id           The session ID
+     * @param deploymentId The deployment ID
      */
     void clearSession(long id, long deploymentId);
 
     /**
+     * Gets the session map
+     *
      * @return the session map containing all managed sessions
      */
     Map<String, T> getSessionMap();

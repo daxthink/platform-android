@@ -47,6 +47,12 @@ public class ActivateDeploymentPresenter implements Presenter {
 
     private ActivateDeploymentView mActivateDeploymentView;
 
+    /**
+     * Default constructor
+     *
+     * @param activateDeploymentUsecase The activate deployment use case
+     * @param deploymentModelMapper     The deployment model mapper
+     */
     @Inject
     public ActivateDeploymentPresenter(
             @Named("deploymentActivate") Usecase activateDeploymentUsecase,

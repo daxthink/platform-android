@@ -40,6 +40,13 @@ public class GetUserProfileUsecase extends Usecase {
 
     private Long mUserProfileId = null;
 
+    /**
+     * Default constructor
+     *
+     * @param userProfileRepository The user profile repository
+     * @param threadExecutor        The thread executor
+     * @param postExecutionThread   The post execution thread
+     */
     @Inject
     protected GetUserProfileUsecase(UserProfileRepository userProfileRepository,
             ThreadExecutor threadExecutor,
