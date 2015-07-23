@@ -29,6 +29,9 @@ import com.ushahidi.android.presentation.ui.fragment.UpdateDeploymentFragment;
 import dagger.Component;
 
 /**
+ * Provides {@link ActivityScope} based components to {@link UpdateDeploymentFragment} and the host
+ * activity {@link UpdateDeploymentActivity}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
@@ -36,9 +39,24 @@ import dagger.Component;
         UpdateDeploymentModule.class})
 public interface UpdateDeploymentComponent extends AppActivityComponent {
 
+    /**
+     * Injects {@link UpdateDeploymentActivity}
+     *
+     * @param updateDeploymentActivity The update deployment activity
+     */
     void inject(UpdateDeploymentActivity updateDeploymentActivity);
 
+    /**
+     * Injects {@link UpdateDeploymentFragment}
+     *
+     * @param updateDeploymentFragment The update deployment fragment
+     */
     void inject(UpdateDeploymentFragment updateDeploymentFragment);
 
+    /**
+     * Provides {@link UpdateDeploymentPresenter} to the sub-graph
+     *
+     * @return The update deployment presenter
+     */
     UpdateDeploymentPresenter updateDeploymentPresenter();
 }

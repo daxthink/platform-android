@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.UserAccountEntity;
 import com.ushahidi.android.domain.entity.UserAccount;
 import com.ushahidi.android.presentation.model.UserAccountModel;
 
@@ -29,10 +28,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Maps {@link UserAccount} onto {@link UserAccountModel}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class UserAccountModelDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public UserAccountModelDataMapper() {
         // Do nothing
@@ -54,6 +58,13 @@ public class UserAccountModelDataMapper {
         return userAccountModel;
     }
 
+    /**
+     * Maps {@link UserAccountModel} to {@link UserAccount}
+     *
+     * @param userAccountModel The {@link UserAccountModel} to be
+     *                         mapped
+     * @return The {@link UserAccount} object
+     */
     public UserAccount map(@NonNull UserAccountModel userAccountModel) {
         UserAccount userAccount = new UserAccount();
         userAccount._id = userAccountModel._id;
@@ -63,11 +74,11 @@ public class UserAccountModelDataMapper {
     }
 
     /**
-     * Maps a list {@link UserAccountEntity} into a list of {@link
-     * UserAccountEntity}.
+     * Maps a list {@link UserAccount} into a list of {@link
+     * UserAccountModel}.
      *
      * @param userAccountList List to be mapped.
-     * @return {@link UserAccountEntity}
+     * @return {@link UserAccountModel}
      */
     public List<UserAccountModel> map(@NonNull List<UserAccount> userAccountList) {
         List<UserAccountModel> userAccountModelList = new ArrayList<>();

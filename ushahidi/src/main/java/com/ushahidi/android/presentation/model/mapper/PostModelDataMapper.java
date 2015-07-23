@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.domain.entity.Post;
 import com.ushahidi.android.presentation.model.PostModel;
 
@@ -29,6 +28,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Maps {@link Post} onto {@link PostModel}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostModelDataMapper {
@@ -37,6 +38,12 @@ public class PostModelDataMapper {
 
     private PostValueModelDataMapper mValueModelDataMapper;
 
+    /**
+     * Default constructor
+     *
+     * @param tagModelDataMapper       The tag model data mapper to use for initialization
+     * @param postValueModelDataMapper The post value model data mapper to use for initialization
+     */
     @Inject
     public PostModelDataMapper(TagModelDataMapper tagModelDataMapper,
             PostValueModelDataMapper postValueModelDataMapper) {
@@ -45,7 +52,7 @@ public class PostModelDataMapper {
     }
 
     /**
-     * Maps {@link PostEntity} to {@link Post}
+     * Maps {@link Post} to {@link Post}
      *
      * @param post The {@link Post} to be
      *             mapped
@@ -71,6 +78,12 @@ public class PostModelDataMapper {
         return postModel;
     }
 
+    /**
+     * Maps {@link PostModel} onto {@link Post}
+     *
+     * @param postModel The post model to be mapped
+     * @return The Post
+     */
     public Post map(@NonNull PostModel postModel) {
         Post post = new Post();
         post._id = postModel._id;

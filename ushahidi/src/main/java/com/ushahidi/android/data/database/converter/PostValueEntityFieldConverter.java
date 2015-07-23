@@ -32,6 +32,7 @@ import nl.qbusict.cupboard.convert.FieldConverter;
  * value for the {@link com.ushahidi.android.data.entity.PostEntity}
  * value field in the table without deserializing it.
  *
+ * @param <T> The type value
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostValueEntityFieldConverter<T> implements FieldConverter<T> {
@@ -40,7 +41,13 @@ public class PostValueEntityFieldConverter<T> implements FieldConverter<T> {
 
     private final Type mType;
 
-    PostValueEntityFieldConverter(Type type, Gson gson) {
+    /**
+     * Default constructor
+     *
+     * @param type The type
+     * @param gson The gson
+     */
+    public PostValueEntityFieldConverter(Type type, Gson gson) {
         mType = type;
         mGson = gson;
     }

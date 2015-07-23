@@ -28,10 +28,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Maps {@link UserProfile} onto {@link UserProfileModel}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class UserProfileModelDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public UserProfileModelDataMapper() {
         // Do nothing
@@ -57,6 +62,12 @@ public class UserProfileModelDataMapper {
         return userProfileModel;
     }
 
+    /**
+     * Maps {@link UserProfileModel} to {@link UserProfile}
+     *
+     * @param userProfileModel The {@link UserProfileModel} to be mapped
+     * @return The {@link UserProfile}
+     */
     public UserProfile unmap(@NonNull UserProfileModel userProfileModel) {
         UserProfile userProfile = new UserProfile();
         userProfile._id = userProfileModel._id;

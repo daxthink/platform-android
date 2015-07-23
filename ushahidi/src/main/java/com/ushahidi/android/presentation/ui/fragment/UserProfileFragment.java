@@ -53,18 +53,18 @@ import static rx.android.app.AppObservable.bindFragment;
  */
 public class UserProfileFragment extends BaseFragment {
 
+    @Inject
+    Launcher mLauncher;
+
+    RxEventBus mRxEventBus;
+
     // User profile
     private View mLoginLayout;
 
     private View mUserProfileLayout;
 
-    @Inject
-    Launcher mLauncher;
-
     // So we can close the nav drawer
     private DrawerLayout mDrawerLayout;
-
-    RxEventBus mRxEventBus;
 
     private CompositeSubscription mSubscriptions;
 
@@ -96,13 +96,13 @@ public class UserProfileFragment extends BaseFragment {
         mSubscriptions = new CompositeSubscription();
 
         mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObserverable())
+                .add(bindFragment(this, mRxEventBus.toObservable())
                         .subscribe(event -> {
                             if (event instanceof LoadUserProfileEvent) {
                                 LoadUserProfileEvent loadUserProfileEvent
                                         = (LoadUserProfileEvent) event;
-                                if (loadUserProfileEvent.userProfileModel != null) {
-                                    showUserProfile(loadUserProfileEvent.userProfileModel);
+                                if (loadUserProfileEvent.getUserProfileModel() != null) {
+                                    showUserProfile(loadUserProfileEvent.getUserProfileModel());
                                 } else {
                                     showLogin();
                                 }
@@ -149,7 +149,7 @@ public class UserProfileFragment extends BaseFragment {
                 usernameTextView = findById(mUserProfileLayout, R.id.user_username);
         AppCompatTextView roleTextView = findById(mUserProfileLayout, R.id.user_role);
         usernameTextView.setText(profile.getUsername());
-        roleTextView.setText(profile.getRole().value);
+        roleTextView.setText(profile.getRole().getValue());
         ImageView avatarImageView = findById(mUserProfileLayout, R.id.user_profile_image);
 
         if (profile.getEmail() != null) {

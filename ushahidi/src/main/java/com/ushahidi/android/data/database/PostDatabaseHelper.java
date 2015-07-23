@@ -47,11 +47,22 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
 
     private AddPostException mException;
 
+    /**
+     * Default constructor
+     *
+     * @param context The calling context. Cannot be a null value
+     */
     @Inject
     public PostDatabaseHelper(@NonNull Context context) {
         super(context);
     }
 
+    /**
+     * Get a list of {@link PostEntity}
+     *
+     * @param deploymentId The deployment the post entity belongs to
+     * @return An Observable that emits a list of {@link PostEntity}
+     */
     public Observable<List<PostEntity>> getPostList(Long deploymentId) {
         return Observable.create(subscriber -> {
             final List<PostEntity> postEntities = getPosts(deploymentId);
@@ -64,6 +75,13 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Get a single {@link PostEntity}
+     *
+     * @param deploymentId The deployment Id associated with the post entity
+     * @param postId       The post id to be used to retrieve the {@link PostEntity}
+     * @return An observable that emits a {@link PostEntity}
+     */
     public Observable<PostEntity> getPostEntity(Long deploymentId, Long postId) {
         return Observable.create(subscriber -> {
             final PostEntity postEntity = get(deploymentId, postId);
@@ -79,6 +97,12 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
 
     }
 
+    /**
+     * Get a list of {@link PostEntity}
+     *
+     * @param postEntities The post entities
+     * @return An observable that emits a {@link PostEntity}
+     */
     public Observable<Long> putPosts(List<PostEntity> postEntities) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
@@ -93,6 +117,15 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * save a list of {@PostEntity}
+     *
+     * @param deploymentId  The deployment ID
+     * @param tagEntities   The Tag entities
+     * @param postEntities  The post entities
+     * @param geoJsonEntity The GeoJson entity
+     * @return An observable that emits {@link PostEntity}
+     */
     public List<PostEntity> putFetchedPosts(Long deploymentId,
             List<TagEntity> tagEntities,
             List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity) {
@@ -111,6 +144,12 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         return setPostEntityList(postEntityList);
     }
 
+    /**
+     * Deletes a post entity
+     *
+     * @param postEntity The post entity
+     * @return True upon successful deletion, otherwise false
+     */
     public Observable<Boolean> deletePost(PostEntity postEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
@@ -131,6 +170,13 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Basic search for deployment
+     *
+     * @param deploymentId The deployment id
+     * @param query        The search query. Should be either the post title or description
+     * @return An observable that emits list of {@link PostEntity}
+     */
     public Observable<List<PostEntity>> search(Long deploymentId, String query) {
         return Observable.create(subscriber -> {
             String selection = " mTitle like ? OR mContent like ? AND deploymentId = ?";

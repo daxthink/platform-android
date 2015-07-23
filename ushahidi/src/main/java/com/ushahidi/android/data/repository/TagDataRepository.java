@@ -43,6 +43,12 @@ public class TagDataRepository implements TagRepository {
 
     private final TagDataSourceFactory mTagDataSourceFactory;
 
+    /**
+     * Default constructor
+     *
+     * @param tagDataSourceFactory The tag data source factory
+     * @param tagEntityDataMapper  The tag entity data mapper
+     */
     @Inject
     public TagDataRepository(TagDataSourceFactory tagDataSourceFactory,
             TagEntityDataMapper tagEntityDataMapper) {

@@ -20,15 +20,24 @@ package com.ushahidi.android.presentation.state;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 
 /**
- * Event to be triggered to cause a deployment reload
+ * Event class used by {@link RxEventBus} to trigger the app to load post
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class ReloadPostEvent {
 
-    public DeploymentModel deploymentModel;
+    private DeploymentModel mDeploymentModel;
 
+    /**
+     * Default constructor
+     *
+     * @param deploymentModel The deployment to be passed to the event listener
+     */
     public ReloadPostEvent(DeploymentModel deploymentModel) {
-        this.deploymentModel = deploymentModel;
+        mDeploymentModel = deploymentModel;
+    }
+
+    public DeploymentModel getDeploymentModel() {
+        return mDeploymentModel;
     }
 }

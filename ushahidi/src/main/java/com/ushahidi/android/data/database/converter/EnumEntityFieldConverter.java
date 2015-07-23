@@ -28,12 +28,18 @@ import nl.qbusict.cupboard.convert.FieldConverter;
 /**
  * Converts entity enum fields so it's value is saved in the table
  *
+ * @param <E> The enum
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class EnumEntityFieldConverter<E extends Enum> implements FieldConverter<E> {
 
     private final Class<E> mEnumClass;
 
+    /**
+     * Default constructor
+     *
+     * @param enumClass The enum
+     */
     public EnumEntityFieldConverter(Class<E> enumClass) {
         this.mEnumClass = enumClass;
     }

@@ -41,6 +41,13 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
 
     private SparseBooleanArray mSelectedItems;
 
+    /**
+     * Default constructor
+     */
+    public DeploymentAdapter() {
+        mSelectedItems = new SparseBooleanArray();
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ((Widgets) viewHolder).title.setText(getItem(position).getTitle());
@@ -59,10 +66,11 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
         return getItems().size();
     }
 
-    public DeploymentAdapter() {
-        mSelectedItems = new SparseBooleanArray();
-    }
-
+    /**
+     * Toggles an item in the adapter as selected or de-selected
+     *
+     * @param position The index of the item to be toggled
+     */
     public void toggleSelection(int position) {
         if (mSelectedItems.get(position, false)) {
             mSelectedItems.delete(position);
@@ -72,15 +80,28 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
         notifyItemChanged(position);
     }
 
+    /**
+     * Count of the selected item
+     *
+     * @return The selected item size
+     */
     public int getSelectedItemCount() {
         return mSelectedItems.size();
     }
 
+    /**
+     * Clear all selections
+     */
     public void clearSelections() {
         mSelectedItems.clear();
         notifyDataSetChanged();
     }
 
+    /**
+     * Gets all selected items
+     *
+     * @return The list of selected items
+     */
     public List<Integer> getSelectedItems() {
         List<Integer> items = new ArrayList<>(mSelectedItems.size());
         for (int i = 0; i < mSelectedItems.size(); i++) {
@@ -89,6 +110,9 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
         return items;
     }
 
+    /**
+     * View holder
+     */
     public class Widgets extends RecyclerView.ViewHolder {
 
         TextView title;
@@ -97,6 +121,11 @@ public class DeploymentAdapter extends BaseRecyclerViewAdapter<DeploymentModel> 
 
         CheckedTextView listCheckBox;
 
+        /**
+         * Default constructor
+         *
+         * @param convertView The view
+         */
         public Widgets(View convertView) {
             super(convertView);
             title = (TextView) convertView.findViewById(R.id.deployment_title);

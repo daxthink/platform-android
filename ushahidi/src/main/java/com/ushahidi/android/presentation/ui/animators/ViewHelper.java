@@ -22,6 +22,10 @@ import android.view.View;
 
 public final class ViewHelper {
 
+    private ViewHelper() {
+        // No instance
+    }
+
     public static void clear(View v) {
         ViewCompat.setAlpha(v, 1);
         ViewCompat.setScaleY(v, 1);

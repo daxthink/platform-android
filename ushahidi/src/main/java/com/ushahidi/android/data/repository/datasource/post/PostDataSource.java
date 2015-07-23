@@ -32,6 +32,7 @@ public interface PostDataSource {
      * Add/Update a {@link com.ushahidi.android.data.entity.PostEntity}.
      *
      * @param postEntity The post entity to be saved.
+     * @return The row affected
      */
     Observable<Long> putPostEntity(List<PostEntity> postEntity);
 
@@ -39,6 +40,7 @@ public interface PostDataSource {
      * Get a list of {@link com.ushahidi.android.data.entity.PostEntity}.
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.data.entity.PostEntity}
+     * @return The list of post entities
      */
     Observable<List<PostEntity>> getPostEntityList(Long deploymentId);
 
@@ -47,6 +49,7 @@ public interface PostDataSource {
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.data.entity.PostEntity}
      * @param postEntityId The post entity id used for retrieving post data.
+     * @return The post entity
      */
     Observable<PostEntity> getPostEntityById(Long deploymentId, Long postEntityId);
 
@@ -54,6 +57,7 @@ public interface PostDataSource {
      * Delete a {@link com.ushahidi.android.data.entity.PostEntity}
      *
      * @param postEntity The post to be deleted.
+     * @return True if post entity is successfully deleted otherwise false
      */
     Observable<Boolean> deletePostEntity(PostEntity postEntity);
 
@@ -62,6 +66,7 @@ public interface PostDataSource {
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.data.entity.DeploymentEntity}
      * @param query        The search query.
+     * @return A list of post entities
      */
     Observable<List<PostEntity>> search(Long deploymentId, String query);
 }

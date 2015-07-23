@@ -23,6 +23,8 @@ import com.ushahidi.android.presentation.model.DeploymentModel;
 import java.util.List;
 
 /**
+ * List deployment view
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface ListDeploymentView extends LoadDataView {

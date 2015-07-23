@@ -15,7 +15,7 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.api.auth;
+package com.ushahidi.android.data.api.oauth;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -44,6 +44,14 @@ public class RefreshTokenRequestBody implements Serializable {
 
     private final String scope;
 
+    /**
+     * Default constructor
+     *
+     * @param grantType    The grant type
+     * @param clientId     The client ID
+     * @param clientSecret The client secret
+     * @param scope        The scope
+     */
     public RefreshTokenRequestBody(@GrantType String grantType, @ClientId String clientId,
             @ClientSecret String clientSecret, @Scope String scope) {
         this.grantType = grantType;
@@ -70,11 +78,11 @@ public class RefreshTokenRequestBody implements Serializable {
 
     @Override
     public String toString() {
-        return "Payload{" +
-                ", grantType='" + grantType + '\'' +
-                ", clientId='" + clientId + '\'' +
-                ", clientSecret='" + clientSecret + '\'' +
-                ", scope='" + scope + '\'' +
-                '}';
+        return "Payload{"
+                + ", grantType='" + grantType + '\''
+                + ", clientId='" + clientId + '\''
+                + ", clientSecret='" + clientSecret + '\''
+                + ", scope='" + scope + '\''
+                + '}';
     }
 }

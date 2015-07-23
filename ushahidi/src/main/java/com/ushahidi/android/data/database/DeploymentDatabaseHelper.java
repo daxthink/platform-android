@@ -21,11 +21,22 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 @Singleton
 public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
 
+    /**
+     * Default constructor
+     *
+     * @param context The calling context. Cannot be a null value
+     */
     @Inject
     public DeploymentDatabaseHelper(@NonNull Context context) {
         super(context);
     }
 
+    /**
+     * Gets deployments by it's status
+     *
+     * @param status The status to use to query for the deployment
+     * @return An Observable that emits a {@link DeploymentEntity}
+     */
     public Observable<DeploymentEntity> getByStatus(final DeploymentEntity.Status status) {
         return Observable.create((subscriber) -> {
             final DeploymentEntity deploymentEntity = get(status);
@@ -38,6 +49,11 @@ public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Gets deployment lists
+     *
+     * @return An Observable that emits a list of {@link DeploymentEntity}
+     */
     public Observable<List<DeploymentEntity>> getDeployments() {
         return Observable.create(subscriber -> {
             final List<DeploymentEntity> deploymentEntities = cupboard()
@@ -51,6 +67,12 @@ public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Gets a deployment
+     *
+     * @param id The ID of the deployment to retrieve
+     * @return An Observable that emits a {@link DeploymentEntity}
+     */
     public Observable<DeploymentEntity> getDeployment(Long id) {
         return Observable.create(subscriber -> {
             final DeploymentEntity deploymentEntity = cupboard().withDatabase(getReadableDatabase())
@@ -65,6 +87,12 @@ public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Saves a {@link DeploymentEntity} into the db
+     *
+     * @param deploymentEntity The deployment to save to the db
+     * @return The row affected
+     */
     public Observable<Long> put(DeploymentEntity deploymentEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
@@ -81,6 +109,12 @@ public class DeploymentDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Deletes a {@link DeploymentEntity} from the db
+     *
+     * @param deploymentId The deployment to be deleted from the db
+     * @return The row affected. One means successful otherwise it triggers an error
+     */
     public Observable<Long> deleteDeployment(Long deploymentId) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {

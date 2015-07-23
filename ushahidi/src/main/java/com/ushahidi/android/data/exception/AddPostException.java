@@ -25,18 +25,37 @@ package com.ushahidi.android.data.exception;
  */
 public class AddPostException extends Exception {
 
+    /**
+     * Default exception
+     */
     public AddPostException() {
         super();
     }
 
+    /**
+     * Initialize the exception with a custom message
+     *
+     * @param message The message be shown when the exception is thrown
+     */
     public AddPostException(final String message) {
         super(message);
     }
 
+    /**
+     * Initialize the exception with a custom message and the cause of the exception
+     *
+     * @param message The message to be shown when the exception is thrown
+     * @param cause   The cause of the exception
+     */
     public AddPostException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Initialize the exception with a the cause of the exception
+     *
+     * @param cause The cause of the exception
+     */
     public AddPostException(final Throwable cause) {
         super(cause);
     }

@@ -100,28 +100,44 @@ public class UserProfile extends Entity {
 
     @Override
     public String toString() {
-        return "UserProfile{" +
-                "mEmail='" + mEmail + '\'' +
-                ", mRealName='" + mRealName + '\'' +
-                ", mUsername='" + mUsername + '\'' +
-                ", mRole=" + mRole +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "UserProfile{"
+                + "mEmail='" + mEmail + '\''
+                + ", mRealName='" + mRealName + '\''
+                + ", mUsername='" + mUsername + '\''
+                + ", mRole=" + mRole
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 
+    /**
+     * Enum representing the different roles a user has
+     */
     public enum Role {
-
+        /**
+         * The admin role
+         */
         ADMIN("admin"),
-        USER("user"),
-        MEMBER("member"),
-        GUEST("guest");
 
-        public String value;
+        /**
+         * The user role
+         */
+        USER("user");
 
+        private final String value;
+
+        /**
+         * Default constructor
+         *
+         * @param value The role's value
+         */
         Role(String value) {
             this.value = value;
+        }
+
+        public String getValue() {
+            return value;
         }
 
         @Override

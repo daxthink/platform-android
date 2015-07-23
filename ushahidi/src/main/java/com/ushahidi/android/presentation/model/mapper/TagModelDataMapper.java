@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.domain.entity.Tag;
 import com.ushahidi.android.presentation.model.TagModel;
 
@@ -29,10 +28,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Maps {@link Tag} onto {@link TagModel}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class TagModelDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public TagModelDataMapper() {
         // Do nothing
@@ -60,6 +64,12 @@ public class TagModelDataMapper {
         return tagModel;
     }
 
+    /**
+     * Maps {@link TagModel} to {@link Tag}
+     *
+     * @param tagModel The {@link TagModel} to be mapped
+     * @return The {@link Tag} model
+     */
     public Tag map(@NonNull TagModel tagModel) {
         Tag tag = new Tag();
         tag._id = tagModel._id;
@@ -76,7 +86,7 @@ public class TagModelDataMapper {
     }
 
     /**
-     * Maps a list {@link TagEntity} into a list of {@link Tag}.
+     * Maps a list {@link TagModel} into a list of {@link Tag}.
      *
      * @param tagList List to be mapped.
      * @return {@link Tag}
@@ -94,7 +104,7 @@ public class TagModelDataMapper {
     }
 
     /**
-     * Maps a list {@link Tag} into a list of {@link TagEntity}.
+     * Maps a list {@link Tag} into a list of {@link TagModel}.
      *
      * @param tagModelList List to be unmapped.
      * @return {@link Tag}

@@ -27,13 +27,27 @@ import com.ushahidi.android.presentation.ui.fragment.UserProfileFragment;
 import dagger.Component;
 
 /**
+ * Provides {@link ActivityScope} based components to {@link UserProfileFragment} and the host
+ * activity
+ * {@link PostActivity}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface UserProfileComponent extends AppActivityComponent {
 
+    /**
+     * Injects {@link PostActivity}
+     *
+     * @param postActivity The post activity
+     */
     void inject(PostActivity postActivity);
 
+    /**
+     * Injects {@link UserProfileFragment}
+     *
+     * @param userProfileFragment The user profile fragment
+     */
     void inject(UserProfileFragment userProfileFragment);
 }

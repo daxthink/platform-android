@@ -51,8 +51,10 @@ import java.util.List;
 public class DeploymentRecyclerView extends BloatedRecyclerView
         implements RecyclerView.OnItemTouchListener {
 
+    /** Indicates an invalid positon */
     public static final int INVALID_POSITION = -1;
 
+    /** List of items pending to to be deleted **/
     public List<PendingDeletedDeployment> mPendingDeletedDeployments;
 
     private Activity mActivity;
@@ -181,9 +183,10 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
         snackbar.setAction(R.string.undo, e -> {
             mIsPermanentlyDeleted = false;
             // Restore items
-            for (DeploymentRecyclerView.PendingDeletedDeployment pendingDeletedDeployment : mPendingDeletedDeployments) {
+            for (DeploymentRecyclerView.PendingDeletedDeployment pendingDeletedDeployment
+                    : mPendingDeletedDeployments) {
                 mDeploymentAdapter.addItem(pendingDeletedDeployment.deploymentModel,
-                        pendingDeletedDeployment.position);
+                        pendingDeletedDeployment.getPosition());
             }
             clearItems();
         });
@@ -259,19 +262,24 @@ public class DeploymentRecyclerView extends BloatedRecyclerView
 
     public static class PendingDeletedDeployment implements Comparable<PendingDeletedDeployment> {
 
-        public int position;
-
+        /** The deployment model to be deleted */
         public DeploymentModel deploymentModel;
 
+        private int mPosition;
+
         public PendingDeletedDeployment(int position, DeploymentModel deploymentModel) {
-            this.position = position;
+            mPosition = position;
             this.deploymentModel = deploymentModel;
         }
 
         @Override
         public int compareTo(PendingDeletedDeployment other) {
             // Sort by descending position
-            return other.position - position;
+            return other.mPosition - mPosition;
+        }
+
+        public int getPosition() {
+            return mPosition;
         }
     }
 

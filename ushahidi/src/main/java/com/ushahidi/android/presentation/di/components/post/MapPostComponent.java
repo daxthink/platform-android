@@ -38,9 +38,24 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class, MapPostModule.class})
 public interface MapPostComponent extends AppActivityComponent {
 
+    /**
+     * Inject dependencies into {@link PostActivity}
+     *
+     * @param postActivity The activity to inject dependencies into
+     */
     void inject(PostActivity postActivity);
 
+    /**
+     * Inject dependencies into {@link MapPostFragment}
+     *
+     * @param mapPostFragment The fragment to inject dependencies into
+     */
     void inject(MapPostFragment mapPostFragment);
 
+    /**
+     * Provides {@link MapPostPresenter} to sub-graphs
+     *
+     * @return The map post presenter
+     */
     MapPostPresenter mapPostPresenter();
 }

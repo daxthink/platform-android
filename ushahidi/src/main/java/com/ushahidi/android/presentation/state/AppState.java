@@ -21,10 +21,17 @@ import com.addhen.android.raiburari.presentation.state.ApplicationState;
 import com.squareup.otto.Bus;
 
 /**
+ * Determines the state of the app
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class AppState extends ApplicationState implements UserState {
 
+    /**
+     * Default constructor
+     *
+     * @param eventBus The event bus
+     */
     public AppState(Bus eventBus) {
         super(eventBus);
     }

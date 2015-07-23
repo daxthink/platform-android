@@ -41,8 +41,13 @@ public class UnauthorizedAccessErrorHandler implements ErrorHandler {
 
     private static final Handler MAIN_LOOPER_HANDLER = new Handler(Looper.getMainLooper());
 
-    UserState mUserState;
+    private UserState mUserState;
 
+    /**
+     * Default constructor
+     *
+     * @param userState The user state
+     */
     @Inject
     public UnauthorizedAccessErrorHandler(UserState userState) {
         mUserState = userState;

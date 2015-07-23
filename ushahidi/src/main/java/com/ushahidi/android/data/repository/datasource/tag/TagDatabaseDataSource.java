@@ -36,6 +36,11 @@ public class TagDatabaseDataSource implements TagDataSource {
 
     private final TagDatabaseHelper mTagDatabaseHelper;
 
+    /**
+     * Default constructor that constructs {@link TagApiDataSource}
+     *
+     * @param tagDatabaseHelper The tag database helper
+     */
     public TagDatabaseDataSource(
             @NonNull TagDatabaseHelper tagDatabaseHelper) {
         mTagDatabaseHelper = tagDatabaseHelper;

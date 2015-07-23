@@ -36,6 +36,9 @@ public class PostEntityDataMapper {
 
     private PostValueEntityDataMapper mPostValueEntityMapper;
 
+    /**
+     * Default constructor
+     */
     @Inject
     public PostEntityDataMapper() {
         mTagEntityMapper = new TagEntityDataMapper();
@@ -79,6 +82,12 @@ public class PostEntityDataMapper {
         return post;
     }
 
+    /**
+     * Maps {@link Post} onto {@link PostEntity}
+     *
+     * @param post The post to be mapped
+     * @return The PostEntity
+     */
     public PostEntity map(Post post) {
         PostEntity postEntity = null;
         if (post != null) {

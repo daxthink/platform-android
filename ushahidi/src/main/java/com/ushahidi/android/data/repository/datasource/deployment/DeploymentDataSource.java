@@ -31,6 +31,8 @@ public interface DeploymentDataSource {
 
     /**
      * Get an {@link Observable} which will emit a List of {@link DeploymentEntity}.
+     *
+     * @return Observable that emits list of {@link DeploymentEntity}
      */
     Observable<List<DeploymentEntity>> getDeploymentEntityList();
 
@@ -38,6 +40,7 @@ public interface DeploymentDataSource {
      * Get an {@link Observable} which will emit a {@link DeploymentEntity} by its id.
      *
      * @param deploymentId The id to retrieve user data.
+     * @return Observable that emits a {@link DeploymentEntity}
      */
     Observable<DeploymentEntity> getDeploymentEntity(Long deploymentId);
 
@@ -45,6 +48,7 @@ public interface DeploymentDataSource {
      * Get an {@link Observable} which will emit a {@link DeploymentEntity} by its id.
      *
      * @param status The deployment status to be used for retrieving a deployment
+     * @return Observable that emits a {@link DeploymentEntity}
      */
     Observable<DeploymentEntity> getByStatus(DeploymentEntity.Status status);
 
@@ -54,6 +58,7 @@ public interface DeploymentDataSource {
      * to react to it.
      *
      * @param deployment The deployment to be added
+     * @return The row affected
      */
     Observable<Long> addDeploymentEntity(DeploymentEntity deployment);
 
@@ -63,6 +68,7 @@ public interface DeploymentDataSource {
      * to react to it.
      *
      * @param deployment The deployment to be added
+     * @return The row affected
      */
     Observable<Long> updateDeploymentEntity(DeploymentEntity deployment);
 
@@ -72,6 +78,7 @@ public interface DeploymentDataSource {
      * subscribers to react to it.
      *
      * @param deploymentId The deployment to be deleted
+     * @return The row affected
      */
     Observable<Long> deleteDeploymentEntity(Long deploymentId);
 }

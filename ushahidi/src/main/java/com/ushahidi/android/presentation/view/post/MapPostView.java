@@ -27,6 +27,8 @@ public interface MapPostView extends LoadDataView {
 
     /**
      * Renders {@link com.ushahidi.android.presentation.model.GeoJsonModel} on the map
+     *
+     * @param geoJsonModel The GeoJsonModel
      */
     void showGeoJson(GeoJsonModel geoJsonModel);
 }

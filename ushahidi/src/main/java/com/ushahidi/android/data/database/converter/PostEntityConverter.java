@@ -38,6 +38,11 @@ import nl.qbusict.cupboard.convert.ReflectiveEntityConverter;
  */
 public class PostEntityConverter extends ReflectiveEntityConverter<PostEntity> {
 
+    /**
+     * Default constructor
+     *
+     * @param cupboard The {@link Cupboard} object
+     */
     public PostEntityConverter(Cupboard cupboard) {
         super(cupboard, PostEntity.class);
     }

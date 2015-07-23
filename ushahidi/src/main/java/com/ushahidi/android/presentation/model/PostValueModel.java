@@ -48,9 +48,9 @@ public class PostValueModel extends Model {
 
     @Override
     public String toString() {
-        return "PostValue{" +
-                "mValues='" + mValues + '\'' +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "PostValue{"
+                + "mValues='" + mValues + '\''
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 }

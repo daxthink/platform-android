@@ -19,6 +19,13 @@ public class GetActiveDeploymentUsecase extends Usecase {
 
     private final DeploymentRepository mDeploymentRepository;
 
+    /**
+     * Default constructor
+     *
+     * @param deploymentRepository The deployment repository
+     * @param threadExecutor       The thread executor
+     * @param postExecutionThread  The post execution thread
+     */
     @Inject
     protected GetActiveDeploymentUsecase(DeploymentRepository deploymentRepository,
             ThreadExecutor threadExecutor,

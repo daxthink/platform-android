@@ -38,10 +38,6 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  */
 public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
 
-    private static String TAG = BaseDatabaseHelper.class.getSimpleName();
-
-    private boolean mIsClosed;
-
     private static final String DATABASE_NAME = "ushahidi.db";
 
     private static final int DATABASE_VERSION = 2;
@@ -52,6 +48,7 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
             TagEntity.class, PostTagEntity.class, PostEntity.class,
             GeoJsonEntity.class};
 
+    private static final String TAG = BaseDatabaseHelper.class.getSimpleName();
 
     static {
         EntityConverterFactory factory = new EntityConverterFactory() {
@@ -81,7 +78,13 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    private boolean mIsClosed;
 
+    /**
+     * Default constructor
+     *
+     * @param context The calling context. Cannot be a null value
+     */
     public BaseDatabaseHelper(@NonNull Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

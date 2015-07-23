@@ -1,0 +1,42 @@
+/*
+ *  Copyright (c) 2015 Ushahidi.
+ *
+ *   This program is free software: you can redistribute it and/or modify it under
+ *   the terms of the GNU Affero General Public License as published by the Free
+ *   Software Foundation, either version 3 of the License, or (at your option)
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but WITHOUT
+ *   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *   FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Affero General Public License
+ *   along with this program in the file LICENSE-AGPL. If not, see
+ *   https://www.gnu.org/licenses/agpl-3.0.html
+ *
+ */
+apply plugin: 'checkstyle'
+
+// Add checkstyle, and lint to the check task.
+check.dependsOn 'checkstyle', 'lint'
+
+task checkstyle(type: Checkstyle) {
+    configFile file("${project.rootDir}/common/config/checkstyle/checkstyle.xml")
+    configProperties.checkstyleSuppressionsPath =
+            file("${project.rootDir}/common/config/checkstyle/suppressions.xml").absolutePath
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+}
+
+android {
+    lintOptions {
+        abortOnError true
+        xmlReport false
+        htmlReport true
+        lintConfig file("${project.rootDir}/common/config/lint/lint.xml")
+        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+        xmlOutput file("$project.buildDir/reports/lint/lint-result.xml")
+    }
+}

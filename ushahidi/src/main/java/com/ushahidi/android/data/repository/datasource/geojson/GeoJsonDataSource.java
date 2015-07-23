@@ -30,6 +30,9 @@ public interface GeoJsonDataSource {
 
     /**
      * Get a list of {@link GeoJsonEntity}.
+     *
+     * @param deploymentId The deployment ID to use to fetch the GeoJson entity
+     * @return The GeoJson entity
      */
     Observable<GeoJsonEntity> getGeoJsonList(Long deploymentId);
 
@@ -37,6 +40,7 @@ public interface GeoJsonDataSource {
      * Add/Update a {@link GeoJsonEntity}.
      *
      * @param geoJson The GeoJson to be saved.
+     * @return The GeoJson entity
      */
     Observable<Long> putGeoJson(GeoJsonEntity geoJson);
 }

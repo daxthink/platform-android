@@ -19,13 +19,13 @@ package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
 
-import com.ushahidi.android.data.api.auth.AccessTokenRequestBody;
-import com.ushahidi.android.data.api.auth.RefreshTokenRequestBody;
-import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
+import com.ushahidi.android.data.api.oauth.AccessTokenRequestBody;
+import com.ushahidi.android.data.api.oauth.RefreshTokenRequestBody;
 import com.ushahidi.android.data.entity.UserEntity;
 
+import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
@@ -45,24 +45,64 @@ import static com.ushahidi.android.data.api.Constant.USERS_ME;
 public interface RestfulService {
 
     // Post related APIs
+
+    /**
+     * Fetches posts. Returns an observable that emits {@link Posts}
+     *
+     * @param authorizationHeader The access token header
+     * @return Posts
+     */
     @GET(POSTS)
     Observable<Posts> posts(@Header("Authorization") String authorizationHeader);
 
     // Tags related APIs
+
+    /**
+     * Fetches Tags. Returns an observable that emits {@link Tags}
+     *
+     * @param authorizationHeader The access token header
+     * @return Tags
+     */
     @GET(TAGS)
     Observable<Tags> getTags(@Header("Authorization") String authorizationHeader);
 
     //User/Authentication related APIs
+
+    /**
+     * Fetches access token. Returns an observable that emits {@link OAuth2AccessToken}
+     *
+     * @param body The request body
+     * @return The access token
+     */
     @POST("/oauth/token")
     Observable<OAuth2AccessToken> grantNewAccessToken(@Body AccessTokenRequestBody body);
 
+    /**
+     * Refreshes the access token. Returns an observable that emits {@link OAuth2AccessToken}
+     *
+     * @param body The request body
+     * @return The access token
+     */
     @POST("/oauth/token")
     Observable<OAuth2AccessToken> refreshAccessToken(@Body RefreshTokenRequestBody body);
 
+    /**
+     * Gets logged in user's profile
+     *
+     * @param authorizationHeader The access token header
+     * @return An observable that emits {@link UserEntity}
+     */
     @GET(USERS_ME)
     Observable<UserEntity> getUser(@Header("Authorization") String authorizationHeader);
 
     // GeoJSON related APIs
+
+    /**
+     * Fetches posts with GEOJSON data
+     *
+     * @param authorizationHeader The access token header
+     * @return An JsonElement that contains the raw json string
+     */
     @GET(GEOJSON)
     Observable<JsonElement> getGeoJson(@Header("Authorization") String authorizationHeader);
 }

@@ -40,6 +40,12 @@ public class UserProfileDataRepository implements UserProfileRepository {
 
     private final UserProfileDataSourceFactory mUserProfileDataSourceFactory;
 
+    /**
+     * Default constructor
+     *
+     * @param userProfileDataSourceFactory The user profile data source factory
+     * @param userProfileEntityDataMapper  The user profile entity data mapper
+     */
     @Inject
     public UserProfileDataRepository(UserProfileDataSourceFactory userProfileDataSourceFactory,
             UserProfileEntityDataMapper userProfileEntityDataMapper) {

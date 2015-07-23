@@ -25,10 +25,10 @@ public class FadeInAnimator extends BaseItemAnimator {
     @Override
     protected void animateRemoveImpl(final RecyclerView.ViewHolder holder) {
         ViewCompat.animate(holder.itemView)
-            .alpha(0)
-            .setDuration(getRemoveDuration())
-            .setListener(new DefaultRemoveVpaListener(holder))
-            .start();
+                .alpha(0)
+                .setDuration(getRemoveDuration())
+                .setListener(new DefaultRemoveVpaListener(holder))
+                .start();
         mRemoveAnimations.add(holder);
     }
 
@@ -41,9 +41,9 @@ public class FadeInAnimator extends BaseItemAnimator {
     @Override
     protected void animateAddImpl(final RecyclerView.ViewHolder holder) {
         ViewCompat.animate(holder.itemView)
-            .alpha(1)
-            .setDuration(getAddDuration())
-            .setListener(new DefaultAddVpaListener(holder)).start();
+                .alpha(1)
+                .setDuration(getAddDuration())
+                .setListener(new DefaultAddVpaListener(holder)).start();
         mAddAnimations.add(holder);
     }
 }

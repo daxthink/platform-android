@@ -34,6 +34,9 @@ import javax.inject.Singleton;
 @Singleton
 public class DeploymentEntityDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public DeploymentEntityDataMapper() {
         // Do nothing
@@ -60,6 +63,12 @@ public class DeploymentEntityDataMapper {
         return deployment;
     }
 
+    /**
+     * Maps {@link DeploymentEntity} onto {@link Deployment}
+     *
+     * @param deployment The deployment be mapped
+     * @return The {@link DeploymentEntity}
+     */
     public DeploymentEntity map(Deployment deployment) {
         DeploymentEntity deploymentEntity = null;
 
@@ -75,7 +84,7 @@ public class DeploymentEntityDataMapper {
     }
 
     /**
-     * Maps a list {@link DeploymentEntity} into a list of {@link Deployment}.
+     * Maps a list {@link DeploymentEntity} onto a list of {@link Deployment}.
      *
      * @param deploymentEntityList List to be mapped.
      * @return {@link Deployment}
@@ -93,6 +102,13 @@ public class DeploymentEntityDataMapper {
         return deploymentList;
     }
 
+    /**
+     * Maps a {@link com.ushahidi.android.domain.entity.Deployment.Status} onto {@link
+     * com.ushahidi.android.data.entity.DeploymentEntity.Status}
+     *
+     * @param status The status to be mapped
+     * @return {@link com.ushahidi.android.data.entity.DeploymentEntity.Status}
+     */
     public DeploymentEntity.Status map(Deployment.Status status) {
         return DeploymentEntity.Status.valueOf(
                 status.name());

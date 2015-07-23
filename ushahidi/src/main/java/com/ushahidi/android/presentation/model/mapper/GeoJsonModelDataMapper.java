@@ -25,10 +25,15 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 
 /**
+ * Maps {@link GeoJson} onto {@link GeoJsonModel}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class GeoJsonModelDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public GeoJsonModelDataMapper() {
         // Do nothing

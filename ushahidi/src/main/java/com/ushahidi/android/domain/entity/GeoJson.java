@@ -47,10 +47,10 @@ public class GeoJson extends Entity {
 
     @Override
     public String toString() {
-        return "GeoJson{" +
-                "mID='" + _id + '\'' +
-                "mDeploymentId='" + mDeploymentId + '\'' +
-                ", geojson='" + mGeoJson + '\'' +
-                '}';
+        return "GeoJson{"
+                + "mID='" + _id + '\''
+                + "mDeploymentId='" + mDeploymentId + '\''
+                + ", geojson='" + mGeoJson + '\''
+                + '}';
     }
 }

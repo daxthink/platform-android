@@ -18,29 +18,56 @@
 package com.ushahidi.android.data.api;
 
 /**
+ * Defines API resource paths
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Constant {
+public final class Constant {
 
-    public static final String USHAHIDI_AUTHTOKEN_PASSWORD_TYPE = "password";
+    // TODO: Put these in the build script
 
-    public static final String HEADER_AUTHORIZATION = "Authorization";
-
-    // TODO: Securely store the client id and secret
+    /**
+     * OAuth client secret
+     */
     public static final String OAUTH_CLIENT_SECRET = "35e7f0bca957836d05ca0492211b0ac707671261";
 
+    /**
+     * OAuth client id
+     */
     public static final String OAUTH_CLIENT_ID = "ushahidiui";
 
+    /**
+     * OAuth scope
+     */
     public static final String SCOPE
             = "posts media forms api tags sets users stats layers config messages dataproviders";
 
+    /**
+     * API version
+     */
     public static final String API_PATH = "/api/v2";
 
+    /**
+     * Posts resources
+     */
     public static final String POSTS = API_PATH + "/posts";
 
+    /**
+     * Tags resources
+     */
     public static final String TAGS = API_PATH + "/tags";
 
+    /**
+     * Users resources
+     */
     public static final String USERS_ME = API_PATH + "/users/me";
 
+    /**
+     * Geojson resources
+     */
     public static final String GEOJSON = POSTS + "/geojson";
+
+    private Constant() {
+        // No instance
+    }
 }

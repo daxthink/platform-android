@@ -31,12 +31,36 @@ import javax.inject.Singleton;
 @Singleton
 public class PlatformAuthConfig implements Parcelable {
 
-    public final String clientId;
+    /**
+     * Parcelable creator
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PlatformAuthConfig> CREATOR
+            = new Parcelable.Creator<PlatformAuthConfig>() {
+        @Override
+        public PlatformAuthConfig createFromParcel(Parcel in) {
+            return new PlatformAuthConfig(in);
+        }
 
-    public final String clientSecret;
+        @Override
+        public PlatformAuthConfig[] newArray(int size) {
+            return new PlatformAuthConfig[size];
+        }
+    };
 
-    public final String scope;
+    private final String clientId;
 
+    private final String clientSecret;
+
+    private final String scope;
+
+    /**
+     * Default constructor
+     *
+     * @param clientId     The OAuth client id
+     * @param clientSecret The OAuth client secret
+     * @param scope        The OAuth scope
+     */
     @Inject
     public PlatformAuthConfig(String clientId, String clientSecret, String scope) {
         this.clientId = clientId;
@@ -44,6 +68,11 @@ public class PlatformAuthConfig implements Parcelable {
         this.scope = scope;
     }
 
+    /**
+     * Initializes member variables with values from the parcel object
+     *
+     * @param in The {@link Parcel}
+     */
     protected PlatformAuthConfig(Parcel in) {
         clientId = in.readString();
         clientSecret = in.readString();
@@ -62,17 +91,15 @@ public class PlatformAuthConfig implements Parcelable {
         dest.writeString(scope);
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<PlatformAuthConfig> CREATOR
-            = new Parcelable.Creator<PlatformAuthConfig>() {
-        @Override
-        public PlatformAuthConfig createFromParcel(Parcel in) {
-            return new PlatformAuthConfig(in);
-        }
+    public String getClientId() {
+        return clientId;
+    }
 
-        @Override
-        public PlatformAuthConfig[] newArray(int size) {
-            return new PlatformAuthConfig[size];
-        }
-    };
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public String getScope() {
+        return scope;
+    }
 }

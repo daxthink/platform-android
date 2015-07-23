@@ -88,18 +88,18 @@ public class MapPostFragment extends BaseFragment
 
     private static MapPostFragment mMapPostFragment;
 
+    @Inject
+    MapPostPresenter mMapPostPresenter;
+
+    RxEventBus mRxEventBus;
+
     private ClusterManager<ClusterMarkerModel> mClusterManager;
 
     private MapFragment mMapFragment;
 
     private GoogleMap mMap;
 
-    @Inject
-    MapPostPresenter mMapPostPresenter;
-
     private HashMap<Marker, ClusterMarkerModel> markers = new HashMap<>();
-
-    RxEventBus mRxEventBus;
 
     private CompositeSubscription mSubscriptions;
 
@@ -127,7 +127,7 @@ public class MapPostFragment extends BaseFragment
         mSubscriptions = new CompositeSubscription();
 
         mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObserverable())
+                .add(bindFragment(this, mRxEventBus.toObservable())
                         .subscribe(event -> {
                             if (event instanceof ReloadPostEvent) {
                                 ReloadPostEvent reloadPostEvent
@@ -303,7 +303,7 @@ public class MapPostFragment extends BaseFragment
     public void onClusterItemInfoWindowClick(ClusterMarkerModel clusterMarkerModel) {
         //TODO launch post detail view
         //For now show a toast with the title
-        showToast(clusterMarkerModel.title);
+        showToast(clusterMarkerModel.getTitle());
     }
 
     @Override
@@ -384,8 +384,8 @@ public class MapPostFragment extends BaseFragment
         protected void onBeforeClusterItemRendered(ClusterMarkerModel geoJsonModel,
                 MarkerOptions markerOptions) {
             super.onBeforeClusterItemRendered(geoJsonModel, markerOptions);
-            markerOptions.snippet(geoJsonModel.description);
-            markerOptions.title(geoJsonModel.title);
+            markerOptions.snippet(geoJsonModel.getDescription());
+            markerOptions.title(geoJsonModel.getTitle());
         }
 
         @Override

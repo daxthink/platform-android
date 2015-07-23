@@ -40,9 +40,9 @@ public class Tags extends Response implements Serializable {
 
     @Override
     public String toString() {
-        return "Tags{" +
-                "response=" + super.toString() +
-                "tags=" + tags +
-                '}';
+        return "Tags{"
+                + "response=" + super.toString()
+                + "tags=" + tags
+                + '}';
     }
 }

@@ -20,13 +20,16 @@ import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 
 /**
- * Add Category view
+ * Set Active Deployment view
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface ActivateDeploymentView extends LoadDataView {
 
-    void markStatus();
-
+    /**
+     * Sets the active deployment
+     *
+     * @param deploymentModel The deployment model
+     */
     void setActiveDeployment(DeploymentModel deploymentModel);
 }

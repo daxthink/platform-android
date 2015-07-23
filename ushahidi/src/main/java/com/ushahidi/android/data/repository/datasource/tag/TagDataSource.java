@@ -30,9 +30,27 @@ import rx.Observable;
  */
 public interface TagDataSource {
 
+    /**
+     * Gets an {@link Observable} that emits a list of {@link TagEntity}
+     *
+     * @param deploymentId The deployment ID to fetch tag list by
+     * @return The list of tags
+     */
     Observable<List<TagEntity>> getTagList(Long deploymentId);
 
+    /**
+     * Saves {@link TagEntity} into a data store
+     *
+     * @param tag The tag entity be saved into the data store
+     * @return The row affected
+     */
     Observable<Long> putTag(List<TagEntity> tag);
 
+    /**
+     * Deletes a tag
+     *
+     * @param tagEntity The tag entity be deleted
+     * @return True if successfully deleted otherwise false
+     */
     Observable<Boolean> deleteTag(TagEntity tagEntity);
 }

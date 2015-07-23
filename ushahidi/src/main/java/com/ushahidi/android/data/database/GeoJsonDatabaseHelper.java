@@ -39,6 +39,11 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 @Singleton
 public class GeoJsonDatabaseHelper extends BaseDatabaseHelper {
 
+    /**
+     * Default constructor
+     *
+     * @param context The calling context. Cannot be a null value
+     */
     @Inject
     public GeoJsonDatabaseHelper(@NonNull Context context) {
         super(context);
@@ -48,6 +53,7 @@ public class GeoJsonDatabaseHelper extends BaseDatabaseHelper {
      * Gets {@link GeoJsonEntity} from the database.
      *
      * @param deploymentId The deployment ID to be used for fetching the {@link GeoJsonEntity}
+     * @return An Observable that emits {@link GeoJsonEntity}
      */
     public Observable<GeoJsonEntity> getGeoJson(Long deploymentId) {
         return Observable.create(subscriber -> {
@@ -67,6 +73,7 @@ public class GeoJsonDatabaseHelper extends BaseDatabaseHelper {
      * Adds / Update {@link GeoJsonEntity} in the database.
      *
      * @param geoJsonEntity The {@link GeoJsonEntity} to be added / updated.
+     * @return The row affected
      */
     public Observable<Long> putGeoJson(GeoJsonEntity geoJsonEntity) {
         return Observable.create(subscriber -> {

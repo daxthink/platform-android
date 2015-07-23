@@ -17,16 +17,27 @@
 
 package com.ushahidi.android.data.api.account;
 
-import com.ushahidi.android.data.entity.UserAccountEntity;
-
 /**
- * Strategy for serializing and deserializing the {@link UserAccountEntity}
+ * Strategy for serializing and deserializing the PlatformSession
  *
+ * @param <T> The platform session
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public interface SerializationStrategy<T extends Session> {
 
-    String serialize(T Session);
+    /**
+     * Serialize a session
+     *
+     * @param session The session to be serialized
+     * @return The string
+     */
+    String serialize(T session);
 
-    T deserialize(String serializedUserAccountEntity);
+    /**
+     * Deserilizes string saved in a SharedPreference into it's typed object
+     *
+     * @param serializedSession The string to be deserialized
+     * @return The typed object
+     */
+    T deserialize(String serializedSession);
 }

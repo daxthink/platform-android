@@ -20,12 +20,18 @@ import java.util.List;
  */
 public class DeploymentSpinnerAdapter extends ArrayAdapter<String> {
 
-    private final static int LAYOUT_RESOURCE_ID = R.layout.deployment_spinner_item;
+    private static final int LAYOUT_RESOURCE_ID = R.layout.deployment_spinner_item;
 
     private final List<DeploymentModel> mDeploymentModels = new ArrayList<>();
 
     private final Context mContext;
 
+    /**
+     * The default constructor
+     *
+     * @param context          The calling context
+     * @param deploymentModels The deployment models
+     */
     public DeploymentSpinnerAdapter(Context context, List<DeploymentModel> deploymentModels) {
         super(context, LAYOUT_RESOURCE_ID);
         setItems(deploymentModels);
@@ -34,11 +40,11 @@ public class DeploymentSpinnerAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
         Widgets widget;
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        View convertView = view;
         if (convertView == null) {
             convertView = inflater.inflate(LAYOUT_RESOURCE_ID,
                     parent, false);
@@ -52,6 +58,11 @@ public class DeploymentSpinnerAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
+    /**
+     * Gets a list of deployments
+     *
+     * @return The list of deployments
+     */
     public List<DeploymentModel> getDeploymentModels() {
         return mDeploymentModels;
     }

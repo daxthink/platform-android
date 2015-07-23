@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.geojson;
 
 import com.ushahidi.android.data.api.GeoJsonApi;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.database.GeoJsonDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -38,6 +38,12 @@ public class GeoJsonDataSourceFactory {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param geoJsonDatabaseHelper The geojson database helper
+     * @param ushAccessTokenManager The access token manager
+     */
     @Inject
     public GeoJsonDataSourceFactory(
             @NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper, @NonNull UshAccessTokenManager
@@ -46,12 +52,21 @@ public class GeoJsonDataSourceFactory {
         mUshAccessTokenManager = ushAccessTokenManager;
     }
 
-
+    /**
+     * Creates a {@link GeoJsonApiDataSource}
+     *
+     * @return The geojson api data source
+     */
     public GeoJsonDataSource createGeoJsonApiDataSource() {
         final GeoJsonApi geoJsonApi = new GeoJsonApi(mUshAccessTokenManager);
         return new GeoJsonApiDataSource(geoJsonApi, mGeoDatabaseHelper);
     }
 
+    /**
+     * Creates {@link GeoJsonDatabaseDataSource}
+     *
+     * @return The geojson data source
+     */
     public GeoJsonDataSource createGeoJsonDatabaseDataSource() {
         return new GeoJsonDatabaseDataSource(mGeoDatabaseHelper);
     }

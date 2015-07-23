@@ -17,6 +17,7 @@
 package com.ushahidi.android.presentation;
 
 import com.addhen.android.raiburari.presentation.BaseApplication;
+import com.facebook.stetho.Stetho;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 
@@ -25,9 +26,21 @@ import com.ushahidi.android.presentation.state.RxEventBus;
  */
 public class UshahidiApplication extends BaseApplication {
 
-    AppComponent mAppComponent;
-
     private static RxEventBus mRxEventBus;
+
+    private AppComponent mAppComponent;
+
+    /**
+     * Singleton for {@link RxEventBus}
+     *
+     * @return The RxEvent bus
+     */
+    public static RxEventBus getRxEventBusInstance() {
+        if (mRxEventBus == null) {
+            mRxEventBus = new RxEventBus();
+        }
+        return mRxEventBus;
+    }
 
     @Override
     public void onCreate() {
@@ -35,14 +48,17 @@ public class UshahidiApplication extends BaseApplication {
         mAppComponent = AppComponent.Initializer.init(this);
     }
 
-    public AppComponent getAppComponent() {
-        return mAppComponent;
+    private void initializeStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(
+                                Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                Stetho.defaultInspectorModulesProvider(this))
+                        .build());
     }
 
-    public static RxEventBus getRxEventBusInstance() {
-        if (mRxEventBus == null) {
-            mRxEventBus = new RxEventBus();
-        }
-        return mRxEventBus;
+    public AppComponent getAppComponent() {
+        return mAppComponent;
     }
 }

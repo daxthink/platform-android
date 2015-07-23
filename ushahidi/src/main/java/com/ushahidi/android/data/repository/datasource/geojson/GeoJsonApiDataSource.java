@@ -36,6 +36,12 @@ public class GeoJsonApiDataSource implements GeoJsonDataSource {
 
     private final GeoJsonDatabaseHelper mGeoJsonDatabaseHelper;
 
+    /**
+     * Default constructor that constructs {@link GeoJsonApiDataSource}
+     *
+     * @param geoJsonApi            The GeoJson API
+     * @param geoJsonDatabaseHelper The geojson database helper
+     */
     public GeoJsonApiDataSource(@NonNull GeoJsonApi geoJsonApi,
             GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
         mGeoJsonApi = geoJsonApi;

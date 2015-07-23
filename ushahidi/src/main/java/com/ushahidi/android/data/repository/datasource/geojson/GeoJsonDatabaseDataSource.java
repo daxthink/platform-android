@@ -31,6 +31,11 @@ public class GeoJsonDatabaseDataSource implements GeoJsonDataSource {
 
     private final GeoJsonDatabaseHelper mGeoJsonDatabaseHelper;
 
+    /**
+     * Default constructor
+     *
+     * @param geoJsonDatabaseHelper The geojson database helper
+     */
     public GeoJsonDatabaseDataSource(
             @NonNull GeoJsonDatabaseHelper geoJsonDatabaseHelper) {
         mGeoJsonDatabaseHelper = geoJsonDatabaseHelper;

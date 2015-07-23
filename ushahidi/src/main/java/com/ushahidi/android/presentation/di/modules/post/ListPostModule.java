@@ -26,11 +26,19 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * Dagger modules that provides list post related objects
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @Module
 public class ListPostModule {
 
+    /**
+     * Provides {@link ListPostUsecase} object annotated with the name "postList"
+     *
+     * @param listPostUsecase The list post use case
+     * @return The list post use case
+     */
     @Provides
     @ActivityScope
     @Named("postList")

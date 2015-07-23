@@ -18,11 +18,11 @@
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
 import com.ushahidi.android.data.entity.UserAccountEntity;
 
 import android.support.annotation.NonNull;
 
+import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import rx.Observable;
 
 /**
@@ -32,6 +32,10 @@ public class UserAccountApiDataSource implements UserAccountDataSource {
 
     private final UserApi mUserApi;
 
+    /**
+     * Default constructor
+     * @param userApi The user API
+     */
     public UserAccountApiDataSource(@NonNull UserApi userApi) {
         mUserApi = userApi;
     }

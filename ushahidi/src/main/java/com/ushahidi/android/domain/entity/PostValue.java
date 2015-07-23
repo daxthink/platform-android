@@ -45,9 +45,9 @@ public class PostValue {
 
     @Override
     public String toString() {
-        return "PostValue{" +
-                "mValues='" + mValues + '\'' +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "PostValue{"
+                + "mValues='" + mValues + '\''
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 }

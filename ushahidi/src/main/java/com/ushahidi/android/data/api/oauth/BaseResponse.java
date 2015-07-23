@@ -15,28 +15,25 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.api;
+package com.ushahidi.android.data.api.oauth;
 
-import com.ushahidi.android.data.api.qualifier.Bearer;
-
-import retrofit.RequestInterceptor;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public final class ApiHeader implements RequestInterceptor {
+public abstract class BaseResponse {
 
-    private static final String AUTHORIZATION_BEARER = "Bearer";
+    @SerializedName("error_description")
+    private String errorDescription = null;
 
-    private final String authorizationValue;
+    private String error = null;
 
-    public ApiHeader(@Bearer String bearer) {
-        authorizationValue = AUTHORIZATION_BEARER + " " + bearer;
+    public String getError() {
+        return error;
     }
 
-    @Override
-    public void intercept(RequestFacade request) {
-        request.addHeader("Accept", "application/json");
-        request.addHeader(Constant.HEADER_AUTHORIZATION, authorizationValue);
+    public String getErrorDescription() {
+        return errorDescription;
     }
 }

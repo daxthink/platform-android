@@ -23,8 +23,8 @@ import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
-import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
 import com.ushahidi.android.presentation.validator.UrlValidator;
+import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -60,10 +60,10 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     @Bind(R.id.textview_deployment_description)
     FontSupportedTextView mHeader;
 
-    private UpdateDeploymentListener mActionListener;
-
     @Inject
     UpdateDeploymentPresenter mUpdateDeploymentPresenter;
+
+    private UpdateDeploymentListener mActionListener;
 
     private DeploymentModel mDeploymentModel;
 
@@ -177,6 +177,8 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
                 case EditorInfo.IME_ACTION_DONE:
                     submit();
                     return true;
+                default:
+                    return false;
             }
         }
         return false;

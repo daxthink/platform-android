@@ -18,6 +18,7 @@
 package com.ushahidi.android.data.api;
 
 /**
+ * Use to providing a custom data deserializer for deserializing dates
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -25,6 +26,11 @@ public class Date extends java.util.Date {
 
     private static final long serialVersionUID = -2667623647943795029L;
 
+    /**
+     * Default constructor
+     *
+     * @param date The date to be deserialized
+     */
     public Date(java.util.Date date) {
         super(date.getTime());
     }

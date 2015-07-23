@@ -29,26 +29,6 @@ import java.util.List;
 
 public class Post extends Entity {
 
-    public enum Status {
-        DRAFT("draft"), PUBLISHED("published"), PENDING("pending"), UNKNOWN("unknown");
-
-        public String value;
-
-        Status(String value) {
-            this.value = value;
-        }
-    }
-
-    public enum Type {
-        REPORT("report"), UPDATE("update"), REVISION("revision"), UNKNOWN("unknown");
-
-        public String value;
-
-        Type(String value) {
-            this.value = value;
-        }
-    }
-
     private Long mParent;
 
     private Type mType;
@@ -183,20 +163,96 @@ public class Post extends Entity {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "mParent=" + mParent +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mValues=" + mValues +
-                ", mTags=" + mTags +
-                '}';
+        return "Post{"
+                + "mParent=" + mParent
+                + ", mType=" + mType
+                + ", mTitle='" + mTitle + '\''
+                + ", mSlug='" + mSlug + '\''
+                + ", mContent='" + mContent + '\''
+                + ", mAuthorEmail='" + mAuthorEmail + '\''
+                + ", mAuthorRealname='" + mAuthorRealname + '\''
+                + ", mStatus=" + mStatus
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + ", mDeploymentId=" + mDeploymentId
+                + ", mValues=" + mValues
+                + ", mTags=" + mTags
+                + '}';
+    }
+
+    public enum Status {
+        /**
+         * A draft status
+         */
+        DRAFT("draft"),
+
+        /**
+         * A published status
+         */
+        PUBLISHED("published"),
+
+        /**
+         * A pending status
+         */
+        PENDING("pending"),
+
+        /**
+         * An unknown status
+         */
+        UNKNOWN("unknown");
+
+        private String value;
+
+        /**
+         * The value property of the post
+         *
+         * @param value The value
+         */
+        Status(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets value
+         *
+         * @return The value
+         */
+        public String getValue() {
+            return value;
+        }
+    }
+
+    public enum Type {
+        /**
+         * Report type
+         */
+        REPORT("report"),
+        /**
+         * Updated type
+         */
+        UPDATE("update"),
+        /**
+         * Revision
+         */
+        REVISION("revision"),
+        /**
+         * Unknown
+         */
+        UNKNOWN("unknown");
+
+        private String value;
+
+        /**
+         * Default constructor
+         *
+         * @param value The value
+         */
+        Type(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 }

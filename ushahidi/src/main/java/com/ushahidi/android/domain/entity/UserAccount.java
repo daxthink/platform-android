@@ -29,27 +29,27 @@ public class UserAccount extends Entity {
 
     private String mPassword;
 
-    public void setAccountName(String accountName) {
-        mAccountName = accountName;
-    }
-
-    public void setPassword(String password) {
-        mPassword = password;
-    }
-    
     public String getAccountName() {
         return mAccountName;
+    }
+
+    public void setAccountName(String accountName) {
+        mAccountName = accountName;
     }
 
     public String getPassword() {
         return mPassword;
     }
 
+    public void setPassword(String password) {
+        mPassword = password;
+    }
+
     @Override
     public String toString() {
-        return "UserAccount{" +
-                "mAccountName='" + mAccountName + '\'' +
-                ", mPassword='" + mPassword + '\'' +
-                '}';
+        return "UserAccount{"
+                + "mAccountName='" + mAccountName + '\''
+                + ", mPassword='" + mPassword + '\''
+                + '}';
     }
 }

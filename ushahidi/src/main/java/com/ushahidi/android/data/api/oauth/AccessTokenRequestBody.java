@@ -1,4 +1,4 @@
-package com.ushahidi.android.data.api.auth;
+package com.ushahidi.android.data.api.oauth;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -31,8 +31,16 @@ public class AccessTokenRequestBody extends BaseResponse implements Serializable
 
     private final String scope;
 
-    // Constructor
-
+    /**
+     * Default constructor
+     *
+     * @param username     The user name
+     * @param password     The password
+     * @param grantType    The grant type
+     * @param clientId     The client ID
+     * @param clientSecret The client secret
+     * @param scope        The scope
+     */
     public AccessTokenRequestBody(@Username String username, @Password String password,
             @GrantType String grantType, @ClientId String clientId,
             @ClientSecret String clientSecret, @Scope String scope) {

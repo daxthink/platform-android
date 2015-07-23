@@ -41,6 +41,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
+ * {@link Presenter} that controls communication between {@link PostView} and
+ * {@link com.ushahidi.android.presentation.model.PostModel} of the presentation layer.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostPresenter implements Presenter {
@@ -59,6 +62,16 @@ public class PostPresenter implements Presenter {
 
     private PrefsFactory mPrefsFactory;
 
+    /**
+     * Default constructor
+     *
+     * @param listDeploymentUsecase      The list deployment use case
+     * @param userProfileUsecase         The user profile usecase
+     * @param activateDeploymentUsecase  The activate deployment use case
+     * @param prefsFactory               The prefs factory
+     * @param deploymentModelDataMapper  The deployment data mapper
+     * @param userProfileModelDataMapper The user profile model data mapper
+     */
     @Inject
     public PostPresenter(@Named("deploymentList") Usecase listDeploymentUsecase,
             @Named("userprofileGet") GetUserProfileUsecase userProfileUsecase,
@@ -113,6 +126,11 @@ public class PostPresenter implements Presenter {
         });
     }
 
+    /**
+     * Gets a user profile
+     *
+     * @param userProfileId The user profile to be used for fetching user's details
+     */
     public void getUserProfile(Long userProfileId) {
         mGetUserProfileUsecase
                 .setListUserProfile(mPrefsFactory.getActiveDeploymentId().get(), userProfileId);
@@ -141,6 +159,11 @@ public class PostPresenter implements Presenter {
         mPostView.showError(errorMessage);
     }
 
+    /**
+     * Sets {@link DeploymentModel} status to Activate
+     *
+     * @param deploymentModel The model to activate it's status
+     */
     public void activateDeployment(DeploymentModel deploymentModel) {
         mActivateDeploymentUsecase.setDeployment(mDeploymentModelDataMapper.map(deploymentModel));
         mActivateDeploymentUsecase.execute(new DefaultSubscriber<Long>() {

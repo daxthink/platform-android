@@ -41,6 +41,11 @@ public class UserAccountAuthenticator extends AbstractAccountAuthenticator {
 
     private final AccountManager mAccountManager;
 
+    /**
+     * Default constructor
+     *
+     * @param context The call context
+     */
     public UserAccountAuthenticator(Context context) {
         super(context);
         mContext = context;

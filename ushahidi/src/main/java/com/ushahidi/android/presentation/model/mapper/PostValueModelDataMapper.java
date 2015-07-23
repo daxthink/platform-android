@@ -17,8 +17,6 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.PostEntity;
-import com.ushahidi.android.domain.entity.Post;
 import com.ushahidi.android.domain.entity.PostValue;
 import com.ushahidi.android.presentation.model.PostValueModel;
 
@@ -30,15 +28,26 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Maps {@link PostValue} onto {@link PostValueModel}
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class PostValueModelDataMapper {
 
+    /**
+     * Default constructor
+     */
     @Inject
     public PostValueModelDataMapper() {
         // Do nothing
     }
 
+    /**
+     * Maps {@link PostValue} onto {@link PostValueModel}
+     *
+     * @param postValue The post entity to be mapped
+     * @return The post value model
+     */
     public PostValueModel map(@NonNull PostValue postValue) {
         PostValueModel postValueModel = new PostValueModel();
         postValueModel.setValues(postValue.getValues());
@@ -46,6 +55,12 @@ public class PostValueModelDataMapper {
         return postValueModel;
     }
 
+    /**
+     * Maps {@link PostValueModel} onto {@link PostValue}
+     *
+     * @param postValueModel The post value model
+     * @return The post value
+     */
     public PostValue map(@NonNull PostValueModel postValueModel) {
         PostValue postValue = new PostValue();
         postValue.setDeploymentId(postValueModel.getDeploymentId());
@@ -54,10 +69,10 @@ public class PostValueModelDataMapper {
     }
 
     /**
-     * Maps a list {@link PostEntity} into a list of {@link Post}.
+     * Maps a list {@link PostValue} into a list of {@link PostValueModel}.
      *
      * @param postValueList List to be mapped.
-     * @return {@link Post}
+     * @return {@link PostValueModel}
      */
     public List<PostValueModel> map(@NonNull List<PostValue> postValueList) {
         List<PostValueModel> postValueModelList = new ArrayList<>();

@@ -35,5 +35,10 @@ import dagger.Component;
         AppModule.class})
 public interface AppActivityComponent {
 
+    /**
+     * Provides {@link Launcher} to the sub-graph
+     *
+     * @return The Launcher
+     */
     Launcher launcher();
 }

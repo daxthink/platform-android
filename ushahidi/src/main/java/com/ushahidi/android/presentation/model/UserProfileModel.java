@@ -28,22 +28,6 @@ import java.util.Date;
  */
 public class UserProfileModel extends Model {
 
-    public enum Role {
-        ADMIN("admin"),
-        USER("user");
-
-        public final String value;
-
-        Role(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return value;
-        }
-    }
-
     private String mEmail;
 
     private String mRealName;
@@ -57,7 +41,6 @@ public class UserProfileModel extends Model {
     private Date mCreated;
 
     private Date mUpdated;
-
 
     public String getEmail() {
         return mEmail;
@@ -117,15 +100,50 @@ public class UserProfileModel extends Model {
 
     @Override
     public String toString() {
-        return "UserProfileModel {" +
-                "_id=" + _id +
-                ", mEmail='" + mEmail + '\'' +
-                ", mRealName='" + mRealName + '\'' +
-                ", mUsername='" + mUsername + '\'' +
-                ", mRole=" + mRole +
-                ", mDeployment=" + mDeployment +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                '}';
+        return "UserProfileModel {"
+                + "_id=" + _id
+                + ", mEmail='" + mEmail + '\''
+                + ", mRealName='" + mRealName + '\''
+                + ", mUsername='" + mUsername + '\''
+                + ", mRole=" + mRole
+                + ", mDeployment=" + mDeployment
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + '}';
+    }
+
+    /**
+     * Enum representing the different roles a user has
+     */
+    public enum Role {
+        /**
+         * The admin role
+         */
+        ADMIN("admin"),
+
+        /**
+         * The user role
+         */
+        USER("user");
+
+        private final String value;
+
+        /**
+         * Default constructor
+         *
+         * @param value The role's value
+         */
+        Role(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 }

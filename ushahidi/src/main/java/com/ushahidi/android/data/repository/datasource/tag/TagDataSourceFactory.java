@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.tag;
 
 import com.ushahidi.android.data.api.TagApi;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.database.TagDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -39,6 +39,12 @@ public class TagDataSourceFactory {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor that constructs {@link TagDataSourceFactory}
+     *
+     * @param tagDatabaseHelper     The tag database helper
+     * @param ushAccessTokenManager The access token manager
+     */
     @Inject
     public TagDataSourceFactory(
             @NonNull TagDatabaseHelper tagDatabaseHelper,
@@ -47,11 +53,20 @@ public class TagDataSourceFactory {
         mTagDatabaseHelper = tagDatabaseHelper;
     }
 
-
+    /**
+     * Creates {@link TagDatabaseDataSource}
+     *
+     * @return The tag database data source
+     */
     public TagDatabaseDataSource createTagDatabaseDataSource() {
         return new TagDatabaseDataSource(mTagDatabaseHelper);
     }
 
+    /**
+     * Creates {@link TagApiDataSource}
+     *
+     * @return The tag api data source
+     */
     public TagDataSource createTagApiDataSource() {
         final TagApi tagApi = new TagApi(mUshAccessTokenManager);
         return new TagApiDataSource(tagApi, mTagDatabaseHelper);

@@ -29,16 +29,48 @@ import com.addhen.android.raiburari.presentation.model.Model;
  */
 public class ClusterMarkerModel extends Model implements ClusterItem {
 
-    public String title;
+    private String title;
 
-    public String description;
+    private String description;
 
-    public double latitude;
+    private double latitude;
 
-    public double longitude;
+    private double longitude;
 
     @Override
     public LatLng getPosition() {
         return new LatLng(latitude, longitude);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

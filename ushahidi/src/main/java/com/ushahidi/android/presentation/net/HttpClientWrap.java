@@ -46,6 +46,12 @@ public class HttpClientWrap implements Client {
 
     private Context mContext;
 
+    /**
+     * Default constructor that constructs {@link HttpClientWrap}
+     *
+     * @param context The call context
+     * @param client  The {@link Client} object
+     */
     @Inject
     public HttpClientWrap(Context context, Client client) {
         mContext = context;

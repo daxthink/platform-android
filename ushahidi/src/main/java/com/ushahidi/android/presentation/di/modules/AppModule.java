@@ -18,6 +18,7 @@ package com.ushahidi.android.presentation.di.modules;
 
 import com.addhen.android.raiburari.data.pref.RxSharedPreferences;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
@@ -29,9 +30,7 @@ import com.ushahidi.android.data.api.account.PersistedSessionManager;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.Session;
 import com.ushahidi.android.data.api.account.SessionManager;
-import com.ushahidi.android.data.api.heimdalldroid.OAuth2AccessToken;
-import com.ushahidi.android.data.api.heimdalldroid.extras.SharedPreferencesOAuth2AccessTokenStorage;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
@@ -59,12 +58,14 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import de.rheinfabrik.heimdall.OAuth2AccessToken;
+import de.rheinfabrik.heimdall.extras.SharedPreferencesOAuth2AccessTokenStorage;
 import retrofit.client.OkClient;
 
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Reusable Dagger modules for the entire app
+ * Dagger modules that provides objects that lives the entire lifecycle of the application
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -87,6 +88,11 @@ public class AppModule {
         return client;
     }
 
+    /**
+     * Provides {@link PlatformAuthConfig} object
+     *
+     * @return The platform config object
+     */
     @Provides
     @Singleton
     PlatformAuthConfig providePlatformAuthConfig() {
@@ -95,6 +101,12 @@ public class AppModule {
                 Constant.SCOPE);
     }
 
+    /**
+     * Provides {@link SessionManager} object
+     *
+     * @param sharedPreferences The sharedPreferences for storing user's session details
+     * @return The session manager object
+     */
     @Provides
     @Singleton
     SessionManager<PlatformSession> providePlatformSessionManager(
@@ -107,6 +119,12 @@ public class AppModule {
         return sessionSessionManager;
     }
 
+    /**
+     * Provides {@link Session} object
+     *
+     * @param sessionManager The session manager
+     * @return The session object
+     */
     @Provides
     @Nullable
     @Singleton
@@ -114,6 +132,12 @@ public class AppModule {
         return sessionManager.getActiveSession();
     }
 
+    /**
+     * Provides {@link HttpClientWrap} object
+     *
+     * @param context The calling context
+     * @return The http client wrap object
+     */
     @Provides
     @Singleton
     HttpClientWrap provideOkHttpClient(Context context) {
@@ -122,9 +146,16 @@ public class AppModule {
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.networkInterceptors().add(new StethoInterceptor());
         return new HttpClientWrap(context, new OkClient(okHttpClient));
     }
 
+    /**
+     * Provides {@link SharedPreferences} object
+     *
+     * @param context The calling context
+     * @return The shared preferences
+     */
     @Provides
     @Singleton
     SharedPreferences provideSharedPreferences(Context context) {
@@ -132,12 +163,25 @@ public class AppModule {
                 MODE_PRIVATE);
     }
 
+    /**
+     * Provides {@link RxSharedPreferences} object
+     *
+     * @param sharedPreferences The RxSharedPreferences
+     * @return The shared preferences
+     */
     @Provides
     @Singleton
     RxSharedPreferences provideRxSharedPreferences(SharedPreferences sharedPreferences) {
         return new RxSharedPreferences(sharedPreferences);
     }
 
+    /**
+     * Provides {@link DeploymentRepository} object
+     *
+     * @param deploymentDataRepository The deployment data repository which is an implementation of
+     *                                 {@link DeploymentRepository}
+     * @return the deployment repository
+     */
     @Provides
     @Singleton
     DeploymentRepository provideDeploymentRepository(
@@ -145,6 +189,12 @@ public class AppModule {
         return deploymentDataRepository;
     }
 
+    /**
+     * Provides {@link PostRepository} object
+     *
+     * @param postDataRepository post data repository
+     * @return The post repository
+     */
     @Provides
     @Singleton
     PostRepository providePostRepository(
@@ -152,6 +202,12 @@ public class AppModule {
         return postDataRepository;
     }
 
+    /**
+     * Provides {@link GeoJsonRepository} object
+     *
+     * @param geoJsonDataRepository The GeoJson data repository
+     * @return The GeoJson
+     */
     @Provides
     @Singleton
     GeoJsonRepository provideGeoJsonRepository(
@@ -160,6 +216,12 @@ public class AppModule {
         return geoJsonDataRepository;
     }
 
+    /**
+     * Provides {@link UserAccountRepository}
+     *
+     * @param userAccountRepository The user data repository
+     * @return The user account repository
+     */
     @Provides
     @Singleton
     UserAccountRepository providesUserAccountRepository(
@@ -167,6 +229,12 @@ public class AppModule {
         return userAccountRepository;
     }
 
+    /**
+     * Provides {@link UserProfileRepository}
+     *
+     * @param userProfileDataRepository The user profile data repository
+     * @return The user profile repository
+     */
     @Provides
     @Singleton
     UserProfileRepository provideUserRepository(
@@ -174,18 +242,38 @@ public class AppModule {
         return userProfileDataRepository;
     }
 
+    /**
+     * Provides {@link AppState} object
+     *
+     * @param bus The bus object
+     * @return The constructed app state
+     */
     @Provides
     @Singleton
     public AppState provideApplicationState(Bus bus) {
         return new AppState(bus);
     }
 
+    /**
+     * Provides {@link UserState} object
+     *
+     * @param appState The AppState which is an implementation of {@link UserState}
+     * @return The user state object
+     */
     @Provides
     @Singleton
     UserState provideUserState(AppState appState) {
         return appState;
     }
 
+    /**
+     * Provides {@link PlatformService} object
+     *
+     * @param httWrap      The http client wrap
+     * @param handler      The unauthorized access error handler
+     * @param prefsFactory The preference factory
+     * @return The constructed platform service object
+     */
     @Provides
     @Singleton
     PlatformService provideApiServiceFactory(HttpClientWrap httWrap,
@@ -194,6 +282,14 @@ public class AppModule {
         return new PlatformService(httWrap, handler, prefsFactory);
     }
 
+    /**
+     * Provides {@link UshAccessTokenManager} object
+     *
+     * @param context            The calling context
+     * @param platformService    The platform service
+     * @param platformAuthConfig The platform auth config
+     * @return The access token manager
+     */
     @Provides
     @Singleton
     UshAccessTokenManager provideUshAccessTokenManager(Context context,

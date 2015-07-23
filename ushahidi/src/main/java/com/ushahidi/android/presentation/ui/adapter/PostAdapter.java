@@ -66,9 +66,9 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     private static final int ANIMATED_ITEMS_COUNT = 2;
 
-    private int lastAnimatedPosition = -1;
+    private final View mEmptyView;
 
-    private int itemsCount = 0;
+    private int lastAnimatedPosition = -1;
 
     private int mDuration = 300;
 
@@ -76,13 +76,22 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     private float mFrom = 0f;
 
-    private final View mEmptyView;
-
+    /**
+     * Default constructor
+     *
+     * @param emptyView Thew vie to show when the adapter is empty
+     */
     public PostAdapter(final View emptyView) {
         mEmptyView = emptyView;
         onDataSetChanged();
     }
 
+    /**
+     * Adapters bind view holder
+     *
+     * @param viewHolder The view hold
+     * @param position   The position of the item to be binded to the view
+     */
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if (position < getItemCount() && (customHeaderView != null ? position <= getItems().size()
                 : position < getItems().size()) && (customHeaderView != null ? position > 0
@@ -168,12 +177,18 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * Sort items by date
+     */
     public void sortByDate() {
         Collections
                 .sort(getItems(), (one, other) -> one.getCreated().compareTo(other.getCreated()));
         notifyDataSetChanged();
     }
 
+    /**
+     * Sort items by title
+     */
     public void sortByTitle() {
 
         Collections.sort(getItems(), (one, other) -> one.getTitle().compareTo(other.getTitle()));
@@ -181,6 +196,12 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         notifyDataSetChanged();
     }
 
+    /**
+     * Gets the animated associated with the adapter's view
+     *
+     * @param view The view
+     * @return The list of {@link Animator}
+     */
     protected Animator[] getAnimators(View view) {
         return new Animator[]{ObjectAnimator.ofFloat(view, "alpha", mFrom, 1f)};
     }
@@ -195,6 +216,9 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                 .toString();
     }
 
+    /**
+     * The view holder's widget
+     */
     public class Widgets extends RecyclerView.ViewHolder {
 
         @Bind(R.id.post_title)
@@ -218,12 +242,18 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
         @Bind(R.id.post_tags_container)
         ViewGroup tagContainer;
 
-        Context context;
+        private Context context;
 
-        int tagColorSize;
+        private int tagColorSize;
 
-        int tagIconSize;
+        private int tagIconSize;
 
+        /**
+         * Widgets
+         *
+         * @param ctxt        The calling context
+         * @param convertView The view
+         */
         public Widgets(Context ctxt, View convertView) {
             super(convertView);
             ButterKnife.bind(this, convertView);
@@ -234,6 +264,11 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
                     .getDimensionPixelSize(R.dimen.tag_icon_color_size);
         }
 
+        /**
+         * Renders tag badges
+         *
+         * @param tags The tags
+         */
         public void renderTagBadge(List<TagModel> tags) {
 
             tagContainer.setVisibility(View.VISIBLE);
@@ -291,7 +326,8 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
             // Seed dummy images
             Map<Integer, String> dummyImages = new HashMap();
             dummyImages.put(0,
-                    "https://lh3.googleusercontent.com/-CGnI13j4vzM/VNYamMbbc5I/AAAAAAAAN3Q/AXIUMgluJrs/w1479-h832-no/2015-02-06%2B10.38.08%2B1.jpg");
+                    "https://lh3.googleusercontent.com/-CGnI13j4vzM/VNYamMbbc5I/AAAAAAAAN3Q/AXI"
+                            + "UMgluJrs/w1479-h832-no/2015-02-06%2B10.38.08%2B1.jpg");
             dummyImages.put(2, "https://farm8.staticflickr.com/7569/15110597684_e46a843af7_b.jpg");
             dummyImages.put(4, "https://farm9.staticflickr.com/8734/16863201508_5685055f10_b.jpg");
             dummyImages.put(5, "https://farm9.staticflickr.com/8800/16862037860_4bd562894e_b.jpg");

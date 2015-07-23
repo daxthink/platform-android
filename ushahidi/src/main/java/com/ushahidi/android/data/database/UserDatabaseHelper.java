@@ -41,6 +41,11 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 @Singleton
 public class UserDatabaseHelper extends BaseDatabaseHelper {
 
+    /**
+     * Default constructor
+     *
+     * @param context The calling context. Cannot be a null value
+     */
     @Inject
     public UserDatabaseHelper(@NonNull Context context) {
         super(context);
@@ -50,6 +55,8 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
      * Gets {@link UserEntity} from the database.
      *
      * @param deploymentId The deployment ID to be used for fetching the {@link UserEntity}
+     * @param userEntityId The user ID
+     * @return An observable that emits {@link UserEntity}
      */
     public Observable<UserEntity> getUserProfile(Long deploymentId, Long userEntityId) {
         return Observable.create(subscriber -> {
@@ -66,6 +73,12 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Gets a list of {@link UserEntity}
+     *
+     * @param deploymentId The deployment Id
+     * @return An Observable that emits {@link UserEntity}
+     */
     public Observable<List<UserEntity>> getUserProfiles(Long deploymentId) {
         return Observable.create(subscriber -> {
             final List<UserEntity> userEntityList = cupboard()
@@ -80,6 +93,12 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Deletes user profile
+     *
+     * @param userProfile The user to deleted
+     * @return True if successful otherwise false
+     */
     public Observable<Boolean> deleteUserProfile(UserEntity userProfile) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
@@ -95,6 +114,12 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Saves a user entity into the db
+     *
+     * @param userEntity The user entity to be saved
+     * @return The row affected
+     */
     public Observable<Long> putUser(UserEntity userEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
@@ -110,6 +135,11 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Saves a user entity into the db
+     *
+     * @param userEntity The user entity
+     */
     public void put(UserEntity userEntity) {
         if (!isClosed()) {
             try {

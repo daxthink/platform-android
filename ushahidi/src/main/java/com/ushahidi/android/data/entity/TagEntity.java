@@ -134,14 +134,45 @@ public class TagEntity extends DataEntity {
         mDeploymentId = deploymentId;
     }
 
+    @Override
+    public String toString() {
+        return "Tag{"
+                + "mParent=" + mParent
+                + ", mTag='" + mTag + '\''
+                + ", mId='" + _id + '\''
+                + ", mColor='" + mColor + '\''
+                + ", mType=" + mType
+                + ", mIcon='" + mIcon + '\''
+                + ", mDescription='" + mDescription + '\''
+                + ", mPriority=" + mPriority
+                + ", mCreated=" + mCreated
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
+    }
+
+    /**
+     * Represents the tag entity type
+     */
     public enum Type {
+        /**
+         * The category
+         */
         @SerializedName("category")
         CATEGORY("category"),
+
+        /**
+         * The status
+         */
         @SerializedName("status")
         STATUS("status");
 
-        public final String value;
+        private final String value;
 
+        /**
+         * Default constructor
+         *
+         * @param value The value
+         */
         Type(String value) {
             this.value = value;
         }
@@ -150,8 +181,15 @@ public class TagEntity extends DataEntity {
         public String toString() {
             return value;
         }
+
+        public String getValue() {
+            return value;
+        }
     }
 
+    /**
+     * The parent property of the tag
+     */
     public static class Parent {
 
         @SerializedName("id")
@@ -160,21 +198,5 @@ public class TagEntity extends DataEntity {
         public Long getId() {
             return id;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "mParent=" + mParent +
-                ", mTag='" + mTag + '\'' +
-                ", mId='" + _id + '\'' +
-                ", mColor='" + mColor + '\'' +
-                ", mType=" + mType +
-                ", mIcon='" + mIcon + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mPriority=" + mPriority +
-                ", mCreated=" + mCreated +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
     }
 }

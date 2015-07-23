@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 /**
- * Represents a Platform session that is associated with a {@link PlatformAuthToken}.
+ * Represents a Platform session
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -34,9 +34,9 @@ public class PlatformSession extends Session {
     private final String userName;
 
     /**
-     * @param userId   User ID
-     * @param userName User Name
-     * @throws {@link java.lang.IllegalArgumentException} if token argument is null
+     * @param userId       User ID
+     * @param userName     User Name
+     * @param deploymentId The deploymentId
      */
     public PlatformSession(@NonNull long userId, @NonNull String userName,
             long deploymentId) {
@@ -76,10 +76,17 @@ public class PlatformSession extends Session {
         return userName;
     }
 
+    /**
+     * Uses {@link Gson} to serialize {@link PlatformSession} object to be saved by the
+     * SharedPreference
+     */
     public static class Serializer implements SerializationStrategy<PlatformSession> {
 
         private final Gson gson;
 
+        /**
+         * Default constructor
+         */
         public Serializer() {
             this.gson = new Gson();
         }

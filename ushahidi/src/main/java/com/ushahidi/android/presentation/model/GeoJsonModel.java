@@ -48,10 +48,10 @@ public class GeoJsonModel extends Model {
 
     @Override
     public String toString() {
-        return "GeoJsonModel{" +
-                "mID='" + _id + '\'' +
-                "mDeploymentId='" + mDeploymentId + '\'' +
-                ", geojson='" + mGeoJson + '\'' +
-                '}';
+        return "GeoJsonModel{"
+                + "mID='" + _id + '\''
+                + "mDeploymentId='" + mDeploymentId + '\''
+                + ", geojson='" + mGeoJson + '\''
+                + '}';
     }
 }

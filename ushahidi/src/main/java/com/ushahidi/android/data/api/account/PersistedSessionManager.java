@@ -31,10 +31,10 @@ import javax.inject.Inject;
  * Implementation of {@link SessionManager} that persists user accounts using {@link
  * SharedPreferences}
  *
+ * @param <T> The platform session
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PersistedSessionManager<T extends Session>
-        implements SessionManager<T> {
+public class PersistedSessionManager<T extends Session> implements SessionManager<T> {
 
     private static final int NUM_SESSIONS = 1;
 
@@ -46,14 +46,22 @@ public class PersistedSessionManager<T extends Session>
 
     private final String mPrefKeySession;
 
-    private volatile boolean restorePending = true;
-
     private final SerializationStrategy<T> mSerializer;
 
     private final ConcurrentHashMap<String, T> mSessionMap;
 
     private final AtomicReference<T> mActiveSessionRef;
 
+    private volatile boolean restorePending = true;
+
+    /**
+     * Default constructor
+     *
+     * @param sharedPreferences    The shared preferences
+     * @param serializer           The serializer to be used for serialization
+     * @param prefKeyActiveSession The active session preference key
+     * @param prefKeySession       the preference key for the user's session
+     */
     @Inject
     public PersistedSessionManager(SharedPreferences sharedPreferences,
             SerializationStrategy<T> serializer, String prefKeyActiveSession,
@@ -73,6 +81,9 @@ public class PersistedSessionManager<T extends Session>
         mPrefKeySession = prefKeySession;
     }
 
+    /**
+     * Restore all session if necessary
+     */
     void restoreAllSessionsIfNecessary() {
         // Only restore once
         if (restorePending) {
@@ -111,6 +122,12 @@ public class PersistedSessionManager<T extends Session>
         }
     }
 
+    /**
+     * Determine if session's preference key exist
+     *
+     * @param preferenceKey The preference key
+     * @return The preference key
+     */
     boolean isSessionPreferenceKey(String preferenceKey) {
         return preferenceKey.startsWith(mPrefKeySession);
     }
@@ -188,10 +205,26 @@ public class PersistedSessionManager<T extends Session>
         }
     }
 
+    /**
+     * Gets the preference key. It's a combination of separator, user id a separator and the
+     * deployment associated with the user
+     *
+     * @param id           The session id which is the same as the user's id
+     * @param deploymentId The deployment the session is tired to.
+     * @return The preference key
+     */
     String getPrefKey(long id, long deploymentId) {
         return mPrefKeySession + "_" + id + "_" + deploymentId;
     }
 
+    /**
+     * Gets the session map's key. It's a combination of separator, user id a separator and the
+     * deployment associated with the user
+     *
+     * @param id           The session id which is the same as the user's id
+     * @param deploymentId The deployment the session is tired to.
+     * @return The session map key
+     */
     String getSessionMapKey(long id, long deploymentId) {
         return mPrefKeySession + "_" + id + "_" + deploymentId;
     }

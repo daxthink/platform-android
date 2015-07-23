@@ -33,6 +33,7 @@ public interface GeoJsonRepository {
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.domain.entity.Deployment}
      * @param from         Where to get the geojson from
+     * @return The deployment
      */
     Observable<GeoJson> getGeoJson(Long deploymentId, From from);
 
@@ -40,6 +41,7 @@ public interface GeoJsonRepository {
      * Add/Update a {@link GeoJson}.
      *
      * @param geoJson The GeoJson to be saved.
+     * @return The row affected
      */
     Observable<Long> putGeoJson(GeoJson geoJson);
 }

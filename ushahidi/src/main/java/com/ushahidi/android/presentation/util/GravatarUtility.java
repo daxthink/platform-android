@@ -22,11 +22,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ * Utility for Gravatar support
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GravatarUtility {
+public final class GravatarUtility {
 
-    private static final StringBuilder sBuilder = new StringBuilder();
+    private static StringBuilder mBuilder = new StringBuilder();
 
     private static final String GRAVATAR_SECURE_ENDPOINT = "https://secure.gravatar.com/avatar/";
 
@@ -35,11 +37,11 @@ public class GravatarUtility {
     }
 
     private static String hex(byte[] array) {
-        sBuilder.setLength(0);
+        mBuilder.setLength(0);
         for (byte b : array) {
-            sBuilder.append(Integer.toHexString((b & 0xFF) | 0x100).substring(1, 3));
+            mBuilder.append(Integer.toHexString((b & 0xFF) | 0x100).substring(1, 3));
         }
-        return sBuilder.toString();
+        return mBuilder.toString();
     }
 
     private static String convertEmailToHash(String email) {
@@ -55,6 +57,12 @@ public class GravatarUtility {
         }
     }
 
+    /**
+     * Gets the gravatar's hashed url
+     *
+     * @param email The email to be used for hashing the URL
+     * @return The gravatar URL
+     */
     public static String url(String email) {
         final String hash = convertEmailToHash(email);
         final StringBuilder builder = new StringBuilder(GRAVATAR_SECURE_ENDPOINT.length()

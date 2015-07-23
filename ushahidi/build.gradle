@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply from: '../common/quality.gradle'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
 
@@ -95,6 +96,9 @@ dependencies {
     compile appDependencies.playServicesMaps
     compile appDependencies.androidMapsUtils
     compile appDependencies.cocoaheroGeoJson
+    compile appDependencies.heimdallDroid
+    compile appDependencies.stetho
+    compile appDependencies.stethoOkHttp
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

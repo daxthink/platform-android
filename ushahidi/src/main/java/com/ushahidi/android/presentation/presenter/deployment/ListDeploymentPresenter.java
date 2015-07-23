@@ -46,6 +46,12 @@ public class ListDeploymentPresenter implements
 
     private ListDeploymentView mListDeploymentView;
 
+    /**
+     * Default constructor
+     *
+     * @param usecase                   The list deployment use case
+     * @param deploymentModelDataMapper The deployment model data mapper
+     */
     @Inject
     public ListDeploymentPresenter(@Named("categoryList") ListDeploymentUsecase usecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
@@ -71,6 +77,9 @@ public class ListDeploymentPresenter implements
         mListDeploymentView = listDeploymentView;
     }
 
+    /**
+     * Gets deployment list from storage
+     */
     public void loadDeployments() {
         mListDeploymentView.hideRetry();
         mListDeploymentView.showLoading();

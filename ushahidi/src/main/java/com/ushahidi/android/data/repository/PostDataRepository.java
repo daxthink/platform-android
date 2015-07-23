@@ -45,6 +45,12 @@ public class PostDataRepository implements PostRepository {
 
     private final PostDataSourceFactory mPostDataSourceFactory;
 
+    /**
+     * Default constructor that constructs a {@link PostDataRepository}
+     *
+     * @param postDataSourceFactory The post data source factory
+     * @param postEntityDataMapper  The post entity data mapper
+     */
     @Inject
     public PostDataRepository(@NonNull PostDataSourceFactory postDataSourceFactory,
             @NonNull PostEntityDataMapper postEntityDataMapper) {

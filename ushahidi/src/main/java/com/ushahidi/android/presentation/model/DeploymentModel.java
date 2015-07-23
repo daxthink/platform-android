@@ -28,14 +28,56 @@ import android.os.Parcelable;
  */
 public class DeploymentModel extends Model implements Parcelable {
 
+    /**
+     * Creates a {@link DeploymentModel} parcelable object
+     */
+    public static final Parcelable.Creator<DeploymentModel> CREATOR
+            = new Parcelable.Creator<DeploymentModel>() {
+
+        @Override
+        public DeploymentModel createFromParcel(Parcel source) {
+            return new DeploymentModel(source);
+        }
+
+        @Override
+        public DeploymentModel[] newArray(int size) {
+            return new DeploymentModel[size];
+        }
+    };
+
     private String mTitle;
 
     private Status mStatus;
 
     private String mUrl;
 
+    /**
+     * Default constructor that constructs a {@link DeploymentModel} with default status being
+     * deactivated
+     */
     public DeploymentModel() {
-        mStatus = Status.DEACTIVATED;
+        this(Status.DEACTIVATED);
+    }
+
+    /**
+     * Constructs a {@link DeploymentModel}
+     *
+     * @param status The status of the deployment
+     */
+    public DeploymentModel(Status status) {
+        mStatus = status;
+    }
+
+    /**
+     * Constructs a deployment model with initialized value retried from the passed {@link Parcel}
+     *
+     * @param in The parcel
+     */
+    public DeploymentModel(Parcel in) {
+        _id = in.readLong();
+        mTitle = in.readString();
+        mUrl = in.readString();
+        mStatus = Status.valueOf(in.readString());
     }
 
     public String getTitle() {
@@ -64,41 +106,18 @@ public class DeploymentModel extends Model implements Parcelable {
 
     @Override
     public String toString() {
-        return "DeploymentModel{" +
-                "_id=" + _id +
-                ", mTitle='" + mTitle + '\'' +
-                ", mStatus='" + mStatus + '\'' +
-                ", mUrl='" + mUrl + '\'' +
-                '}';
-    }
-
-    public DeploymentModel(Parcel in) {
-        _id = in.readLong();
-        mTitle = in.readString();
-        mUrl = in.readString();
-        mStatus = Status.valueOf(in.readString());
+        return "DeploymentModel{"
+                + "_id=" + _id
+                + ", mTitle='" + mTitle + '\''
+                + ", mStatus='" + mStatus + '\''
+                + ", mUrl='" + mUrl + '\''
+                + '}';
     }
 
     @Override
     public int describeContents() {
         return 0;
     }
-
-
-    public static final Parcelable.Creator<DeploymentModel> CREATOR
-            = new Parcelable.Creator<DeploymentModel>() {
-
-        @Override
-        public DeploymentModel createFromParcel(Parcel source) {
-            return new DeploymentModel(source);
-        }
-
-        @Override
-        public DeploymentModel[] newArray(int size) {
-            return new DeploymentModel[size];
-        }
-    };
-
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -109,6 +128,9 @@ public class DeploymentModel extends Model implements Parcelable {
     }
 
     public enum Status {
-        ACTIVATED, DEACTIVATED
+        /** Represents an activated deployment **/
+        ACTIVATED,
+        /** Represents de-activated deployment **/
+        DEACTIVATED
     }
 }

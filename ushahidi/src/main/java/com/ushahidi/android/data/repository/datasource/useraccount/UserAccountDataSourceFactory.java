@@ -18,7 +18,7 @@
 package com.ushahidi.android.data.repository.datasource.useraccount;
 
 import com.ushahidi.android.data.api.UserApi;
-import com.ushahidi.android.data.api.ushoauth2.UshAccessTokenManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,11 +31,21 @@ public class UserAccountDataSourceFactory {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
+    /**
+     * Default constructor
+     *
+     * @param ushAccessTokenManager The access token manager
+     */
     @Inject
     public UserAccountDataSourceFactory(UshAccessTokenManager ushAccessTokenManager) {
         mUshAccessTokenManager = ushAccessTokenManager;
     }
 
+    /**
+     * Creates {@link UserAccountApiDataSource}
+     *
+     * @return The user account api data source
+     */
     public UserAccountDataSource createApiDataSource() {
         final UserApi userApi = new UserApi(mUshAccessTokenManager);
         return new UserAccountApiDataSource(userApi);

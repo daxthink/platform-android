@@ -37,12 +37,13 @@ public class DateDeserializer implements JsonDeserializer<Date> {
     @Override
     public Date deserialize(JsonElement json, Type typeOfT,
             JsonDeserializationContext context) throws JsonParseException {
-        final SimpleDateFormat PARSER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.getDefault());
+        final SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX",
+                Locale.getDefault());
         try {
-            if(TextUtils.isDigitsOnly(json.getAsString())) {
+            if (TextUtils.isDigitsOnly(json.getAsString())) {
                 return new Date(new java.util.Date(json.getAsLong()));
             }
-            return new Date(PARSER.parse(json.getAsString()));
+            return new Date(parser.parse(json.getAsString()));
         } catch (ParseException e) {
             throw new JsonParseException(e);
         }

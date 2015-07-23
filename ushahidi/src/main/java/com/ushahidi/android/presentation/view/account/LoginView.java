@@ -36,5 +36,8 @@ public interface LoginView extends LoadDataView {
      */
     void deploymentList(List<DeploymentModel> deploymentModels);
 
+    /**
+     * Shows when a login operation has been completed
+     */
     void loginCompleted();
 }

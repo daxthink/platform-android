@@ -58,9 +58,7 @@ import static rx.android.app.AppObservable.bindFragment;
 public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAdapter> implements
         ListPostView, RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
-    public ListPostFragment() {
-        super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
-    }
+    private static ListPostFragment mListPostFragment;
 
     @Bind(R.id.list_post_progress_bar)
     ProgressBar mProgressBar;
@@ -77,15 +75,17 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Inject
     Launcher mLauncher;
 
-    private PostAdapter mPostAdapter;
+    RxEventBus mRxEventBus;
 
-    private static ListPostFragment mListPostFragment;
+    private PostAdapter mPostAdapter;
 
     private LinearLayoutManager mLinearLayoutManager;
 
-    RxEventBus mRxEventBus;
-
     private CompositeSubscription mSubscriptions;
+
+    public ListPostFragment() {
+        super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
+    }
 
     public static ListPostFragment newInstance() {
         if (mListPostFragment == null) {
@@ -110,7 +110,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private void subscribeToRxEventBus() {
         mSubscriptions = new CompositeSubscription();
-        mSubscriptions.add(bindFragment(this, mRxEventBus.toObserverable())
+        mSubscriptions.add(bindFragment(this, mRxEventBus.toObservable())
                 .subscribe(event -> {
                     if (event instanceof ReloadPostEvent) {
                         ReloadPostEvent reloadPostEvent
@@ -138,9 +138,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mPostRecyclerView.addItemDividerDecoration(getActivity());
         mPostRecyclerView.setLayoutManager(mLinearLayoutManager);
-        RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter =
-                new RecyclerViewItemTouchListenerAdapter(mPostRecyclerView.recyclerView,
-                        this);
+        RecyclerViewItemTouchListenerAdapter recyclerViewItemTouchListenerAdapter
+                = new RecyclerViewItemTouchListenerAdapter(mPostRecyclerView.recyclerView, this);
         mPostRecyclerView.recyclerView.addOnItemTouchListener(recyclerViewItemTouchListenerAdapter);
         // Upon  successful refresh, disable swipe to refresh
         mPostRecyclerView
@@ -247,8 +246,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showError(String s) {
-        Snackbar snackbar = Snackbar.make(getView(), s,
-                Snackbar.LENGTH_LONG)
+        Snackbar snackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
                 .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi());
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);

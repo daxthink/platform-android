@@ -37,6 +37,13 @@ public class UpdateDeploymentUsecase extends Usecase {
 
     private Deployment mDeployment;
 
+    /**
+     * Default constructor
+     *
+     * @param deploymentRepository The deployment repository
+     * @param threadExecutor       The thread executor
+     * @param postExecutionThread  The post execution thread
+     */
     @Inject
     protected UpdateDeploymentUsecase(DeploymentRepository deploymentRepository,
             ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -44,6 +51,11 @@ public class UpdateDeploymentUsecase extends Usecase {
         mDeploymentRepository = deploymentRepository;
     }
 
+    /**
+     * Sets the deployment
+     *
+     * @param deployment The deployment to be updated
+     */
     public void setDeployment(Deployment deployment) {
         mDeployment = deployment;
     }

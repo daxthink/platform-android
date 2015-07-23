@@ -28,13 +28,25 @@ import com.ushahidi.android.presentation.ui.activity.PostActivity;
 import dagger.Component;
 
 /**
+ * An {@link ActivityScope} scope components that injects post activity
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class, PostModule.class})
 public interface PostComponent extends AppActivityComponent {
 
+    /**
+     * Injects dependencies into {@link PostActivity}
+     *
+     * @param postActivity The activity to inject dependencies into
+     */
     void inject(PostActivity postActivity);
 
+    /**
+     * Provides {@link PostPresenter} to sub-graphs
+     *
+     * @return The post presenter
+     */
     PostPresenter postPresenter();
 }

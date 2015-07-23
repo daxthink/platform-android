@@ -36,6 +36,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * {@link Presenter} that controls communication between {@link ListPostView} and
+ * {@link com.ushahidi.android.presentation.model.PostModel} of the presentation layer.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class ListPostPresenter implements Presenter {
@@ -44,11 +47,18 @@ public class ListPostPresenter implements Presenter {
 
     private final ListPostUsecase mListPostUsecase;
 
-    private ListPostView mListPostView;
-
     private final PrefsFactory mPrefsFactory;
 
+    private ListPostView mListPostView;
 
+
+    /**
+     * Default constructor
+     *
+     * @param listPostUsecase     The list post usecase
+     * @param postModelDataMapper The post model data mapper
+     * @param prefsFactory        The prefs factory
+     */
     @Inject
     public ListPostPresenter(ListPostUsecase listPostUsecase,
             PostModelDataMapper postModelDataMapper, PrefsFactory prefsFactory) {
@@ -72,10 +82,16 @@ public class ListPostPresenter implements Presenter {
         mListPostUsecase.unsubscribe();
     }
 
+    /**
+     * Gets a list of {@link com.ushahidi.android.presentation.model.PostModel} from local storage
+     */
     public void loadLocalDatabase() {
         loadPost(From.DATABASE);
     }
 
+    /**
+     * Gets a list of {@link com.ushahidi.android.presentation.model.PostModel} from online storage
+     */
     public void loadPostViaApi() {
         loadPost(From.ONLINE);
     }

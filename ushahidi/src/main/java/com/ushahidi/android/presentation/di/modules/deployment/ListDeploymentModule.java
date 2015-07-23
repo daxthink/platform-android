@@ -33,9 +33,18 @@ import dagger.Provides;
 @Module
 public class ListDeploymentModule {
 
+    /**
+     * Default constructor
+     */
     public ListDeploymentModule() {
     }
 
+    /**
+     * Provides {@link ListDeploymentUsecase} object
+     *
+     * @param listDeploymentUsecase The list deployment use case
+     * @return The list deployment use case
+     */
     @Provides
     @ActivityScope
     @Named("categoryList")

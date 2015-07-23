@@ -38,6 +38,13 @@ public class LoginUsecase extends Usecase {
 
     private UserAccount mUserAccount;
 
+    /**
+     * Default constructor
+     *
+     * @param userAccountRepository The user account repository
+     * @param threadExecutor        The thread executor
+     * @param postExecutionThread   The post execution thread
+     */
     @Inject
     protected LoginUsecase(UserAccountRepository userAccountRepository,
             ThreadExecutor threadExecutor,
@@ -46,6 +53,11 @@ public class LoginUsecase extends Usecase {
         mUserAccountRepository = userAccountRepository;
     }
 
+    /**
+     * Sets user account
+     *
+     * @param userAccount The user account be logged in
+     */
     public void setUserAccount(UserAccount userAccount) {
         mUserAccount = userAccount;
     }

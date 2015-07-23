@@ -27,6 +27,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,31 +35,45 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 /**
+ * {@link Presenter} that controls communication between {@link FeedbackView} and
+ * the presentation layer.
+ *
  * @author Henry Addo
  */
 public class FeedbackPresenter implements Presenter {
 
-    FeedbackView mFeedbackView;
+    private FeedbackView mFeedbackView;
 
+
+    /**
+     * Default constructor
+     */
     @Inject
     public FeedbackPresenter() {
     }
 
-    public void setView(FeedbackView feedbackView) {
+    public void setView(@NonNull FeedbackView feedbackView) {
         mFeedbackView = feedbackView;
     }
 
+    /**
+     * Prompts the user to select an app for sending emails
+     *
+     * @param subject    The subject of the feedback
+     * @param deviceInfo The device info
+     * @param message    The feedback message
+     */
     public void send(String subject, String deviceInfo, String message) {
         try {
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             String[] recipients = new String[]{BuildConfig.FEEDBACK_EMAIL_ADDRESS};
             emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, recipients);
-            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                    "Ushahidi Android App Feedback");
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT,
+                    mFeedbackView.getAppContext().getString(R.string.feedback_email_subject));
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                    "Subject: " + subject +
-                            "\n\nMessage:\n" + message + // Enter description
-                            "\n\n" + deviceInfo);
+                    "Subject: " + subject
+                            + "\n\nMessage:\n" + message // Enter description
+                            + "\n\n" + deviceInfo);
             emailIntent.setType(
                     "plain/text"); // This is an incorrect MIME, but Gmail is one of the only apps that responds to it
             final PackageManager pm = mFeedbackView.getAppContext().getPackageManager();
@@ -66,9 +81,9 @@ public class FeedbackPresenter implements Presenter {
             ResolveInfo best = null;
             int count = matches.size();
             for (int i = 0; i < count; i++) {
-                if (matches.get(i).activityInfo.packageName.endsWith(".gm") ||
-                        matches.get(i).activityInfo.name.toLowerCase(Locale.ENGLISH)
-                                .contains("gmail")) {
+                if (matches.get(i).activityInfo.packageName.endsWith(".gm")
+                        || matches.get(i).activityInfo.name.toLowerCase(Locale.ENGLISH)
+                        .contains("gmail")) {
                     best = matches.get(i);
                 }
             }
@@ -87,6 +102,12 @@ public class FeedbackPresenter implements Presenter {
         }
     }
 
+    /**
+     * Retrieves devices model number, manufacturer, brand, the app release number and compose them
+     * into a single string as part of the feedback message
+     *
+     * @return The device info
+     */
     public String getDeviceInfo() {
         String deviceInfo = null;
         try {

@@ -34,24 +34,39 @@ public class GeoJsonEntity extends DataEntity {
         return mGeoJson;
     }
 
+    /**
+     * Sets a GEOJSON string
+     *
+     * @param geoJson The geojson string
+     */
     public void setGeoJson(String geoJson) {
         mGeoJson = geoJson;
     }
 
+    /**
+     * Gets a deployment ID
+     *
+     * @return The deployment id
+     */
     public Long getDeploymentId() {
         return mDeploymentId;
     }
 
+    /**
+     * Sets the deployment Id
+     *
+     * @param deploymentId The deployment Id
+     */
     public void setDeploymentId(Long deploymentId) {
         mDeploymentId = deploymentId;
     }
 
     @Override
     public String toString() {
-        return "GeoJsonModel{" +
-                "mID='" + _id + '\'' +
-                "mDeploymentId='" + mDeploymentId + '\'' +
-                ", geojson='" + mGeoJson + '\'' +
-                '}';
+        return "GeoJsonModel{"
+                + "mID='" + _id + '\''
+                + "mDeploymentId='" + mDeploymentId + '\''
+                + ", geojson='" + mGeoJson + '\''
+                + '}';
     }
 }

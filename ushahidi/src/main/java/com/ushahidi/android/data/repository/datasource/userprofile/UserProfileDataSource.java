@@ -29,7 +29,9 @@ import rx.Observable;
 public interface UserProfileDataSource {
 
     /**
-     * @param deploymentId The deploymentId to be used for fetching the API
+     * @param deploymentId The ID of the deployment associated with the user
+     * @param userEntityId The user id to be used for getting the user entity
+     * @return The user entity
      */
     Observable<UserEntity> getUserEntity(Long deploymentId, Long userEntityId);
 
@@ -38,6 +40,7 @@ public interface UserProfileDataSource {
      * Add / Update an {@link UserEntity} to/in a storage.
      *
      * @param userEntities The entity to be added.
+     * @return The row affected
      */
     Observable<Long> putUserEntity(UserEntity userEntities);
 
@@ -45,15 +48,23 @@ public interface UserProfileDataSource {
      * Delete an existing {@link UserEntity} in a storage.
      *
      * @param userEntity The user profile to be deleted.
+     * @return True if successfully deleted otherwise false
      */
     Observable<Boolean> deleteUserEntity(UserEntity userEntity);
 
     /**
+     * Gets a list of {@link UserEntity}
+     *
      * @param deploymentId The deploymentId to be used for fetching the API
+     * @return list of user entities
      */
     Observable<List<UserEntity>> getUserEntityList(Long deploymentId);
 
     /**
+     * Fetches user profile based on the ID provided
+     *
+     * @param deploymentId The ID to fetch user profile by
+     * @return The user entity
      */
     Observable<UserEntity> fetchUserProfile(Long deploymentId);
 }
