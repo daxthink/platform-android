@@ -19,6 +19,7 @@ package com.ushahidi.android.presentation.ui.navigation;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.ui.activity.AboutActivity;
 import com.ushahidi.android.presentation.ui.activity.AddDeploymentActivity;
+import com.ushahidi.android.presentation.ui.activity.DetailPostActivity;
 import com.ushahidi.android.presentation.ui.activity.FeedbackActivity;
 import com.ushahidi.android.presentation.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.ui.activity.LoginActivity;
@@ -87,5 +88,9 @@ public class Launcher {
      */
     public void launchFeedback() {
         mActivity.startActivity(FeedbackActivity.getIntent(mActivity));
+    }
+
+    public void launchDetailPost(Long postId, String postTitle) {
+        mActivity.startActivity(DetailPostActivity.getIntent(mActivity, postId, postTitle));
     }
 }

@@ -19,6 +19,7 @@ package com.ushahidi.android.presentation.exception;
 
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;
+import com.ushahidi.android.data.exception.PostNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
 
 import android.content.Context;
@@ -31,7 +32,7 @@ import android.content.Context;
 public final class ErrorMessageFactory {
 
     private ErrorMessageFactory() {
-        // Do nothing
+        // No instance
     }
 
     /**
@@ -50,6 +51,8 @@ public final class ErrorMessageFactory {
             message = context.getString(R.string.exception_message_not_logged_in);
         } else if (exception instanceof TagNotFoundException) {
             message = context.getString(R.string.exception_message_tag_not_found);
+        } else if (exception instanceof PostNotFoundException) {
+            message = context.getString(R.string.post_not_found);
         }
         exception.printStackTrace();
         return message;

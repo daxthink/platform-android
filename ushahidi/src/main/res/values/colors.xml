@@ -17,10 +17,10 @@
 
 <resources>
     <!-- Branding colors -->
-    <color name="color_primary">#3F51B5</color>
-    <color name="color_primary_dark">#303F9F</color>
+    <color name="color_primary">#3F4751</color>
+    <color name="color_primary_dark">#1E232A</color>
     <color name="primary_light">#C5CAE9</color>
-    <color name="color_accent">#4CAF50</color>
+    <color name="color_accent">#FFC334</color>
     <color name="color_accent_secondary">#ff0068</color>
 
     <!-- Color palette -->

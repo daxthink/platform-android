@@ -46,6 +46,7 @@ public class UshahidiApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         mAppComponent = AppComponent.Initializer.init(this);
+        initializeStetho();
     }
 
     private void initializeStetho() {

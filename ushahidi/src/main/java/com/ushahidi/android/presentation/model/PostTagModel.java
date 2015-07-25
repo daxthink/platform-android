@@ -19,16 +19,48 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostTagModel extends Model {
+public class PostTagModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link PostTagModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostTagModel> CREATOR
+            = new Parcelable.Creator<PostTagModel>() {
+        @Override
+        public PostTagModel createFromParcel(Parcel in) {
+            return new PostTagModel(in);
+        }
+
+        @Override
+        public PostTagModel[] newArray(int size) {
+            return new PostTagModel[size];
+        }
+    };
 
     private Long mPostId;
 
     private Long mTagId;
 
     private long mDeploymentId;
+
+    /**
+     * Constructs a {@link PostValueModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected PostTagModel(Parcel in) {
+        mPostId = in.readByte() == 0x00 ? null : in.readLong();
+        mTagId = in.readByte() == 0x00 ? null : in.readLong();
+        mDeploymentId = in.readLong();
+    }
 
     public Long getPostId() {
         return mPostId;
@@ -62,5 +94,27 @@ public class PostTagModel extends Model {
                 + ", _id=" + _id
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (mPostId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mPostId);
+        }
+        if (mTagId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mTagId);
+        }
+        dest.writeLong(mDeploymentId);
     }
 }

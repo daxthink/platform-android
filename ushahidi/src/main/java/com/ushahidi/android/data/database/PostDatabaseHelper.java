@@ -84,7 +84,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
      */
     public Observable<PostEntity> getPostEntity(Long deploymentId, Long postId) {
         return Observable.create(subscriber -> {
-            final PostEntity postEntity = get(deploymentId, postId);
+            final PostEntity postEntity = get(postId, deploymentId);
             if (postEntity != null) {
                 List<TagEntity> tags = getTagEntity(postEntity);
                 postEntity.setTags(tags);
@@ -196,7 +196,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
 
     private PostEntity get(Long postId, Long deploymentId) {
         return cupboard().withDatabase(getReadableDatabase()).query(PostEntity.class)
-                .byId(postId).withSelection("mDeploymentId = ? ", String.valueOf(deploymentId))
+                .withSelection("mDeploymentId = ? ", String.valueOf(deploymentId)).byId(postId)
                 .get();
     }
 

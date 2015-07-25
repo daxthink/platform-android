@@ -19,16 +19,54 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * PostValue model
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostValueModel extends Model {
+public class PostValueModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link PostValueModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostValueModel> CREATOR
+            = new Parcelable.Creator<PostValueModel>() {
+        @Override
+        public PostValueModel createFromParcel(Parcel in) {
+            return new PostValueModel(in);
+        }
+
+        @Override
+        public PostValueModel[] newArray(int size) {
+            return new PostValueModel[size];
+        }
+    };
 
     private String mValues;
 
     private long mDeploymentId;
+
+    /**
+     * Default constructor
+     */
+    public PostValueModel() {
+
+    }
+
+    /**
+     * Constructs a {@link PostValueModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected PostValueModel(Parcel in) {
+        mValues = in.readString();
+        mDeploymentId = in.readLong();
+    }
 
     public String getValues() {
         return mValues;
@@ -52,5 +90,16 @@ public class PostValueModel extends Model {
                 + "mValues='" + mValues + '\''
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mValues);
+        dest.writeLong(mDeploymentId);
     }
 }

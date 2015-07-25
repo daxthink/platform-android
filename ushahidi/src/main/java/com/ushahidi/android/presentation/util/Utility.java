@@ -20,10 +20,12 @@ package com.ushahidi.android.presentation.util;
 import android.content.Context;
 import android.graphics.Point;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.Display;
 import android.view.WindowManager;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -100,5 +102,18 @@ public final class Utility {
         Point size = new Point();
         display.getSize(size);
         return size.y;
+    }
+
+    /**
+     * Formats a past {@link Date} into a relative time display
+     *
+     * @param pastTime The past date
+     * @return The formatted the data
+     */
+    public static String getRelativeTimeDisplay(Date pastTime) {
+        long timeNow = System.currentTimeMillis();
+        return DateUtils.getRelativeTimeSpanString(pastTime.getTime(), timeNow,
+                DateUtils.MINUTE_IN_MILLIS)
+                .toString();
     }
 }

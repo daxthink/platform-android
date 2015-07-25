@@ -195,7 +195,8 @@ public class PostEntity extends DataEntity {
     @Override
     public String toString() {
         return "Post{"
-                + "mParent=" + mParent
+                + "id=" + _id
+                + ", mParent=" + mParent
                 + ", mType=" + mType
                 + ", mTitle='" + mTitle + '\''
                 + ", mSlug='" + mSlug + '\''

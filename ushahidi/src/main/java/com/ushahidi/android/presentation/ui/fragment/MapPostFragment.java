@@ -154,11 +154,11 @@ public class MapPostFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        intialize();
+        initialize();
         mRxEventBus = UshahidiApplication.getRxEventBusInstance();
     }
 
-    private void intialize() {
+    private void initialize() {
         checkPlayServices();
         getMapPostComponent(MapPostComponent.class).inject(this);
         mMapPostPresenter.setView(this);
