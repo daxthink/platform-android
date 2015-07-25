@@ -19,6 +19,9 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -26,7 +29,24 @@ import java.util.Date;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserProfileModel extends Model {
+public class UserProfileModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link UserProfileModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<UserProfileModel> CREATOR
+            = new Parcelable.Creator<UserProfileModel>() {
+        @Override
+        public UserProfileModel createFromParcel(Parcel in) {
+            return new UserProfileModel(in);
+        }
+
+        @Override
+        public UserProfileModel[] newArray(int size) {
+            return new UserProfileModel[size];
+        }
+    };
 
     private String mEmail;
 
@@ -41,6 +61,31 @@ public class UserProfileModel extends Model {
     private Date mCreated;
 
     private Date mUpdated;
+
+    /**
+     * Default constructor
+     */
+    public UserProfileModel() {
+
+    }
+
+    /**
+     * Constructs a {@link UserProfileModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected UserProfileModel(Parcel in) {
+        mEmail = in.readString();
+        mRealName = in.readString();
+        mUsername = in.readString();
+        mRole = (Role) in.readValue(Role.class.getClassLoader());
+        mDeployment = in.readLong();
+        long tmpMCreated = in.readLong();
+        mCreated = tmpMCreated != -1 ? new Date(tmpMCreated) : null;
+        long tmpMUpdated = in.readLong();
+        mUpdated = tmpMUpdated != -1 ? new Date(tmpMUpdated) : null;
+    }
 
     public String getEmail() {
         return mEmail;
@@ -145,5 +190,21 @@ public class UserProfileModel extends Model {
         public String toString() {
             return value;
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mEmail);
+        dest.writeString(mRealName);
+        dest.writeString(mUsername);
+        dest.writeValue(mRole);
+        dest.writeLong(mDeployment);
+        dest.writeLong(mCreated != null ? mCreated.getTime() : -1L);
+        dest.writeLong(mUpdated != null ? mUpdated.getTime() : -1L);
     }
 }

@@ -60,7 +60,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private static ListPostFragment mListPostFragment;
 
-    @Bind(R.id.list_post_progress_bar)
+    @Bind(R.id.loading_progress_bar)
     ProgressBar mProgressBar;
 
     @Bind(android.R.id.list)
@@ -82,6 +82,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     private LinearLayoutManager mLinearLayoutManager;
 
     private CompositeSubscription mSubscriptions;
+
+    private List<PostModel> mPostModelList;
 
     public ListPostFragment() {
         super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
@@ -230,13 +232,17 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void renderPostList(List<PostModel> postModel) {
         if (!Utility.isCollectionEmpty(postModel)) {
+            mPostModelList = postModel;
             mPostAdapter.setItems(postModel);
         }
     }
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View view, int i) {
-        // TODO: Launch post detail view
+        if (!Utility.isCollectionEmpty(mPostModelList)) {
+            final PostModel postModel = mPostModelList.get(i);
+            mLauncher.launchDetailPost(postModel._id, postModel.getTitle());
+        }
     }
 
     @Override

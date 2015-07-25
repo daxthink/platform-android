@@ -19,6 +19,9 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
@@ -26,7 +29,23 @@ import java.util.Date;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagModel extends Model {
+public class TagModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link TagModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<TagModel> CREATOR = new Parcelable.Creator<TagModel>() {
+        @Override
+        public TagModel createFromParcel(Parcel in) {
+            return new TagModel(in);
+        }
+
+        @Override
+        public TagModel[] newArray(int size) {
+            return new TagModel[size];
+        }
+    };
 
     private Long mParentId;
 
@@ -45,6 +64,31 @@ public class TagModel extends Model {
     private Date mCreated;
 
     private Long mDeploymentId;
+
+    /**
+     * Default constructor
+     */
+    public TagModel() {
+    }
+
+    /**
+     * Constructs a {@link TagModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected TagModel(Parcel in) {
+        mParentId = in.readByte() == 0x00 ? null : in.readLong();
+        mTag = in.readString();
+        mColor = in.readString();
+        mType = (Type) in.readValue(Type.class.getClassLoader());
+        mIcon = in.readString();
+        mDescription = in.readString();
+        mPriority = in.readInt();
+        long tmpMCreated = in.readLong();
+        mCreated = tmpMCreated != -1 ? new Date(tmpMCreated) : null;
+        mDeploymentId = in.readByte() == 0x00 ? null : in.readLong();
+    }
 
     public Long getParentId() {
         return mParentId;
@@ -165,6 +209,34 @@ public class TagModel extends Model {
 
         public String getValue() {
             return value;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (mParentId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mParentId);
+        }
+        dest.writeString(mTag);
+        dest.writeString(mColor);
+        dest.writeValue(mType);
+        dest.writeString(mIcon);
+        dest.writeString(mDescription);
+        dest.writeInt(mPriority);
+        dest.writeLong(mCreated != null ? mCreated.getTime() : -1L);
+        if (mDeploymentId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mDeploymentId);
         }
     }
 }

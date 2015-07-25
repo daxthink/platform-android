@@ -123,4 +123,6 @@
         Photo
     </string>
     <string name="feedback_email_subject">Ushahidi Android App Feedback</string>
+    <string name="post_detail">Detail Post</string>
+    <string name="share">Share Post</string>
 </resources>

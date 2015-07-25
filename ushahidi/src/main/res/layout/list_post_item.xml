@@ -90,6 +90,6 @@
                 android:id="@+id/post_tags"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"/>
+                android:layout_height="@dimen/tag_height"/>
     </HorizontalScrollView>
 </RelativeLayout>

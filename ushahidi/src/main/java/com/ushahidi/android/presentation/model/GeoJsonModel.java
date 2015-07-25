@@ -19,16 +19,54 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * GeoJson Data Entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonModel extends Model {
+public class GeoJsonModel extends Model implements Parcelable {
+
+    /**
+     * Creates a parcelable {@link GeoJsonModel} type
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<GeoJsonModel> CREATOR
+            = new Parcelable.Creator<GeoJsonModel>() {
+        @Override
+        public GeoJsonModel createFromParcel(Parcel in) {
+            return new GeoJsonModel(in);
+        }
+
+        @Override
+        public GeoJsonModel[] newArray(int size) {
+            return new GeoJsonModel[size];
+        }
+    };
 
     private String mGeoJson;
 
     private Long mDeploymentId;
+
+    /**
+     * Default constructor
+     */
+    public GeoJsonModel() {
+
+    }
+
+    /**
+     * Constructs a {@link GeoJsonModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected GeoJsonModel(Parcel in) {
+        mGeoJson = in.readString();
+        mDeploymentId = in.readByte() == 0x00 ? null : in.readLong();
+    }
 
     public String getGeoJson() {
         return mGeoJson;
@@ -54,4 +92,21 @@ public class GeoJsonModel extends Model {
                 + ", geojson='" + mGeoJson + '\''
                 + '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mGeoJson);
+        if (mDeploymentId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mDeploymentId);
+        }
+    }
+
 }

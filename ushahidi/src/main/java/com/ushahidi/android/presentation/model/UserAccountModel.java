@@ -19,16 +19,54 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * User account entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserAccountModel extends Model {
+public class UserAccountModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link UserAccountModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<UserAccountModel> CREATOR
+            = new Parcelable.Creator<UserAccountModel>() {
+        @Override
+        public UserAccountModel createFromParcel(Parcel in) {
+            return new UserAccountModel(in);
+        }
+
+        @Override
+        public UserAccountModel[] newArray(int size) {
+            return new UserAccountModel[size];
+        }
+    };
 
     private String mAccountName;
 
     private String mPassword;
+
+    /**
+     * Default constructor
+     */
+    public UserAccountModel() {
+
+    }
+
+    /**
+     * Constructs a {@link UserAccountModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected UserAccountModel(Parcel in) {
+        mAccountName = in.readString();
+        mPassword = in.readString();
+    }
 
     public String getAccountName() {
         return mAccountName;
@@ -52,5 +90,16 @@ public class UserAccountModel extends Model {
                 + "mAccountName='" + mAccountName + '\''
                 + ", mPassword='" + mPassword
                 + '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAccountName);
+        dest.writeString(mPassword);
     }
 }

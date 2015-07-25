@@ -14,7 +14,7 @@ android:
   - extra-android-m2repository
   - addon-google_apis-google-22
 script:
-- "./gradlew test -PdisablePreDex"
+- "./gradlew build -PdisablePreDex"
 notifications:
   hipchat:
     rooms:

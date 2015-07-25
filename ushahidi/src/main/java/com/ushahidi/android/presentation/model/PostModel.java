@@ -21,6 +21,10 @@ import com.google.gson.annotations.SerializedName;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +33,24 @@ import java.util.List;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostModel extends Model {
+public class PostModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link PostModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostModel> CREATOR
+            = new Parcelable.Creator<PostModel>() {
+        @Override
+        public PostModel createFromParcel(Parcel in) {
+            return new PostModel(in);
+        }
+
+        @Override
+        public PostModel[] newArray(int size) {
+            return new PostModel[size];
+        }
+    };
 
     private Parent parent;
 
@@ -62,6 +83,50 @@ public class PostModel extends Model {
     private long mDeploymentId;
 
     private transient List<TagModel> mTags;
+
+    /**
+     * Default constructor
+     */
+    public PostModel() {
+
+    }
+
+    /**
+     * Constructs a {@link PostModel} with initialized value retried from the passed {@link
+     * Parcel}
+     *
+     * @param in The parcel
+     */
+    protected PostModel(Parcel in) {
+        parent = (Parent) in.readValue(Parent.class.getClassLoader());
+        mParent = in.readByte() == 0x00 ? null : in.readLong();
+        mUser = (UserProfileModel) in.readValue(UserProfileModel.class.getClassLoader());
+        mType = (Type) in.readValue(Type.class.getClassLoader());
+        mTitle = in.readString();
+        mSlug = in.readString();
+        mContent = in.readString();
+        mAuthorEmail = in.readString();
+        mAuthorRealname = in.readString();
+        mStatus = (Status) in.readValue(Status.class.getClassLoader());
+        long tmpMCreated = in.readLong();
+        mCreated = tmpMCreated != -1 ? new Date(tmpMCreated) : null;
+        long tmpMUpdated = in.readLong();
+        mUpdated = tmpMUpdated != -1 ? new Date(tmpMUpdated) : null;
+        mValues = (PostValueModel) in.readValue(PostValueModel.class.getClassLoader());
+        if (in.readByte() == 0x01) {
+            mPostTagEntityList = new ArrayList<>();
+            in.readList(mPostTagEntityList, PostTagModel.class.getClassLoader());
+        } else {
+            mPostTagEntityList = null;
+        }
+        mDeploymentId = in.readLong();
+        if (in.readByte() == 0x01) {
+            mTags = new ArrayList<>();
+            in.readList(mTags, TagModel.class.getClassLoader());
+        } else {
+            mTags = null;
+        }
+    }
 
     public Long getParent() {
         return mParent;
@@ -271,6 +336,46 @@ public class PostModel extends Model {
 
         public String getValue() {
             return value;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(parent);
+        if (mParent == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mParent);
+        }
+        dest.writeValue(mUser);
+        dest.writeValue(mType);
+        dest.writeString(mTitle);
+        dest.writeString(mSlug);
+        dest.writeString(mContent);
+        dest.writeString(mAuthorEmail);
+        dest.writeString(mAuthorRealname);
+        dest.writeValue(mStatus);
+        dest.writeLong(mCreated != null ? mCreated.getTime() : -1L);
+        dest.writeLong(mUpdated != null ? mUpdated.getTime() : -1L);
+        dest.writeValue(mValues);
+        if (mPostTagEntityList == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mPostTagEntityList);
+        }
+        dest.writeLong(mDeploymentId);
+        if (mTags == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mTags);
         }
     }
 

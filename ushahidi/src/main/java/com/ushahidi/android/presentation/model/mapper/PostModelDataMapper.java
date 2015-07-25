@@ -105,7 +105,7 @@ public class PostModelDataMapper {
     }
 
     /**
-     * Maps a list {@link PostEntity} into a list of {@link Post}.
+     * Maps a list {@link Post} into a list of {@link Post}.
      *
      * @param postList List to be mapped.
      * @return {@link Post}
