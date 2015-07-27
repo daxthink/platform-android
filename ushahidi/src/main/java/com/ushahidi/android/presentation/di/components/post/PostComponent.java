@@ -23,7 +23,7 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.post.PostModule;
 import com.ushahidi.android.presentation.presenter.post.PostPresenter;
-import com.ushahidi.android.presentation.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 
 import dagger.Component;
 

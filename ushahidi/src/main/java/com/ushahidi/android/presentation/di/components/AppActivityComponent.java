@@ -21,7 +21,7 @@ import com.addhen.android.raiburari.presentation.di.component.ApplicationCompone
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.modules.AppModule;
-import com.ushahidi.android.presentation.ui.navigation.Launcher;
+import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
 import dagger.Component;
 

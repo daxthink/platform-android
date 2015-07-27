@@ -17,7 +17,7 @@
 
 package com.ushahidi.android.presentation.account;
 
-import com.ushahidi.android.presentation.ui.activity.LoginActivity;
+import com.ushahidi.android.presentation.view.ui.activity.LoginActivity;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;

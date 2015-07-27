@@ -23,8 +23,8 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.deployment.UpdateDeploymentModule;
 import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
-import com.ushahidi.android.presentation.ui.activity.UpdateDeploymentActivity;
-import com.ushahidi.android.presentation.ui.fragment.UpdateDeploymentFragment;
+import com.ushahidi.android.presentation.view.ui.activity.UpdateDeploymentActivity;
+import com.ushahidi.android.presentation.view.ui.fragment.UpdateDeploymentFragment;
 
 import dagger.Component;
 
