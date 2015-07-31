@@ -21,8 +21,8 @@ import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
-import com.ushahidi.android.presentation.ui.activity.PostActivity;
-import com.ushahidi.android.presentation.ui.fragment.UserProfileFragment;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
 
 import dagger.Component;
 

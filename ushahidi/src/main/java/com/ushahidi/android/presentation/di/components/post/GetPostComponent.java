@@ -6,8 +6,8 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.post.GetPostModule;
 import com.ushahidi.android.presentation.presenter.post.DetailPostPresenter;
-import com.ushahidi.android.presentation.ui.activity.DetailPostActivity;
-import com.ushahidi.android.presentation.ui.fragment.DetailPostFragment;
+import com.ushahidi.android.presentation.view.ui.activity.DetailPostActivity;
+import com.ushahidi.android.presentation.view.ui.fragment.DetailPostFragment;
 
 import dagger.Component;
 

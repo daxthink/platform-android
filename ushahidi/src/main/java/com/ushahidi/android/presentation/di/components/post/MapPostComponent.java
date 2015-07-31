@@ -23,8 +23,8 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.post.MapPostModule;
 import com.ushahidi.android.presentation.presenter.post.MapPostPresenter;
-import com.ushahidi.android.presentation.ui.activity.PostActivity;
-import com.ushahidi.android.presentation.ui.fragment.MapPostFragment;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
 
 import dagger.Component;
 

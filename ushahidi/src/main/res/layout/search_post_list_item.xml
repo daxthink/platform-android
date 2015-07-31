@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Ushahidi Inc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~  the terms of the GNU Affero General Public License as published by the Free
+  ~  Software Foundation, either version 3 of the License, or (at your option)
+  ~  any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT
+  ~  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU Affero General Public License
+  ~  along with this program in the file LICENSE-AGPL. If not, see
+  ~  https://www.gnu.org/licenses/agpl-3.0.html
+  -->
+
+<!-- A CardView that contains a TextView -->
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/view_spacing_large"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
+
+    <com.addhen.android.raiburari.presentation.ui.widget.BezelImageView
+            android:id="@+id/post_image"
+            android:layout_width="@dimen/post_item_image_width"
+            android:layout_height="@dimen/post_item_image_height"
+            android:layout_marginRight="@dimen/view_spacing_large"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+    <TextView
+            android:id="@+id/post_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextHeaderSub"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/post_image"
+            android:layout_toEndOf="@+id/post_image"/>
+
+    <com.addhen.android.raiburari.presentation.ui.widget.CapitalizedTextView
+            android:id="@+id/post_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            style="@style/TextHeaderSub.Location"/>
+
+    <com.addhen.android.raiburari.presentation.ui.widget.CapitalizedTextView
+            android:id="@+id/post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ListTextHeader"
+            android:maxLines="2"
+            android:layout_below="@+id/post_date"
+            android:layout_toRightOf="@+id/post_image"
+            android:layout_toEndOf="@+id/post_image"/>
+
+    <TextView
+            android:id="@+id/post_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ListTextBody"
+            android:autoLink="all"
+            android:layout_toRightOf="@+id/post_image"
+            android:layout_toEndOf="@+id/post_image"
+            android:layout_below="@+id/post_title"/>
+</RelativeLayout>

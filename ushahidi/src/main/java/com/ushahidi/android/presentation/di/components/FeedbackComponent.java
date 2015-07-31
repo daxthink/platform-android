@@ -21,8 +21,8 @@ import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.presenter.FeedbackPresenter;
-import com.ushahidi.android.presentation.ui.activity.FeedbackActivity;
-import com.ushahidi.android.presentation.ui.fragment.FeedbackFragment;
+import com.ushahidi.android.presentation.view.ui.activity.FeedbackActivity;
+import com.ushahidi.android.presentation.view.ui.fragment.FeedbackFragment;
 
 import dagger.Component;
 

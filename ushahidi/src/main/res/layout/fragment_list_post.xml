@@ -17,7 +17,6 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -25,8 +24,7 @@
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cacheColorHint="@android:color/transparent"
-            app:recyclerviewEmptyView="@layout/list_empty_view"/>
+            android:cacheColorHint="@android:color/transparent"/>
     <TextView
             android:id="@id/android:empty"
             style="@style/TextView.Empty"

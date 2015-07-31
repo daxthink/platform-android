@@ -23,8 +23,8 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.account.LoginModule;
 import com.ushahidi.android.presentation.presenter.account.LoginPresenter;
-import com.ushahidi.android.presentation.ui.activity.LoginActivity;
-import com.ushahidi.android.presentation.ui.fragment.LoginFragment;
+import com.ushahidi.android.presentation.view.ui.activity.LoginActivity;
+import com.ushahidi.android.presentation.view.ui.fragment.LoginFragment;
 
 import dagger.Component;
 

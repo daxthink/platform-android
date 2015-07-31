@@ -23,6 +23,6 @@
     <fragment android:id="@+id/user_profile_fragment"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:name="com.ushahidi.android.presentation.ui.fragment.UserProfileFragment"
+              android:name="com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment"
               tools:layout="@layout/fragment_user_profile"/>
 </LinearLayout>

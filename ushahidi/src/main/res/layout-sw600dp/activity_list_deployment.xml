@@ -47,7 +47,7 @@
                     android:background="@android:color/white">
 
                 <fragment
-                        android:name="com.ushahidi.android.presentation.ui.fragment.ListDeploymentFragment"
+                        android:name="com.ushahidi.android.presentation.view.ui.fragment.ListDeploymentFragment"
                         android:id="@+id/fragment_list_deployments"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

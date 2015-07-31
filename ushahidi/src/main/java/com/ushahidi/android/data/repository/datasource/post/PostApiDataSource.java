@@ -78,19 +78,19 @@ public class PostApiDataSource implements PostDataSource {
     @Override
     public Observable<PostEntity> getPostEntityById(Long deploymentId, Long postEntityId) {
         // Do nothing. Not getting post by Id via the API ATM
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Boolean> deletePostEntity(PostEntity postEntity) {
         // Do nothing. Not deleting via the API ATM
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<List<PostEntity>> search(Long deploymentId, String query) {
         // Do nothing. Not searching via the API ATM
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     /**

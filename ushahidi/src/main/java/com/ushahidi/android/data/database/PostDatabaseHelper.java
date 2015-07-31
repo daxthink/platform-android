@@ -179,7 +179,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
      */
     public Observable<List<PostEntity>> search(Long deploymentId, String query) {
         return Observable.create(subscriber -> {
-            String selection = " mTitle like ? OR mContent like ? AND deploymentId = ?";
+            String selection = " mTitle LIKE ? OR mContent LIKE ? AND mDeploymentId = ?";
             String args[] = {query + "%", query + "%", String.valueOf(deploymentId)};
             // Post title holds the search term
             List<PostEntity> postEntities = cupboard().withDatabase(getReadableDatabase()).query(
@@ -187,6 +187,22 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             subscriber.onNext(setPostEntityList(postEntities));
             subscriber.onCompleted();
         });
+    }
+
+    /**
+     * Basic search for deployment
+     *
+     * @param deploymentId The deployment id
+     * @param query        The search query. Should be either the post title or description
+     * @return A list {@link PostEntity}
+     */
+    public List<PostEntity> searchQuery(Long deploymentId, String query) {
+        String selection = " mTitle LIKE ? OR mContent LIKE ? AND mDeploymentId = ?";
+        String args[] = {query + "%", query + "%", String.valueOf(deploymentId)};
+        // Post title holds the search term
+        List<PostEntity> postEntities = cupboard().withDatabase(getReadableDatabase())
+                .query(PostEntity.class).withSelection(selection, args).list();
+        return setPostEntityList(postEntities);
     }
 
     private List<PostEntity> getPosts(final Long deploymentId) {
