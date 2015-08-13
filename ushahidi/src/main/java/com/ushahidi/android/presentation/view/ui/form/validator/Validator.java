@@ -28,6 +28,11 @@ public abstract class Validator {
 
     protected String mErrorMessage;
 
+    /**
+     * Default constructor
+     *
+     * @param errorMessage The error message
+     */
     public Validator(String errorMessage) {
         mErrorMessage = errorMessage;
     }

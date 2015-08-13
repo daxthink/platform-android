@@ -29,6 +29,11 @@ import android.text.TextUtils;
  */
 public class RequiredValidator extends Validator {
 
+    /**
+     * Default constructor
+     *
+     * @param errorMessage The error message
+     */
     public RequiredValidator(String errorMessage) {
         super(errorMessage);
     }

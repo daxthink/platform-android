@@ -26,6 +26,11 @@ import android.util.Patterns;
  */
 public class LinkValidator extends PatternValidator {
 
+    /**
+     * Default constructor
+     *
+     * @param errorMessage The error message
+     */
     public LinkValidator(String errorMessage) {
         super(errorMessage, Patterns.WEB_URL);
     }

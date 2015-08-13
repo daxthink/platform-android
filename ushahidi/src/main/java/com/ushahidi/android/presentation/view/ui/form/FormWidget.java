@@ -52,6 +52,13 @@ public abstract class FormWidget {
     // Validation
     private boolean mRequired;
 
+    /**
+     * Default constructor that constructs {@link FormWidget}
+     *
+     * @param context The calling context
+     * @param name    The name of the form
+     * @param label   The label of the form
+     */
     public FormWidget(Context context, String name, String label) {
         mLayout = new LinearLayout(context);
         mLayout.setOrientation(LinearLayout.VERTICAL);

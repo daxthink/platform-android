@@ -112,7 +112,6 @@ public class Form {
         for (FormWidget formWidget : mFormWidgets) {
             mContainer.addView(formWidget.getLayout());
         }
-
         return mContainer;
     }
 

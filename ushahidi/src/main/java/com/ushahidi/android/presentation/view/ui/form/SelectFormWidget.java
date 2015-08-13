@@ -36,6 +36,14 @@ public class SelectFormWidget extends FormWidget {
 
     private ArrayAdapter<String> mAdapter;
 
+    /**
+     * Default constructor that constructs {@link SelectFormWidget}
+     *
+     * @param context The calling context
+     * @param name    The name of the form
+     * @param label   The label of the form
+     * @param options The options associated with the select widget
+     */
     public SelectFormWidget(Context context, String name, String label, List<String> options) {
         super(context, name, label);
         mOptions = options;

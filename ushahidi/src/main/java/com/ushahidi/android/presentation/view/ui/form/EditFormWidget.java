@@ -35,6 +35,13 @@ public class EditFormWidget extends FormWidget {
 
     private Context mContext;
 
+    /**
+     * Default constructor that constructs {@link EditFormWidget}
+     *
+     * @param context The calling context
+     * @param name    The name of the form
+     * @param label   The label
+     */
     public EditFormWidget(Context context, String name, String label) {
         super(context, name, label);
         mContext = context;
