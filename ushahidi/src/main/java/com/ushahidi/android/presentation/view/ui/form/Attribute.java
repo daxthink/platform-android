@@ -20,7 +20,7 @@ package com.ushahidi.android.presentation.view.ui.form;
 import java.util.List;
 
 /**
- * Form's attribute. This is based off V3's /api/v3/form API
+ * Form's attribute. This is based on V3's /api/v3/form API
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
