@@ -32,6 +32,12 @@ public class PatternValidator extends Validator {
 
     private Pattern mPattern;
 
+    /**
+     * Default constructor
+     *
+     * @param errorMessage The error message
+     * @param pattern      The regex pattern to be matched
+     */
     public PatternValidator(String errorMessage, @NonNull Pattern pattern) {
         super(errorMessage);
         mPattern = pattern;

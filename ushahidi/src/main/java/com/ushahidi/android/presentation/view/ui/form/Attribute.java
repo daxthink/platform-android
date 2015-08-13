@@ -98,27 +98,37 @@ public class Attribute {
 
     public static class Input {
 
+        /** A map widget or input type */
         public static final String LOCATION = "location";
 
+        /** A text input field */
         public static final String TEXT = "text";
 
+        /** A drop down select input type */
         public static final String SELECT = "select";
 
+        /** Date picker */
         public static final String DATE = "date";
 
+        /** Textarea input type */
         public static final String TEXTAREA = "textarea";
     }
 
-    public class Type {
+    public static class Type {
 
+        /** A Varchar type */
         public static final String VARCHAR = "varchar";
 
+        /** A point type */
         public static final String POINT = "point";
 
+        /** A datetime type */
         public static final String DATETIME = "datetime";
 
+        /** A text type */
         public static final String TEXT = "text";
 
+        /** A geometry type */
         public static final String GEOMETRY = "geometry";
     }
 }
