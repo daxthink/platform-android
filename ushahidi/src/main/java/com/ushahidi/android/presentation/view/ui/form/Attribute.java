@@ -96,25 +96,17 @@ public class Attribute {
         mOptions = options;
     }
 
-    public enum Input {
+    public static class Input {
 
-        LOCATION("location"),
-        TEXT("text"),
-        SELECT("select"),
-        DATE("date"),
-        TEXTAREA("textarea");
+        public static final String LOCATION = "location";
 
-        private final String mValue;
+        public static final String TEXT = "text";
 
-        Input(String value) {
-            mValue = value;
-        }
+        public static final String SELECT = "select";
 
-        @Override
-        public String toString() {
-            return mValue;
-        }
+        public static final String DATE = "date";
 
+        public static final String TEXTAREA = "textarea";
     }
 
     public class Type {

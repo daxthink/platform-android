@@ -38,24 +38,49 @@ public class Form {
 
     private List<FormWidget> mFormWidgets;
 
+    /**
+     * Default constructor that constructs {@link Form}
+     *
+     * @param context   The calling context
+     * @param container The layout container
+     */
     public Form(Context context, ViewGroup container) {
         mContainer = container;
         mContext = context;
         mFormWidgets = new ArrayList<>();
     }
 
+    /**
+     * Gets the form widgets
+     *
+     * @return The list of form widgets
+     */
     public List<FormWidget> getFormWidgets() {
         return mFormWidgets;
     }
 
-    public ViewGroup renderForm(Attribute... attributes) {
+    /**
+     * Renders one or more form widgets.
+     *
+     * @param attribute1 The first form attribute that makes up the form widget
+     * @param attributes The rest of the form attribute that makes up the form widget
+     * @return The container in which the form widgets have been added
+     */
+    public ViewGroup renderForm(Attribute attribute1, Attribute attribute2,
+            Attribute... attributes) {
+        generateFormWidget(attribute1);
+        generateFormWidget(attribute2);
         for (Attribute attribute : attributes) {
             generateFormWidget(attribute);
         }
-
         return getContainer();
     }
 
+    /**
+     * Validates the form widget's values
+     *
+     * @return The validation status. True for the field being valid
+     */
     public boolean validate() {
         for (FormWidget formWidget : getFormWidgets()) {
             if (!formWidget.validate()) {
