@@ -1,6 +1,6 @@
-package com.ushahidi.android.domain.entity;
+package com.ushahidi.android.data.entity;
 
-import com.addhen.android.raiburari.domain.entity.Entity;
+import com.addhen.android.raiburari.data.entity.DataEntity;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class Form extends Entity {
+public class FormEntity extends DataEntity {
 
     private String mName;
 
@@ -21,7 +21,7 @@ public class Form extends Entity {
 
     private Date mUpdated;
 
-    private FormAttribute mAttributes;
+    private FormAttributeEntity mAttributes;
 
     private Long mDeploymentId;
 
@@ -73,11 +73,11 @@ public class Form extends Entity {
         mUpdated = updated;
     }
 
-    public FormAttribute getAttributes() {
+    public FormAttributeEntity getAttributes() {
         return mAttributes;
     }
 
-    public void setAttributes(FormAttribute attributes) {
+    public void setAttributes(FormAttributeEntity attributes) {
         mAttributes = attributes;
     }
 
