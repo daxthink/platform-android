@@ -1,7 +1,8 @@
 package com.ushahidi.android.domain.repository;
 
-import com.addhen.android.raiburari.domain.repository.Repository;
 import com.ushahidi.android.domain.entity.Form;
+import com.ushahidi.android.domain.entity.From;
+import com.ushahidi.android.domain.entity.GeoJson;
 
 import rx.Observable;
 
@@ -10,13 +11,22 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface FormRepository extends Repository<Form> {
+public interface FormRepository {
 
     /**
-     * Get an {@link Form} by its status.
+     * Get a list of {@link GeoJson} from either the database or online.
      *
-     * @param status The form status to be used for retrieving form data.
-     * @return The form
+     * @param deploymentId An ID of {@link com.ushahidi.android.domain.entity.Deployment}
+     * @param from         Where to get the form from. Either from local storage or online
+     * @return The form details
      */
-    Observable<Form> getByStatus(boolean status);
+    Observable<Form> getForm(Long deploymentId, From from);
+
+    /**
+     * Add/Update a {@link Form}.
+     *
+     * @param form The Form to be saved.
+     * @return The row affected
+     */
+    Observable<Long> putForm(Form form);
 }
