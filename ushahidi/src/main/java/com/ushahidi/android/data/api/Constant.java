@@ -53,6 +53,11 @@ public final class Constant {
     public static final String POSTS = API_PATH + "/posts";
 
     /**
+     * Form resources
+     */
+    public static final String FORM = API_PATH + "/forms";
+
+    /**
      * Tags resources
      */
     public static final String TAGS = API_PATH + "/tags";

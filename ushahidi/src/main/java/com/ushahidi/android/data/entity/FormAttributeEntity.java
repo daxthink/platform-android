@@ -1,5 +1,7 @@
 package com.ushahidi.android.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,20 +10,49 @@ import java.util.List;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class FormAttributeEntity {
-
+    @SerializedName("label")
     private String mLabel;
-
+    @SerializedName("key")
     private String mKey;
-
+    @SerializedName("input")
     private Input mInput;
-
+    @SerializedName("type")
     private Type mType;
-
+    @SerializedName("required")
     private Boolean mRequired;
-
+    @SerializedName("priority")
     private Integer mPriority;
 
+    @SerializedName("form")
+    private Form form;
+
     private List<String> mOptions;
+
+    private Long mDeploymentId;
+
+    private Long mFormId;
+
+    public void setFormId(Long formId) {
+        mFormId = formId;
+    }
+
+    public void setFormId() {
+        if (form != null) {
+            mFormId = form.getId();
+        }
+    }
+
+    public Long getFormId() {
+        return mFormId;
+    }
+
+    public void setDeploymentId(Long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    public Long getDeploymentId() {
+        return mDeploymentId;
+    }
 
     public String getLabel() {
         return mLabel;
@@ -79,21 +110,48 @@ public class FormAttributeEntity {
         mOptions = options;
     }
 
+    private class Form {
+        private Long id;
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public Long getId() {
+            return id;
+        }
+    }
+
     public enum Input {
 
-        /** A map widget or input type */
+        /**
+         * A map widget or input type
+         */
+        @SerializedName("location")
         LOCATION("location"),
 
-        /** A text input field */
+        /**
+         * A text input field
+         */
+        @SerializedName("text")
         TEXT("text"),
 
-        /** A drop down select input type */
+        /**
+         * A drop down select input type
+         */
+        @SerializedName("select")
         SELECT("select"),
 
-        /** Date picker */
+        /**
+         * Date picker
+         */
+        @SerializedName("date")
         DATE("date"),
 
-        /** Textarea input type */
+        /**
+         * Textarea input type
+         */
+        @SerializedName("textarea")
         TEXTAREA("textarea");
 
         private String value;
@@ -114,19 +172,34 @@ public class FormAttributeEntity {
 
     public enum Type {
 
-        /** A Varchar type */
+        /**
+         * A Varchar type
+         */
+        @SerializedName("varchar")
         VARCHAR("varchar"),
 
-        /** A point type */
+        /**
+         * A point type
+         */
+        @SerializedName("point")
         POINT("point"),
 
-        /** A datetime type */
+        /**
+         * A datetime type
+         */
+        @SerializedName("datetime")
         DATETIME("datetime"),
 
-        /** A text type */
+        /**
+         * A text type
+         */
+        @SerializedName("text")
         TEXT("text"),
 
-        /** A geometry type */
+        /**
+         * A geometry type
+         */
+        @SerializedName("geometry")
         GEOMETRY("geometry");
 
         private String value;
