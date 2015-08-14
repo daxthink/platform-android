@@ -45,7 +45,7 @@ public final class Constant {
     /**
      * API version
      */
-    public static final String API_PATH = "/api/v2";
+    public static final String API_PATH = "/api/v3";
 
     /**
      * Posts resources
