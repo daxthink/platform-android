@@ -23,6 +23,16 @@ public class FormAttribute {
 
     private List<String> mOptions;
 
+    private Long _id;
+
+    public void setId(Long id) {
+        _id = id;
+    }
+
+    public Long getId() {
+        return _id;
+    }
+
     public String getLabel() {
         return mLabel;
     }
@@ -79,40 +89,62 @@ public class FormAttribute {
         mOptions = options;
     }
 
-    public static class Input {
+    public enum Input {
 
         /** A map widget or input type */
-        public static final String LOCATION = "location";
-
+        LOCATION("location"),
         /** A text input field */
-        public static final String TEXT = "text";
-
+        TEXT("text"),
         /** A drop down select input type */
-        public static final String SELECT = "select";
-
+        SELECT("select"),
         /** Date picker */
-        public static final String DATE = "date";
+        DATE("date"),
+        /** TextArea input type */
+        TEXTAREA("textarea");
 
-        /** Textarea input type */
-        public static final String TEXTAREA = "textarea";
+        private String value;
+
+        Input(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets value
+         *
+         * @return The value
+         */
+        public String getValue() {
+            return value;
+        }
     }
 
-    public static class Type {
+    public enum Type {
 
         /** A Varchar type */
-        public static final String VARCHAR = "varchar";
-
+        VARCHAR("varchar"),
         /** A point type */
-        public static final String POINT = "point";
-
+        POINT("point"),
         /** A datetime type */
-        public static final String DATETIME = "datetime";
-
+        DATETIME("datetime"),
         /** A text type */
-        public static final String TEXT = "text";
-
+        TEXT("text"),
         /** A geometry type */
-        public static final String GEOMETRY = "geometry";
+        GEOMETRY("geometry");
+
+        private String value;
+
+        Type(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets value
+         *
+         * @return The value
+         */
+        public String getValue() {
+            return value;
+        }
     }
 
     @Override
