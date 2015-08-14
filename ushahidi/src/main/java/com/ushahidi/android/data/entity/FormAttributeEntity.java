@@ -37,6 +37,10 @@ public class FormAttributeEntity {
     }
 
     public void setFormId() {
+        // Avoiding the need to save the Form object in the db
+        // Since we're only interested in the form id. Using
+        // variable to hold just the form id and save that in the db after the
+        // API has been de-serialized
         if (form != null) {
             mFormId = form.getId();
         }
