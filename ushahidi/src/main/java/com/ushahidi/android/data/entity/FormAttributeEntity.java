@@ -10,16 +10,22 @@ import java.util.List;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class FormAttributeEntity {
+
     @SerializedName("label")
     private String mLabel;
+
     @SerializedName("key")
     private String mKey;
+
     @SerializedName("input")
     private Input mInput;
+
     @SerializedName("type")
     private Type mType;
+
     @SerializedName("required")
     private Boolean mRequired;
+
     @SerializedName("priority")
     private Integer mPriority;
 
@@ -114,17 +120,6 @@ public class FormAttributeEntity {
         mOptions = options;
     }
 
-    private class Form {
-        private Long id;
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public Long getId() {
-            return id;
-        }
-    }
 
     public enum Input {
 
@@ -233,5 +228,18 @@ public class FormAttributeEntity {
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
                 + '}';
+    }
+
+    private class Form {
+
+        private Long id;
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public Long getId() {
+            return id;
+        }
     }
 }
