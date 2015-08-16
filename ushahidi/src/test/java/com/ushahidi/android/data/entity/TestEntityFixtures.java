@@ -28,6 +28,7 @@ public class TestEntityFixtures {
 
     private static PlatformSession mPlatformSession;
 
+    private static FormEntity mFormEntity;
 
     private TestEntityFixtures() {
         // No instances
@@ -48,5 +49,19 @@ public class TestEntityFixtures {
             mPlatformSession = new PlatformSession(1, "user_name", 1);
         }
         return mPlatformSession;
+    }
+
+    public static FormEntity getFormEntity() {
+        if (mFormEntity == null) {
+            mFormEntity = new FormEntity();
+            mFormEntity._id = 1l;
+            mFormEntity.setCreated(new java.util.Date(1439502954));
+            mFormEntity.setDescription("A Basic Form Entity");
+            mFormEntity.setDeploymentId(1l);
+            mFormEntity.setName("Basic form Entity");
+            mFormEntity.setUpdated(new java.util.Date(1439503014));
+            mFormEntity.setDisabled(true);
+        }
+        return mFormEntity;
     }
 }

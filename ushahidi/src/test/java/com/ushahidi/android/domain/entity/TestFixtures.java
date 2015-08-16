@@ -16,7 +16,6 @@ public final class TestFixtures {
             mForm.setDeploymentId(1l);
             mForm.setName("Basic form");
             mForm.setUpdated(new java.util.Date(1439503014));
-            mForm.setAttributes(getFormAttribute());
             mForm.setDisabled(true);
         }
         return mForm;
@@ -24,6 +23,7 @@ public final class TestFixtures {
 
     public static FormAttribute getFormAttribute() {
         FormAttribute formAttribute = new FormAttribute();
+        formAttribute._id = 1l;
         formAttribute.setKey("test_varchar");
         formAttribute.setLabel("Test varchar");
         formAttribute.setInput(FormAttribute.Input.TEXT);

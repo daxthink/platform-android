@@ -1,5 +1,8 @@
 package com.ushahidi.android.domain.entity;
 
+
+import com.addhen.android.raiburari.domain.entity.Entity;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class FormAttribute {
+public class FormAttribute extends Entity {
 
     private String mLabel;
 
@@ -22,16 +25,6 @@ public class FormAttribute {
     private Integer mPriority;
 
     private List<String> mOptions;
-
-    private Long _id;
-
-    public void setId(Long id) {
-        _id = id;
-    }
-
-    public Long getId() {
-        return _id;
-    }
 
     public String getLabel() {
         return mLabel;

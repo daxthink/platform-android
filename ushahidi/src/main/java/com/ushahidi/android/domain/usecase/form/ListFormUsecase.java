@@ -55,7 +55,7 @@ public class ListFormUsecase extends Usecase {
             throw new RuntimeException(
                     "Deployment id and from cannot be null. You must call setListForm(...)");
         }
-        return mFormRepository.getForm(mDeploymentId, mFrom);
+        return mFormRepository.getForms(mDeploymentId, mFrom);
     }
 
 }
