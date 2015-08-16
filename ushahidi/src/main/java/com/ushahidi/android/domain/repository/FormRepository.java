@@ -3,6 +3,8 @@ package com.ushahidi.android.domain.repository;
 import com.ushahidi.android.domain.entity.Form;
 import com.ushahidi.android.domain.entity.From;
 
+import java.util.List;
+
 import rx.Observable;
 
 /**
@@ -19,7 +21,7 @@ public interface FormRepository {
      * @param from         Where to get the form from. Either from local storage or online
      * @return The form details
      */
-    Observable<Form> getForm(Long deploymentId, From from);
+    Observable<List<Form>> getForms(Long deploymentId, From from);
 
     /**
      * Add/Update a {@link Form}.

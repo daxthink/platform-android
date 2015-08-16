@@ -68,7 +68,7 @@ public class ListFormUsecaseTest {
         mListFormUsecase.setListForm(1l, From.ONLINE);
         mListFormUsecase.buildUseCaseObservable();
 
-        verify(mMockFormJsonRepository).getForm(1l, From.ONLINE);
+        verify(mMockFormJsonRepository).getForms(1l, From.ONLINE);
 
         verifyNoMoreInteractions(mMockFormJsonRepository);
         verifyNoMoreInteractions(mMockPostExecutionThread);

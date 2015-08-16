@@ -22,7 +22,7 @@ import com.ushahidi.android.data.entity.GeoJsonEntity;
 import rx.Observable;
 
 /**
- * All different source providers must implement this interface to provide geojson data
+ * All the different source providers must implement this interface to provide geojson data
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

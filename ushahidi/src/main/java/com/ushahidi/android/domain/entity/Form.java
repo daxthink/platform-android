@@ -21,8 +21,6 @@ public class Form extends Entity {
 
     private Date mUpdated;
 
-    private FormAttribute mAttributes;
-
     private Long mDeploymentId;
 
     public Long getDeploymentId() {
@@ -73,14 +71,6 @@ public class Form extends Entity {
         mUpdated = updated;
     }
 
-    public FormAttribute getAttributes() {
-        return mAttributes;
-    }
-
-    public void setAttributes(FormAttribute attributes) {
-        mAttributes = attributes;
-    }
-
     @Override
     public String toString() {
         return "Form{"
@@ -89,7 +79,6 @@ public class Form extends Entity {
                 + ", mDisabled=" + mDisabled
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
-                + ", mAttributes='" + mAttributes + '\''
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
     }
