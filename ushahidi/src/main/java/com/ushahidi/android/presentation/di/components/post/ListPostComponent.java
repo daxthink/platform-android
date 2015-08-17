@@ -21,7 +21,9 @@ import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
+import com.ushahidi.android.presentation.di.modules.form.ListFormModule;
 import com.ushahidi.android.presentation.di.modules.post.ListPostModule;
+import com.ushahidi.android.presentation.presenter.form.ListFormPresenter;
 import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
 import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.view.ui.fragment.ListPostFragment;
@@ -36,7 +38,7 @@ import dagger.Component;
  */
 @ActivityScope
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class,
-        ListPostModule.class})
+        ListPostModule.class, ListFormModule.class})
 public interface ListPostComponent extends AppActivityComponent {
 
     /**
@@ -59,4 +61,11 @@ public interface ListPostComponent extends AppActivityComponent {
      * @return The list post presenter
      */
     ListPostPresenter listPostPresenter();
+
+    /**
+     * Provides {@link ListFormPresenter} to the sub-graph
+     *
+     * @return The list form presenter
+     */
+    ListFormPresenter listFormPresenter();
 }
