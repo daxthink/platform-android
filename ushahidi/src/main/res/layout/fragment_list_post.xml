@@ -17,6 +17,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -24,11 +25,7 @@
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:recyclerviewEmptyView="@layout/list_post_empty_view"
             android:cacheColorHint="@android:color/transparent"/>
-    <TextView
-            android:id="@id/android:empty"
-            style="@style/TextView.Empty"
-            android:text="@string/empty_list"
-            android:layout_centerInParent="true"/>
     <include layout="@layout/include_progress_loading"/>
 </RelativeLayout>
