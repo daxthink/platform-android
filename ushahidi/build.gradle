@@ -92,7 +92,7 @@ dependencies {
     compile appDependencies.okhttp
     compile appDependencies.okhttpUrlConnection
     compile appDependencies.qrCodeReaderView
-    compile appDependencies.androidIconify
+    compile appDependencies.androidIconifyFontawesome
     compile appDependencies.playServicesMaps
     compile appDependencies.androidMapsUtils
     compile appDependencies.cocoaheroGeoJson

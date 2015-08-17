@@ -40,7 +40,7 @@ ext {
     okhttpVersion = '2.3.0'
     okhttpUrlConnectionVersion = '2.3.0'
     qrCodeReaderViewVersion = '1.0.0'
-    androidIconifyVersion = '1.0.9'
+    androidIconifyFontawesomeVersion = '2.0.7'
     playServicesMapsVersion = '7.5.0'
     cocoaheroGeoJsonVersion = '1.0.1'
     androidMapsUtilsVersion = '0.3.4'
@@ -60,22 +60,22 @@ ext {
     okhttpMockWebserver = '2.3.0'
 
     appDependencies = [
-            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger             : "com.google.dagger:dagger:${daggerVersion}",
-            javaxAnnotation    : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            raiburari          : "com.addhen.android:raiburari:${raiburariVersion}",
-            cupboard           : "nl.qbusict:cupboard:${cupboardVersion}",
-            retrofit           : "com.squareup.retrofit:retrofit:${retrofitVersion}",
-            okhttp             : "com.squareup.okhttp:okhttp:${okhttpVersion}",
-            okhttpUrlConnection: "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
-            qrCodeReaderView   : "com.dlazaro66.qrcodereaderview:qrcodereaderview:${qrCodeReaderViewVersion}",
-            androidIconify     : "com.joanzapata.android:android-iconify:${androidIconifyVersion}",
-            playServicesMaps   : "com.google.android.gms:play-services-maps:${playServicesMapsVersion}",
-            cocoaheroGeoJson   : "com.cocoahero.android:geojson:${cocoaheroGeoJsonVersion}@jar",
-            androidMapsUtils   : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}",
-            heimdallDroid      : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
-            stetho             : "com.facebook.stetho:stetho:${stethoVersion}",
-            stethoOkHttp       : "com.facebook.stetho:stetho-okhttp:${stethoOkHttpVersion}",
+            daggerCompiler           : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger                   : "com.google.dagger:dagger:${daggerVersion}",
+            javaxAnnotation          : "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            raiburari                : "com.addhen.android:raiburari:${raiburariVersion}",
+            cupboard                 : "nl.qbusict:cupboard:${cupboardVersion}",
+            retrofit                 : "com.squareup.retrofit:retrofit:${retrofitVersion}",
+            okhttp                   : "com.squareup.okhttp:okhttp:${okhttpVersion}",
+            okhttpUrlConnection      : "com.squareup.okhttp:okhttp-urlconnection:${okhttpUrlConnectionVersion}",
+            qrCodeReaderView         : "com.dlazaro66.qrcodereaderview:qrcodereaderview:${qrCodeReaderViewVersion}",
+            androidIconifyFontawesome: "com.joanzapata.iconify:android-iconify-fontawesome:${androidIconifyFontawesomeVersion}",
+            playServicesMaps         : "com.google.android.gms:play-services-maps:${playServicesMapsVersion}",
+            cocoaheroGeoJson         : "com.cocoahero.android:geojson:${cocoaheroGeoJsonVersion}@jar",
+            androidMapsUtils         : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}",
+            heimdallDroid            : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
+            stetho                   : "com.facebook.stetho:stetho:${stethoVersion}",
+            stethoOkHttp             : "com.facebook.stetho:stetho-okhttp:${stethoOkHttpVersion}",
     ]
 
     appTestDependencies = [
