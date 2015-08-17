@@ -24,5 +24,5 @@ import dagger.Module;
  */
 @Module
 public class InternalAppModule {
-    // TODO: provide internal based data
+    // TODO: provide internal based modules
 }

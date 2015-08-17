@@ -71,6 +71,10 @@ public class ListFormPresenter implements Presenter {
         loadForm(From.DATABASE);
     }
 
+    public void loadFormFromOnline() {
+        loadForm(From.ONLINE);
+    }
+
     private void loadForm(From from) {
         mListFormUsecase.setListForm(mPrefsFactory.getActiveDeploymentId().get(), from);
         mListFormUsecase.execute(new DefaultSubscriber<List<Form>>() {

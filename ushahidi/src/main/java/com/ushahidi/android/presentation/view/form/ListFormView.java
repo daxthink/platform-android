@@ -15,5 +15,5 @@ public interface ListFormView extends LoadDataView {
      *
      * @param formModel The collection of {@link FormModel} that will be shown.
      */
-    void renderPostList(List<FormModel> formModel);
+    void renderFormList(List<FormModel> formModel);
 }

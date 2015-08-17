@@ -49,6 +49,17 @@ public class FormModel extends Model implements Parcelable {
         // Do nothing
     }
 
+    protected FormModel(Parcel in) {
+        mName = in.readString();
+        mDescription = in.readString();
+        mDisabled = in.readByte() != 0x00;
+        long tmpMCreated = in.readLong();
+        mCreated = tmpMCreated != -1 ? new Date(tmpMCreated) : null;
+        long tmpMUpdated = in.readLong();
+        mUpdated = tmpMUpdated != -1 ? new Date(tmpMUpdated) : null;
+        mDeploymentId = in.readByte() == 0x00 ? null : in.readLong();
+    }
+
     public Long getDeploymentId() {
         return mDeploymentId;
     }
@@ -95,17 +106,6 @@ public class FormModel extends Model implements Parcelable {
 
     public void setUpdated(Date updated) {
         mUpdated = updated;
-    }
-
-    protected FormModel(Parcel in) {
-        mName = in.readString();
-        mDescription = in.readString();
-        mDisabled = in.readByte() != 0x00;
-        long tmpMCreated = in.readLong();
-        mCreated = tmpMCreated != -1 ? new Date(tmpMCreated) : null;
-        long tmpMUpdated = in.readLong();
-        mUpdated = tmpMUpdated != -1 ? new Date(tmpMUpdated) : null;
-        mDeploymentId = in.readByte() == 0x00 ? null : in.readLong();
     }
 
     @Override
