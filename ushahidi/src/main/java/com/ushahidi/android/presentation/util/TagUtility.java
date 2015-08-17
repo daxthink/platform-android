@@ -1,7 +1,7 @@
 package com.ushahidi.android.presentation.util;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.TagModel;
 
@@ -93,11 +93,11 @@ public final class TagUtility {
     private static Drawable getFontAwesomeIconAsDrawable(@NonNull Context context,
             @NonNull String fontawesomeIcon, @Nullable String color, int tagIconSize) {
         if (TextUtils.isEmpty(color)) {
-            return new IconDrawable(context, Iconify.IconValue.valueOf(fontawesomeIcon))
+            return new IconDrawable(context, FontAwesomeIcons.valueOf(fontawesomeIcon))
                     .colorRes(R.color.black_dark).sizeDp(tagIconSize);
         }
 
-        return new IconDrawable(context, Iconify.IconValue.valueOf(fontawesomeIcon))
+        return new IconDrawable(context, FontAwesomeIcons.valueOf(fontawesomeIcon))
                 .color(Color.parseColor(color)).sizeDp(tagIconSize);
     }
 }
