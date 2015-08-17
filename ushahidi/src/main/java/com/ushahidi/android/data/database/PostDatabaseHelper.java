@@ -17,6 +17,7 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
@@ -124,14 +125,17 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
      * @param tagEntities   The Tag entities
      * @param postEntities  The post entities
      * @param geoJsonEntity The GeoJson entity
+     * @param formEntities  The           form entities
      * @return An observable that emits {@link PostEntity}
      */
     public List<PostEntity> putFetchedPosts(Long deploymentId,
             List<TagEntity> tagEntities,
-            List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity) {
+            List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity,
+            List<FormEntity> formEntities) {
         if (!isClosed()) {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
+            cupboard().withDatabase(getWritableDatabase()).put(formEntities);
             for (PostEntity postEntity : postEntities) {
                 // Delete existing posttag entities.
                 // Lame way to avoid duplicates because the ID is auto generated upon insertion

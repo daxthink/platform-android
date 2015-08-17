@@ -20,9 +20,11 @@ package com.ushahidi.android.data.repository.datasource.post;
 import com.google.gson.JsonElement;
 
 import com.ushahidi.android.data.api.PostApi;
+import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
+import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.TagEntity;
@@ -67,11 +69,12 @@ public class PostApiDataSource implements PostDataSource {
 
     @Override
     public Observable<List<PostEntity>> getPostEntityList(Long deploymentId) {
-        return Observable.zip(mPostApi.getTags(), mPostApi.getPostList(),
-                mPostApi.getGeoJson(),
-                (tags, posts, geoJsons) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
-                        setTag(tags, deploymentId), setPost(posts, deploymentId),
-                        setGeoJson(geoJsons, deploymentId)));
+        return Observable.zip(mPostApi.getTags(), mPostApi.getPostList(), mPostApi.getGeoJson(),
+                mPostApi.getForms(),
+                (tags, posts, geoJsons, forms) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
+                        setTag(tags, deploymentId),
+                        setPost(posts, deploymentId),
+                        setGeoJson(geoJsons, deploymentId), setForms(forms, deploymentId)));
 
     }
 
@@ -133,5 +136,14 @@ public class PostApiDataSource implements PostDataSource {
         geoJsonEntity.setGeoJson(jsonElement.toString());
         geoJsonEntity.setDeploymentId(deploymentId);
         return geoJsonEntity;
+    }
+
+    private List<FormEntity> setForms(Forms forms, Long deploymentId) {
+        List<FormEntity> formEntityList = new ArrayList<>(forms.getForms().size());
+        for (FormEntity formEntity : forms.getForms()) {
+            formEntity.setDeploymentId(deploymentId);
+            formEntityList.add(formEntity);
+        }
+        return formEntityList;
     }
 }

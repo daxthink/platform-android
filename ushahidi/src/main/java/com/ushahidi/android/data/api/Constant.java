@@ -55,7 +55,12 @@ public final class Constant {
     /**
      * Form resources
      */
-    public static final String FORM = API_PATH + "/forms";
+    public static final String FORMS = API_PATH + "/forms";
+
+    /**
+     * Attribute resources
+     */
+    public static final String ATTRIBUTES = API_PATH + "/attributes";
 
     /**
      * Tags resources
