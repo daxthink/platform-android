@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface FormView extends LoadDataView {
+public interface ListFormView extends LoadDataView {
 
     /**
      * Render a post list in the UI.
