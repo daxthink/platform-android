@@ -23,8 +23,7 @@
     <TextView
             android:id="@id/android:empty"
             style="@style/TextView.Empty"
-            android:visibility="gone"
             android:text="@string/empty_post_list"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:layout_centerInParent="true"/>
 
 </RelativeLayout>

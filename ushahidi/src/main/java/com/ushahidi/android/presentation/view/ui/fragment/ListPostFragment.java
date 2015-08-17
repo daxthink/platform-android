@@ -132,7 +132,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void initRecyclerView() {
-        mPostAdapter = new PostAdapter(mEmptyView);
+        mPostAdapter = new PostAdapter();
         mPostRecyclerView.setFocusable(true);
         mPostRecyclerView.setFocusableInTouchMode(true);
         mPostRecyclerView.setAdapter(mPostAdapter);

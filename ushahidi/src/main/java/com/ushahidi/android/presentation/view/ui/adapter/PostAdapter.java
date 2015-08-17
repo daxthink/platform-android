@@ -22,9 +22,9 @@ import com.addhen.android.raiburari.presentation.ui.widget.CapitalizedTextView;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.model.TagModel;
-import com.ushahidi.android.presentation.view.ui.animators.ViewHelper;
 import com.ushahidi.android.presentation.util.TagUtility;
 import com.ushahidi.android.presentation.util.Utility;
+import com.ushahidi.android.presentation.view.ui.animators.ViewHelper;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -53,8 +53,6 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     private static final int ANIMATED_ITEMS_COUNT = 2;
 
-    private final View mEmptyView;
-
     private int lastAnimatedPosition = -1;
 
     private int mDuration = 300;
@@ -63,15 +61,6 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
 
     private float mFrom = 0f;
 
-    /**
-     * Default constructor
-     *
-     * @param emptyView Thew vie to show when the adapter is empty
-     */
-    public PostAdapter(final View emptyView) {
-        mEmptyView = emptyView;
-        onDataSetChanged();
-    }
 
     /**
      * Adapters bind view holder
@@ -145,20 +134,6 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
     @Override
     public int getAdapterItemCount() {
         return getItems().size();
-    }
-
-    @Override
-    public void setItems(List<PostModel> items) {
-        super.setItems(items);
-        onDataSetChanged();
-    }
-
-    /**
-     * Sets an empty view when the adapter's data item gets to zero
-     */
-    private void onDataSetChanged() {
-        notifyDataSetChanged();
-        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     /**
