@@ -24,11 +24,14 @@ import com.ushahidi.android.data.api.account.PlatformSession;
  */
 public class TestEntityFixtures {
 
+    public static final Long DEPLOYMENT_ID = 1l;
+
     private static UserAccountEntity mUserAccountEntity;
 
     private static PlatformSession mPlatformSession;
 
     private static FormEntity mFormEntity;
+
 
     private TestEntityFixtures() {
         // No instances
@@ -37,7 +40,7 @@ public class TestEntityFixtures {
     public static UserAccountEntity getUserAccountEntity() {
         if (mUserAccountEntity == null) {
             mUserAccountEntity = new UserAccountEntity();
-            mUserAccountEntity._id = 1l;
+            mUserAccountEntity._id = DEPLOYMENT_ID;
             mUserAccountEntity.setPassword("password");
             mUserAccountEntity.setAccountName("account name");
         }
@@ -54,7 +57,7 @@ public class TestEntityFixtures {
     public static FormEntity getFormEntity() {
         if (mFormEntity == null) {
             mFormEntity = new FormEntity();
-            mFormEntity._id = 1l;
+            mFormEntity._id = DEPLOYMENT_ID;
             mFormEntity.setCreated(new java.util.Date(1439502954));
             mFormEntity.setDescription("A Basic Form Entity");
             mFormEntity.setDeploymentId(1l);

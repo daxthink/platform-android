@@ -19,8 +19,6 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class DeploymentTest {
 
-    private Deployment mDeployment;
-
     private static final Long DUMMY_ID = 1l;
 
     private static final String DUMMY_TITLE = "Dummy Deployment Title";
@@ -28,6 +26,8 @@ public class DeploymentTest {
     private static final Deployment.Status DUMMY_STATUS = Deployment.Status.DEACTIVATED;
 
     private static final String DUMMY_URL = "http://deployment.com";
+
+    private Deployment mDeployment;
 
     @Before
     public void setUp() {

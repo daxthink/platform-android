@@ -61,8 +61,8 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
 
     @Test
     public void shouldSuccessfullyAddADeployment() {
-        given(mMockDataSource.addDeploymentEntity(mMockDeploymentEntity)).willReturn(
-                Observable.just(1l));
+        given(mMockDataSource.addDeploymentEntity(mMockDeploymentEntity))
+                .willReturn(Observable.just(1l));
         given(mMockDeploymentEntityMapper.map(mMockDeployment)).willReturn(mMockDeploymentEntity);
 
         mDeploymentDataRepository.addEntity(mMockDeployment);

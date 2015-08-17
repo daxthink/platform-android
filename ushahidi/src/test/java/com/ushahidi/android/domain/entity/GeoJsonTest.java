@@ -36,13 +36,13 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class GeoJsonTest {
 
-    private GeoJson mGeoJson;
-
     private static final Long DUMMY_ID = 1l;
 
     private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     private static final String DUMMY_STRING = "Dummy Deployment Title";
+
+    private GeoJson mGeoJson;
 
     @Before
     public void setUp() {

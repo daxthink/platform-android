@@ -36,6 +36,8 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class UserAccountEntityTest {
 
+    private static final Long DUMMY_ID = 1l;
+
     private String ACCOUNT_NAME = "account name";
 
     private String PASSWORD = "password";
@@ -45,8 +47,6 @@ public class UserAccountEntityTest {
     private String AUTH_TOKEN_TYPE = "auth token type";
 
     private long DEPLOYMENT_ID = 1l;
-
-    private static final Long DUMMY_ID = 1l;
 
     private UserAccountEntity mUserAccountEntity;
 

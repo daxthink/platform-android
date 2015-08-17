@@ -33,8 +33,6 @@ import static com.google.common.truth.Truth.assertThat;
  */
 public class PostTest {
 
-    private Post mPost;
-
     private static Long PARENT = 1l;
 
     private static String TITLE = "title";
@@ -62,6 +60,8 @@ public class PostTest {
     private static List<Tag> TAG_LIST = new ArrayList<>();
 
     private static PostValue POST_VALUE = new PostValue();
+
+    private Post mPost;
 
     @Before
     public void setUp() {
