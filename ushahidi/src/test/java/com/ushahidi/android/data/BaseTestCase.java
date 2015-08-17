@@ -1,4 +1,4 @@
-package com.ushahidi.android;
+package com.ushahidi.android.data;
 
 import java.lang.reflect.Field;
 
