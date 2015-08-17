@@ -25,6 +25,7 @@ import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
+import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 import com.ushahidi.android.presentation.state.ReloadPostEvent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.util.Utility;
@@ -120,6 +121,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                         if (reloadPostEvent != null) {
                             mListPostPresenter.loadLocalDatabase();
                         }
+                    } else if (event instanceof NoAccessTokenEvent) {
+
                     }
                 }));
     }
@@ -254,6 +257,16 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     public void showError(String s) {
         Snackbar snackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
                 .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi());
+        View view = snackbar.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
+        snackbar.show();
+    }
+
+    private void showLoginPrompt() {
+        Snackbar snackbar = Snackbar
+                .make(getView(), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG)
+                .setAction(R.string.login, e -> mLauncher.launchLogin());
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));

@@ -43,6 +43,7 @@ import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
+import com.ushahidi.android.presentation.account.AccessTokenStorageManager;
 import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
@@ -61,7 +62,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import de.rheinfabrik.heimdall.OAuth2AccessToken;
-import de.rheinfabrik.heimdall.extras.SharedPreferencesOAuth2AccessTokenStorage;
 import retrofit.client.OkClient;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -311,10 +311,9 @@ public class AppModule {
         // Define the shared preferences where we will save the access token
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 "UshahidiAccessTokenStorage", Context.MODE_PRIVATE);
-        // Define the storage using the the previously defined preferences
-        SharedPreferencesOAuth2AccessTokenStorage<OAuth2AccessToken> tokenStorage
-                = new SharedPreferencesOAuth2AccessTokenStorage<>(sharedPreferences,
-                OAuth2AccessToken.class);
+        // Define the storage using the previously defined preferences
+        AccessTokenStorageManager<OAuth2AccessToken> tokenStorage
+                = new AccessTokenStorageManager<>(sharedPreferences, OAuth2AccessToken.class);
         return new UshAccessTokenManager(tokenStorage, platformService, platformAuthConfig);
     }
 }
