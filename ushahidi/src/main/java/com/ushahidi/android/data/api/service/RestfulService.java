@@ -19,6 +19,7 @@ package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
 
+import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.oauth.AccessTokenRequestBody;
@@ -32,6 +33,7 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 import rx.Observable;
 
+import static com.ushahidi.android.data.api.Constant.FORMS;
 import static com.ushahidi.android.data.api.Constant.GEOJSON;
 import static com.ushahidi.android.data.api.Constant.POSTS;
 import static com.ushahidi.android.data.api.Constant.TAGS;
@@ -105,4 +107,15 @@ public interface RestfulService {
      */
     @GET(GEOJSON)
     Observable<JsonElement> getGeoJson(@Header("Authorization") String authorizationHeader);
+
+    // Form related APIs
+
+    /**
+     * Fetches forms associated with a deployment
+     *
+     * @param authorizationHeader The access token header
+     * @return Forms
+     */
+    @GET(FORMS)
+    Observable<Forms> getForms(@Header("Authorization") String authorizationHeader);
 }
