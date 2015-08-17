@@ -41,6 +41,8 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class UserAccountEntityDataMapperTest {
 
+    private static final Long DUMMY_ID = 1l;
+
     private UserAccount mUserAccount;
 
     private UserAccountEntity mUserAccountEntity;
@@ -54,8 +56,6 @@ public class UserAccountEntityDataMapperTest {
     private String AUTH_TOKEN_TYPE = "auth token type";
 
     private long DEPLOYMENT_ID = 1l;
-
-    private static final Long DUMMY_ID = 1l;
 
     private UserAccountEntityDataMapper mUserAccountEntityDataMapper;
 

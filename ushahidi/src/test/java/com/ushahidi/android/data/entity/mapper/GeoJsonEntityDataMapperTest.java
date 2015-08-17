@@ -38,17 +38,17 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class GeoJsonEntityDataMapperTest {
 
-    private GeoJsonEntityDataMapper mGeoJsonEntityMapper;
-
-    private GeoJsonEntity mGeoJsonEntity;
-
-    private GeoJson mGeoJson;
-
     private static final Long DUMMY_ID = 22l;
 
     private static final String DUMMY_GEOJSON = "dummy_goejson";
 
     private static final Long DUMMY_DEPLOYMENT_ID = 1l;
+
+    private GeoJsonEntityDataMapper mGeoJsonEntityMapper;
+
+    private GeoJsonEntity mGeoJsonEntity;
+
+    private GeoJson mGeoJson;
 
     @Before
     public void setUp() {

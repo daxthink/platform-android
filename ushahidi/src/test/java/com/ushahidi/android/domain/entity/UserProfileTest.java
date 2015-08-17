@@ -38,7 +38,7 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class UserProfileTest {
 
-    UserProfile mUserProfile;
+    private static final Long DUMMY_ID = 1l;
 
     private static String EMAIL = "email";
 
@@ -54,7 +54,7 @@ public class UserProfileTest {
 
     private static Long DEPLOYMENT_ID = 1l;
 
-    private static final Long DUMMY_ID = 1l;
+    UserProfile mUserProfile;
 
     @Before
     public void setUp() {

@@ -36,6 +36,8 @@ import static com.google.common.truth.Truth.assertThat;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class UserEntityTest {
 
+    private static final Long DUMMY_ID = 1l;
+
     private static String EMAIL = "email";
 
     private static String REAL_NAME = "Real name";
@@ -49,8 +51,6 @@ public class UserEntityTest {
     private static Date UPDATED = new Date();
 
     private static Long DEPLOYMENT_ID = 1l;
-
-    private static final Long DUMMY_ID = 1l;
 
     private UserEntity mUserEntity;
 

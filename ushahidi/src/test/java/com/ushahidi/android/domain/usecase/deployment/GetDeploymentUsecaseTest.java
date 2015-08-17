@@ -26,6 +26,8 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class GetDeploymentUsecaseTest {
 
+    private static final Long DUMMY_DEPLOYMENT_ID = 1l;
+
     @Mock
     private ThreadExecutor mockThreadExecutor;
 
@@ -36,8 +38,6 @@ public class GetDeploymentUsecaseTest {
     private DeploymentRepository mockDeploymentRepository;
 
     private GetDeploymentUsecase mGetDeploymentUsecase;
-
-    private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     @Before
     public void setUp() throws Exception {
