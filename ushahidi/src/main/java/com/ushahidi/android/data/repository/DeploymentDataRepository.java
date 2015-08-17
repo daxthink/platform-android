@@ -45,7 +45,7 @@ public class DeploymentDataRepository implements DeploymentRepository {
     /**
      * Constructs a {@link DeploymentRepository}.
      *
-     * @param dataSourceFactory          A factory to construct different data source
+     * @param dataSourceFactory          A factory to construct the different data source
      *                                   implementations.
      * @param deploymentEntityDataMapper {@link DeploymentEntityDataMapper}.
      */
