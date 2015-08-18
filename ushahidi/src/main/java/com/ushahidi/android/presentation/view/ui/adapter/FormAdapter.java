@@ -22,7 +22,7 @@ public class FormAdapter extends BaseAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    protected final List<FormModel> mItems = new ArrayList<>();
+    private final List<FormModel> mItems = new ArrayList<>();
 
     public FormAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
