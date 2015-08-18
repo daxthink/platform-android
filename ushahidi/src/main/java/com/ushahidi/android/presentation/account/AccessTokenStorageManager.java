@@ -15,11 +15,11 @@ import rx.Observable;
  * A simple storage that saves the access token as plain text in the passed shared preferences.
  * It is recommend to set the access mode to MODE_PRIVATE.
  *
- * @param <TAccessToken> The access token type.
+ * @param <T> The access token type.
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AccessTokenStorageManager<TAccessToken extends OAuth2AccessToken> implements
-        OAuth2AccessTokenStorage<TAccessToken> {
+public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
+        OAuth2AccessTokenStorage<T> {
     // Constants
 
     private static final String ACCESS_TOKEN_PREFERENCES_KEY = "OAuth2AccessToken";
@@ -58,7 +58,7 @@ public class AccessTokenStorageManager<TAccessToken extends OAuth2AccessToken> i
 
     @SuppressWarnings("unchecked")
     @Override
-    public Observable<TAccessToken> getStoredAccessToken() {
+    public Observable<T> getStoredAccessToken() {
         return Observable
                 .just(mSharedPreferences.getString(ACCESS_TOKEN_PREFERENCES_KEY, null))
                 .filter(accessToken -> {
@@ -66,14 +66,13 @@ public class AccessTokenStorageManager<TAccessToken extends OAuth2AccessToken> i
                         // Send an event that there is no valid access token
                         UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
                     }
-
                     return true;
                 })
-                .map(json -> (TAccessToken) new Gson().fromJson(json, mTokenClass));
+                .map(json -> (T) new Gson().fromJson(json, mTokenClass));
     }
 
     @Override
-    public void storeAccessToken(TAccessToken accessToken) {
+    public void storeAccessToken(T accessToken) {
         mSharedPreferences
                 .edit()
                 .putString(ACCESS_TOKEN_PREFERENCES_KEY, new Gson().toJson(accessToken))
