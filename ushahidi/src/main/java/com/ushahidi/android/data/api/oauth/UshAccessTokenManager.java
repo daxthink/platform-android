@@ -51,7 +51,7 @@ public final class UshAccessTokenManager extends OAuth2AccessTokenManager<OAuth2
         ushPasswordCredentialsGrant.setClientSecret(mPlatformAuthConfig.getClientSecret());
         ushPasswordCredentialsGrant.scope = mPlatformAuthConfig.getScope();
         ushPasswordCredentialsGrant.password = userAccount.getPassword();
-        ushPasswordCredentialsGrant.username = userAccount.getPassword();
+        ushPasswordCredentialsGrant.username = userAccount.getAccountName();
         return ushPasswordCredentialsGrant;
     }
 

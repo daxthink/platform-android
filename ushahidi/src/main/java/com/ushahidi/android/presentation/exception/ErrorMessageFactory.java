@@ -71,14 +71,14 @@ public final class ErrorMessageFactory {
         } else if (exception instanceof IllegalStateException && exception.getMessage()
                 .equalsIgnoreCase("No access token found.")) {
             // Double check to make sure exception being checked is that of access token
-            // Triggers prompt login
+            // then trigger a login prompt
             UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
 
         } else if (exception instanceof RetrofitError) {
             RetrofitError retrofitError = (RetrofitError) exception;
             message = getRetrofitErrorMessage(retrofitError);
         }
-        // Only print stackTrace when running a debug build
+        // Only print stacktrace when running a debug build
         if (BuildConfig.DEBUG) {
             exception.printStackTrace();
         }
