@@ -458,15 +458,16 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     void onFabClick(View view) {
         Holder holder = new CustomGridHolder(3);
         final DialogPlus dialog = DialogPlus.newDialog(this)
-                .setAdapter(mFormAdapter)
                 .setOnItemClickListener((dialog1, item, view1, position) -> {
                     // Do nothing
                 })
                 .setContentHolder(holder)
                 .setHeader(R.layout.form_dialog_header)
+                .setAdapter(mFormAdapter)
                 .setExpanded(true)
                 .setCancelable(true)
                 .setContentHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                .setOnBackPressListener(dialogPlus -> dialogPlus.dismiss())
                 .create();
         dialog.show();
     }
