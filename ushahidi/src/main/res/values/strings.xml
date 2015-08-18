@@ -130,4 +130,6 @@
     <string name="not_logged_in">You have to login to perform this action</string>
     <string name="geojson_not_found">Could not fetch GeoJson. Not found.</string>
     <string name="fetch_post_not_found">Could not fetch Post. Not found.</string>
+    <string name="select_post_type">Select post type</string>
+    <string name="no_forms_found">No forms found.</string>
 </resources>
