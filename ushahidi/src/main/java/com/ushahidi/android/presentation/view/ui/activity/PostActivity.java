@@ -17,6 +17,7 @@
 
 package com.ushahidi.android.presentation.view.ui.activity;
 
+import com.orhanobut.dialogplus.DialogPlus;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
@@ -42,6 +43,7 @@ import com.ushahidi.android.presentation.state.ReloadPostEvent;
 import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.form.ListFormView;
 import com.ushahidi.android.presentation.view.post.PostView;
+import com.ushahidi.android.presentation.view.ui.adapter.FormAdapter;
 import com.ushahidi.android.presentation.view.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
@@ -54,7 +56,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -145,6 +146,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     private List<DeploymentModel> mDeploymentModelList;
 
     private boolean mPendingIntroAnimation;
+
+    private FormAdapter mFormAdapter;
 
     /**
      * Default constructor
@@ -239,6 +242,7 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         }
 
         mTabLayout.setupWithViewPager(mViewPager);
+        mFormAdapter = new FormAdapter(this);
     }
 
     private void injector() {
@@ -449,8 +453,13 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
      */
     @OnClick(R.id.post_fab)
     void onFabClick(View view) {
-        Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null)
-                .show();
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setAdapter(mFormAdapter)
+                .setOnItemClickListener((dialog1, item, view1, position) -> {
+                })
+                .setExpanded(true)
+                .create();
+        dialog.show();
     }
 
 
@@ -506,7 +515,9 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
 
     @Override
     public void renderFormList(List<FormModel> formModel) {
-
+        if (!Utility.isCollectionEmpty(formModel)) {
+            mFormAdapter.setItems(formModel);
+        }
     }
 
     /**
