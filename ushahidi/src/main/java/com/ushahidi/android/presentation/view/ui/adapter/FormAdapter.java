@@ -62,6 +62,7 @@ public class FormAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
+        viewHolder.textView.setText(mItems.get(0).getName());
         return view;
     }
 
