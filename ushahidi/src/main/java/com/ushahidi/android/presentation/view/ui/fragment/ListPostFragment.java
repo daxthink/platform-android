@@ -67,9 +67,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Bind(android.R.id.list)
     BloatedRecyclerView mPostRecyclerView;
 
-    @Bind(android.R.id.empty)
-    TextView mEmptyView;
-
     @Inject
     ListPostPresenter mListPostPresenter;
 
@@ -188,7 +185,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showLoading() {
-        mEmptyView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
