@@ -33,12 +33,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:textColor="@color/black_dark"
             android:paddingEnd="@dimen/view_spacing_large"
             android:paddingRight="@dimen/view_spacing_large"
             style="@style/TextView.Suffix"/>
     <android.support.v7.widget.AppCompatTextView
             android:id="@+id/detail_post_content"
             style="@style/TextView.Description"
+            android:textColor="@android:color/black"
             android:autoLink="all"
             android:layout_below="@+id/detail_post_status"/>
     <HorizontalScrollView android:id="@+id/detail_post_tags_container"
