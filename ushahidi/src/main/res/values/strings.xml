@@ -86,8 +86,7 @@
     <string name="register">Register</string>
     <string name="prompt_login">Select A Deployment To Login to</string>
     <string name="empty_post_list"><b>No posts</b>\n\nPull down on the
-        <b>screen</b>
-        to fetch new posts.
+        <b>screen</b>to fetch new posts.
     </string>
     <string name="post_not_found"><b>No post found</b>\n\nPlease try again with a different search
         term.
@@ -129,4 +128,5 @@
     <string name="required_field_error">This field is required.</string>
     <string name="not_logged_in">You have to login to perform this action</string>
     <string name="geojson_not_found">Could not fetch GeoJson. Not found.</string>
+    <string name="fetch_post_not_found">Could not fetch Post. Not found.</string>
 </resources>
