@@ -17,8 +17,11 @@
 package com.ushahidi.android.presentation.exception;
 
 
+import com.google.gson.Gson;
+
 import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.R;
+import com.ushahidi.android.data.api.oauth.ErrorResponse;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;
 import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
 import com.ushahidi.android.data.exception.PostNotFoundException;
@@ -27,6 +30,12 @@ import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 
 import android.content.Context;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+import retrofit.RetrofitError;
 
 /**
  * Creates the various app exceptions
@@ -65,11 +74,28 @@ public final class ErrorMessageFactory {
             // Triggers prompt login
             UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
 
+        } else if (exception instanceof RetrofitError) {
+            RetrofitError retrofitError = (RetrofitError) exception;
+            message = getRetrofitErroMessage(retrofitError);
         }
         // Only print stackTrace when running a debug build
         if (BuildConfig.DEBUG) {
             exception.printStackTrace();
         }
         return message;
+    }
+    
+    public static String getRetrofitErroMessage(RetrofitError error) {
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(error.getResponse().getBody().in(), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (reader != null) {
+            ErrorResponse errorResponse = new Gson().fromJson(reader, ErrorResponse.class);
+            return errorResponse.getErrorDescription();
+        }
+        return "";
     }
 }
