@@ -45,6 +45,7 @@ ext {
     cocoaheroGeoJsonVersion = '1.0.1'
     androidMapsUtilsVersion = '0.3.4'
     heimdallDroidVersion = '1.0.3'
+    dialogplusVersion = '1.10'
     stethoVersion = '1.1.1'
     stethoOkHttpVersion = '1.1.1'
 
@@ -74,6 +75,7 @@ ext {
             cocoaheroGeoJson         : "com.cocoahero.android:geojson:${cocoaheroGeoJsonVersion}@jar",
             androidMapsUtils         : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}",
             heimdallDroid            : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
+            dialogplus               : "com.orhanobut:dialogplus:${dialogplusVersion}",
             stetho                   : "com.facebook.stetho:stetho:${stethoVersion}",
             stethoOkHttp             : "com.facebook.stetho:stetho-okhttp:${stethoOkHttpVersion}",
     ]

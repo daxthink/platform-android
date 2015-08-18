@@ -99,6 +99,7 @@ dependencies {
     compile appDependencies.heimdallDroid
     compile appDependencies.stetho
     compile appDependencies.stethoOkHttp
+    compile appDependencies.dialogplus
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit
