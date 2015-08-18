@@ -37,4 +37,5 @@
     <color name="black_lighter">#6000</color>
     <color name="white">#deffffff</color>
     <color name="gray_lighter">#8affffff</color>
+    <color name="light_blue">#2274B4</color>
 </resources>
