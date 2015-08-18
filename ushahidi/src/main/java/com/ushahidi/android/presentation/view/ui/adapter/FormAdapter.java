@@ -57,18 +57,22 @@ public class FormAdapter extends BaseAdapter {
         if (view == null) {
             view = mLayoutInflater.inflate(R.layout.grid_form_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.textView = (TextView) view.findViewById(R.id.text_view);
+            viewHolder.title = (TextView) view.findViewById(R.id.form_title);
+            viewHolder.description = (TextView) view.findViewById(R.id.form_description);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.textView.setText(mItems.get(0).getName());
+        viewHolder.title.setText(mItems.get(position).getName());
+        viewHolder.description.setText(mItems.get(position).getDescription());;
         return view;
     }
 
     static class ViewHolder {
 
-        TextView textView;
+        TextView title;
+
+        TextView description;
     }
 
 }

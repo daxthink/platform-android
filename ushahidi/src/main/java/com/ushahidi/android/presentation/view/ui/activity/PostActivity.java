@@ -18,6 +18,7 @@
 package com.ushahidi.android.presentation.view.ui.activity;
 
 import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.Holder;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
@@ -47,6 +48,7 @@ import com.ushahidi.android.presentation.view.ui.adapter.FormAdapter;
 import com.ushahidi.android.presentation.view.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
+import com.ushahidi.android.presentation.view.ui.widget.CustomGridHolder;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -69,6 +71,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
 import java.util.ArrayList;
@@ -453,11 +456,17 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
      */
     @OnClick(R.id.post_fab)
     void onFabClick(View view) {
-        DialogPlus dialog = DialogPlus.newDialog(this)
+        Holder holder = new CustomGridHolder(3);
+        final DialogPlus dialog = DialogPlus.newDialog(this)
                 .setAdapter(mFormAdapter)
                 .setOnItemClickListener((dialog1, item, view1, position) -> {
+                    // Do nothing
                 })
+                .setContentHolder(holder)
+                .setHeader(R.layout.form_dialog_header)
                 .setExpanded(true)
+                .setCancelable(true)
+                .setContentHeight(ViewGroup.LayoutParams.MATCH_PARENT)
                 .create();
         dialog.show();
     }
