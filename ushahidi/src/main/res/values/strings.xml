@@ -128,4 +128,5 @@
     <string name="search_post_empty_result">No matching posts.</string>
     <string name="required_field_error">This field is required.</string>
     <string name="not_logged_in">You have to login to perform this action</string>
+    <string name="geojson_not_found">Could not fetch GeoJson. Not found.</string>
 </resources>

@@ -86,6 +86,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private List<PostModel> mPostModelList;
 
+    private Snackbar mSnackbar;
+
     public ListPostFragment() {
         super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
     }
@@ -122,7 +124,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                             mListPostPresenter.loadLocalDatabase();
                         }
                     } else if (event instanceof NoAccessTokenEvent) {
-
+                        showLoginPrompt();
                     }
                 }));
     }
@@ -224,12 +226,30 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showRetry() {
-        // Do nothing
+        mSnackbar = Snackbar
+                .make(getView(), getString(R.string.post_not_found), Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, e -> mListPostPresenter.loadLocalDatabase());
+        setSnackbarTextColor();
     }
 
     @Override
     public void hideRetry() {
-        // Do nothing
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
+    }
+
+    /**
+     * Change Snackbar text color to orange by finding the TextView associated with
+     * it. A bit of a hack to get this working as it doesn't come with a native API for doing this.
+     */
+    private void setSnackbarTextColor() {
+        if (mSnackbar != null) {
+            View view = mSnackbar.getView();
+            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+            tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
+            mSnackbar.show();
+        }
     }
 
     @Override
@@ -255,22 +275,19 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showError(String s) {
-        Snackbar snackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
+        mSnackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
                 .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi());
-        View view = snackbar.getView();
+        View view = mSnackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
-        snackbar.show();
+        mSnackbar.show();
     }
 
     private void showLoginPrompt() {
-        Snackbar snackbar = Snackbar
+        mSnackbar = Snackbar
                 .make(getView(), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG)
                 .setAction(R.string.login, e -> mLauncher.launchLogin());
-        View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
-        snackbar.show();
+        setSnackbarTextColor();
     }
 
     @Override
