@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 /**
+ * GridHolder that supports empty view display
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class CustomGridHolder implements HolderAdapter, AdapterView.OnItemClickListener {
