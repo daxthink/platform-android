@@ -76,7 +76,7 @@ public final class ErrorMessageFactory {
 
         } else if (exception instanceof RetrofitError) {
             RetrofitError retrofitError = (RetrofitError) exception;
-            message = getRetrofitErroMessage(retrofitError);
+            message = getRetrofitErrorMessage(retrofitError);
         }
         // Only print stackTrace when running a debug build
         if (BuildConfig.DEBUG) {
@@ -84,8 +84,8 @@ public final class ErrorMessageFactory {
         }
         return message;
     }
-    
-    public static String getRetrofitErroMessage(RetrofitError error) {
+
+    public static String getRetrofitErrorMessage(RetrofitError error) {
         Reader reader = null;
         try {
             reader = new InputStreamReader(error.getResponse().getBody().in(), "UTF-8");
