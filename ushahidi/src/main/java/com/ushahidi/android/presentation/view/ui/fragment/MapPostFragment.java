@@ -44,9 +44,9 @@ import com.ushahidi.android.presentation.model.GeoJsonModel;
 import com.ushahidi.android.presentation.presenter.post.MapPostPresenter;
 import com.ushahidi.android.presentation.state.ReloadPostEvent;
 import com.ushahidi.android.presentation.state.RxEventBus;
-import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.util.GeoJsonLoadUtility;
 import com.ushahidi.android.presentation.view.post.MapPostView;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 
 import org.json.JSONException;
 
@@ -102,6 +102,8 @@ public class MapPostFragment extends BaseFragment
     private HashMap<Marker, ClusterMarkerModel> markers = new HashMap<>();
 
     private CompositeSubscription mSubscriptions;
+
+    private Snackbar mSnackbar;
 
     public MapPostFragment() {
         super(R.layout.map_post, 0);
@@ -249,35 +251,34 @@ public class MapPostFragment extends BaseFragment
 
     @Override
     public void showRetry() {
-        Snackbar snackbar = Snackbar.make(getView(), R.string.retry,
-                Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, e -> mMapPostPresenter.loadGeoJsonFromOnline()
-                );
-        setSnackbarTextColor(snackbar);
+        mSnackbar = Snackbar
+                .make(getView(), getString(R.string.geojson_not_found), Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, e -> mMapPostPresenter.loadGeoJsonFromOnline());
+        setSnackbarTextColor();
     }
 
     @Override
     public void hideRetry() {
-
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
     }
 
     @Override
     public void showError(String s) {
-        Snackbar snackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG);
-        setSnackbarTextColor(snackbar);
+        mSnackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG);
+        setSnackbarTextColor();
     }
 
     /**
      * Change Snackbar text color to orange by finding the TextView associated with
      * it. A bit of a hack to get this working as it doesn't come with a native API for doing this.
-     *
-     * @param snackbar The snackbar to change its text color
      */
-    private void setSnackbarTextColor(Snackbar snackbar) {
-        View view = snackbar.getView();
+    private void setSnackbarTextColor() {
+        View view = mSnackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
-        snackbar.show();
+        mSnackbar.show();
     }
 
     @Override
