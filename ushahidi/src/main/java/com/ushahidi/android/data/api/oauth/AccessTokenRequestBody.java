@@ -34,7 +34,7 @@ public class AccessTokenRequestBody extends BaseResponse implements Serializable
     /**
      * Default constructor
      *
-     * @param username     The user name
+     * @param username     The username
      * @param password     The password
      * @param grantType    The grant type
      * @param clientId     The client ID
