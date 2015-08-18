@@ -56,7 +56,7 @@ public final class ErrorMessageFactory {
         } else if (exception instanceof TagNotFoundException) {
             message = context.getString(R.string.exception_message_tag_not_found);
         } else if (exception instanceof PostNotFoundException) {
-            message = context.getString(R.string.post_not_found);
+            message = context.getString(R.string.fetch_post_not_found);
         } else if (exception instanceof GeoJsonNotFoundException) {
             message = context.getString(R.string.geojson_not_found);
         } else if (exception instanceof IllegalStateException && exception.getMessage()
