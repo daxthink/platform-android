@@ -19,7 +19,7 @@ public interface FormAttributeRepository {
      * @param from         Where to get the formattribute from. Either from local storage or online
      * @return The retrieved form attribute.
      */
-    Observable<List<FormAttribute>> getForms(Long deploymentId, From from);
+    Observable<List<FormAttribute>> getFormAttributes(Long deploymentId, From from);
 
     /**
      * Add/Update a {@link FormAttribute}.
@@ -27,5 +27,5 @@ public interface FormAttributeRepository {
      * @param form The FormAttribute to be saved.
      * @return The row affected
      */
-    Observable<Long> putForm(FormAttribute form);
+    Observable<Long> putFormAttribute(FormAttribute form);
 }
