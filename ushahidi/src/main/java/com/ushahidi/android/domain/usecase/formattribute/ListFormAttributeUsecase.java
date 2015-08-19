@@ -26,16 +26,16 @@ public class ListFormAttributeUsecase extends Usecase {
     /**
      * Default constructor
      *
-     * @param FormAttributeRepository The FormAttributeJson Repository
+     * @param formAttributeRepository The FormAttributeJson Repository
      * @param threadExecutor          The thread executor
      * @param postExecutionThread     The post execution thread
      */
     @Inject
-    protected ListFormAttributeUsecase(FormAttributeRepository FormAttributeRepository,
+    protected ListFormAttributeUsecase(FormAttributeRepository formAttributeRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mFormAttributeRepository = FormAttributeRepository;
+        mFormAttributeRepository = formAttributeRepository;
     }
 
     /**
