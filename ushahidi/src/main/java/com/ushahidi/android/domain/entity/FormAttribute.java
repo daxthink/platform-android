@@ -26,6 +26,10 @@ public class FormAttribute extends Entity {
 
     private List<String> mOptions;
 
+    private Long mDeploymentId;
+
+    private Long mFormId;
+
     public String getLabel() {
         return mLabel;
     }
@@ -80,6 +84,22 @@ public class FormAttribute extends Entity {
 
     public void setOptions(List<String> options) {
         mOptions = options;
+    }
+
+    public void setFormId(Long formId) {
+        mFormId = formId;
+    }
+
+    public Long getFormId() {
+        return mFormId;
+    }
+
+    public void setDeploymentId(Long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    public Long getDeploymentId() {
+        return mDeploymentId;
     }
 
     public enum Input {
