@@ -28,4 +28,13 @@ public interface FormAttributeRepository {
      * @return The row affected
      */
     Observable<Long> putFormAttribute(FormAttribute form);
+
+    /**
+     * Get a list of {@link FormAttribute} from either the database or online.
+     *
+     * @param deploymentId    An ID of {@link com.ushahidi.android.domain.entity.Deployment}
+     * @param formAttributeId The form attribute's ID
+     * @return The retrieved form attribute.
+     */
+    Observable<FormAttribute> getFormAttribute(Long deploymentId, Long formAttributeId);
 }

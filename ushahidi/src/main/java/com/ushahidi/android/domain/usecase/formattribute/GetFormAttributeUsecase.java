@@ -3,7 +3,6 @@ package com.ushahidi.android.domain.usecase.formattribute;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
-import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.FormAttributeRepository;
 
 import javax.inject.Inject;
@@ -15,13 +14,13 @@ import rx.Observable;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ListFormAttributeUsecase extends Usecase {
+public class GetFormAttributeUsecase extends Usecase {
 
     private final FormAttributeRepository mFormAttributeRepository;
 
     private Long mDeploymentId = null;
 
-    private From mFrom;
+    private Long mFormAttributeId;
 
     /**
      * Default constructor
@@ -31,7 +30,7 @@ public class ListFormAttributeUsecase extends Usecase {
      * @param postExecutionThread     The post execution thread
      */
     @Inject
-    protected ListFormAttributeUsecase(FormAttributeRepository FormAttributeRepository,
+    protected GetFormAttributeUsecase(FormAttributeRepository FormAttributeRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
@@ -42,21 +41,21 @@ public class ListFormAttributeUsecase extends Usecase {
      * Sets the deployment ID to be used to fetch the {@link com.ushahidi.android.domain.entity.GeoJson}
      * and where to fetch it from.
      *
-     * @param deploymentId The deploymentId associated with the GeoJson
-     * @param from         Whether to fetch through the API or the local storage
+     * @param deploymentId    The deploymentId associated with the GeoJson
+     * @param formAttributeId The ID of the form attribute
      */
-    public void setListFormAttribute(Long deploymentId, From from) {
+    public void setGetFormAttribute(Long deploymentId, Long formAttributeId) {
         mDeploymentId = deploymentId;
-        mFrom = from;
+        mFormAttributeId = formAttributeId;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeploymentId == null || mFrom == null) {
+        if (mDeploymentId == null || mFormAttributeId == null) {
             throw new RuntimeException(
-                    "Deployment id and from cannot be null. You must call setListFormAttribute(...)");
+                    "Deployment id and form attribute id cannot be null. You must call setGetFormAttribute(...)");
         }
-        return mFormAttributeRepository.getFormAttributes(mDeploymentId, mFrom);
+        return mFormAttributeRepository.getFormAttribute(mDeploymentId, mFormAttributeId);
     }
 
 }
