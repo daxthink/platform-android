@@ -31,5 +31,6 @@ public class FormsTest extends BaseApiTestCase {
         final String formJson = getResource("forms.json");
         final Forms forms = gson.fromJson(formJson, Forms.class);
         assertThat(forms).isNotNull();
+        // TODO: Test the remanining fields 
     }
 }
