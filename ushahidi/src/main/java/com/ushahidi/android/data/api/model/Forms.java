@@ -58,7 +58,7 @@ public class Forms extends Response implements Serializable {
         }
     }
 
-    public List<FormAttributeEntity> getFormAttributeEntities() {
+    private List<FormAttributeEntity> getFormAttributeEntities() {
         return mFormAttributeEntities;
     }
 
