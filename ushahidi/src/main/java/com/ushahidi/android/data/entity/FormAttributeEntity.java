@@ -2,6 +2,8 @@ package com.ushahidi.android.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import com.addhen.android.raiburari.data.entity.DataEntity;
+
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ import java.util.List;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class FormAttributeEntity {
+public class FormAttributeEntity extends DataEntity {
 
     @SerializedName("label")
     private String mLabel;
@@ -29,9 +31,6 @@ public class FormAttributeEntity {
     @SerializedName("priority")
     private Integer mPriority;
 
-    @SerializedName("form")
-    private Form form;
-
     private List<String> mOptions;
 
     private Long mDeploymentId;
@@ -40,16 +39,6 @@ public class FormAttributeEntity {
 
     public void setFormId(Long formId) {
         mFormId = formId;
-    }
-
-    public void setFormId() {
-        // Avoiding the need to save the Form object in the db
-        // Since we're only interested in the form id. Using
-        // variable to hold just the form id and save that in the db after the
-        // API has been de-serialized
-        if (form != null) {
-            mFormId = form.getId();
-        }
     }
 
     public Long getFormId() {
@@ -174,31 +163,26 @@ public class FormAttributeEntity {
         /**
          * A Varchar type
          */
-        @SerializedName("varchar")
         VARCHAR("varchar"),
 
         /**
          * A point type
          */
-        @SerializedName("point")
         POINT("point"),
 
         /**
          * A datetime type
          */
-        @SerializedName("datetime")
         DATETIME("datetime"),
 
         /**
          * A text type
          */
-        @SerializedName("text")
         TEXT("text"),
 
         /**
          * A geometry type
          */
-        @SerializedName("geometry")
         GEOMETRY("geometry");
 
         private String value;
@@ -228,18 +212,5 @@ public class FormAttributeEntity {
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
                 + '}';
-    }
-
-    private class Form {
-
-        private Long id;
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public Long getId() {
-            return id;
-        }
     }
 }
