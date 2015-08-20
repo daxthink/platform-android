@@ -1,9 +1,9 @@
 package com.ushahidi.android.data.entity;
 
 import com.addhen.android.raiburari.data.entity.DataEntity;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Holds the raw V3's /api/v3/form JSON response
@@ -11,18 +11,20 @@ import java.util.Date;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class FormEntity extends DataEntity {
-    @SerializedName("name")
+
     private String mName;
-    @SerializedName("description")
+
     private String mDescription;
-    @SerializedName("disabled")
+
     private boolean mDisabled;
-    @SerializedName("created")
+
     private Date mCreated;
-    @SerializedName("updated")
+
     private Date mUpdated;
 
     private Long mDeploymentId;
+
+    private List<FormAttributeEntity> mFormAttributeEntities;
 
     public Long getDeploymentId() {
         return mDeploymentId;
@@ -70,6 +72,14 @@ public class FormEntity extends DataEntity {
 
     public void setUpdated(Date updated) {
         mUpdated = updated;
+    }
+
+    public void setFormAttributeEntity(List<FormAttributeEntity> formAttributeEntities) {
+        mFormAttributeEntities = formAttributeEntities;
+    }
+
+    public List<FormAttributeEntity> getFormAttributeEntities() {
+        return mFormAttributeEntities;
     }
 
     @Override
