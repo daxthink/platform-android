@@ -29,7 +29,7 @@ public class FormAttributeEntity extends DataEntity {
 
     private Long mFormId;
 
-    private int mCardinality;
+    private Integer mCardinality;
 
     public void setFormId(Long formId) {
         mFormId = formId;
@@ -107,7 +107,7 @@ public class FormAttributeEntity extends DataEntity {
         mCardinality = cardinality;
     }
 
-    public int getCardinality() {
+    public Integer getCardinality() {
         return mCardinality;
     }
 

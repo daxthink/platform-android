@@ -30,6 +30,16 @@ public class FormAttribute extends Entity {
 
     private Long mFormId;
 
+    private Integer mCardinality;
+
+    public void setCardinality(int cardinality) {
+        mCardinality = cardinality;
+    }
+
+    public Integer getCardinality() {
+        return mCardinality;
+    }
+
     public String getLabel() {
         return mLabel;
     }
@@ -170,6 +180,7 @@ public class FormAttribute extends Entity {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ", mCardinality=" + mCardinality
                 + '}';
     }
 }
