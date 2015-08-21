@@ -21,10 +21,9 @@ public class Forms extends Response implements Serializable {
     @SerializedName("results")
     private List<Form> mForms;
 
-    private List<FormAttributeEntity> mFormAttributeEntities = new ArrayList<>();
-
     public List<FormEntity> getForms() {
         if (mForms != null && mForms.size() > 0) {
+            List<FormEntity> forms = new ArrayList<>();
             for (Form form : mForms) {
                 FormEntity formEntity = new FormEntity();
                 formEntity._id = form.id;
@@ -33,15 +32,20 @@ public class Forms extends Response implements Serializable {
                 formEntity.setDisabled(form.mDisabled);
                 formEntity.setCreated(form.mCreated);
                 formEntity.setUpdated(form.mUpdated);
-                setFormAttributeEntities(form.id, form.mAttributes);
-                formEntity.setFormAttributeEntity(getFormAttributeEntities());
+                if (form.mAttributes != null) {
+                    formEntity.setFormAttributeEntity(initFormAttributeEntities(form.id,
+                            form.mAttributes));
+                }
+                forms.add(formEntity);
             }
+            return forms;
         }
         return Collections.emptyList();
     }
 
-    private void setFormAttributeEntities(Long formId, Form.Attributes attributes) {
-
+    private List<FormAttributeEntity> initFormAttributeEntities(Long formId,
+            Form.Attributes attributes) {
+        List<FormAttributeEntity> formAttributeEntities = new ArrayList<>();
         for (Form.Attributes.FormAttributes attribute : attributes.mFormAttributes) {
             FormAttributeEntity formAttributeEntity = new FormAttributeEntity();
             formAttributeEntity._id = attribute.id;
@@ -54,12 +58,10 @@ public class Forms extends Response implements Serializable {
             formAttributeEntity.setOptions(attribute.mOptions);
             formAttributeEntity.setPriority(attribute.mPriority);
             formAttributeEntity.setRequired(attribute.mRequired);
-            mFormAttributeEntities.add(formAttributeEntity);
+            formAttributeEntity.setCardinality(attribute.mCardinality);
+            formAttributeEntities.add(formAttributeEntity);
         }
-    }
-
-    private List<FormAttributeEntity> getFormAttributeEntities() {
-        return mFormAttributeEntities;
+        return formAttributeEntities;
     }
 
     private static class Form {
@@ -113,7 +115,11 @@ public class Forms extends Response implements Serializable {
                 @SerializedName("priority")
                 private Integer mPriority;
 
+                @SerializedName("options")
                 private List<String> mOptions;
+
+                @SerializedName("cardinality")
+                private Integer mCardinality;
 
                 private enum Input {
 

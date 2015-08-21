@@ -31,6 +31,30 @@ public class FormsTest extends BaseApiTestCase {
         final String formJson = getResource("forms.json");
         final Forms forms = gson.fromJson(formJson, Forms.class);
         assertThat(forms).isNotNull();
-        // TODO: Test the remanining fields 
+        assertThat(forms.getForms()).isNotNull();
+        assertThat(forms.getForms().size()).isEqualTo(4);
+        assertThat(forms.getForms().get(0).getCreated()).isNotNull();
+        assertThat(forms.getForms().get(0).getUpdated()).isNull();
+        assertThat(forms.getForms().get(0).getDescription()).isEqualTo("a basic form");
+        assertThat(forms.getForms().get(0).getName()).isEqualTo("Basic Form");
+        assertThat(forms.getForms().get(0).getDeploymentId()).isNull();
+        assertThat(forms.getForms().get(0).getFormAttributeEntities()).isNotNull();
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0)).isNotNull();
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(
+                0).getDeploymentId()).isNull();
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getFormId())
+                .isEqualTo(1);
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getKey())
+                .isEqualTo("test_varchar");
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getLabel())
+                .isEqualTo("Test varchar");
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getRequired())
+                .isFalse();
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getPriority())
+                .isEqualTo(1);
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getCardinality())
+                .isEqualTo(1);
+        assertThat(forms.getForms().get(0).getFormAttributeEntities().get(0).getOptions()).isNull();
+        assertThat(forms.getForms().get(1).getFormAttributeEntities()).isNull();
     }
 }

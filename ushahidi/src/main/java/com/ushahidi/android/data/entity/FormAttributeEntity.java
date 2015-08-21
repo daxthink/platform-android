@@ -1,7 +1,5 @@
 package com.ushahidi.android.data.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 import com.addhen.android.raiburari.data.entity.DataEntity;
 
 import java.util.List;
@@ -13,22 +11,16 @@ import java.util.List;
  */
 public class FormAttributeEntity extends DataEntity {
 
-    @SerializedName("label")
     private String mLabel;
 
-    @SerializedName("key")
     private String mKey;
 
-    @SerializedName("input")
     private Input mInput;
 
-    @SerializedName("type")
     private Type mType;
 
-    @SerializedName("required")
     private Boolean mRequired;
 
-    @SerializedName("priority")
     private Integer mPriority;
 
     private List<String> mOptions;
@@ -36,6 +28,8 @@ public class FormAttributeEntity extends DataEntity {
     private Long mDeploymentId;
 
     private Long mFormId;
+
+    private int mCardinality;
 
     public void setFormId(Long formId) {
         mFormId = formId;
@@ -109,37 +103,39 @@ public class FormAttributeEntity extends DataEntity {
         mOptions = options;
     }
 
+    public void setCardinality(int cardinality) {
+        mCardinality = cardinality;
+    }
+
+    public int getCardinality() {
+        return mCardinality;
+    }
 
     public enum Input {
 
         /**
          * A map widget or input type
          */
-        @SerializedName("location")
         LOCATION("location"),
 
         /**
          * A text input field
          */
-        @SerializedName("text")
         TEXT("text"),
 
         /**
          * A drop down select input type
          */
-        @SerializedName("select")
         SELECT("select"),
 
         /**
          * Date picker
          */
-        @SerializedName("date")
         DATE("date"),
 
         /**
          * Textarea input type
          */
-        @SerializedName("textarea")
         TEXTAREA("textarea");
 
         private String value;
@@ -211,6 +207,7 @@ public class FormAttributeEntity extends DataEntity {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ", mCardinality=" + mCardinality
                 + '}';
     }
 }
