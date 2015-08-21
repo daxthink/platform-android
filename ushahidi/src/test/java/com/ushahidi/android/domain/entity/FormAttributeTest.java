@@ -21,18 +21,12 @@ public class FormAttributeTest {
         FormAttribute formAttribute = TestFixtures.getFormAttribute();
         assertThat(formAttribute).isNotNull();
         assertThat(formAttribute.getKey()).isEqualTo("test_varchar");
-        assertThat(formAttribute.getFormId())
-                .isEqualTo(2l);
-        assertThat(formAttribute.getKey())
-                .isEqualTo("test_varchar");
-        assertThat(formAttribute.getLabel())
-                .isEqualTo("Test varchar");
-        assertThat(formAttribute.getRequired())
-                .isTrue();
-        assertThat(formAttribute.getPriority())
-                .isEqualTo(1);
-        assertThat(formAttribute.getCardinality())
-                .isEqualTo(1);
+        assertThat(formAttribute.getFormId()).isEqualTo(2l);
+        assertThat(formAttribute.getKey()).isEqualTo("test_varchar");
+        assertThat(formAttribute.getLabel()).isEqualTo("Test varchar");
+        assertThat(formAttribute.getRequired()).isTrue();
+        assertThat(formAttribute.getPriority()).isEqualTo(1);
+        assertThat(formAttribute.getCardinality()).isEqualTo(1);
         assertThat(formAttribute.getOptions()).isNull();
     }
 }
