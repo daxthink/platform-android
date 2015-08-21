@@ -26,12 +26,15 @@ public class TestEntityFixtures {
 
     public static final Long DEPLOYMENT_ID = 1l;
 
+    public static final Long ID = 2l;
+
     private static UserAccountEntity mUserAccountEntity;
 
     private static PlatformSession mPlatformSession;
 
     private static FormEntity mFormEntity;
 
+    private static FormAttributeEntity mFormAttributeEntity;
 
     private TestEntityFixtures() {
         // No instances
@@ -40,7 +43,7 @@ public class TestEntityFixtures {
     public static UserAccountEntity getUserAccountEntity() {
         if (mUserAccountEntity == null) {
             mUserAccountEntity = new UserAccountEntity();
-            mUserAccountEntity._id = DEPLOYMENT_ID;
+            mUserAccountEntity._id = ID;
             mUserAccountEntity.setPassword("password");
             mUserAccountEntity.setAccountName("account name");
         }
@@ -66,5 +69,21 @@ public class TestEntityFixtures {
             mFormEntity.setDisabled(true);
         }
         return mFormEntity;
+    }
+
+    public static FormAttributeEntity getFormAttributeEntity() {
+        FormAttributeEntity formAttributeEntity = new FormAttributeEntity();
+        formAttributeEntity._id = ID;
+        formAttributeEntity.setDeploymentId(DEPLOYMENT_ID);
+        formAttributeEntity.setCardinality(1);
+        formAttributeEntity.setInput(FormAttributeEntity.Input.TEXT);
+        formAttributeEntity.setType(FormAttributeEntity.Type.POINT);
+        formAttributeEntity.setRequired(false);
+        formAttributeEntity.setFormId(1l);
+        formAttributeEntity.setLabel("Test varchar");
+        formAttributeEntity.setKey("test_varchar");
+        formAttributeEntity.setPriority(1);
+        formAttributeEntity.setOptions(null);
+        return null;
     }
 }

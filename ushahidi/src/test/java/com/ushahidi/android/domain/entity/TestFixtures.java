@@ -35,6 +35,7 @@ public final class TestFixtures {
         formAttribute.setRequired(true);
         formAttribute.setOptions(null);
         formAttribute.setPriority(1);
+        formAttribute.setCardinality(1);
         formAttribute.setDeploymentId(DEPLOYMENT_ID);
         formAttribute.setFormId(2l);
         return formAttribute;
