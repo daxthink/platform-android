@@ -91,6 +91,7 @@ public class FormEntity extends DataEntity {
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
                 + ", mDeploymentId=" + mDeploymentId
+                + ", mFormAttribute=" + mFormAttributeEntities.toString()
                 + '}';
     }
 }
