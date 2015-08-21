@@ -24,7 +24,7 @@ public class Form extends Entity {
 
     private Long mDeploymentId;
 
-    private List<FormAttribute> mFormAttribute;
+    private List<FormAttribute> mFormAttributes;
 
     public Long getDeploymentId() {
         return mDeploymentId;
@@ -75,11 +75,11 @@ public class Form extends Entity {
     }
 
     public void setFormAttribute(List<FormAttribute> formAttributes) {
-        mFormAttribute = formAttributes;
+        mFormAttributes = formAttributes;
     }
 
-    public List<FormAttribute> getFormAttribute() {
-        return mFormAttribute;
+    public List<FormAttribute> getFormAttributes() {
+        return mFormAttributes;
     }
 
     @Override

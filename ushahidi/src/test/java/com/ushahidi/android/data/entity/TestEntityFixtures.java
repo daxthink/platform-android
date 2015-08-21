@@ -19,6 +19,9 @@ package com.ushahidi.android.data.entity;
 
 import com.ushahidi.android.data.api.account.PlatformSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -67,8 +70,15 @@ public class TestEntityFixtures {
             mFormEntity.setName("Basic form Entity");
             mFormEntity.setUpdated(new java.util.Date(1439503014));
             mFormEntity.setDisabled(true);
+            mFormEntity.setFormAttributeEntity(getFormAttributeEntities());
         }
         return mFormEntity;
+    }
+
+    public static List<FormAttributeEntity> getFormAttributeEntities() {
+        List<FormAttributeEntity> formAttributeEntityList = new ArrayList<>();
+        formAttributeEntityList.add(getFormAttributeEntity());
+        return formAttributeEntityList;
     }
 
     public static FormAttributeEntity getFormAttributeEntity() {
@@ -84,6 +94,6 @@ public class TestEntityFixtures {
         formAttributeEntity.setKey("test_varchar");
         formAttributeEntity.setPriority(1);
         formAttributeEntity.setOptions(null);
-        return null;
+        return formAttributeEntity;
     }
 }

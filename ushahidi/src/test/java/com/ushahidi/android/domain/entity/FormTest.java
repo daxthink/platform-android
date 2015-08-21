@@ -29,5 +29,22 @@ public class FormTest {
         assertThat(form.getCreated()).isEqualTo(TestFixtures.getForm().getCreated());
         assertThat(form.getUpdated()).isEqualTo(TestFixtures.getForm().getUpdated());
         assertThat(form.getDeploymentId()).isEqualTo(TestFixtures.getForm().getDeploymentId());
+        assertThat(form.getFormAttributes()).isNotNull();
+        assertThat(form.getFormAttributes()).isNotEmpty();
+        assertThat(form.getFormAttributes().get(0)).isNotNull();
+        assertThat(form.getFormAttributes().get(0).getKey()).isEqualTo("test_varchar");
+        assertThat(form.getFormAttributes().get(0).getFormId())
+                .isEqualTo(2l);
+        assertThat(form.getFormAttributes().get(0).getKey())
+                .isEqualTo("test_varchar");
+        assertThat(form.getFormAttributes().get(0).getLabel())
+                .isEqualTo("Test varchar");
+        assertThat(form.getFormAttributes().get(0).getRequired())
+                .isTrue();
+        assertThat(form.getFormAttributes().get(0).getPriority())
+                .isEqualTo(1);
+        assertThat(form.getFormAttributes().get(0).getCardinality())
+                .isEqualTo(1);
+        assertThat(form.getFormAttributes().get(0).getOptions()).isNull();
     }
 }
