@@ -3,6 +3,7 @@ package com.ushahidi.android.domain.entity;
 import com.addhen.android.raiburari.domain.entity.Entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Holds the raw V3's /api/v3/form JSON response
@@ -22,6 +23,8 @@ public class Form extends Entity {
     private Date mUpdated;
 
     private Long mDeploymentId;
+
+    private List<FormAttribute> mFormAttribute;
 
     public Long getDeploymentId() {
         return mDeploymentId;
@@ -69,6 +72,14 @@ public class Form extends Entity {
 
     public void setUpdated(Date updated) {
         mUpdated = updated;
+    }
+
+    public void setFormAttribute(List<FormAttribute> formAttributes) {
+        mFormAttribute = formAttributes;
+    }
+
+    public List<FormAttribute> getFormAttribute() {
+        return mFormAttribute;
     }
 
     @Override
