@@ -1,5 +1,8 @@
 package com.ushahidi.android.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -21,8 +24,15 @@ public final class TestFixtures {
             mForm.setName("Basic form");
             mForm.setUpdated(new java.util.Date(1439503014));
             mForm.setDisabled(true);
+            mForm.setFormAttribute(getFormAttributes());
         }
         return mForm;
+    }
+
+    public static List<FormAttribute> getFormAttributes() {
+        List<FormAttribute> formAttributeList = new ArrayList<>();
+        formAttributeList.add(getFormAttribute());
+        return formAttributeList;
     }
 
     public static FormAttribute getFormAttribute() {
