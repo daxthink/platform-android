@@ -1,8 +1,6 @@
 package com.ushahidi.android.data.entity.mapper;
 
 import com.ushahidi.android.data.entity.FormAttributeEntity;
-import com.ushahidi.android.data.entity.FormEntity;
-import com.ushahidi.android.domain.entity.Form;
 import com.ushahidi.android.domain.entity.FormAttribute;
 
 import android.support.annotation.Nullable;
@@ -26,7 +24,7 @@ public class FormAttributeEntityDataMapper {
     }
 
     /**
-     * Maps {@link FormEntity} to {@link Form}
+     * Maps {@link FormAttributeEntity} to {@link FormAttribute}
      *
      * @param formAttributeEntity The form entity to be mapped
      * @return The mapped form entity
@@ -52,7 +50,7 @@ public class FormAttributeEntityDataMapper {
     }
 
     /**
-     * Maps {@link Form} to {@link FormEntity}
+     * Maps {@link FormAttribute} to {@link FormAttributeEntity}
      *
      * @param formAttribute The form to be mapped
      * @return The mapped form
@@ -80,7 +78,7 @@ public class FormAttributeEntityDataMapper {
     }
 
     /**
-     * Maps a list of {@link FormEntity} to a list of {@link Form}
+     * Maps a list of {@link FormAttributeEntity} to a list of {@link FormAttribute}
      *
      * @param formAttributeEntityList The form entity list
      * @return The mapped form entity list
