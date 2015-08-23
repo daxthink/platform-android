@@ -24,6 +24,7 @@ package com.ushahidi.android.data.api.account;
  */
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.data.entity.TestEntityFixtures;
 
 import org.junit.After;
@@ -44,7 +45,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class PersistedAccountManagerTest {
 
     private static final String PREF_ACTIVE_USER_ACCOUNT_KEY = "active_userAccount";

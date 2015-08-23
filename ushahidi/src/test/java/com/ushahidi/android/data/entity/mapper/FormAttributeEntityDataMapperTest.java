@@ -1,6 +1,7 @@
 package com.ushahidi.android.data.entity.mapper;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.data.entity.FormAttributeEntity;
 import com.ushahidi.android.data.entity.TestEntityFixtures;
 import com.ushahidi.android.domain.entity.FormAttribute;
@@ -23,7 +24,7 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class FormAttributeEntityDataMapperTest {
 
     private FormAttribute mFormAttribute;
@@ -68,14 +69,18 @@ public class FormAttributeEntityDataMapperTest {
         assertThat(mFormAttribute).isNotNull();
         assertThat(mFormAttribute.getKey()).isEqualTo(
                 TestEntityFixtures.getFormAttributeEntity().getKey());
-        assertThat(mFormAttribute.getFormId()).isEqualTo(TestEntityFixtures.getFormAttributeEntity().getFormId());
-        assertThat(mFormAttribute.getLabel()).isEqualTo(TestEntityFixtures.getFormAttributeEntity().getLabel());
+        assertThat(mFormAttribute.getFormId())
+                .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getFormId());
+        assertThat(mFormAttribute.getLabel())
+                .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getLabel());
         assertThat(mFormAttribute.getRequired()).isFalse();
         assertThat(mFormAttribute.getPriority()).isEqualTo(
                 TestEntityFixtures.getFormAttributeEntity().getPriority());
-        assertThat(mFormAttribute.getCardinality()).isEqualTo(TestEntityFixtures.getFormAttributeEntity().getCardinality());
+        assertThat(mFormAttribute.getCardinality())
+                .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getCardinality());
         assertThat(mFormAttribute.getOptions()).isNull();
-        assertThat(mFormAttribute.getDeploymentId()).isEqualTo(TestEntityFixtures.getFormAttributeEntity().getDeploymentId());
+        assertThat(mFormAttribute.getDeploymentId())
+                .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getDeploymentId());
 
     }
 

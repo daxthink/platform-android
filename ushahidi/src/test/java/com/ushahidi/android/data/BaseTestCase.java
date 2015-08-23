@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class BaseTestCase {
+public abstract class BaseTestCase {
 
     public Gson gson;
 

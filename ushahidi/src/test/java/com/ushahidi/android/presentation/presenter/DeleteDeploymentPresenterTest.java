@@ -1,6 +1,7 @@
 package com.ushahidi.android.presentation.presenter;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
 import com.ushahidi.android.presentation.presenter.deployment.DeleteDeploymentPresenter;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.verify;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class DeleteDeploymentPresenterTest {
 
     private DeleteDeploymentPresenter mDeleteDeploymentPresenter;
