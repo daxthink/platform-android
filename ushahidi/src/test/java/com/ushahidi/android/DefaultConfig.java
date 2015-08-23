@@ -5,14 +5,15 @@ package com.ushahidi.android;
  *
  * @author Henry Addo
  */
-public class DefaultConfig {
+public final class DefaultConfig {
 
-    // The api level that Roboelectric will use to run the unit tests
+    /**
+     * The api level that Roboelectric will use to run the unit tests
+     */
     public static final int EMULATE_SDK = 21;
 
     private DefaultConfig() {
         // No instance
     }
-
 
 }
