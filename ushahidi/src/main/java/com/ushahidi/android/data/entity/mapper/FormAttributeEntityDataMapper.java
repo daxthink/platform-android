@@ -42,8 +42,8 @@ public class FormAttributeEntityDataMapper {
             formAttribute.setOptions(formAttributeEntity.getOptions());
             formAttribute.setFormId(formAttributeEntity.getFormId());
             formAttribute.setRequired(formAttributeEntity.getRequired());
-            formAttribute.setInput(FormAttribute.Input.valueOf(formAttribute.getInput().name()));
-            formAttribute.setType(FormAttribute.Type.valueOf(formAttribute.getType().name()));
+            formAttribute.setInput(FormAttribute.Input.valueOf(formAttributeEntity.getInput().name()));
+            formAttribute.setType(FormAttribute.Type.valueOf(formAttributeEntity.getType().name()));
             formAttribute.setLabel(formAttributeEntity.getLabel());
         }
         return formAttribute;
