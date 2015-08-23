@@ -3,6 +3,7 @@ package com.ushahidi.android.domain.usecase.deployment;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class GetActiveDeploymentUsecaseTest {
 
     @Mock

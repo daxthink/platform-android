@@ -18,6 +18,7 @@
 package com.ushahidi.android.data.entity.mapper;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.domain.entity.Deployment;
 
@@ -35,7 +36,7 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class DeploymentEntityDataMapperTest {
 
     private static final long DUMMY_ID = 1;
