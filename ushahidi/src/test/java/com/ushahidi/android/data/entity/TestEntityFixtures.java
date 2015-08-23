@@ -39,6 +39,8 @@ public class TestEntityFixtures {
 
     private static FormAttributeEntity mFormAttributeEntity;
 
+    private static DeploymentEntity mDeploymentEntity;
+
     private TestEntityFixtures() {
         // No instances
     }
@@ -95,5 +97,22 @@ public class TestEntityFixtures {
         formAttributeEntity.setPriority(1);
         formAttributeEntity.setOptions(null);
         return formAttributeEntity;
+    }
+
+    public static DeploymentEntity getDeploymentEntity() {
+        if (mDeploymentEntity == null) {
+            mDeploymentEntity = new DeploymentEntity();
+            mDeploymentEntity._id = DEPLOYMENT_ID;
+            mDeploymentEntity.setTitle("Deployment Tititle");
+            mDeploymentEntity.setStatus(DeploymentEntity.Status.ACTIVATED);
+            mDeploymentEntity.setUrl("http://api.myushahidiinstance.com");
+        }
+        return mDeploymentEntity;
+    }
+
+    public static List<DeploymentEntity> getDeploymentEntityList() {
+        List<DeploymentEntity> deploymentEntityList = new ArrayList<>();
+        deploymentEntityList.add(getDeploymentEntity());
+        return deploymentEntityList;
     }
 }

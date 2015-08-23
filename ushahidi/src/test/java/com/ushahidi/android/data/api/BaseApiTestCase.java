@@ -13,7 +13,7 @@ import static org.mockito.Mockito.spy;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class BaseApiTestCase extends BaseTestCase {
+public abstract class BaseApiTestCase extends BaseTestCase {
 
     protected MockWebServer mMockWebServer;
 
