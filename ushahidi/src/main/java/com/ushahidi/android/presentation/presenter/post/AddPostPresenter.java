@@ -45,14 +45,14 @@ public class AddPostPresenter implements Presenter {
     /**
      * Default constructor
      *
-     * @param AddPostUsecase      The add Post use case
-     * @param PostModelDataMapper the Post model data mapper
+     * @param addPostUsecase      The add Post use case
+     * @param postModelDataMapper the Post model data mapper
      */
     @Inject
-    public AddPostPresenter(@Named("postAdd") AddPostUsecase AddPostUsecase,
-            PostModelDataMapper PostModelDataMapper) {
-        mAddPostUsecase = AddPostUsecase;
-        mPostModelDataMapper = PostModelDataMapper;
+    public AddPostPresenter(@Named("postAdd") AddPostUsecase addPostUsecase,
+            PostModelDataMapper postModelDataMapper) {
+        mAddPostUsecase = addPostUsecase;
+        mPostModelDataMapper = postModelDataMapper;
     }
 
     @Override

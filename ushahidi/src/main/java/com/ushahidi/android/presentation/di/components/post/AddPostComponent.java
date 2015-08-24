@@ -7,15 +7,13 @@ import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.post.AddPostModule;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
-import com.ushahidi.android.presentation.view.ui.activity.DetailPostActivity;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
-import com.ushahidi.android.presentation.view.ui.fragment.DetailPostFragment;
 
 import dagger.Component;
 
 /**
- * Provides {@link ActivityScope} based components that injects {@link DetailPostFragment} and the
- * host activity {@link DetailPostActivity}
+ * Provides {@link ActivityScope} based components that injects {@link AddPostFragment} and the
+ * host activity {@link AddPostActivity}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
