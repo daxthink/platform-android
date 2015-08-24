@@ -26,6 +26,11 @@ public class FormDatabaseDataSource implements FormDataSource {
     }
 
     @Override
+    public Observable<FormEntity> getForm(Long deploymentId, Long formId) {
+        return mFormDatabaseHelper.getForm(deploymentId, formId);
+    }
+
+    @Override
     public Observable<Long> putForm(FormEntity formEntity) {
         return null;
     }

@@ -49,6 +49,12 @@ public class FormDataRepository implements FormRepository {
     }
 
     @Override
+    public Observable<Form> getForm(Long deploymentId, Long formId) {
+        final FormDataSource formDataSource = mFormDataSourceFactory.createDatabaseDataSource();
+        return formDataSource.getForm(deploymentId, formId).map(mFormEntityDataMapper::map);
+    }
+
+    @Override
     public Observable<Long> putForm(Form form) {
         final FormDataSource formDataSource = mFormDataSourceFactory.createDatabaseDataSource();
         return formDataSource.putForm(mFormEntityDataMapper.map(form));

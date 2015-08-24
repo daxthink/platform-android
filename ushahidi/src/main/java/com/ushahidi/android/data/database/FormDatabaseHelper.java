@@ -1,5 +1,6 @@
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.FormAttributeEntity;
 import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.exception.FormNotFoundException;
 
@@ -50,6 +51,33 @@ public class FormDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+    /**
+     * Gets form lists
+     *
+     * @param deploymentId The deployment the form entity is attached to
+     * @param formId       The formId to retrieve the form by
+     * @return An Observable that emits a list of {@link FormEntity}
+     */
+    public Observable<FormEntity> getForm(Long deploymentId, Long formId) {
+        return Observable.create(subscriber -> {
+            final FormEntity formEntity = cupboard().withDatabase(getReadableDatabase())
+                    .query(FormEntity.class)
+                    .withSelection("mDeploymentId = ? ", String.valueOf(deploymentId)).byId(formId)
+                    .get();
+
+            if (formEntity != null) {
+                // Get form attribute
+                final List<FormAttributeEntity> formAttributeEntities = getFormAttributeEntity(
+                        formEntity);
+                formEntity.setFormAttributeEntity(formAttributeEntities);
+                subscriber.onNext(formEntity);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(new FormNotFoundException());
+            }
+        });
+    }
+
 
     /**
      * Saves a {@link FormEntity} into the db
@@ -71,5 +99,21 @@ public class FormDatabaseHelper extends BaseDatabaseHelper {
             }
 
         });
+    }
+
+    /**
+     * Since {@link cupboad()} doesn't really support relationship, have to manually
+     * query for form attribute entities and add them to the form entity
+     *
+     * @param formEntity The form entity
+     * @return The form attribute entity
+     */
+    private List<FormAttributeEntity> getFormAttributeEntity(FormEntity formEntity) {
+
+        return cupboard().withDatabase(getReadableDatabase())
+                .query(FormAttributeEntity.class)
+                .withSelection("mDeploymentId = ?", String.valueOf(formEntity.getDeploymentId()))
+                .withSelection("mFormId = ?", String.valueOf(formEntity._id)).list();
+
     }
 }
