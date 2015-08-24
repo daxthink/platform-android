@@ -17,8 +17,10 @@
 package com.ushahidi.android.presentation.view.ui.navigation;
 
 import com.ushahidi.android.presentation.model.DeploymentModel;
+import com.ushahidi.android.presentation.model.FormModel;
 import com.ushahidi.android.presentation.view.ui.activity.AboutActivity;
 import com.ushahidi.android.presentation.view.ui.activity.AddDeploymentActivity;
+import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.DetailPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.FeedbackActivity;
 import com.ushahidi.android.presentation.view.ui.activity.ListDeploymentActivity;
@@ -99,6 +101,15 @@ public class Launcher {
      */
     public void launchDetailPost(Long postId, String postTitle) {
         mActivity.startActivity(DetailPostActivity.getIntent(mActivity, postId, postTitle));
+    }
+
+    /**
+     * Launches add post
+     *
+     * @param formModel The selected form model
+     */
+    public void launchAddPost(FormModel formModel) {
+        mActivity.startActivity(AddPostActivity.getIntent(mActivity, formModel));
     }
 
     /**

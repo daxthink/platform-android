@@ -47,8 +47,13 @@ public class PostDatabaseDataSource implements PostDataSource {
     }
 
     @Override
-    public Observable<Long> putPostEntity(List<PostEntity> postEntities) {
+    public Observable<Long> putPostEntities(List<PostEntity> postEntities) {
         return mPostDatabaseHelper.putPosts(postEntities);
+    }
+
+    @Override
+    public Observable<Long> putPostEntity(PostEntity postEntity) {
+        return mPostDatabaseHelper.putPost(postEntity);
     }
 
     @Override

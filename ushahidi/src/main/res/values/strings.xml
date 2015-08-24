@@ -132,4 +132,8 @@
     <string name="fetch_post_not_found">Could not fetch Post. Not found.</string>
     <string name="select_post_type">Select Post Type</string>
     <string name="no_forms_found">No forms found.</string>
+    <string name="post_title">Post title</string>
+    <string name="post_description">Post description</string>
+    <string name="save">Save</string>
+    <string name="add_post">Add Post</string>
 </resources>

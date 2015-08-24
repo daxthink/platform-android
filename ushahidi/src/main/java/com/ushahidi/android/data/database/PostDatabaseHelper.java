@@ -99,7 +99,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     }
 
     /**
-     * Get a list of {@link PostEntity}
+     * Saves a list of {@link PostEntity}
      *
      * @param postEntities The post entities
      * @return An observable that emits a {@link PostEntity}
@@ -114,6 +114,24 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
                     deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
                     puts(postEntity, subscriber);
                 }
+            }
+        });
+    }
+
+    /**
+     * Saves a list of {@link PostEntity}
+     *
+     * @param postEntity The post entity
+     * @return An observable that emits a {@link PostEntity}
+     */
+    public Observable<Long> putPost(PostEntity postEntity) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                // Delete existing posttag entities.
+                // Lame way to avoid duplicates because the ID is auto generated upon insertion
+                // and we wouldn't know by then to replace them.
+                deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                puts(postEntity, subscriber);
             }
         });
     }

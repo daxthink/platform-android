@@ -14,7 +14,7 @@
  * https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.view.deployment;
+package com.ushahidi.android.presentation.view.post;
 
 import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 
@@ -23,12 +23,13 @@ import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface AddDeploymentView extends LoadDataView {
+public interface AddPostView extends LoadDataView {
 
     /**
-     * Shows that a deployment has successfully been added
+     * Shows that a {@link com.ushahidi.android.presentation.model.PostModel} has successfully been
+     * added
      *
      * @param row The affected row
      */
-    void onDeploymentSuccessfullyAdded(Long row);
+    void onPostSuccessfullyAdded(Long row);
 }
