@@ -1,6 +1,5 @@
 package com.ushahidi.android.data.database;
 
-import com.ushahidi.android.data.entity.FormAttributeEntity;
 import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.exception.FormNotFoundException;
 
@@ -66,10 +65,6 @@ public class FormDatabaseHelper extends BaseDatabaseHelper {
                     .get();
 
             if (formEntity != null) {
-                // Get form attribute
-                final List<FormAttributeEntity> formAttributeEntities = getFormAttributeEntity(
-                        formEntity);
-                formEntity.setFormAttributeEntity(formAttributeEntities);
                 subscriber.onNext(formEntity);
                 subscriber.onCompleted();
             } else {
@@ -99,21 +94,5 @@ public class FormDatabaseHelper extends BaseDatabaseHelper {
             }
 
         });
-    }
-
-    /**
-     * Since {@link cupboad()} doesn't really support relationship, have to manually
-     * query for form attribute entities and add them to the form entity
-     *
-     * @param formEntity The form entity
-     * @return The form attribute entity
-     */
-    private List<FormAttributeEntity> getFormAttributeEntity(FormEntity formEntity) {
-
-        return cupboard().withDatabase(getReadableDatabase())
-                .query(FormAttributeEntity.class)
-                .withSelection("mDeploymentId = ?", String.valueOf(formEntity.getDeploymentId()))
-                .withSelection("mFormId = ?", String.valueOf(formEntity._id)).list();
-
     }
 }
