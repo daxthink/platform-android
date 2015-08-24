@@ -40,15 +40,6 @@
                         android:hint="@string/post_description"
                         android:imeOptions="actionDone"/>
             </android.support.design.widget.TextInputLayout>
-
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/view_spacing_normal"
-                android:animateLayoutChanges="true">
         </LinearLayout>
     </ScrollView>
 

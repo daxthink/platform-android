@@ -4,6 +4,8 @@ import com.addhen.android.raiburari.data.entity.DataEntity;
 
 import java.util.List;
 
+import nl.qbusict.cupboard.annotation.Ignore;
+
 /**
  * Form attribute
  *
@@ -23,6 +25,7 @@ public class FormAttributeEntity extends DataEntity {
 
     private Integer mPriority;
 
+    @Ignore
     private List<String> mOptions;
 
     private Long mDeploymentId;

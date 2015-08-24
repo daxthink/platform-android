@@ -102,7 +102,6 @@
         <activity
                 android:name=".presentation.view.ui.activity.AddPostActivity"
                 android:parentActivityName=".presentation.view.ui.activity.PostActivity"
-                android:theme="@style/AppTheme.NoActionBar"
                 android:label="@string/add_post">
             <intent-filter>
                 <category android:name="android.intent.category.VIEW"/>

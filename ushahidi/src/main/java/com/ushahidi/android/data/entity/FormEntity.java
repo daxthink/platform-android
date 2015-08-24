@@ -5,6 +5,8 @@ import com.addhen.android.raiburari.data.entity.DataEntity;
 import java.util.Date;
 import java.util.List;
 
+import nl.qbusict.cupboard.annotation.Ignore;
+
 /**
  * Holds the raw V3's /api/v3/form JSON response
  *
@@ -24,6 +26,7 @@ public class FormEntity extends DataEntity {
 
     private Long mDeploymentId;
 
+    @Ignore
     private List<FormAttributeEntity> mFormAttributeEntities;
 
     public Long getDeploymentId() {

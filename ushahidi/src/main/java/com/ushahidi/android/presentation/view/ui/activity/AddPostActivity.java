@@ -96,7 +96,7 @@ public class AddPostActivity extends BaseAppActivity
                     .findFragmentByTag(FRAG_TAG);
             if (mAddPostFragment == null) {
                 mAddPostFragment = AddPostFragment.newInstance(mFormModel);
-                replaceFragment(R.id.add_fragment_container, mAddPostFragment, FRAG_TAG);
+                replaceFragment(R.id.add_post_fragment_container, mAddPostFragment, FRAG_TAG);
             }
 
         } else {
