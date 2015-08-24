@@ -2,7 +2,6 @@ package com.ushahidi.android.presentation.di.modules.post;
 
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.domain.usecase.post.AddPostUsecase;
-import com.ushahidi.android.domain.usecase.post.GetPostUsecase;
 
 import javax.inject.Named;
 
@@ -18,7 +17,7 @@ import dagger.Provides;
 public class AddPostModule {
 
     /**
-     * Provides {@link GetPostUsecase} object annotated with the name "postList"
+     * Provides {@link AddPostUsecase} object annotated with the name "postList"
      *
      * @param addPostUsecase Add Post Usecase
      * @return The add post Usecase
