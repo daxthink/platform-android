@@ -13,7 +13,9 @@ import rx.Observable;
 
 /**
  * A simple storage that saves the access token as plain text in the passed shared preferences.
- * It is recommend to set the access mode to MODE_PRIVATE.
+ * It is recommend to set the access mode to MODE_PRIVATE. It uses {@link Gson} as the
+ * serialization
+ * / deserialization class.
  *
  * @param <T> The access token type.
  * @author Ushahidi Team <team@ushahidi.com>
@@ -38,8 +40,7 @@ public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
      * @param sharedPreferences The shared preferences used for saving the access token.
      * @param tokenClass        The actual class of the access token.
      */
-    public AccessTokenStorageManager(SharedPreferences sharedPreferences,
-            Class tokenClass) {
+    public AccessTokenStorageManager(SharedPreferences sharedPreferences, Class tokenClass) {
         super();
 
         if (tokenClass == null) {

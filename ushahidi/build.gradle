@@ -97,8 +97,7 @@ dependencies {
     compile appDependencies.androidMapsUtils
     compile appDependencies.cocoaheroGeoJson
     compile appDependencies.heimdallDroid
-    compile appDependencies.stetho
-    compile appDependencies.stethoOkHttp
+    compile appDependencies.gson
     compile appDependencies.dialogplus
     provided appDependencies.javaxAnnotation
 
