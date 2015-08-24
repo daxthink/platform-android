@@ -154,6 +154,14 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
             cupboard().withDatabase(getWritableDatabase()).put(formEntities);
+            for (FormEntity formEntity : formEntities) {
+                if (formEntity.getFormAttributeEntities() != null
+                        || formEntity.getFormAttributeEntities().size() > 0) {
+                    cupboard().withDatabase(getWritableDatabase())
+                            .put(formEntity.getFormAttributeEntities());
+                }
+
+            }
             for (PostEntity postEntity : postEntities) {
                 // Delete existing posttag entities.
                 // Lame way to avoid duplicates because the ID is auto generated upon insertion

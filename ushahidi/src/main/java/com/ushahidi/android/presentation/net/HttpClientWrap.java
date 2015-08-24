@@ -61,8 +61,8 @@ public class HttpClientWrap implements Client {
     @Override
     public Response execute(Request request) throws IOException {
         if (!Utils.isNetworkConnected(mContext)) {
-            throw RetrofitError
-                    .unexpectedError("No internet", new NetworkConnectionException("No Internet"));
+            throw RetrofitError.unexpectedError("No internet",
+                    new NetworkConnectionException("No Internet"));
         } else {
             return mClient.execute(request);
         }

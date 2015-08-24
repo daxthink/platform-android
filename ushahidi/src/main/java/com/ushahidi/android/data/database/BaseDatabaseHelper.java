@@ -15,21 +15,14 @@ import com.ushahidi.android.data.entity.UserEntity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
-import java.util.List;
 
 import nl.qbusict.cupboard.Cupboard;
 import nl.qbusict.cupboard.CupboardBuilder;
 import nl.qbusict.cupboard.CupboardFactory;
-import nl.qbusict.cupboard.annotation.Index;
 import nl.qbusict.cupboard.convert.EntityConverter;
-import nl.qbusict.cupboard.convert.EntityConverter.Column;
-import nl.qbusict.cupboard.convert.EntityConverter.ColumnType;
 import nl.qbusict.cupboard.convert.EntityConverterFactory;
-import nl.qbusict.cupboard.internal.IndexStatement;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -72,6 +65,10 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
                         new EnumEntityFieldConverter<>(PostEntity.Status.class))
                 .registerFieldConverter(PostEntity.Type.class,
                         new EnumEntityFieldConverter<>(PostEntity.Type.class))
+                .registerFieldConverter(FormAttributeEntity.Input.class,
+                        new EnumEntityFieldConverter<>(FormAttributeEntity.Input.class))
+                .registerFieldConverter(FormAttributeEntity.Type.class,
+                        new EnumEntityFieldConverter<>(FormAttributeEntity.Type.class))
                 .registerEntityConverterFactory(factory).useAnnotations().build());
 
         // Register our entities
@@ -94,49 +91,7 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public final void onCreate(SQLiteDatabase db) {
         // This will ensure that all tables are created
-        // Setup cupboard
-        createTables(db);
-    }
-
-    private void createTables(SQLiteDatabase db) {
-        for (Class<?> entity : cupboard().getRegisteredEntities()) {
-            // Attempt to create table only if the entity has been registered
-            if (cupboard().getRegisteredEntities().contains(entity)) {
-                EntityConverter<?> converter = cupboard().getEntityConverter(entity);
-                createNewTable(db, converter.getTable(), converter.getColumns());
-            }
-        }
-    }
-
-    /**
-     * Manually creating tables to ensure all individually registered
-     */
-    private boolean createNewTable(SQLiteDatabase db, String table, List<Column> cols) {
-        StringBuilder sql = new StringBuilder("create table if not exists '").append(table).append(
-                "' (_id integer primary key autoincrement");
-
-        IndexStatement.Builder builder = new IndexStatement.Builder();
-        for (Column col : cols) {
-            if (col.type == ColumnType.JOIN) {
-                continue;
-            }
-            String name = col.name;
-            if (!name.equals(BaseColumns._ID)) {
-                sql.append(", '").append(name).append("'");
-                sql.append(" ").append(col.type.toString());
-            }
-            Index index = col.index;
-            if (index != null) {
-                builder.addIndexedColumn(table, name, index);
-            }
-        }
-        sql.append(");");
-        db.execSQL(sql.toString());
-
-        for (IndexStatement stmt : builder.build()) {
-            db.execSQL(stmt.getCreationSql(table));
-        }
-        return true;
+        cupboard().withDatabase(db).createTables();
     }
 
     @Override

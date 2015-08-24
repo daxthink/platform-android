@@ -46,8 +46,8 @@ import butterknife.OnEditorAction;
  */
 public class AddPostFragment extends BaseFragment implements AddPostView {
 
-    private static final String ARGUMENT_KEY_POST_MODEL
-            = "com.ushahidi.android.ARGUMENT_KEY_POST_MODEL";
+    private static final String ARGUMENT_KEY_FORM_MODEL
+            = "com.ushahidi.android.ARGUMENT_KEY_FORM_MODEL";
 
     private static AddPostFragment mAddPostFragment;
 
@@ -63,7 +63,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     @Inject
     Launcher mLauncher;
 
-    private PostModel mPostModel;
+    private FormModel mFormModel;
 
     /**
      * Add Deployment  Fragment
@@ -78,7 +78,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
         }
 
         Bundle arguments = new Bundle();
-        arguments.putParcelable(ARGUMENT_KEY_POST_MODEL, formModel);
+        arguments.putParcelable(ARGUMENT_KEY_FORM_MODEL, formModel);
         mAddPostFragment.setArguments(arguments);
         return mAddPostFragment;
     }
@@ -110,7 +110,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     private void initialize() {
         getComponent(AddPostComponent.class).inject(this);
         mAddPostPresenter.setView(this);
-        mPostModel = getArguments().getParcelable(ARGUMENT_KEY_POST_MODEL);
+        mFormModel = getArguments().getParcelable(ARGUMENT_KEY_FORM_MODEL);
         // TODO: Fetch form details 
     }
 
