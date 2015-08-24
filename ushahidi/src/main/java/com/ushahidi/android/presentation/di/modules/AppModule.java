@@ -18,7 +18,6 @@ package com.ushahidi.android.presentation.di.modules;
 
 import com.addhen.android.raiburari.data.pref.RxSharedPreferences;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
-import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
@@ -148,7 +147,6 @@ public class AppModule {
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
-        okHttpClient.networkInterceptors().add(new StethoInterceptor());
         return new HttpClientWrap(context, new OkClient(okHttpClient));
     }
 

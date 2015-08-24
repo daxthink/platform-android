@@ -38,6 +38,7 @@ ext {
     cupboardVersion = '2.1.2'
     retrofitVersion = '1.9.0'
     okhttpVersion = '2.3.0'
+    gsonVersion = '2.3.1'
     okhttpUrlConnectionVersion = '2.3.0'
     qrCodeReaderViewVersion = '1.0.0'
     androidIconifyFontawesomeVersion = '2.0.7'
@@ -46,8 +47,6 @@ ext {
     androidMapsUtilsVersion = '0.3.4'
     heimdallDroidVersion = '1.0.3'
     dialogplusVersion = '1.10'
-    stethoVersion = '1.1.1'
-    stethoOkHttpVersion = '1.1.1'
 
     //Testing
     jUnitVersion = '4.12'
@@ -76,8 +75,7 @@ ext {
             androidMapsUtils         : "com.google.maps.android:android-maps-utils:${androidMapsUtilsVersion}",
             heimdallDroid            : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
             dialogplus               : "com.orhanobut:dialogplus:${dialogplusVersion}",
-            stetho                   : "com.facebook.stetho:stetho:${stethoVersion}",
-            stethoOkHttp             : "com.facebook.stetho:stetho-okhttp:${stethoOkHttpVersion}",
+            gson                     : "com.google.code.gson:gson:${gsonVersion}",
     ]
 
     appTestDependencies = [

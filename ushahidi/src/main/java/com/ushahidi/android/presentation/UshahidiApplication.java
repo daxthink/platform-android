@@ -17,7 +17,6 @@
 package com.ushahidi.android.presentation;
 
 import com.addhen.android.raiburari.presentation.BaseApplication;
-import com.facebook.stetho.Stetho;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 
@@ -46,17 +45,6 @@ public class UshahidiApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         mAppComponent = AppComponent.Initializer.init(this);
-        initializeStetho();
-    }
-
-    private void initializeStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(
-                                Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                Stetho.defaultInspectorModulesProvider(this))
-                        .build());
     }
 
     public AppComponent getAppComponent() {
