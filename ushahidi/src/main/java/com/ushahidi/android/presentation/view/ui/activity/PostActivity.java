@@ -356,9 +356,9 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
         // Work around to get the menus items to show
         // https://code.google.com/p/android/issues/detail?id=176300
-        // TODO: Remove the code snippet below when there is an official fix for it
+        /*// TODO: Remove the code snippet below when there is an official fix for it
         menu.add(0, 99, 0, "gone");
-        menu.removeItem(99);
+        menu.removeItem(99);*/
     }
 
     /**
