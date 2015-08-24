@@ -332,8 +332,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
             // deployment when user clicks on it to make it the active deployment
             for (int pos = 0; pos < mDeploymentModelList.size(); pos++) {
                 subMenu.add(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, pos, pos,
-                        mDeploymentModelList.get(pos).getTitle())
-                        .setIcon(R.drawable.ic_action_globe);
+                        mDeploymentModelList.get(pos).getTitle()).setIcon(
+                        R.drawable.ic_action_globe);
                 if (mDeploymentModelList.get(pos).getStatus() == DeploymentModel.Status.ACTIVATED) {
                     subMenu.getItem().setChecked(true);
                 } else {
@@ -354,11 +354,6 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         subMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
                 .setIcon(R.drawable.ic_action_info);
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
-        // Work around to get the menus items to show
-        // https://code.google.com/p/android/issues/detail?id=176300
-        /*// TODO: Remove the code snippet below when there is an official fix for it
-        menu.add(0, 99, 0, "gone");
-        menu.removeItem(99);*/
     }
 
     /**
