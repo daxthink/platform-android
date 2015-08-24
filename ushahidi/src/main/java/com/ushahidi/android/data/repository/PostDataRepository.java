@@ -78,7 +78,13 @@ public class PostDataRepository implements PostRepository {
     @Override
     public Observable<Long> putPost(List<Post> posts) {
         final PostDataSource postDataSource = mPostDataSourceFactory.createPostDatabaseDataSource();
-        return postDataSource.putPostEntity(mPostEntityDataMapper.unmap(posts));
+        return postDataSource.putPostEntities(mPostEntityDataMapper.unmap(posts));
+    }
+
+    @Override
+    public Observable<Long> putPost(Post post) {
+        final PostDataSource postDataSource = mPostDataSourceFactory.createPostDatabaseDataSource();
+        return postDataSource.putPostEntity(mPostEntityDataMapper.map(post));
     }
 
     @Override

@@ -62,8 +62,14 @@ public class PostApiDataSource implements PostDataSource {
     }
 
     @Override
-    public Observable<Long> putPostEntity(List<PostEntity> postEntity) {
+    public Observable<Long> putPostEntities(List<PostEntity> postEntity) {
         // Do nothing. Not posting via the API ATM
+        return null;
+    }
+
+    @Override
+    public Observable<Long> putPostEntity(PostEntity postEntity) {
+        // TODO: Implement post entity upload via the API
         return null;
     }
 
