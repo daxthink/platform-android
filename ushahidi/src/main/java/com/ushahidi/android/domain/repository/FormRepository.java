@@ -24,6 +24,15 @@ public interface FormRepository {
     Observable<List<Form>> getForms(Long deploymentId, From from);
 
     /**
+     * Get a list of {@link Form} from either the database or online.
+     *
+     * @param deploymentId An ID of {@link com.ushahidi.android.domain.entity.Deployment}
+     * @param formId       The id of the form to be fetched
+     * @return The form details
+     */
+    Observable<Form> getForm(Long deploymentId, Long formId);
+
+    /**
      * Add/Update a {@link Form}.
      *
      * @param form The Form to be saved.
