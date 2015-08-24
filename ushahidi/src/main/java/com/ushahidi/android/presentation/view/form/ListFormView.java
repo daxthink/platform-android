@@ -11,7 +11,7 @@ import java.util.List;
 public interface ListFormView extends LoadDataView {
 
     /**
-     * Render a post list in the UI.
+     * Render a form list in the UI.
      *
      * @param formModel The collection of {@link FormModel} that will be shown.
      */
