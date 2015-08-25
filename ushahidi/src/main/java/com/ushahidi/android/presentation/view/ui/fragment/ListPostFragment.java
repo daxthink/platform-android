@@ -150,6 +150,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                 .setDefaultOnRefreshListener(() -> {
                     mPostRecyclerView.setRefreshing(true);
                     mListPostPresenter.loadPostViaApi();
+                    // Hide progress bar when pull refresh is in action
+                    mProgressBar.setVisibility(View.GONE);
                     mPostRecyclerView.recyclerView.smoothScrollToPosition(0);
                 });
     }
@@ -278,7 +280,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void showLoginPrompt() {
-        showToast(getString(R.string.not_logged_in));
         Snackbar.make(getView().getRootView(), getString(R.string.not_logged_in),
                 Snackbar.LENGTH_LONG)
                 .setActionTextColor(getAppContext().getResources().getColor(R.color.orange))
