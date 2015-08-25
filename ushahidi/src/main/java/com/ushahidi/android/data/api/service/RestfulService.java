@@ -26,13 +26,17 @@ import com.ushahidi.android.data.api.oauth.AccessTokenRequestBody;
 import com.ushahidi.android.data.api.oauth.RefreshTokenRequestBody;
 import com.ushahidi.android.data.entity.UserEntity;
 
+import java.util.jar.Attributes;
+
 import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import rx.Observable;
 
+import static com.ushahidi.android.data.api.Constant.ATTRIBUTES;
 import static com.ushahidi.android.data.api.Constant.FORMS;
 import static com.ushahidi.android.data.api.Constant.GEOJSON;
 import static com.ushahidi.android.data.api.Constant.POSTS;
@@ -118,4 +122,14 @@ public interface RestfulService {
      */
     @GET(FORMS)
     Observable<Forms> getForms(@Header("Authorization") String authorizationHeader);
+
+    /**
+     * Fetches form attributes
+     *
+     * @param authorizationHeader The access token header
+     * @return Attributes
+     */
+    @GET(FORMS + "/{id}" + ATTRIBUTES + "?order=asc&orderby=priority")
+    Observable<Attributes> getFormAttributes(@Header("Authorization") String authorizationHeader,
+            @Path("id") long id);
 }

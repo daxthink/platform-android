@@ -145,11 +145,6 @@ public class PostApiDataSource implements PostDataSource {
     }
 
     private List<FormEntity> setForms(Forms forms, Long deploymentId) {
-        List<FormEntity> formEntityList = new ArrayList<>(forms.getForms().size());
-        for (FormEntity formEntity : forms.getForms()) {
-            formEntity.setDeploymentId(deploymentId);
-            formEntityList.add(formEntity);
-        }
-        return formEntityList;
+        return forms.getForms(deploymentId);
     }
 }

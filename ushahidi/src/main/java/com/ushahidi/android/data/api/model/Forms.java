@@ -21,7 +21,7 @@ public class Forms extends Response implements Serializable {
     @SerializedName("results")
     private List<Form> mForms;
 
-    public List<FormEntity> getForms() {
+    public List<FormEntity> getForms(Long deploymentId) {
         if (mForms != null && mForms.size() > 0) {
             List<FormEntity> forms = new ArrayList<>();
             for (Form form : mForms) {
@@ -32,9 +32,10 @@ public class Forms extends Response implements Serializable {
                 formEntity.setDisabled(form.mDisabled);
                 formEntity.setCreated(form.mCreated);
                 formEntity.setUpdated(form.mUpdated);
+                formEntity.setDeploymentId(deploymentId);
                 if (form.mAttributes != null) {
                     formEntity.setFormAttributeEntity(initFormAttributeEntities(form.id,
-                            form.mAttributes));
+                            deploymentId, form.mAttributes));
                 }
                 forms.add(formEntity);
             }
@@ -43,12 +44,13 @@ public class Forms extends Response implements Serializable {
         return Collections.emptyList();
     }
 
-    private List<FormAttributeEntity> initFormAttributeEntities(Long formId,
+    private List<FormAttributeEntity> initFormAttributeEntities(Long formId, Long deploymentId,
             Form.Attributes attributes) {
         List<FormAttributeEntity> formAttributeEntities = new ArrayList<>();
         for (Form.Attributes.FormAttributes attribute : attributes.mFormAttributes) {
             FormAttributeEntity formAttributeEntity = new FormAttributeEntity();
             formAttributeEntity._id = attribute.id;
+            formAttributeEntity.setDeploymentId(deploymentId);
             formAttributeEntity.setFormId(formId);
             formAttributeEntity
                     .setInput(FormAttributeEntity.Input.valueOf(attribute.mInput.name()));
