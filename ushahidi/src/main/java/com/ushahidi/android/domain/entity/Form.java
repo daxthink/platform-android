@@ -3,7 +3,6 @@ package com.ushahidi.android.domain.entity;
 import com.addhen.android.raiburari.domain.entity.Entity;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Holds the raw V3's /api/v3/form JSON response

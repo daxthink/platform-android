@@ -88,7 +88,7 @@ public class FormAttributeModelDataMapper {
     public List<FormAttributeModel> map(List<FormAttribute> formAttributeList) {
         List<FormAttributeModel> formAttributeModelList = null;
         if (formAttributeList != null) {
-            formAttributeList = new ArrayList<>();
+            formAttributeModelList = new ArrayList<>();
             for (FormAttribute formAttribute : formAttributeList) {
                 FormAttributeModel formAttributeModel = map(formAttribute);
                 formAttributeModelList.add(formAttributeModel);
