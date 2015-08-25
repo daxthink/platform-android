@@ -19,9 +19,12 @@ package com.ushahidi.android.presentation.view.ui.fragment;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
+import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.FormModel;
 import com.ushahidi.android.presentation.model.PostModel;
+import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
+import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
 import com.ushahidi.android.presentation.view.post.AddPostView;
 import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
@@ -32,6 +35,8 @@ import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -59,6 +64,9 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
 
     @Inject
     AddPostPresenter mAddPostPresenter;
+
+    @Inject
+    ListFormAttributePresenter mListFormAttributePresenter;
 
     @Inject
     Launcher mLauncher;
@@ -111,9 +119,49 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
         getComponent(AddPostComponent.class).inject(this);
         mAddPostPresenter.setView(this);
         mFormModel = getArguments().getParcelable(ARGUMENT_KEY_FORM_MODEL);
-        // TODO: Fetch form details 
+        initializeFormAttributeView();
     }
 
+    private void initializeFormAttributeView() {
+        mListFormAttributePresenter.setView(new ListFormAttributeView() {
+            @Override
+            public void renderFormAttribute(List<FormAttributeModel> formModel) {
+                // TODO: show custom form UI
+            }
+
+            @Override
+            public void showLoading() {
+
+            }
+
+            @Override
+            public void hideLoading() {
+
+            }
+
+            @Override
+            public void showRetry() {
+
+            }
+
+            @Override
+            public void hideRetry() {
+
+            }
+
+            @Override
+            public void showError(String s) {
+                showSnabackar(getView(), s);
+            }
+
+            @Override
+            public Context getAppContext() {
+                return getActivity().getApplicationContext();
+            }
+        });
+
+        mListFormAttributePresenter.getForm(mFormModel._id);
+    }
 
     @Override
     public Context getAppContext() {

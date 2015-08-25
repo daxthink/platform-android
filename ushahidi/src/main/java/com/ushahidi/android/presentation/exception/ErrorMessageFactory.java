@@ -23,6 +23,7 @@ import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.oauth.ErrorResponse;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;
+import com.ushahidi.android.data.exception.FormAttributeNotFoundException;
 import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
 import com.ushahidi.android.data.exception.PostNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
@@ -34,6 +35,7 @@ import android.content.Context;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 
 import retrofit.RetrofitError;
 
@@ -76,7 +78,12 @@ public final class ErrorMessageFactory {
 
         } else if (exception instanceof RetrofitError) {
             RetrofitError retrofitError = (RetrofitError) exception;
+            if (retrofitError.getResponse().getStatus() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
+            }
             message = getRetrofitErrorMessage(retrofitError);
+        } else if (exception instanceof FormAttributeNotFoundException) {
+            message = context.getString(R.string.form_attribute_not_found);
         }
         // Only print stacktrace when running a debug build
         if (BuildConfig.DEBUG) {

@@ -50,6 +50,7 @@ public class FormModel extends Model implements Parcelable {
     }
 
     protected FormModel(Parcel in) {
+        _id = in.readLong();
         mName = in.readString();
         mDescription = in.readString();
         mDisabled = in.readByte() != 0x00;
@@ -111,6 +112,7 @@ public class FormModel extends Model implements Parcelable {
     @Override
     public String toString() {
         return "Form{"
+                + "_id='" + _id + '\''
                 + "mName='" + mName + '\''
                 + ", mDescription='" + mDescription + '\''
                 + ", mDisabled=" + mDisabled
@@ -127,6 +129,7 @@ public class FormModel extends Model implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(_id);
         dest.writeString(mName);
         dest.writeString(mDescription);
         dest.writeByte((byte) (mDisabled ? 0x01 : 0x00));

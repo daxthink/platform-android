@@ -88,6 +88,7 @@ public class FormEntity extends DataEntity {
     @Override
     public String toString() {
         return "Form{"
+                + "_id='" + _id + '\''
                 + "mName='" + mName + '\''
                 + ", mDescription='" + mDescription + '\''
                 + ", mDisabled=" + mDisabled

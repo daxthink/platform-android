@@ -81,19 +81,19 @@ public class FormAttributeModelDataMapper {
     /**
      * Maps a list of {@link FormAttributeModel} to a list of {@link FormAttribute}
      *
-     * @param formAttributeModelList The form entity list
+     * @param formAttributeList The form entity list
      * @return The mapped form entity list
      */
     @Nullable
-    public List<FormAttribute> map(List<FormAttributeModel> formAttributeModelList) {
-        List<FormAttribute> formAttributeList = null;
-        if (formAttributeModelList != null) {
+    public List<FormAttributeModel> map(List<FormAttribute> formAttributeList) {
+        List<FormAttributeModel> formAttributeModelList = null;
+        if (formAttributeList != null) {
             formAttributeList = new ArrayList<>();
-            for (FormAttributeModel formAttributeModel : formAttributeModelList) {
-                FormAttribute formAttribute = map(formAttributeModel);
-                formAttributeList.add(formAttribute);
+            for (FormAttribute formAttribute : formAttributeList) {
+                FormAttributeModel formAttributeModel = map(formAttribute);
+                formAttributeModelList.add(formAttributeModel);
             }
         }
-        return formAttributeList;
+        return formAttributeModelList;
     }
 }

@@ -1,4 +1,4 @@
-package com.ushahidi.android.presentation.presenter.form;
+package com.ushahidi.android.presentation.presenter.formattribute;
 
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
@@ -6,12 +6,14 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.domain.entity.FormAttribute;
-import com.ushahidi.android.domain.usecase.formattribute.GetFormAttributeUsecase;
+import com.ushahidi.android.domain.usecase.formattribute.ListFormAttributeUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.FormAttributeModelDataMapper;
-import com.ushahidi.android.presentation.view.form.GetFormAttributeView;
+import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
 
 import android.support.annotation.NonNull;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,22 +23,22 @@ import javax.inject.Named;
  *
  * @author Henry Addo
  */
-public class GetFormAttributePresenter implements Presenter {
+public class ListFormAttributePresenter implements Presenter {
 
     private final FormAttributeModelDataMapper mFormAttributeModelDataMapper;
 
     private final PrefsFactory mPrefsFactory;
 
-    private final GetFormAttributeUsecase mGetFormAttributeUsecase;
+    private final ListFormAttributeUsecase mListFormAttributeUsecase;
 
-    private GetFormAttributeView mGetFormAttributeView;
+    private ListFormAttributeView mListFormAttributeView;
 
     @Inject
-    public GetFormAttributePresenter(
-            @Named("formAttributeGet") GetFormAttributeUsecase getGetFormAttributeUsecase,
+    public ListFormAttributePresenter(
+            @Named("formAttributeList") ListFormAttributeUsecase listFormAttributeUsecase,
             FormAttributeModelDataMapper formAttributeModelDataMapper,
             PrefsFactory prefsFactory) {
-        mGetFormAttributeUsecase = getGetFormAttributeUsecase;
+        mListFormAttributeUsecase = listFormAttributeUsecase;
         mFormAttributeModelDataMapper = formAttributeModelDataMapper;
         mPrefsFactory = prefsFactory;
     }
@@ -53,46 +55,46 @@ public class GetFormAttributePresenter implements Presenter {
 
     @Override
     public void destroy() {
-        mGetFormAttributeUsecase.unsubscribe();
+        mListFormAttributeUsecase.unsubscribe();
     }
 
-    public void setView(@NonNull GetFormAttributeView getFormAttributeView) {
-        mGetFormAttributeView = getFormAttributeView;
+    public void setView(@NonNull ListFormAttributeView getFormAttributeView) {
+        mListFormAttributeView = getFormAttributeView;
     }
 
     public void getForm(Long formId) {
-        mGetFormAttributeUsecase
-                .setGetFormAttribute(mPrefsFactory.getActiveDeploymentId().get(), formId);
-        mGetFormAttributeUsecase.execute(new GetFormAttributeSubscriber());
+        mListFormAttributeUsecase.setListFormAttribute(mPrefsFactory.getActiveDeploymentId().get(),
+                formId);
+        mListFormAttributeUsecase.execute(new GetFormAttributeSubscriber());
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {
-        String errorMessage = ErrorMessageFactory.create(mGetFormAttributeView.getAppContext(),
+        String errorMessage = ErrorMessageFactory.create(mListFormAttributeView.getAppContext(),
                 errorHandler.getException());
-        mGetFormAttributeView.showError(errorMessage);
+        mListFormAttributeView.showError(errorMessage);
     }
 
-    private class GetFormAttributeSubscriber extends DefaultSubscriber<FormAttribute> {
+    private class GetFormAttributeSubscriber extends DefaultSubscriber<List<FormAttribute>> {
 
         @Override
         public void onStart() {
-            mGetFormAttributeView.showLoading();
+            mListFormAttributeView.showLoading();
         }
 
         @Override
         public void onCompleted() {
-            mGetFormAttributeView.hideLoading();
+            mListFormAttributeView.hideLoading();
         }
 
         @Override
-        public void onNext(FormAttribute formAttribute) {
-            mGetFormAttributeView
-                    .renderFormAttribute(mFormAttributeModelDataMapper.map(formAttribute));
+        public void onNext(List<FormAttribute> formAttributes) {
+            mListFormAttributeView
+                    .renderFormAttribute(mFormAttributeModelDataMapper.map(formAttributes));
         }
 
         @Override
         public void onError(Throwable e) {
-            mGetFormAttributeView.hideLoading();
+            mListFormAttributeView.hideLoading();
             showErrorMessage(new DefaultErrorHandler((Exception) e));
         }
     }
