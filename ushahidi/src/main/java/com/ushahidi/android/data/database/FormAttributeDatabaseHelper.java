@@ -55,16 +55,16 @@ public class FormAttributeDatabaseHelper extends BaseDatabaseHelper {
 
     }
 
-    public Observable<Long> putFormAttributeEntity(FormAttributeEntity formAttributeEntity) {
+    public Observable<Long> putFormAttributeEntity(List<FormAttributeEntity> formAttributeEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
-                Long row = null;
                 try {
-                    row = cupboard().withDatabase(getWritableDatabase()).put(formAttributeEntity);
+                    cupboard().withDatabase(getWritableDatabase()).put(formAttributeEntity);
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }
-                subscriber.onNext(row);
+                int row = formAttributeEntity.size();
+                subscriber.onNext((long) row);
                 subscriber.onCompleted();
             }
         });

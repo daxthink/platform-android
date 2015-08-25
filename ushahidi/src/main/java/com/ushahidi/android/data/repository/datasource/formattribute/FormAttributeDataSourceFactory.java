@@ -1,5 +1,7 @@
 package com.ushahidi.android.data.repository.datasource.formattribute;
 
+import com.ushahidi.android.data.api.FormAttributeApi;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.database.FormAttributeDatabaseHelper;
 
 import android.support.annotation.NonNull;
@@ -13,6 +15,8 @@ public class FormAttributeDataSourceFactory {
 
     private final FormAttributeDatabaseHelper mFormAttributeDatabaseHelper;
 
+    private final UshAccessTokenManager mUshAccessTokenManager;
+
     /**
      * Default constructor that constructs {@link FormAttributeDataSourceFactory}
      *
@@ -20,8 +24,10 @@ public class FormAttributeDataSourceFactory {
      */
     @Inject
     FormAttributeDataSourceFactory(
-            @NonNull FormAttributeDatabaseHelper formAttributeDatabaseHelper) {
+            @NonNull FormAttributeDatabaseHelper formAttributeDatabaseHelper,
+            @NonNull UshAccessTokenManager ushAccessTokenManager) {
         mFormAttributeDatabaseHelper = formAttributeDatabaseHelper;
+        mUshAccessTokenManager = ushAccessTokenManager;
     }
 
     /**
@@ -31,5 +37,10 @@ public class FormAttributeDataSourceFactory {
      */
     public FormAttributeDataSource createDatabaseDataSource() {
         return new FormAttributeDatabaseDataSource(mFormAttributeDatabaseHelper);
+    }
+
+    public FormAttributeDataSource createApiDataSource() {
+        FormAttributeApi formAttributeApi = new FormAttributeApi(mUshAccessTokenManager);
+        return new FormAttributeApiDataSource(formAttributeApi, mFormAttributeDatabaseHelper);
     }
 }

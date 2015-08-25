@@ -6,6 +6,7 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.domain.entity.FormAttribute;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.usecase.formattribute.ListFormAttributeUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.mapper.FormAttributeModelDataMapper;
@@ -62,9 +63,15 @@ public class ListFormAttributePresenter implements Presenter {
         mListFormAttributeView = getFormAttributeView;
     }
 
-    public void getForm(Long formId) {
+    public void getFormOnline(Long formId) {
         mListFormAttributeUsecase.setListFormAttribute(mPrefsFactory.getActiveDeploymentId().get(),
-                formId);
+                formId, From.ONLINE);
+        mListFormAttributeUsecase.execute(new GetFormAttributeSubscriber());
+    }
+
+    public void getFormDb(Long formId) {
+        mListFormAttributeUsecase.setListFormAttribute(mPrefsFactory.getActiveDeploymentId().get(),
+                formId, From.DATABASE);
         mListFormAttributeUsecase.execute(new GetFormAttributeSubscriber());
     }
 
