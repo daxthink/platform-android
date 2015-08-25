@@ -38,4 +38,7 @@
     <color name="white">#deffffff</color>
     <color name="gray_lighter">#8affffff</color>
     <color name="light_blue">#2274B4</color>
+    <color name="progress_done">#3F4751</color>
+    <color name="progress_background">#FFC334</color>
+    <color name="progress_background_dark">#2274B4</color>
 </resources>

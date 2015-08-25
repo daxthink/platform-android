@@ -279,7 +279,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private void showLoginPrompt() {
         showToast(getString(R.string.not_logged_in));
-        Snackbar.make(getView(), getString(R.string.not_logged_in),
+        Snackbar.make(getView().getRootView(), getString(R.string.not_logged_in),
                 Snackbar.LENGTH_LONG)
                 .setActionTextColor(getAppContext().getResources().getColor(R.color.orange))
                 .setAction(R.string.login, e -> mLauncher.launchLogin()).show();
