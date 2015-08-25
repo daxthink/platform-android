@@ -24,7 +24,6 @@ public final class TestFixtures {
             mForm.setName("Basic form");
             mForm.setUpdated(new java.util.Date(1439503014));
             mForm.setDisabled(true);
-            mForm.setFormAttribute(getFormAttributes());
         }
         return mForm;
     }

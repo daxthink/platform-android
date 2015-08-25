@@ -1,11 +1,10 @@
 package com.ushahidi.android.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import com.addhen.android.raiburari.data.entity.DataEntity;
 
 import java.util.Date;
-import java.util.List;
-
-import nl.qbusict.cupboard.annotation.Ignore;
 
 /**
  * Holds the raw V3's /api/v3/form JSON response
@@ -14,20 +13,23 @@ import nl.qbusict.cupboard.annotation.Ignore;
  */
 public class FormEntity extends DataEntity {
 
+    @SerializedName("name")
     private String mName;
 
+    @SerializedName("description")
     private String mDescription;
 
+    @SerializedName("disabled")
     private boolean mDisabled;
 
+    @SerializedName("created")
     private Date mCreated;
 
+    @SerializedName("updated")
     private Date mUpdated;
 
     private Long mDeploymentId;
 
-    @Ignore
-    private List<FormAttributeEntity> mFormAttributeEntities;
 
     public Long getDeploymentId() {
         return mDeploymentId;
@@ -77,14 +79,6 @@ public class FormEntity extends DataEntity {
         mUpdated = updated;
     }
 
-    public void setFormAttributeEntity(List<FormAttributeEntity> formAttributeEntities) {
-        mFormAttributeEntities = formAttributeEntities;
-    }
-
-    public List<FormAttributeEntity> getFormAttributeEntities() {
-        return mFormAttributeEntities;
-    }
-
     @Override
     public String toString() {
         return "Form{"
@@ -95,7 +89,6 @@ public class FormEntity extends DataEntity {
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
                 + ", mDeploymentId=" + mDeploymentId
-                + ", mFormAttribute=" + mFormAttributeEntities.toString()
                 + '}';
     }
 }
