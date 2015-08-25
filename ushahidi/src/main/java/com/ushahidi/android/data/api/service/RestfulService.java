@@ -19,14 +19,13 @@ package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
 
+import com.ushahidi.android.data.api.model.FormAttributes;
 import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.oauth.AccessTokenRequestBody;
 import com.ushahidi.android.data.api.oauth.RefreshTokenRequestBody;
 import com.ushahidi.android.data.entity.UserEntity;
-
-import java.util.jar.Attributes;
 
 import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import retrofit.http.Body;
@@ -130,6 +129,7 @@ public interface RestfulService {
      * @return Attributes
      */
     @GET(FORMS + "/{id}" + ATTRIBUTES + "?order=asc&orderby=priority")
-    Observable<Attributes> getFormAttributes(@Header("Authorization") String authorizationHeader,
+    Observable<FormAttributes> getFormAttributes(
+            @Header("Authorization") String authorizationHeader,
             @Path("id") long id);
 }

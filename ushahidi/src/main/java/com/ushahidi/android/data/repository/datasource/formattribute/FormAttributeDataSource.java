@@ -19,12 +19,4 @@ public interface FormAttributeDataSource {
      * @return The form details
      */
     Observable<List<FormAttributeEntity>> getFormAttributes(Long deploymentId, Long formId);
-
-    /**
-     * Add/Update a {@link FormAttributeEntity}.
-     *
-     * @param formAttributeEntity The FormAttribute to be saved.
-     * @return The row affected
-     */
-    Observable<Long> putFormAttribute(FormAttributeEntity formAttributeEntity);
 }

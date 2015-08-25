@@ -3,6 +3,7 @@ package com.ushahidi.android.domain.usecase.formattribute;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.FormAttributeRepository;
 
 import javax.inject.Inject;
@@ -21,6 +22,8 @@ public class ListFormAttributeUsecase extends Usecase {
     private Long mDeploymentId = null;
 
     private Long mFormId;
+
+    private From mFrom;
 
     /**
      * Default constructor
@@ -44,9 +47,10 @@ public class ListFormAttributeUsecase extends Usecase {
      * @param deploymentId The deploymentId associated with the GeoJson
      * @param formId       Whether to fetch through the API or the local storage
      */
-    public void setListFormAttribute(Long deploymentId, Long formId) {
+    public void setListFormAttribute(Long deploymentId, Long formId, From from) {
         mDeploymentId = deploymentId;
         mFormId = formId;
+        mFrom = from;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class ListFormAttributeUsecase extends Usecase {
             throw new RuntimeException(
                     "Deployment id and form id cannot be null. You must call setListFormAttribute(...)");
         }
-        return mFormAttributeRepository.getFormAttributes(mDeploymentId, mFormId);
+        return mFormAttributeRepository.getFormAttributes(mDeploymentId, mFormId, mFrom);
     }
 
 }

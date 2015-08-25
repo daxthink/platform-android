@@ -34,7 +34,7 @@ public class PostDataSourceFactory {
 
     private final UshAccessTokenManager mUshAccessTokenManager;
 
-    private PostDatabaseHelper mPostDatabaseHelper;
+    private final PostDatabaseHelper mPostDatabaseHelper;
 
     /**
      * Default constructor

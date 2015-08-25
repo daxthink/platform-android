@@ -4,6 +4,7 @@ import com.ushahidi.android.data.entity.mapper.FormAttributeEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.formattribute.FormAttributeDataSource;
 import com.ushahidi.android.data.repository.datasource.formattribute.FormAttributeDataSourceFactory;
 import com.ushahidi.android.domain.entity.FormAttribute;
+import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.FormAttributeRepository;
 
 import android.support.annotation.NonNull;
@@ -39,9 +40,15 @@ public class FormAttributeDataRepository implements FormAttributeRepository {
     }
 
     @Override
-    public Observable<List<FormAttribute>> getFormAttributes(Long deploymentId, Long formId) {
-        final FormAttributeDataSource formAttributeDataSource = mFormAttributeDataSourceFactory
-                .createDatabaseDataSource();
+    public Observable<List<FormAttribute>> getFormAttributes(Long deploymentId, Long formId,
+            From from) {
+        FormAttributeDataSource formAttributeDataSource;
+        if (from == From.ONLINE) {
+            formAttributeDataSource = mFormAttributeDataSourceFactory
+                    .createDatabaseDataSource();
+        } else {
+            formAttributeDataSource = mFormAttributeDataSourceFactory.createApiDataSource();
+        }
         return formAttributeDataSource.getFormAttributes(deploymentId, formId)
                 .map(mFormAttributeEntityDataMapper::map);
     }

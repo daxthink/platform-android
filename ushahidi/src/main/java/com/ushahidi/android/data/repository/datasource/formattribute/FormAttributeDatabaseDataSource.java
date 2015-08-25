@@ -25,9 +25,4 @@ public class FormAttributeDatabaseDataSource implements FormAttributeDataSource 
     public Observable<List<FormAttributeEntity>> getFormAttributes(Long deploymentId, Long formId) {
         return mFormAttributeDatabaseHelper.getFormAttributeEntity(deploymentId, formId);
     }
-
-    @Override
-    public Observable<Long> putFormAttribute(FormAttributeEntity formAttributeEntity) {
-        return mFormAttributeDatabaseHelper.putFormAttributeEntity(formAttributeEntity);
-    }
 }
