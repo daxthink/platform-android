@@ -37,22 +37,5 @@ public class FormEntityTest {
         assertThat(formEntity.getUpdated())
                 .isEqualTo(TestEntityFixtures.getFormEntity().getUpdated());
         assertThat(formEntity.isDisabled()).isTrue();
-        assertThat(formEntity.getFormAttributeEntities()).isNotNull();
-        assertThat(formEntity.getFormAttributeEntities()).isNotEmpty();
-        assertThat(formEntity.getFormAttributeEntities().get(0)).isNotNull();
-        assertThat(formEntity.getFormAttributeEntities().get(0).getKey()).isEqualTo("test_varchar");
-        assertThat(formEntity.getFormAttributeEntities().get(0).getFormId())
-                .isEqualTo(1l);
-        assertThat(formEntity.getFormAttributeEntities().get(0).getKey())
-                .isEqualTo("test_varchar");
-        assertThat(formEntity.getFormAttributeEntities().get(0).getLabel())
-                .isEqualTo("Test varchar");
-        assertThat(formEntity.getFormAttributeEntities().get(0).getRequired())
-                .isFalse();
-        assertThat(formEntity.getFormAttributeEntities().get(0).getPriority())
-                .isEqualTo(1);
-        assertThat(formEntity.getFormAttributeEntities().get(0).getCardinality())
-                .isEqualTo(1);
-        assertThat(formEntity.getFormAttributeEntities().get(0).getOptions()).isNull();
     }
 }

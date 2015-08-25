@@ -72,7 +72,6 @@ public class TestEntityFixtures {
             mFormEntity.setName("Basic form Entity");
             mFormEntity.setUpdated(new java.util.Date(1439503014));
             mFormEntity.setDisabled(true);
-            mFormEntity.setFormAttributeEntity(getFormAttributeEntities());
         }
         return mFormEntity;
     }

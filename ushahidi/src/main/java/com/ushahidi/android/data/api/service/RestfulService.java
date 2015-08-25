@@ -58,7 +58,7 @@ public interface RestfulService {
      * @param authorizationHeader The access token header
      * @return Posts
      */
-    @GET(POSTS)
+    @GET(POSTS + "?order=desc&orderby=created")
     Observable<Posts> posts(@Header("Authorization") String authorizationHeader);
 
     // Tags related APIs
@@ -109,7 +109,7 @@ public interface RestfulService {
      * @param authorizationHeader The access token header
      * @return An JsonElement that contains the raw json string
      */
-    @GET(GEOJSON)
+    @GET(GEOJSON + "?order=desc&orderby=created&status=all")
     Observable<JsonElement> getGeoJson(@Header("Authorization") String authorizationHeader);
 
     // Form related APIs
