@@ -271,19 +271,18 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showError(String s) {
-        mSnackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi());
-        View view = mSnackbar.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
-        mSnackbar.show();
+        Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi())
+                .setActionTextColor(getAppContext().getResources().getColor(R.color.orange)).show();
+
     }
 
     private void showLoginPrompt() {
-        mSnackbar = Snackbar
-                .make(getView(), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG)
-                .setAction(R.string.login, e -> mLauncher.launchLogin());
-        setSnackbarTextColor();
+        showToast(getString(R.string.not_logged_in));
+        Snackbar.make(getView(), getString(R.string.not_logged_in),
+                Snackbar.LENGTH_LONG)
+                .setActionTextColor(getAppContext().getResources().getColor(R.color.orange))
+                .setAction(R.string.login, e -> mLauncher.launchLogin()).show();
     }
 
     @Override

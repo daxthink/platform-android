@@ -455,8 +455,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         Holder holder = new CustomGridHolder(3);
         final DialogPlus dialog = DialogPlus.newDialog(this)
                 .setOnItemClickListener((dia, item, view1, position) -> {
-                    dia.dismiss();
                     mMapPostComponent.launcher().launchAddPost(mFormAdapter.getItem(position));
+                    dia.dismiss();
                 })
                 .setExpanded(true)
                 .setCancelable(true)

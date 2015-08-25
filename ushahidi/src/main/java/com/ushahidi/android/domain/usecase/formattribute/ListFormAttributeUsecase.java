@@ -21,7 +21,7 @@ public class ListFormAttributeUsecase extends Usecase {
 
     private Long mDeploymentId = null;
 
-    private From mFrom;
+    private Long mFormId;
 
     /**
      * Default constructor
@@ -43,20 +43,19 @@ public class ListFormAttributeUsecase extends Usecase {
      * and where to fetch it from.
      *
      * @param deploymentId The deploymentId associated with the GeoJson
-     * @param from         Whether to fetch through the API or the local storage
+     * @param formId         Whether to fetch through the API or the local storage
      */
-    public void setListFormAttribute(Long deploymentId, From from) {
+    public void setListFormAttribute(Long deploymentId, Long formId) {
         mDeploymentId = deploymentId;
-        mFrom = from;
+        mFormId = formId;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeploymentId == null || mFrom == null) {
-            throw new RuntimeException(
-                    "Deployment id and from cannot be null. You must call setListFormAttribute(...)");
+        if (mDeploymentId == null || mFormId == null) {
+            throw new RuntimeException("Deployment id and form id cannot be null. You must call setListFormAttribute(...)");
         }
-        return mFormAttributeRepository.getFormAttributes(mDeploymentId, mFrom);
+        return mFormAttributeRepository.getFormAttributes(mDeploymentId, mFormId);
     }
 
 }

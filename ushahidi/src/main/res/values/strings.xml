@@ -136,4 +136,5 @@
     <string name="post_description">Post description</string>
     <string name="save">Save</string>
     <string name="add_post">Add Post</string>
+    <string name="form_attribute_not_found">Could not fetch form attribute. Not found.</string>
 </resources>

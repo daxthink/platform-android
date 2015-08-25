@@ -31,12 +31,14 @@ import com.ushahidi.android.data.api.account.Session;
 import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
+import com.ushahidi.android.data.repository.FormAttributeDataRepository;
 import com.ushahidi.android.data.repository.FormDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.data.repository.UserAccountDataRepository;
 import com.ushahidi.android.data.repository.UserProfileDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.FormAttributeRepository;
 import com.ushahidi.android.domain.repository.FormRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
@@ -252,6 +254,19 @@ public class AppModule {
     @Singleton
     FormRepository provideFormRepository(FormDataRepository formDataRepository) {
         return formDataRepository;
+    }
+
+    /**
+     * Provides {@link com.ushahidi.android.domain.repository.FormRepository}
+     *
+     * @param formAttributeDataRepository The form data repository
+     * @return The form repository
+     */
+    @Provides
+    @Singleton
+    FormAttributeRepository provideFormAttributeRepository(
+            FormAttributeDataRepository formAttributeDataRepository) {
+        return formAttributeDataRepository;
     }
 
     /**

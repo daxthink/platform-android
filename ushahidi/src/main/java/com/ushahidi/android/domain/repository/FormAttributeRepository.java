@@ -1,7 +1,6 @@
 package com.ushahidi.android.domain.repository;
 
 import com.ushahidi.android.domain.entity.FormAttribute;
-import com.ushahidi.android.domain.entity.From;
 
 import java.util.List;
 
@@ -16,10 +15,10 @@ public interface FormAttributeRepository {
      * Get a list of {@link FormAttribute} from either the database or online.
      *
      * @param deploymentId An ID of {@link com.ushahidi.android.domain.entity.Deployment}
-     * @param from         Where to get the formattribute from. Either from local storage or online
+     * @param formId       The form Id
      * @return The retrieved form attribute.
      */
-    Observable<List<FormAttribute>> getFormAttributes(Long deploymentId, From from);
+    Observable<List<FormAttribute>> getFormAttributes(Long deploymentId, Long formId);
 
     /**
      * Add/Update a {@link FormAttribute}.

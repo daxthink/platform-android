@@ -1,7 +1,7 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.entity.FormAttributeEntity;
-import com.ushahidi.android.data.exception.FormNotFoundException;
+import com.ushahidi.android.data.exception.FormAttributeNotFoundException;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -45,11 +45,11 @@ public class FormAttributeDatabaseHelper extends BaseDatabaseHelper {
                     .withSelection("mDeploymentId = ?", String.valueOf(deploymentId))
                     .withSelection("mFormId = ?", String.valueOf(formId)).list();
 
-            if (formAttributeEntities != null) {
+            if (formAttributeEntities != null && formAttributeEntities.size() > 0) {
                 subscriber.onNext(formAttributeEntities);
                 subscriber.onCompleted();
             } else {
-                subscriber.onError(new FormNotFoundException());
+                subscriber.onError(new FormAttributeNotFoundException());
             }
         });
 
