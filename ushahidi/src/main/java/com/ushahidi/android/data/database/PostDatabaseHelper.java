@@ -156,9 +156,9 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             cupboard().withDatabase(getWritableDatabase()).put(formEntities);
             for (FormEntity formEntity : formEntities) {
                 if (formEntity.getFormAttributeEntities() != null
-                        || formEntity.getFormAttributeEntities().size() > 0) {
-                    cupboard().withDatabase(getWritableDatabase())
-                            .put(formEntity.getFormAttributeEntities());
+                        && formEntity.getFormAttributeEntities().size() > 0) {
+                    cupboard().withDatabase(getWritableDatabase()).put(
+                            formEntity.getFormAttributeEntities());
                 }
 
             }

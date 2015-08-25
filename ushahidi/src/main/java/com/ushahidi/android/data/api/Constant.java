@@ -60,7 +60,7 @@ public final class Constant {
     /**
      * Attribute resources
      */
-    public static final String ATTRIBUTES = API_PATH + "/attributes";
+    public static final String ATTRIBUTES = "/attributes";
 
     /**
      * Tags resources
