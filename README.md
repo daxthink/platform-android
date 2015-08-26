@@ -1,4 +1,4 @@
-Ushahidi Android App [![Build Status](https://travis-ci.org/ushahidi/platform-android.svg?branch=develop)](https://travis-ci.org/ushahidi/platform-android) [![Stories in Ready](https://badge.waffle.io/ushahidi/platform-android.png?label=ready&title=Ready)](http://waffle.io/ushahidi/platform-android)
+Ushahidi Android App [![Build Status](https://travis-ci.org/ushahidi/platform-android.svg?branch=develop)](https://travis-ci.org/ushahidi/platform-android) [![Stories in Ready](https://badge.waffle.io/ushahidi/platform-android.png?label=ready&title=Ready)](http://waffle.io/ushahidi/platform-android) [![Join the chat at https://gitter.im/ushahidi/Community](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ushahidi/Community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ================
 
 Ushahidi is an open source web application for information collection, visualization, and interactive mapping. 
