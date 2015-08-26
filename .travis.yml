@@ -19,6 +19,5 @@ notifications:
   hipchat:
     template: '<a href="%{build_url}">%{repository}#%{build_number}</a> (%{branch} - <a href="%{compare_url}">%{commit}</a> : %{author}): %{message}'
     format: html
-    notify: true
     rooms:
       secure: WBxrL2ceIAXTtJjXG4Gs/IWX+HVJ1izU1Y5UW7chuJ5w2wBCjoPDsAbsJhkaXbhZWQ5haSbEOJXjGwxbUBWVnKhFihYF7Ozh60kpovbJOYKvc7x3/5HsBAgYK0dKUJj7HCVutps2r3lKCXP9YFoOsDZqQd0dRsmxulteigYxn48=
