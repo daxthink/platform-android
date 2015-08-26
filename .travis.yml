@@ -6,8 +6,8 @@ before_install:
 - android list sdk --no-ui --all --extended
 android:
   components:
-  - build-tools-23.0.0_rc3
-  - android-22
+  - build-tools-23.0.0
+  - android-23
   - extra-google-google_play_services
   - extra-google-m2repository
   - extra-android-support
@@ -17,5 +17,7 @@ script:
 - "./gradlew build -PdisablePreDex"
 notifications:
   hipchat:
+    template: '<a href="%{build_url}">%{repository}#%{build_number}</a> (%{branch} - <a href="%{compare_url}">%{commit}</a> : %{author}): %{message}'
+    format: html
     rooms:
       secure: WBxrL2ceIAXTtJjXG4Gs/IWX+HVJ1izU1Y5UW7chuJ5w2wBCjoPDsAbsJhkaXbhZWQ5haSbEOJXjGwxbUBWVnKhFihYF7Ozh60kpovbJOYKvc7x3/5HsBAgYK0dKUJj7HCVutps2r3lKCXP9YFoOsDZqQd0dRsmxulteigYxn48=
