@@ -19,8 +19,6 @@ package com.ushahidi.android.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +29,7 @@ import nl.qbusict.cupboard.annotation.Ignore;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostEntity extends DataEntity {
+public class PostEntity extends Data {
 
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
@@ -88,7 +86,7 @@ public class PostEntity extends DataEntity {
         mParent = parent;
     }
 
-        public List<PostTagEntity> getPostTagEntityList() {
+    public List<PostTagEntity> getPostTagEntityList() {
         return mPostTagEntityList;
     }
 

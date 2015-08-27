@@ -26,10 +26,7 @@ import java.util.Date;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserEntity {
-
-    @SerializedName("id")
-    private Long _id;
+public class UserEntity extends Data {
 
     @SerializedName("email")
     private String mEmail;

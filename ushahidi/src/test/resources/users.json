@@ -1,0 +1,1673 @@
+{
+  "count": 150,
+  "results": [
+    {
+      "id": 2,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/2",
+      "realname": "the boss",
+      "username": "admin",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 4,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/4",
+      "realname": null,
+      "username": "importadmin",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 5,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/5",
+      "realname": "demo",
+      "username": "demo",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 31,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/31",
+      "realname": null,
+      "username": "ajansdogu",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 61,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/61",
+      "realname": null,
+      "username": "marikop",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 71,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/71",
+      "realname": null,
+      "username": "cmc",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 81,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/81",
+      "realname": null,
+      "username": "wormysu",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 91,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/91",
+      "realname": null,
+      "username": "ccharboneau",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 101,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/101",
+      "realname": null,
+      "username": "phrdn",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 121,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/121",
+      "realname": null,
+      "username": "jbeam",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 131,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/131",
+      "realname": null,
+      "username": "suryadi",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 141,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/141",
+      "realname": null,
+      "username": "vasso",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 151,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/151",
+      "realname": null,
+      "username": "raoul",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 161,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/161",
+      "realname": null,
+      "username": "janka.gombitova",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 171,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/171",
+      "realname": null,
+      "username": "thk",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 181,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/181",
+      "realname": null,
+      "username": "kevintsur",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 191,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/191",
+      "realname": null,
+      "username": "dios13",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 201,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/201",
+      "realname": null,
+      "username": "jmg",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 211,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/211",
+      "realname": null,
+      "username": "CNAM2015",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 221,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/221",
+      "realname": null,
+      "username": "parry",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 231,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/231",
+      "realname": null,
+      "username": "Glrastis",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 241,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/241",
+      "realname": null,
+      "username": "dkobia",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 251,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/251",
+      "realname": "En defensa del voto",
+      "username": "DefensaVoto",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 261,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/261",
+      "realname": null,
+      "username": "Ayotzintli",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 271,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/271",
+      "realname": null,
+      "username": "crowdmapmirafiori",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 281,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/281",
+      "realname": null,
+      "username": "Tim",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 291,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/291",
+      "realname": null,
+      "username": "rodge",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 301,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/301",
+      "realname": null,
+      "username": "dbraun",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 311,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/311",
+      "realname": null,
+      "username": "aurelien1",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 321,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/321",
+      "realname": null,
+      "username": "Raul",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 331,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/331",
+      "realname": null,
+      "username": "shavkunova.natalia",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 341,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/341",
+      "realname": null,
+      "username": "testtest",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 351,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/351",
+      "realname": null,
+      "username": "Ellen",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 361,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/361",
+      "realname": null,
+      "username": "iheartqwerty",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 371,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/371",
+      "realname": null,
+      "username": "grument",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 381,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/381",
+      "realname": null,
+      "username": "ahmedasker",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 391,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/391",
+      "realname": null,
+      "username": "yuanye0111",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 401,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/401",
+      "realname": null,
+      "username": "charlie",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 411,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/411",
+      "realname": null,
+      "username": "sahbani",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 421,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/421",
+      "realname": null,
+      "username": "bignose",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 431,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/431",
+      "realname": null,
+      "username": "Erichend",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 441,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/441",
+      "realname": null,
+      "username": "Tracy",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 451,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/451",
+      "realname": null,
+      "username": "Juliana",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 461,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/461",
+      "realname": null,
+      "username": "gonzalo",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 471,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/471",
+      "realname": null,
+      "username": "ANUMUITU",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 481,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/481",
+      "realname": null,
+      "username": "asyafiq1991aas",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 491,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/491",
+      "realname": null,
+      "username": "gise",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 501,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/501",
+      "realname": null,
+      "username": "DonnaBW",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 511,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/511",
+      "realname": "Donna Baranski-Walker",
+      "username": "DBW",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 521,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/521",
+      "realname": null,
+      "username": "mohammad",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 531,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/531",
+      "realname": null,
+      "username": "casz",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 541,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/541",
+      "realname": null,
+      "username": "das_ankit",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 551,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/551",
+      "realname": null,
+      "username": "Paolo",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 561,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/561",
+      "realname": null,
+      "username": "vitroiko",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 571,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/571",
+      "realname": null,
+      "username": "ka1vgm",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 581,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/581",
+      "realname": null,
+      "username": "harypurnomo",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 591,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/591",
+      "realname": null,
+      "username": "test123",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 601,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/601",
+      "realname": null,
+      "username": "bernise",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 611,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/611",
+      "realname": null,
+      "username": "jcrowley",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 621,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/621",
+      "realname": null,
+      "username": "arbazreza",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 631,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/631",
+      "realname": null,
+      "username": "TimurDosaev",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 641,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/641",
+      "realname": null,
+      "username": "kihos",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 651,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/651",
+      "realname": null,
+      "username": "StanMD",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 661,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/661",
+      "realname": "Adam Bard",
+      "username": "adambard",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 671,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/671",
+      "realname": "Adam B",
+      "username": "Adam",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 681,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/681",
+      "realname": null,
+      "username": "demonccc",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 691,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/691",
+      "realname": null,
+      "username": "Tindana",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 701,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/701",
+      "realname": null,
+      "username": "Maua",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 711,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/711",
+      "realname": null,
+      "username": "Riddhi",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 721,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/721",
+      "realname": null,
+      "username": "gdeunanue",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 731,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/731",
+      "realname": null,
+      "username": "ayushk89",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 741,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/741",
+      "realname": null,
+      "username": "joelkelling",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 751,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/751",
+      "realname": null,
+      "username": "rodrivaldez5",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 761,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/761",
+      "realname": null,
+      "username": "zemar",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 771,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/771",
+      "realname": null,
+      "username": "msuantak",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 781,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/781",
+      "realname": null,
+      "username": "cheyennewylie",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 791,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/791",
+      "realname": null,
+      "username": "testeador",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 801,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/801",
+      "realname": null,
+      "username": "aaa",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 811,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/811",
+      "realname": null,
+      "username": "ejaz",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 821,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/821",
+      "realname": null,
+      "username": "bojikutu",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 831,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/831",
+      "realname": "Angela Oduor Lungati",
+      "username": "angela",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 841,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/841",
+      "realname": null,
+      "username": "Franckit",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 851,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/851",
+      "realname": "franck",
+      "username": "franck",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 861,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/861",
+      "realname": null,
+      "username": "sandracart",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 871,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/871",
+      "realname": null,
+      "username": "Limo",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 881,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/881",
+      "realname": null,
+      "username": "chrisdemo",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 891,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/891",
+      "realname": null,
+      "username": "achin",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 901,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/901",
+      "realname": null,
+      "username": "erttvsd",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 911,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/911",
+      "realname": "blessyou",
+      "username": "brickme",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 921,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/921",
+      "realname": "test me",
+      "username": "test",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 931,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/931",
+      "realname": "cubes",
+      "username": "cubes",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 941,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/941",
+      "realname": null,
+      "username": "voybhav",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 951,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/951",
+      "realname": "Craig",
+      "username": "Craig",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 961,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/961",
+      "realname": "Francesco Bartoli",
+      "username": "xbartolone",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 971,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/971",
+      "realname": null,
+      "username": "gregory",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 981,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/981",
+      "realname": null,
+      "username": "Dex",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 991,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/991",
+      "realname": null,
+      "username": "Nekesa",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1001,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1001",
+      "realname": null,
+      "username": "Sebastian",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1011,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1011",
+      "realname": null,
+      "username": "brianbirir",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1021,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1021",
+      "realname": null,
+      "username": "chriskuri",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1031,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1031",
+      "realname": null,
+      "username": "lkamau",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1041,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1041",
+      "realname": null,
+      "username": "gikebe",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1051,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1051",
+      "realname": null,
+      "username": "Kurtis",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1061,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1061",
+      "realname": null,
+      "username": "njerirosemary",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1071,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1071",
+      "realname": null,
+      "username": "Ger",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1081,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1081",
+      "realname": null,
+      "username": "Monica",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1091,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1091",
+      "realname": null,
+      "username": "Cel",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1101,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1101",
+      "realname": null,
+      "username": "kiruik",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1111,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1111",
+      "realname": null,
+      "username": "njeri",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1121,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1121",
+      "realname": null,
+      "username": "eric",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1131,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1131",
+      "realname": null,
+      "username": "barri",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1141,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1141",
+      "realname": null,
+      "username": "anselmelly",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1151,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1151",
+      "realname": null,
+      "username": "hleson",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1161,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1161",
+      "realname": null,
+      "username": "Mogz",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1171,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1171",
+      "realname": null,
+      "username": "Michellehp",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1181,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1181",
+      "realname": null,
+      "username": "Doe",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1191,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1191",
+      "realname": null,
+      "username": "Essy",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1201,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1201",
+      "realname": null,
+      "username": "angiemuigai",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1211,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1211",
+      "realname": null,
+      "username": "angelamuigai",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1221,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1221",
+      "realname": null,
+      "username": "Sharon",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1231,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1231",
+      "realname": null,
+      "username": "njari",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1241,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1241",
+      "realname": null,
+      "username": "Mophius",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1251,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1251",
+      "realname": null,
+      "username": "mmmmmmmmdfffffffgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfgfga",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1261,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1261",
+      "realname": null,
+      "username": "Loise",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1271,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1271",
+      "realname": null,
+      "username": "angieO",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1281,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1281",
+      "realname": null,
+      "username": "nat",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1291,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1291",
+      "realname": "Bartoli Francesco",
+      "username": "ybartolone",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1301,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1301",
+      "email": "henry@ushahidi.com",
+      "realname": "Henry Addo",
+      "username": "eyedol",
+      "logins": 0,
+      "failed_attempts": 0,
+      "last_login": null,
+      "last_attempt": null,
+      "created": "2015-08-14T17:34:33+00:00",
+      "updated": "2015-08-14T17:38:54+00:00",
+      "role": "user",
+      "allowed_privileges": [
+        "read",
+        "update",
+        "search",
+        "read_full",
+        "register"
+      ]
+    },
+    {
+      "id": 1311,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1311",
+      "realname": null,
+      "username": "DOME",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1321,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1321",
+      "realname": null,
+      "username": "Shemeer",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1331,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1331",
+      "realname": null,
+      "username": "lll",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1341,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1341",
+      "realname": null,
+      "username": "jimmm",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1351,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1351",
+      "realname": null,
+      "username": "tctambor",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1361,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1361",
+      "realname": null,
+      "username": "caro",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1371,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1371",
+      "realname": null,
+      "username": "bankelele",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1381,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1381",
+      "realname": null,
+      "username": "kalekachali",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1391,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1391",
+      "realname": null,
+      "username": "msn2002",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1401,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1401",
+      "realname": null,
+      "username": "Alex",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1411,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1411",
+      "realname": null,
+      "username": "julio",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1421,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1421",
+      "realname": "Anahiayala",
+      "username": "Anahi",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1431,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1431",
+      "realname": null,
+      "username": "JacekC",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1441,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1441",
+      "realname": null,
+      "username": "liviuolos",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1451,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1451",
+      "realname": null,
+      "username": "testme",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1461,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1461",
+      "realname": null,
+      "username": "please323",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1471,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1471",
+      "realname": null,
+      "username": "please32",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1481,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1481",
+      "realname": null,
+      "username": "intratek",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1491,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1491",
+      "realname": null,
+      "username": "bails3",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1501,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1501",
+      "realname": null,
+      "username": "rafemoro",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1511,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1511",
+      "realname": null,
+      "username": "rokko",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    },
+    {
+      "id": 1521,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users/1521",
+      "realname": null,
+      "username": "valonc",
+      "allowed_privileges": [
+        "read",
+        "search",
+        "register"
+      ]
+    }
+  ],
+  "limit": null,
+  "offset": 0,
+  "order": "asc",
+  "orderby": "id",
+  "curr": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users?orderby=id&order=asc&offset=0",
+  "next": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users?orderby=id&order=asc&offset=0",
+  "prev": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/users?orderby=id&order=asc&offset=0",
+  "total_count": 150
+}

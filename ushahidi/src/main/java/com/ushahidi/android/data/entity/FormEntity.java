@@ -2,8 +2,6 @@ package com.ushahidi.android.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 import java.util.Date;
 
 /**
@@ -11,7 +9,7 @@ import java.util.Date;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class FormEntity extends DataEntity {
+public class FormEntity extends Data {
 
     @SerializedName("name")
     private String mName;

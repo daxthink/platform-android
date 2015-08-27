@@ -2,8 +2,6 @@ package com.ushahidi.android.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 import java.util.List;
 
 import nl.qbusict.cupboard.annotation.Ignore;
@@ -13,7 +11,7 @@ import nl.qbusict.cupboard.annotation.Ignore;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class FormAttributeEntity extends DataEntity {
+public class FormAttributeEntity extends Data {
 
     @SerializedName("label")
     private String mLabel;
