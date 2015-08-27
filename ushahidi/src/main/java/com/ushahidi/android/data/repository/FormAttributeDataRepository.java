@@ -44,10 +44,10 @@ public class FormAttributeDataRepository implements FormAttributeRepository {
             From from) {
         FormAttributeDataSource formAttributeDataSource;
         if (from == From.ONLINE) {
+            formAttributeDataSource = mFormAttributeDataSourceFactory.createApiDataSource();
+        } else {
             formAttributeDataSource = mFormAttributeDataSourceFactory
                     .createDatabaseDataSource();
-        } else {
-            formAttributeDataSource = mFormAttributeDataSourceFactory.createApiDataSource();
         }
         return formAttributeDataSource.getFormAttributes(deploymentId, formId)
                 .map(mFormAttributeEntityDataMapper::map);

@@ -20,10 +20,12 @@ package com.ushahidi.android.data.repository.datasource.post;
 import com.google.gson.JsonElement;
 
 import com.ushahidi.android.data.api.PostApi;
+import com.ushahidi.android.data.api.model.FormAttributes;
 import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
+import com.ushahidi.android.data.entity.FormAttributeEntity;
 import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
@@ -80,8 +82,8 @@ public class PostApiDataSource implements PostDataSource {
                 (tags, posts, geoJsons, forms) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
                         setTag(tags, deploymentId),
                         setPost(posts, deploymentId),
-                        setGeoJson(geoJsons, deploymentId), setForms(forms, deploymentId)));
-
+                        setGeoJson(geoJsons, deploymentId),
+                        setForms(forms, deploymentId)));
     }
 
     @Override
@@ -151,5 +153,15 @@ public class PostApiDataSource implements PostDataSource {
             formEntityList.add(formEntity);
         }
         return formEntityList;
+    }
+
+    private List<FormAttributeEntity> setFormAttributes(FormAttributes formAttributes,
+            Long deploymentId) {
+        List<FormAttributeEntity> formAttributeEntities = new ArrayList<>();
+        for (FormAttributeEntity formAttributeEntity : formAttributes.getFormAttributes()) {
+            formAttributeEntity.setDeploymentId(deploymentId);
+            formAttributeEntities.add(formAttributeEntity);
+        }
+        return formAttributeEntities;
     }
 }

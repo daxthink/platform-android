@@ -132,4 +132,17 @@ public interface RestfulService {
     Observable<FormAttributes> getFormAttributes(
             @Header("Authorization") String authorizationHeader,
             @Path("id") long id);
+
+    /**
+     * Fetches form attributes
+     *
+     * @param authorizationHeader The access token header
+     * @return Attributes
+     */
+    @GET(FORMS + "/{id}" + ATTRIBUTES + "?order=asc&orderby=priority")
+    FormAttributes getFormAttribute(
+            @Header("Authorization") String authorizationHeader,
+            @Path("id") long id);
+
+
 }

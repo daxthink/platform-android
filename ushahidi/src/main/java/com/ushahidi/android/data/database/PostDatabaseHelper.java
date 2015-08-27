@@ -17,6 +17,7 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.FormAttributeEntity;
 import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
@@ -137,7 +138,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     }
 
     /**
-     * save a list of {@PostEntity}
+     * Saves a list of {@PostEntity}
      *
      * @param deploymentId  The deployment ID
      * @param tagEntities   The Tag entities
@@ -150,6 +151,8 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             List<TagEntity> tagEntities,
             List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity,
             List<FormEntity> formEntities) {
+        // Note: Saving other entity types apart from post because it was easier to save
+        // all the different entity types fetched the API request.
         if (!isClosed()) {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
@@ -164,6 +167,12 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         }
         List<PostEntity> postEntityList = getPosts(deploymentId);
         return setPostEntityList(postEntityList);
+    }
+
+    public void putFetchedFormAttributes(List<FormAttributeEntity> formAttributes) {
+        if (!isClosed()) {
+            cupboard().withDatabase(getWritableDatabase()).put(formAttributes);
+        }
     }
 
     /**
@@ -308,5 +317,9 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             postEntityList.add(postEntity);
         }
         return postEntityList;
+    }
+
+    public List<FormEntity> getForms(Long deploymentId) {
+        return cupboard().withDatabase(getReadableDatabase()).query(FormEntity.class).list();
     }
 }

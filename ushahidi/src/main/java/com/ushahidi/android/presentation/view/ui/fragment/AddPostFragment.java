@@ -101,7 +101,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     public void onResume() {
         super.onResume();
         mAddPostPresenter.resume();
-        mListFormAttributePresenter.getFormDb(mFormModel._id);
+        //mListFormAttributePresenter.getFormDb(mFormModel._id);
     }
 
     @Override
