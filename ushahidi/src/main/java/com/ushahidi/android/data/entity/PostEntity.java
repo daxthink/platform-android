@@ -192,9 +192,11 @@ public class PostEntity extends Data {
 
     @Override
     public String toString() {
-        return "Post{"
+        return "PostEntity{"
                 + "id=" + _id
+                + "parent=" + parent
                 + ", mParent=" + mParent
+                + ", mUser=" + mUser
                 + ", mType=" + mType
                 + ", mTitle='" + mTitle + '\''
                 + ", mSlug='" + mSlug + '\''
@@ -204,10 +206,27 @@ public class PostEntity extends Data {
                 + ", mStatus=" + mStatus
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
-                + ", mDeploymentId=" + mDeploymentId
                 + ", mValues=" + mValues
+                + ", mPostTagEntityList=" + mPostTagEntityList
+                + ", mDeploymentId=" + mDeploymentId
                 + ", mTags=" + mTags
                 + '}';
+    }
+
+    public UserEntity getUser() {
+        return mUser;
+    }
+
+    public void setUser(UserEntity user) {
+        mUser = user;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     public enum Status {
