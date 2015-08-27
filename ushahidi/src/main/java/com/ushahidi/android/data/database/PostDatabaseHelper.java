@@ -249,18 +249,22 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
 
     private List<TagEntity> getTagEntity(PostEntity postEntity) {
         List<TagEntity> tagEntityList = new ArrayList<>();
+        String selection = "mDeploymentId = ? AND mPostId = ?";
+        String args[] = {String.valueOf(postEntity.getDeploymentId()),
+                String.valueOf(postEntity._id)};
         // Fetch Tags attached to a post by querying the post entity
         // table to get the tag IDs
         List<PostTagEntity> postTagEntityList = cupboard().withDatabase(getReadableDatabase())
-                .query(PostTagEntity.class)
-                .withSelection("mDeploymentId = ?", String.valueOf(postEntity.getDeploymentId()))
-                .withSelection("mPostId = ?", String.valueOf(postEntity._id)).list();
+                .query(PostTagEntity.class).withSelection(selection, args).list();
         // Iterate through the fetched post tag entity to fetch for the
         // tags attached to the post. This is a manual way of dealing
         // entity relationships
         for (PostTagEntity postTagEntity : postTagEntityList) {
+            String sel = "mDeploymentId = ? AND _id = ?";
+            String arg[] = {String.valueOf(postEntity.getDeploymentId()),
+                    String.valueOf(postTagEntity.getTagId())};
             TagEntity tagEntity = cupboard().withDatabase(getReadableDatabase())
-                    .get(TagEntity.class, postTagEntity.getTagId());
+                    .query(TagEntity.class).withSelection(sel, arg).get();
             tagEntityList.add(tagEntity);
         }
         return tagEntityList;

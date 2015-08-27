@@ -34,7 +34,7 @@ public class TagEntity extends DataEntity {
 
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
-    //For some reasons gson expects this field otherwise it throws errros
+    //For some reasons gson expects this field otherwise it throws errors
     private Parent parent;
 
     private transient Long mParent;

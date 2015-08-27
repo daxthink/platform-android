@@ -88,7 +88,7 @@ public class PostEntity extends DataEntity {
         mParent = parent;
     }
 
-    public List<PostTagEntity> getPostTagEntityList() {
+        public List<PostTagEntity> getPostTagEntityList() {
         return mPostTagEntityList;
     }
 

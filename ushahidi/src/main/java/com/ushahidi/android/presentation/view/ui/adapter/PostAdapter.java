@@ -90,8 +90,8 @@ public class PostAdapter extends BaseRecyclerViewAdapter<PostModel> {
             if (!Utility.isCollectionEmpty(tags)) {
                 widgets.renderTagBadge(tags);
             } else {
-                //Don't show post that don't have tags. Hide the horizontal scroll view otherwise
-                // It shows tags from previous posts.
+                // Don't show post that don't have tags. Hide the horizontal scroll view otherwise
+                // it shows tags from previous posts.
                 widgets.tagContainer.setVisibility(View.GONE);
             }
 
