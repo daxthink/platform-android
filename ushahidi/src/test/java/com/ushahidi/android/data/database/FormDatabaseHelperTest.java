@@ -36,7 +36,7 @@ public class FormDatabaseHelperTest extends BaseTestCase {
     }
 
     @Test
-    public void shouldSuccessfullyGetPosts() throws IOException {
+    public void shouldSuccessfullyGetForms() throws IOException {
         assertThat(mFormDatabaseHelper).isNotNull();
         List<FormEntity> formList = getFormEntities();
         assertThat(formList).isNotNull();

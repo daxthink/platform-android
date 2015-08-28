@@ -1,6 +1,7 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.entity.FormAttributeEntity;
+import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.exception.FormAttributeNotFoundException;
 
 import android.content.Context;
@@ -68,5 +69,12 @@ public class FormAttributeDatabaseHelper extends BaseDatabaseHelper {
                 subscriber.onCompleted();
             }
         });
+    }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(FormAttributeEntity.class, null);
     }
 }
