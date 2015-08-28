@@ -1,6 +1,7 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.entity.FormEntity;
+import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.exception.FormNotFoundException;
 
 import android.content.Context;
@@ -41,7 +42,7 @@ public class FormDatabaseHelper extends BaseDatabaseHelper {
         return Observable.create(subscriber -> {
             final List<FormEntity> formEntities = cupboard()
                     .withDatabase(getReadableDatabase()).query(FormEntity.class).list();
-            if (formEntities != null) {
+            if (formEntities != null && formEntities.size() > 0) {
                 subscriber.onNext(formEntities);
                 subscriber.onCompleted();
             } else {
@@ -80,19 +81,26 @@ public class FormDatabaseHelper extends BaseDatabaseHelper {
      * @param formEntity The form to save to the db
      * @return The row affected
      */
-    public Observable<Long> put(FormEntity formEntity) {
+    public Observable<Long> put(List<FormEntity> formEntity) {
         return Observable.create(subscriber -> {
             if (!isClosed()) {
-                Long row = null;
                 try {
-                    row = cupboard().withDatabase(getWritableDatabase()).put(formEntity);
+                    cupboard().withDatabase(getWritableDatabase()).put(formEntity);
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }
+                final Long row = (long) formEntity.size();
                 subscriber.onNext(row);
                 subscriber.onCompleted();
             }
 
         });
+    }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(FormEntity.class, null);
     }
 }
