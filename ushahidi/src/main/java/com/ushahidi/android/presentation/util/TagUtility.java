@@ -74,8 +74,7 @@ public final class TagUtility {
                 colorDrawable.setIntrinsicHeight(tagColorSize);
                 colorDrawable.getPaint().setStyle(Paint.Style.FILL);
                 colorDrawable.getPaint().setColor(Color.parseColor(tagModel.getColor()));
-                tagBadge.setCompoundDrawablesWithIntrinsicBounds(colorDrawable,
-                        null, null, null);
+                tagBadge.setCompoundDrawablesWithIntrinsicBounds(colorDrawable, null, null, null);
 
                 // Tag has only icon, display it
             } else {

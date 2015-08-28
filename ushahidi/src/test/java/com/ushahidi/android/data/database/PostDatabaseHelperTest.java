@@ -55,11 +55,30 @@ public class PostDatabaseHelperTest extends BaseTestCase {
         result.assertCompleted();
         PostEntity postEntity = result.getOnNextEvents().get(0).get(0);
         assertThat(postEntity).isNotNull();
-        System.out.println(postEntity);
         assertThat(postEntity).isInstanceOf(PostEntity.class);
         assertThat(postEntity.getDeploymentId()).isNotNull();
         assertThat(postEntity.getDeploymentId()).isEqualTo(TestEntityFixtures.DEPLOYMENT_ID);
         assertThat(postEntity.getCreated()).isNotNull();
+        assertThat(postEntity._id).isEqualTo(10681);
+        assertThat(postEntity.getUser()._id).isEqualTo(5);
+        assertThat(postEntity.getContent()).isEqualTo("want 5 people, comment below");
+        assertThat(postEntity.getAuthorEmail()).isNull();
+        assertThat(postEntity.getAuthorRealname()).isNull();
+        assertThat(postEntity.getCreated()).isNotNull();
+        assertThat(postEntity.getUpdated()).isNotNull();
+        assertThat(postEntity.getValues()).isNotNull();
+        assertThat(postEntity.getValues().getValues())
+                .isEqualTo(
+                        "{\"where--when\":[\"2015-08-04 21:00:00\"],\"location\":[{\"lon\":12.452835,\"lat\":41.903491}]}");
+        assertThat(postEntity.getPostTagEntityList()).isNull();
+        assertThat(postEntity.getTags().get(0)._id).isEqualTo(361);
+        assertThat(postEntity.getTags().get(0).getTag()).isEqualTo("Question");
+        assertThat(postEntity.getTags().get(0).getColor()).isEqualTo("#911010");
+        assertThat(postEntity.getTags().get(0).getCreated()).isNotNull();
+        assertThat(postEntity.getTags().get(0).getDescription()).isEqualTo("Question");
+        assertThat(postEntity.getTags().get(0).getIcon()).isEqualTo("tag");
+        assertThat(postEntity.getTags().get(0).getPriority()).isEqualTo(99);
+        assertThat(postEntity.getTags().get(0).getType()).isEqualTo(TagEntity.Type.CATEGORY);
 
     }
 

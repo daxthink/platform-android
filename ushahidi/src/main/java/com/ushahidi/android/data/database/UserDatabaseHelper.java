@@ -17,7 +17,6 @@
 
 package com.ushahidi.android.data.database;
 
-import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
