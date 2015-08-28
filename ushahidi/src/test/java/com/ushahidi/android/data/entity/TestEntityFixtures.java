@@ -41,6 +41,8 @@ public class TestEntityFixtures {
 
     private static DeploymentEntity mDeploymentEntity;
 
+    private static TagEntity mTagEntity;
+
     private TestEntityFixtures() {
         // No instances
     }
@@ -101,7 +103,7 @@ public class TestEntityFixtures {
     public static DeploymentEntity getDeploymentEntity() {
         if (mDeploymentEntity == null) {
             mDeploymentEntity = new DeploymentEntity();
-            mDeploymentEntity._id = DEPLOYMENT_ID;
+            mDeploymentEntity._id = ID;
             mDeploymentEntity.setTitle("Deployment Tititle");
             mDeploymentEntity.setStatus(DeploymentEntity.Status.ACTIVATED);
             mDeploymentEntity.setUrl("http://api.myushahidiinstance.com");
@@ -113,5 +115,27 @@ public class TestEntityFixtures {
         List<DeploymentEntity> deploymentEntityList = new ArrayList<>();
         deploymentEntityList.add(getDeploymentEntity());
         return deploymentEntityList;
+    }
+
+    public static TagEntity getTagEntity() {
+        if (mTagEntity == null) {
+            mTagEntity = new TagEntity();
+            mTagEntity._id = ID;
+            mTagEntity.setDeploymentId(DEPLOYMENT_ID);
+            mTagEntity.setCreated(new java.util.Date(1439502954));
+            mTagEntity.setColor("#0c1404");
+            mTagEntity.setType(TagEntity.Type.STATUS);
+            mTagEntity.setIcon("icon");
+            mTagEntity.setDescription("Positive reports");
+            mTagEntity.setPriority(99);
+            mTagEntity.setTag("tag");
+        }
+        return mTagEntity;
+    }
+
+    public static List<TagEntity> getTagEntities() {
+        List<TagEntity> tagEntityList = new ArrayList<>();
+        tagEntityList.add(getTagEntity());
+        return tagEntityList;
     }
 }

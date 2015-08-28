@@ -32,7 +32,8 @@ ext {
 
     //Libraries
     daggerVersion = '2.0.1'
-    daggerVersion = '2.0'
+    rxJavaVersion = '1.0.14'
+    rxAndroidVersion = '0.25.0'
     javaxAnnotationVersion = '10.0-b28'
     raiburariVersion = '2.6.0'
     cupboardVersion = '2.1.2'
@@ -76,6 +77,8 @@ ext {
             heimdallDroid            : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
             dialogplus               : "com.orhanobut:dialogplus:${dialogplusVersion}",
             gson                     : "com.google.code.gson:gson:${gsonVersion}",
+            rxJava                   : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid                : "io.reactivex:rxandroid:${rxAndroidVersion}",
     ]
 
     appTestDependencies = [

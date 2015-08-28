@@ -71,7 +71,7 @@ import javax.inject.Inject;
 
 import rx.subscriptions.CompositeSubscription;
 
-import static rx.android.app.AppObservable.bindFragment;
+import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * Provides Google maps as a fragment in a {@link android.support.v4.view.ViewPager}. Has support
@@ -129,7 +129,7 @@ public class MapPostFragment extends BaseFragment
         mSubscriptions = new CompositeSubscription();
 
         mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObservable())
+                .add(bindSupportFragment(this, mRxEventBus.toObservable())
                         .subscribe(event -> {
                             if (event instanceof ReloadPostEvent) {
                                 ReloadPostEvent reloadPostEvent

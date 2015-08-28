@@ -99,6 +99,8 @@ dependencies {
     compile appDependencies.heimdallDroid
     compile appDependencies.gson
     compile appDependencies.dialogplus
+    compile appDependencies.rxJava
+    compile appDependencies.rxAndroid
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

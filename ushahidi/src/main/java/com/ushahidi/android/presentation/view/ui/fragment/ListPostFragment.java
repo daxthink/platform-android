@@ -51,7 +51,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import rx.subscriptions.CompositeSubscription;
 
-import static rx.android.app.AppObservable.bindFragment;
+import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -112,7 +112,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private void subscribeToRxEventBus() {
         mSubscriptions = new CompositeSubscription();
-        mSubscriptions.add(bindFragment(this, mRxEventBus.toObservable())
+        mSubscriptions.add(bindSupportFragment(this, mRxEventBus.toObservable())
                 .subscribe(event -> {
                     if (event instanceof ReloadPostEvent) {
                         ReloadPostEvent reloadPostEvent
