@@ -152,7 +152,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity,
             List<FormEntity> formEntities) {
         // Note: Saving other entity types apart from post because it was easier to save
-        // all the different entity types fetched the API request.
+        // all the different entity types fetched via the API request.
         if (!isClosed()) {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
@@ -323,7 +323,10 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         return postEntityList;
     }
 
-    public List<FormEntity> getForms(Long deploymentId) {
-        return cupboard().withDatabase(getReadableDatabase()).query(FormEntity.class).list();
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(PostEntity.class, null);
     }
 }

@@ -17,6 +17,8 @@
 package com.ushahidi.android.presentation;
 
 import com.addhen.android.raiburari.presentation.BaseApplication;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 
@@ -45,6 +47,7 @@ public class UshahidiApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         mAppComponent = AppComponent.Initializer.init(this);
+        Iconify.with(new FontAwesomeModule());
     }
 
     public AppComponent getAppComponent() {

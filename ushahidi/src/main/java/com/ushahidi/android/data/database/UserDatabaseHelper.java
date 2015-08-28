@@ -17,6 +17,7 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
@@ -148,5 +149,12 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(UserEntity.class, null);
     }
 }

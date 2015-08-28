@@ -42,7 +42,7 @@ ext {
     gsonVersion = '2.3.1'
     okhttpUrlConnectionVersion = '2.3.0'
     qrCodeReaderViewVersion = '1.0.0'
-    androidIconifyFontawesomeVersion = '2.0.7'
+    androidIconifyFontawesomeVersion = '2.0.8'
     playServicesMapsVersion = '7.8.0'
     cocoaheroGeoJsonVersion = '1.0.1'
     androidMapsUtilsVersion = '0.3.4'
