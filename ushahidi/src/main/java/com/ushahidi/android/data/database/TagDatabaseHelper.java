@@ -60,7 +60,7 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
             final List<TagEntity> tagEntityList = cupboard()
                     .withDatabase(getReadableDatabase()).query(TagEntity.class)
                     .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
-            if (tagEntityList != null) {
+            if (tagEntityList != null && tagEntityList.size() > 0) {
                 subscriber.onNext(tagEntityList);
                 subscriber.onCompleted();
             } else {
@@ -109,5 +109,12 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
                 subscriber.onCompleted();
             }
         });
+    }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(TagEntity.class, null);
     }
 }
