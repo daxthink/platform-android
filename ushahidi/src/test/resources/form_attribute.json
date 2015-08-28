@@ -1,0 +1,73 @@
+{
+  "count": 3,
+  "results": [
+    {
+      "id": 401,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/form_attributes/401",
+      "key": "location",
+      "label": "Location",
+      "instructions": null,
+      "input": "location",
+      "type": "point",
+      "required": false,
+      "default": null,
+      "priority": 99,
+      "options": [],
+      "cardinality": 1,
+      "config": [],
+      "form_stage_id": 201,
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 411,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/form_attributes/411",
+      "key": "where--when",
+      "label": "Where & when?",
+      "instructions": null,
+      "input": "datetime",
+      "type": "datetime",
+      "required": false,
+      "default": null,
+      "priority": 99,
+      "options": [],
+      "cardinality": 1,
+      "config": [],
+      "form_stage_id": 201,
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 1041,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/form_attributes/1041",
+      "key": "3",
+      "label": "New short text field",
+      "instructions": null,
+      "input": "text",
+      "type": "varchar",
+      "required": false,
+      "default": null,
+      "priority": 100,
+      "options": [],
+      "cardinality": 1,
+      "config": [],
+      "form_stage_id": 201,
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    }
+  ],
+  "limit": null,
+  "offset": 0,
+  "order": "asc",
+  "orderby": "id",
+  "curr": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/forms/141/attributes?orderby=id&order=asc&offset=0",
+  "next": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/forms/141/attributes?orderby=id&order=asc&offset=0",
+  "prev": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/forms/141/attributes?orderby=id&order=asc&offset=0",
+  "total_count": 3
+}
