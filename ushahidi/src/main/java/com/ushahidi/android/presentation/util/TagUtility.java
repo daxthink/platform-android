@@ -60,9 +60,8 @@ public final class TagUtility {
             // Tag has both icon and color. Display both
             if (!TextUtils.isEmpty(tagModel.getIcon()) && Utility
                     .validateHexColor(tagModel.getColor())) {
-                Drawable drawable =
-                        getFontAwesomeIconAsDrawable(context, "fa_" + tagModel.getIcon(),
-                                tagModel.getColor(), tagIconSize);
+                Drawable drawable = getFontAwesomeIconAsDrawable(context,
+                        "fa_" + tagModel.getIcon(), tagModel.getColor(), tagIconSize);
                 if (drawable != null) {
                     tagBadge.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
                 }
@@ -81,9 +80,8 @@ public final class TagUtility {
                 if (!TextUtils.isEmpty(tagModel.getIcon())) {
                     StringBuilder builder = new StringBuilder("fa_");
                     builder.append(tagModel.getIcon());
-                    Drawable drawable =
-                            getFontAwesomeIconAsDrawable(context, builder.toString(), null,
-                                    tagIconSize);
+                    Drawable drawable = getFontAwesomeIconAsDrawable(context, builder.toString(),
+                            null, tagIconSize);
                     if (drawable != null) {
                         tagBadge.setCompoundDrawablesWithIntrinsicBounds(drawable,
                                 null, null, null);
