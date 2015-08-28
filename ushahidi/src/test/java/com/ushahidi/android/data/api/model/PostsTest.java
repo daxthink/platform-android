@@ -38,7 +38,6 @@ public class PostsTest extends BaseApiTestCase {
         assertThat(posts.getPosts().get(0).getValues().getValues())
                 .isEqualTo(
                         "{\"where--when\":[\"2015-08-04 21:00:00\"],\"location\":[{\"lon\":12.452835,\"lat\":41.903491}]}");
-        System.out.println(posts.getPosts().get(0).getPostTagEntityList());
         assertThat(posts.getPosts().get(0).getPostTagEntityList()).isNotNull();
         assertThat(posts.getPosts().get(0).getPostTagEntityList()).isNotEmpty();
         assertThat(posts.getPosts().get(0).getPostTagEntityList().get(0).getTagId()).isEqualTo(361);
