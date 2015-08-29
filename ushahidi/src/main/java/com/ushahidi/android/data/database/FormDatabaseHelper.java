@@ -1,7 +1,6 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.entity.FormEntity;
-import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.exception.FormNotFoundException;
 
 import android.content.Context;

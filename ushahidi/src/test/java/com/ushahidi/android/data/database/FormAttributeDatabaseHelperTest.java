@@ -84,7 +84,7 @@ public class FormAttributeDatabaseHelperTest extends BaseTestCase {
     }
 
     private List<FormAttributeEntity> getFormAttributeEntities() throws IOException {
-        final String formAttributeJson = getResource("formAttribute_attribute.json");
+        final String formAttributeJson = getResource("form_attribute.json");
         final FormAttributes formAttributes = gson.fromJson(formAttributeJson, FormAttributes.class);
         List<FormAttributeEntity> formAttributeEntityList = new ArrayList<>(formAttributes.getFormAttributes().size());
         for (FormAttributeEntity formAttributeEntity : formAttributes.getFormAttributes()) {

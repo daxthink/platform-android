@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -42,7 +43,7 @@ public class ActivateDeploymentUsecaseTest {
     private DeploymentRepository mMockDeploymentRepository;
 
     @Mock
-    private List<Deployment> mMockDeployment;
+    private Deployment mMockDeployment;
 
     private ActivateDeploymentUsecase mActivateDeploymentUsecase;
 
@@ -55,9 +56,11 @@ public class ActivateDeploymentUsecaseTest {
 
     @Test
     public void shouldSuccessfullyAddDeployment() {
-        mActivateDeploymentUsecase.setDeployment(mMockDeployment, 1);
+        List<Deployment> deployments = new ArrayList<>();
+        deployments.add(mMockDeployment);
+        mActivateDeploymentUsecase.setDeployment(deployments, 1);
         mActivateDeploymentUsecase.buildUseCaseObservable();
-        verify(mMockDeploymentRepository).updateEntity(mMockDeployment.get(0));
+        verify(mMockDeploymentRepository).updateEntity(deployments.get(0));
 
         verifyNoMoreInteractions(mMockDeploymentRepository);
         verifyZeroInteractions(mMockPostExecutionThread);
@@ -72,7 +75,7 @@ public class ActivateDeploymentUsecaseTest {
             mActivateDeploymentUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Deployment is null you need to call setDeployment(...)");
+            assertThat(e).hasMessage("Deployments is null you need to call setDeployment(...)");
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.ushahidi.android.data.database;
 
 import com.ushahidi.android.data.entity.FormAttributeEntity;
-import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.exception.FormAttributeNotFoundException;
 
 import android.content.Context;
