@@ -337,9 +337,10 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                         mDeploymentModelList.get(pos).getTitle()).setIcon(
                         R.drawable.ic_action_globe);
                 if (mDeploymentModelList.get(pos).getStatus() == DeploymentModel.Status.ACTIVATED) {
-                    subMenu.getItem().setChecked(true);
+                    mNavigationView.getMenu().findItem(pos).setChecked(true);
+                    mToolbar.setTitle(mNavigationView.getMenu().findItem(pos).getTitle());
                 } else {
-                    subMenu.getItem().setChecked(false);
+                    mNavigationView.getMenu().findItem(pos).setChecked(false);
                 }
             }
         }
@@ -355,6 +356,7 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         subMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
                 .setIcon(R.drawable.ic_action_info);
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
+
     }
 
     /**

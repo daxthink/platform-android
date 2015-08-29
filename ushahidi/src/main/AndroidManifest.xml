@@ -39,7 +39,7 @@
         <!-- Activities -->
         <activity
                 android:name=".presentation.view.ui.activity.PostActivity"
-                android:label="@string/posts"
+                android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
