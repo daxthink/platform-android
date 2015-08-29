@@ -19,8 +19,6 @@ public class UshRefreshAuthTokenGrant extends OAuth2RefreshAccessTokenGrant<OAut
 
     private String password;
 
-    private String grantType;
-
     private String clientId;
 
     private String clientSecret;
@@ -41,8 +39,8 @@ public class UshRefreshAuthTokenGrant extends OAuth2RefreshAccessTokenGrant<OAut
 
     @Override
     public Observable<OAuth2AccessToken> grantNewAccessToken() {
-        RefreshTokenRequestBody body = new RefreshTokenRequestBody(grantType, clientId,
-                clientSecret, scope);
+        RefreshTokenRequestBody body = new RefreshTokenRequestBody(refreshToken, GRANT_TYPE,
+                clientId, clientSecret, scope);
         return mRestfulService.refreshAccessToken(body);
     }
 
@@ -60,14 +58,6 @@ public class UshRefreshAuthTokenGrant extends OAuth2RefreshAccessTokenGrant<OAut
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getGrantType() {
-        return grantType;
-    }
-
-    public void setGrantType(String grantType) {
-        this.grantType = grantType;
     }
 
     public String getClientId() {

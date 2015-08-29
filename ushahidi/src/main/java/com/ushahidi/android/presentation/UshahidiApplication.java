@@ -17,6 +17,8 @@
 package com.ushahidi.android.presentation;
 
 import com.addhen.android.raiburari.presentation.BaseApplication;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 
@@ -46,7 +48,7 @@ public class UshahidiApplication extends BaseApplication {
         super.onCreate();
         mAppComponent = AppComponent.Initializer.init(this);
         // This is causing all test to fail. Going to investigate later
-        //Iconify.with(new FontAwesomeModule());
+        Iconify.with(new FontAwesomeModule());
     }
 
     public AppComponent getAppComponent() {

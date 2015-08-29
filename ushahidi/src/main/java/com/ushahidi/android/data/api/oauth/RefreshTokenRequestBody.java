@@ -44,16 +44,21 @@ public class RefreshTokenRequestBody implements Serializable {
 
     private final String scope;
 
+    @SerializedName("refresh_token")
+    private String refreshToken;
+
     /**
      * Default constructor
      *
+     * @param refreshToken The refresh token
      * @param grantType    The grant type
      * @param clientId     The client ID
      * @param clientSecret The client secret
      * @param scope        The scope
      */
-    public RefreshTokenRequestBody(@GrantType String grantType, @ClientId String clientId,
-            @ClientSecret String clientSecret, @Scope String scope) {
+    public RefreshTokenRequestBody(String refreshToken, @GrantType String grantType,
+            @ClientId String clientId, @ClientSecret String clientSecret, @Scope String scope) {
+        this.refreshToken = refreshToken;
         this.grantType = grantType;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -76,13 +81,23 @@ public class RefreshTokenRequestBody implements Serializable {
         return scope;
     }
 
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
     @Override
     public String toString() {
-        return "Payload{"
-                + ", grantType='" + grantType + '\''
-                + ", clientId='" + clientId + '\''
-                + ", clientSecret='" + clientSecret + '\''
-                + ", scope='" + scope + '\''
-                + '}';
+        return "RefreshTokenRequestBody{" +
+                "grantType='" + grantType + '\'' +
+                ", clientId='" + clientId + '\'' +
+                ", clientSecret='" + clientSecret + '\'' +
+                ", scope='" + scope + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                '}';
     }
 }
