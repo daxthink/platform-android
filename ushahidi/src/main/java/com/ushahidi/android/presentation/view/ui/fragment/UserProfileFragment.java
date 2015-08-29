@@ -24,6 +24,7 @@ import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.UserProfileComponent;
 import com.ushahidi.android.presentation.model.UserProfileModel;
 import com.ushahidi.android.presentation.state.LoadUserProfileEvent;
+import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.util.GravatarUtility;
 import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
@@ -107,6 +108,10 @@ public class UserProfileFragment extends BaseFragment {
                                     showLogin();
                                 }
                             }
+
+                            if (event instanceof NoAccessTokenEvent) {
+                                showLogin();
+                            }
                         }));
     }
 
@@ -145,8 +150,7 @@ public class UserProfileFragment extends BaseFragment {
         mLoginLayout.setVisibility(GONE);
         mUserProfileLayout.setVisibility(VISIBLE);
 
-        AppCompatTextView
-                usernameTextView = findById(mUserProfileLayout, R.id.user_username);
+        AppCompatTextView usernameTextView = findById(mUserProfileLayout, R.id.user_username);
         AppCompatTextView roleTextView = findById(mUserProfileLayout, R.id.user_role);
         usernameTextView.setText(profile.getUsername());
         roleTextView.setText(profile.getRole().getValue());

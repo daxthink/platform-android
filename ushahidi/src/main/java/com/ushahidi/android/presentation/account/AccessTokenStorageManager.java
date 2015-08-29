@@ -74,10 +74,8 @@ public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
 
     @Override
     public void storeAccessToken(T accessToken) {
-        mSharedPreferences
-                .edit()
-                .putString(ACCESS_TOKEN_PREFERENCES_KEY, new Gson().toJson(accessToken))
-                .apply();
+        mSharedPreferences.edit().putString(ACCESS_TOKEN_PREFERENCES_KEY,
+                new Gson().toJson(accessToken)).apply();
     }
 
     @Override
@@ -87,9 +85,6 @@ public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
 
     @Override
     public void removeAccessToken() {
-        mSharedPreferences
-                .edit()
-                .remove(ACCESS_TOKEN_PREFERENCES_KEY)
-                .apply();
+        mSharedPreferences.edit().remove(ACCESS_TOKEN_PREFERENCES_KEY).apply();
     }
 }

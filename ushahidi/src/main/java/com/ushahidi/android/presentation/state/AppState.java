@@ -38,6 +38,6 @@ public class AppState extends ApplicationState implements UserState {
 
     @Override
     public void unauthorized() {
-
+        mEventBus.post(new UnauthorizedAccessEvent());
     }
 }
