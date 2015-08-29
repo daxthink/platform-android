@@ -309,14 +309,15 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                                 // Mark the deployment active if it's not
                                 if (mDeploymentModelList.get(menuItem.getItemId()).getStatus()
                                         == DeploymentModel.Status.DEACTIVATED) {
-                                    mPostPresenter.activateDeployment(
-                                            mDeploymentModelList.get(menuItem.getItemId()));
+                                    mPostPresenter.activateDeployment(mDeploymentModelList,
+                                            menuItem.getItemId());
                                 }
+                                menuItem.setCheckable(true);
+                                menuItem.setChecked(true);
+                                mToolbar.setTitle(menuItem.getTitle());
                             }
 
                     }
-                    menuItem.setChecked(true);
-                    mToolbar.setTitle(menuItem.getTitle());
                     mDrawerLayout.closeDrawers();
                     return true;
                 });
@@ -328,6 +329,7 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         if (!Utility.isCollectionEmpty(mDeploymentModelList)) {
             SubMenu subMenu = menu
                     .addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.deployments);
+            subMenu.setGroupCheckable(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, true, true);
             // Use item position as the menu item's id that way we can retrieve the individual
             // deployment when user clicks on it to make it the active deployment
             for (int pos = 0; pos < mDeploymentModelList.size(); pos++) {
@@ -340,7 +342,6 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                     subMenu.getItem().setChecked(false);
                 }
             }
-            subMenu.setGroupCheckable(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, true, true);
         }
 
         SubMenu subMenuMisc = menu

@@ -22,6 +22,8 @@ import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -35,7 +37,9 @@ public class ActivateDeploymentUsecase extends Usecase {
 
     private final DeploymentRepository mDeploymentRepository;
 
-    private Deployment mDeployment;
+    private List<Deployment> mDeployments;
+
+    private int mPosition;
 
     /**
      * Default constructor
@@ -55,17 +59,30 @@ public class ActivateDeploymentUsecase extends Usecase {
     /**
      * Sets deployment
      *
-     * @param deployment The deployment to be updated
+     * @param deployments The deployment list cannot to be updated
+     * @param position    The position of the deployment
      */
-    public void setDeployment(Deployment deployment) {
-        mDeployment = deployment;
+    public void setDeployment(List<Deployment> deployments, int position) {
+        mDeployments = deployments;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeployment == null) {
-            throw new RuntimeException("Deployment is null you need to call setDeployment(...)");
+        if (mDeployments == null) {
+            throw new RuntimeException("Deployments is null you need to call setDeployment(...)");
         }
-        return mDeploymentRepository.updateEntity(mDeployment);
+        // Deactivate the previously activated deployment because we don't want more than one
+        // deployments to be the active one.
+        //TODO refactor so you don't have to go through a list of deployments to find the
+        // current active deployment before making a deployment an active one.
+        for (Deployment dep : mDeployments) {
+            if (dep.getStatus() == Deployment.Status.ACTIVATED) {
+                dep.setStatus(Deployment.Status.DEACTIVATED);
+                mDeploymentRepository.updateEntity(dep);
+            }
+        }
+        final Deployment deployment = mDeployments.get(mPosition);
+        deployment.setStatus(Deployment.Status.ACTIVATED);
+        return mDeploymentRepository.updateEntity(deployment);
     }
 }

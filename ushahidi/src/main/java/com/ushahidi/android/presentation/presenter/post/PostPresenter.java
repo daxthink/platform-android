@@ -162,10 +162,12 @@ public class PostPresenter implements Presenter {
     /**
      * Sets {@link DeploymentModel} status to Activate
      *
-     * @param deploymentModel The model to activate it's status
+     * @param deploymentModels The model to activate it's status
+     * @param position         The position of the deployment model to be deactivated
      */
-    public void activateDeployment(DeploymentModel deploymentModel) {
-        mActivateDeploymentUsecase.setDeployment(mDeploymentModelDataMapper.map(deploymentModel));
+    public void activateDeployment(List<DeploymentModel> deploymentModels, int position) {
+        mActivateDeploymentUsecase
+                .setDeployment(mDeploymentModelDataMapper.unmap(deploymentModels), position);
         mActivateDeploymentUsecase.execute(new DefaultSubscriber<Long>() {
             @Override
             public void onCompleted() {
@@ -182,9 +184,9 @@ public class PostPresenter implements Presenter {
             @Override
             public void onNext(Long row) {
                 // Do nothing
-                mPrefsFactory.getActiveDeploymentId().set(deploymentModel._id);
-                mPrefsFactory.getActiveDeploymentUrl().set(deploymentModel.getUrl());
-                mPostView.setActiveDeployment(deploymentModel);
+                mPrefsFactory.getActiveDeploymentId().set(deploymentModels.get(position)._id);
+                mPrefsFactory.getActiveDeploymentUrl().set(deploymentModels.get(position).getUrl());
+                mPostView.setActiveDeployment(deploymentModels.get(position));
             }
         });
     }
