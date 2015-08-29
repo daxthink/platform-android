@@ -79,6 +79,7 @@ public class ActivateDeploymentUsecase extends Usecase {
             if (dep.getStatus() == Deployment.Status.ACTIVATED) {
                 dep.setStatus(Deployment.Status.DEACTIVATED);
                 mDeploymentRepository.updateEntity(dep);
+                break;
             }
         }
         final Deployment deployment = mDeployments.get(mPosition);

@@ -189,7 +189,6 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     public void onResume() {
         super.onResume();
         mPostPresenter.resume();
-        mListFormPresenter.loadFormFromDb();
         showLoginUserProfile();
         mViewPager.setCurrentItem(mCurrentItem);
     }
@@ -490,7 +489,9 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         if (Utility.isCollectionEmpty(deploymentModels)) {
             getListPostComponent().launcher().launchListDeployment();
         } else {
+            markFirstDeploymentActive();
             setNavigationViewMenuItems(mNavigationView.getMenu());
+            mListFormPresenter.loadFormFromDb();
         }
     }
 
@@ -528,6 +529,18 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     public void renderFormList(List<FormModel> formModel) {
         if (!Utility.isCollectionEmpty(formModel)) {
             mFormAdapter.setItems(formModel);
+        }
+    }
+
+    // This is to enure there is always an active deployment
+    private void markFirstDeploymentActive() {
+        for (DeploymentModel deploymentModel : mDeploymentModelList) {
+            if (deploymentModel.getStatus() == DeploymentModel.Status.ACTIVATED) {
+                break;
+            } else {
+                // Make the first item the active one
+                mPostPresenter.activateDeployment(mDeploymentModelList, 0);
+            }
         }
     }
 
