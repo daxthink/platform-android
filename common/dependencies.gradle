@@ -45,7 +45,7 @@ ext {
     androidIconifyFontawesomeVersion = '2.0.8'
     playServicesMapsVersion = '7.8.0'
     cocoaheroGeoJsonVersion = '1.0.1'
-    androidMapsUtilsVersion = '0.3.4'
+    androidMapsUtilsVersion = '0.4'
     heimdallDroidVersion = '1.0.3'
     dialogplusVersion = '1.10'
 

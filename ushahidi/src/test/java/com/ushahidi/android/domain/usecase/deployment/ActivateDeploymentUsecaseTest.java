@@ -15,6 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.List;
+
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
 import static org.mockito.Mockito.verify;
@@ -40,7 +42,7 @@ public class ActivateDeploymentUsecaseTest {
     private DeploymentRepository mMockDeploymentRepository;
 
     @Mock
-    private Deployment mMockDeployment;
+    private List<Deployment> mMockDeployment;
 
     private ActivateDeploymentUsecase mActivateDeploymentUsecase;
 
@@ -53,9 +55,9 @@ public class ActivateDeploymentUsecaseTest {
 
     @Test
     public void shouldSuccessfullyAddDeployment() {
-        mActivateDeploymentUsecase.setDeployment(mMockDeployment);
+        mActivateDeploymentUsecase.setDeployment(mMockDeployment, 1);
         mActivateDeploymentUsecase.buildUseCaseObservable();
-        verify(mMockDeploymentRepository).updateEntity(mMockDeployment);
+        verify(mMockDeploymentRepository).updateEntity(mMockDeployment.get(0));
 
         verifyNoMoreInteractions(mMockDeploymentRepository);
         verifyZeroInteractions(mMockPostExecutionThread);
@@ -65,7 +67,7 @@ public class ActivateDeploymentUsecaseTest {
     @Test
     public void shouldThrowRuntimeException() {
         assertThat(mActivateDeploymentUsecase).isNotNull();
-        mActivateDeploymentUsecase.setDeployment(null);
+        mActivateDeploymentUsecase.setDeployment(null, 0);
         try {
             mActivateDeploymentUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");

@@ -47,6 +47,7 @@ import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.util.GeoJsonLoadUtility;
 import com.ushahidi.android.presentation.view.post.MapPostView;
 import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
 import org.json.JSONException;
 
@@ -91,6 +92,9 @@ public class MapPostFragment extends BaseFragment
     @Inject
     MapPostPresenter mMapPostPresenter;
 
+    @Inject
+    Launcher mLauncher;
+
     RxEventBus mRxEventBus;
 
     private ClusterManager<ClusterMarkerModel> mClusterManager;
@@ -118,16 +122,15 @@ public class MapPostFragment extends BaseFragment
 
     public void onResume() {
         super.onResume();
+        mMapPostPresenter.resume();
         // Set up Google map
         setUpMapIfNeeded();
-        mMapPostPresenter.resume();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mSubscriptions = new CompositeSubscription();
-
         mSubscriptions
                 .add(bindSupportFragment(this, mRxEventBus.toObservable())
                         .subscribe(event -> {
@@ -174,20 +177,24 @@ public class MapPostFragment extends BaseFragment
             // Try to obtain the map from the SupportMapFragment.
             mMap = mMapFragment.getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                mClusterManager = new ClusterManager<>(getActivity(), mMap);
-                final PostModelRenderer postModelRenderer = new PostModelRenderer(
-                        getActivity().getApplicationContext(), new WeakReference<>(mMap),
-                        new WeakReference<>(mClusterManager),
-                        new WeakReference<>(markers));
-                mClusterManager.setRenderer(postModelRenderer);
-                mMap.setOnCameraChangeListener(mClusterManager);
-                mMap.setOnMarkerClickListener(mClusterManager);
-                mMap.setOnInfoWindowClickListener(mClusterManager);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                mClusterManager.setOnClusterInfoWindowClickListener(this);
-                mClusterManager.setOnClusterItemInfoWindowClickListener(this);
-            }
+            setUpClusterer();
+        }
+    }
+
+    private void setUpClusterer() {
+        if (mMap != null) {
+            mClusterManager = new ClusterManager<>(getActivity(), mMap);
+            final PostModelRenderer postModelRenderer = new PostModelRenderer(
+                    getActivity().getApplicationContext(), new WeakReference<>(mMap),
+                    new WeakReference<>(mClusterManager),
+                    new WeakReference<>(markers));
+            mClusterManager.setRenderer(postModelRenderer);
+            mMap.setOnCameraChangeListener(mClusterManager);
+            mMap.setOnMarkerClickListener(mClusterManager);
+            mMap.setOnInfoWindowClickListener(mClusterManager);
+            //mMap.getUiSettings().setZoomControlsEnabled(true);
+            mClusterManager.setOnClusterInfoWindowClickListener(this);
+            mClusterManager.setOnClusterItemInfoWindowClickListener(this);
         }
     }
 
@@ -220,11 +227,12 @@ public class MapPostFragment extends BaseFragment
             uiObjects = GeoJsonLoadUtility
                     .createUIObjectsFromGeoJSONObjects(featureCollection,
                             getResources().getColor(R.color.white),
-                            getResources().getColor(R.color.red));
+                            getResources().getColor(R.color.color_accent));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        mClusterManager.clearItems();
         for (Object uiObj : uiObjects) {
             if (uiObj instanceof PolylineOptions) {
                 mMap.addPolyline((PolylineOptions) uiObj);
@@ -302,9 +310,7 @@ public class MapPostFragment extends BaseFragment
 
     @Override
     public void onClusterItemInfoWindowClick(ClusterMarkerModel clusterMarkerModel) {
-        //TODO launch post detail view
-        //For now show a toast with the title
-        showToast(clusterMarkerModel.getTitle());
+        mLauncher.launchDetailPost(clusterMarkerModel._id, clusterMarkerModel.getTitle());
     }
 
     @Override

@@ -7,6 +7,8 @@ import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 
 import android.content.SharedPreferences;
 
+import java.util.Calendar;
+
 import de.rheinfabrik.heimdall.OAuth2AccessToken;
 import de.rheinfabrik.heimdall.OAuth2AccessTokenStorage;
 import rx.Observable;
@@ -74,6 +76,9 @@ public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
 
     @Override
     public void storeAccessToken(T accessToken) {
+        setExpiringDate(accessToken);
+        final String json = new Gson().toJson(accessToken);
+        System.out.println(json);
         mSharedPreferences.edit().putString(ACCESS_TOKEN_PREFERENCES_KEY,
                 new Gson().toJson(accessToken)).apply();
     }
@@ -86,5 +91,13 @@ public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
     @Override
     public void removeAccessToken() {
         mSharedPreferences.edit().remove(ACCESS_TOKEN_PREFERENCES_KEY).apply();
+    }
+
+    private void setExpiringDate(T accessToken) {
+        if (accessToken.expiresIn != null) {
+            Calendar expirationDate = Calendar.getInstance();
+            expirationDate.add(Calendar.SECOND, accessToken.expiresIn);
+            accessToken.expirationDate = expirationDate;
+        }
     }
 }

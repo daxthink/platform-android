@@ -191,6 +191,7 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         mPostPresenter.resume();
         mListFormPresenter.loadFormFromDb();
         showLoginUserProfile();
+        mViewPager.setCurrentItem(mCurrentItem);
     }
 
     @Override
@@ -352,7 +353,7 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                 .setIcon(R.drawable.ic_action_map);
 
         subMenuMisc.add(MISC_MENU_ITEMS, FEEDBACK_MENU_ID, 2, R.string.send_feedback)
-                .setIcon(R.drawable.ic_action_info);
+                .setIcon(R.drawable.ic_action_help);
         subMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
                 .setIcon(R.drawable.ic_action_info);
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
