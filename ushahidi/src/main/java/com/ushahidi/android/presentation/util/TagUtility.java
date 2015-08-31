@@ -1,7 +1,7 @@
 package com.ushahidi.android.presentation.util;
 
-import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.TagModel;
 
@@ -60,11 +60,9 @@ public final class TagUtility {
             // Tag has both icon and color. Display both
             if (!TextUtils.isEmpty(tagModel.getIcon()) && Utility
                     .validateHexColor(tagModel.getColor())) {
-                Drawable drawable = getFontAwesomeIconAsDrawable(context,
-                        "fa_" + tagModel.getIcon(), tagModel.getColor(), tagIconSize);
-                if (drawable != null) {
-                    tagBadge.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-                }
+                tagBadge.setCompoundDrawablesWithIntrinsicBounds(
+                        getFontAwesomeIconAsDrawable(context, "fa_" + tagModel.getIcon(),
+                                tagModel.getColor(), tagIconSize), null, null, null);
 
                 //Tag has only color, display badge
             } else if (Utility.validateHexColor(tagModel.getColor())) {
@@ -73,19 +71,18 @@ public final class TagUtility {
                 colorDrawable.setIntrinsicHeight(tagColorSize);
                 colorDrawable.getPaint().setStyle(Paint.Style.FILL);
                 colorDrawable.getPaint().setColor(Color.parseColor(tagModel.getColor()));
-                tagBadge.setCompoundDrawablesWithIntrinsicBounds(colorDrawable, null, null, null);
+                tagBadge.setCompoundDrawablesWithIntrinsicBounds(colorDrawable,
+                        null, null, null);
 
                 // Tag has only icon, display it
             } else {
                 if (!TextUtils.isEmpty(tagModel.getIcon())) {
                     StringBuilder builder = new StringBuilder("fa_");
                     builder.append(tagModel.getIcon());
-                    Drawable drawable = getFontAwesomeIconAsDrawable(context, builder.toString(),
-                            null, tagIconSize);
-                    if (drawable != null) {
-                        tagBadge.setCompoundDrawablesWithIntrinsicBounds(drawable,
-                                null, null, null);
-                    }
+                    tagBadge.setCompoundDrawablesWithIntrinsicBounds(
+                            getFontAwesomeIconAsDrawable(context, builder.toString(), null,
+                                    tagIconSize),
+                            null, null, null);
                 }
             }
 
@@ -93,25 +90,14 @@ public final class TagUtility {
         }
     }
 
-    @Nullable
     private static Drawable getFontAwesomeIconAsDrawable(@NonNull Context context,
             @NonNull String fontawesomeIcon, @Nullable String color, int tagIconSize) {
         if (TextUtils.isEmpty(color)) {
-            try {
-                return new IconDrawable(context,
-                        FontAwesomeIcons.valueOf(fontawesomeIcon.toLowerCase()))
-                        .colorRes(R.color.black_dark).sizeDp(tagIconSize);
-            } catch (IllegalArgumentException e) {
-                //Do nothing
-            }
+            return new IconDrawable(context, Iconify.IconValue.valueOf(fontawesomeIcon))
+                    .colorRes(R.color.black_dark).sizeDp(tagIconSize);
         }
-        try {
-            return new IconDrawable(context,
-                    FontAwesomeIcons.valueOf(fontawesomeIcon.toLowerCase()))
-                    .color(Color.parseColor(color)).sizeDp(tagIconSize);
-        } catch (IllegalArgumentException e) {
-            // Do nothing
-        }
-        return null;
+
+        return new IconDrawable(context, Iconify.IconValue.valueOf(fontawesomeIcon))
+                .color(Color.parseColor(color)).sizeDp(tagIconSize);
     }
 }
