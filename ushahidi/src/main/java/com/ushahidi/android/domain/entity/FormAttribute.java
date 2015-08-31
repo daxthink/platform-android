@@ -121,7 +121,7 @@ public class FormAttribute extends Entity {
         /** A drop down select input type */
         SELECT("select"),
         /** Date picker */
-        DATE("date"),
+        DATETIME("datetime"),
         /** TextArea input type */
         TEXTAREA("textarea");
 

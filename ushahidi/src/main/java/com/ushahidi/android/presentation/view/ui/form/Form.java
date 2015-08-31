@@ -17,6 +17,8 @@
 
 package com.ushahidi.android.presentation.view.ui.form;
 
+import com.ushahidi.android.presentation.model.FormAttributeModel;
+
 import android.content.Context;
 import android.view.ViewGroup;
 
@@ -59,18 +61,16 @@ public class Form {
         return mFormWidgets;
     }
 
+
     /**
      * Renders one or more form widgets.
      *
-     * @param attribute1 The first form attribute that makes up the form widget
      * @param attributes The rest of the form attribute that makes up the form widget
      * @return The container in which the form widgets have been added
      */
-    public ViewGroup renderForm(Attribute attribute1, Attribute attribute2,
-            Attribute... attributes) {
-        generateFormWidget(attribute1);
-        generateFormWidget(attribute2);
-        for (Attribute attribute : attributes) {
+    public ViewGroup renderForm(List<FormAttributeModel> attributes) {
+
+        for (FormAttributeModel attribute : attributes) {
             generateFormWidget(attribute);
         }
         return getContainer();
@@ -90,9 +90,9 @@ public class Form {
         return true;
     }
 
-    private void generateFormWidget(Attribute attribute) {
+    private void generateFormWidget(FormAttributeModel attribute) {
         FormWidget formWidget = null;
-        Attribute.Input input = attribute.getInput();
+        FormAttributeModel.Input input = attribute.getInput();
         if (Attribute.Input.TEXT.equals(input)) {
             formWidget = new EditFormWidget(mContext, attribute.getKey(), attribute.getLabel());
             formWidget.setPriority(attribute.getPriority());

@@ -29,6 +29,10 @@
     <string name="exception_message_deployment_not_added">Could not add the deployment.</string>
     <string name="exception_message_tag_not_found">Tag not found.</string>
     <string name="exception_message_not_logged_in">User not logged in</string>
+    <string name="exception_message_no_response">No response from server</string>
+    <string name="exception_message_error_network_http_error">There is a network error with code
+        %1$d
+    </string>
 
     <!-- Deployments -->
     <string name="add_deployment_title_hint">The title of the deployment</string>

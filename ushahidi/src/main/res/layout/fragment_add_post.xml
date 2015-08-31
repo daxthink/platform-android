@@ -40,6 +40,11 @@
                         android:hint="@string/post_description"
                         android:imeOptions="actionDone"/>
             </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                    android:id="@+id/form_attributes"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 

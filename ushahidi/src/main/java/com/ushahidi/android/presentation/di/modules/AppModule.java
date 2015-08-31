@@ -30,6 +30,7 @@ import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.Session;
 import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
+import com.ushahidi.android.data.exception.RetrofitErrorHandler;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.data.repository.FormAttributeDataRepository;
 import com.ushahidi.android.data.repository.FormDataRepository;
@@ -45,7 +46,6 @@ import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 import com.ushahidi.android.presentation.account.AccessTokenStorageManager;
-import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
 import com.ushahidi.android.presentation.state.UserState;
@@ -304,7 +304,7 @@ public class AppModule {
     @Provides
     @Singleton
     PlatformService provideApiServiceFactory(HttpClientWrap httWrap,
-            UnauthorizedAccessErrorHandler handler, PrefsFactory prefsFactory
+            RetrofitErrorHandler handler, PrefsFactory prefsFactory
     ) {
         return new PlatformService(httWrap, handler, prefsFactory);
     }

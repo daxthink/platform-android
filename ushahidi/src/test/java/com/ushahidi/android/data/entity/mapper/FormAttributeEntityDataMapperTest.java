@@ -48,15 +48,14 @@ public class FormAttributeEntityDataMapperTest {
         assertThat(mFormAttributeEntity.getKey()).isEqualTo("test_varchar");
         assertThat(mFormAttributeEntity.getFormId())
                 .isEqualTo(TestFixtures.getFormAttribute().getFormId());
-        assertThat(mFormAttributeEntity.getKey())
-                .isEqualTo("test_varchar");
-        assertThat(mFormAttributeEntity.getLabel())
-                .isEqualTo("Test varchar");
+        assertThat(mFormAttributeEntity.getKey()).isEqualTo("test_varchar");
+        assertThat(mFormAttributeEntity.getLabel()).isEqualTo("Test varchar");
         assertThat(mFormAttributeEntity.getRequired()).isTrue();
         assertThat(mFormAttributeEntity.getPriority())
                 .isEqualTo(TestFixtures.getFormAttribute().getPriority());
-        assertThat(mFormAttributeEntity.getCardinality())
-                .isEqualTo(1);
+        assertThat(mFormAttributeEntity.getCardinality()).isEqualTo(1);
+        assertThat(mFormAttributeEntity.getInput()).isEqualTo(FormAttributeEntity.Input.TEXT);
+        assertThat(mFormAttributeEntity.getType()).isEqualTo(FormAttributeEntity.Type.VARCHAR);
         assertThat(mFormAttributeEntity.getOptions()).isNull();
     }
 
@@ -79,6 +78,9 @@ public class FormAttributeEntityDataMapperTest {
         assertThat(mFormAttribute.getCardinality())
                 .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getCardinality());
         assertThat(mFormAttribute.getOptions()).isNull();
+        assertThat(mFormAttribute.getInput()).isEqualTo(FormAttribute.Input.TEXT);
+        assertThat(mFormAttribute.getType())
+                .isEqualTo(FormAttribute.Type.POINT);
         assertThat(mFormAttribute.getDeploymentId())
                 .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getDeploymentId());
 
@@ -110,6 +112,8 @@ public class FormAttributeEntityDataMapperTest {
                 .isEqualTo(TestEntityFixtures.getFormAttributeEntity().getPriority());
         assertThat(formAttributeList.get(0).getCardinality()).isEqualTo(
                 TestEntityFixtures.getFormAttributeEntity().getCardinality());
+        assertThat(formAttributeList.get(0).getInput()).isEqualTo(FormAttribute.Input.TEXT);
+        assertThat(formAttributeList.get(0).getType()).isEqualTo(FormAttribute.Type.POINT);
         assertThat(formAttributeList.get(0).getOptions()).isNull();
     }
 }

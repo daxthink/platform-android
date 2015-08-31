@@ -23,7 +23,7 @@ import com.google.gson.GsonBuilder;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.PostValueEntity;
-import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
+import com.ushahidi.android.data.exception.RetrofitErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 
 import javax.inject.Inject;
@@ -42,7 +42,7 @@ import retrofit.converter.GsonConverter;
  */
 public class PlatformService {
 
-    private UnauthorizedAccessErrorHandler mUnauthorizedAccessErrorHandler;
+    private RetrofitErrorHandler mUnauthorizedAccessErrorHandler;
 
     private HttpClientWrap mClient;
 
@@ -59,7 +59,7 @@ public class PlatformService {
      */
     @Inject
     public PlatformService(HttpClientWrap client,
-            UnauthorizedAccessErrorHandler unauthorizedAccessErrorHandler,
+            RetrofitErrorHandler unauthorizedAccessErrorHandler,
             PrefsFactory prefsFactory) {
         mClient = client;
         mUnauthorizedAccessErrorHandler = unauthorizedAccessErrorHandler;

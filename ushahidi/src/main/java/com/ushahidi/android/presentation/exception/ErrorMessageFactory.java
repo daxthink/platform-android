@@ -25,6 +25,7 @@ import com.ushahidi.android.data.api.oauth.ErrorResponse;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;
 import com.ushahidi.android.data.exception.FormAttributeNotFoundException;
 import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
+import com.ushahidi.android.data.exception.NetworkException;
 import com.ushahidi.android.data.exception.PostNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
 import com.ushahidi.android.presentation.UshahidiApplication;
@@ -84,6 +85,8 @@ public final class ErrorMessageFactory {
             message = getRetrofitErrorMessage(retrofitError);
         } else if (exception instanceof FormAttributeNotFoundException) {
             message = context.getString(R.string.form_attribute_not_found);
+        } else if (exception instanceof NetworkException) {
+            message = exception.getMessage();
         }
         // Only print stacktrace when running a debug build
         if (BuildConfig.DEBUG) {

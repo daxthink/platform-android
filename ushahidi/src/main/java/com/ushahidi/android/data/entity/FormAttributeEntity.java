@@ -144,8 +144,8 @@ public class FormAttributeEntity extends Data {
         /**
          * Date picker
          */
-        @SerializedName("date")
-        DATE("date"),
+        @SerializedName("datetime")
+        DATETIME("datetime"),
 
         /**
          * Textarea input type

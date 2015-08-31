@@ -26,12 +26,14 @@ import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttribu
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
 import com.ushahidi.android.presentation.view.post.AddPostView;
+import com.ushahidi.android.presentation.view.ui.form.Form;
 import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,6 +64,9 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     @Bind(R.id.add_post_description)
     EditText description;
 
+    @Bind(R.id.form_attributes)
+    ViewGroup mFormAttributeViewGroup;
+
     @Inject
     AddPostPresenter mAddPostPresenter;
 
@@ -72,6 +77,8 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     Launcher mLauncher;
 
     private FormModel mFormModel;
+
+    private Form mForm;
 
     /**
      * Add Deployment  Fragment
@@ -124,10 +131,12 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     }
 
     private void initializeFormAttributeView() {
+        mForm = new Form(getActivity(), mFormAttributeViewGroup);
         mListFormAttributePresenter.setView(new ListFormAttributeView() {
             @Override
             public void renderFormAttribute(List<FormAttributeModel> formModel) {
                 // TODO: show custom form UI
+                mForm.renderForm(formModel);
             }
 
             @Override

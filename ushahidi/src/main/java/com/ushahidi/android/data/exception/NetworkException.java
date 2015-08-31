@@ -15,19 +15,19 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.exception;
+package com.ushahidi.android.data.exception;
 
 /**
  * This {@link Exception} is thrown when there is not network/data connection on the device
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class NetworkConnectionException extends Exception {
+public class NetworkException extends Exception {
 
     /**
      * Default exception
      */
-    public NetworkConnectionException() {
+    public NetworkException() {
         super();
     }
 
@@ -36,7 +36,7 @@ public class NetworkConnectionException extends Exception {
      *
      * @param message The message be shown when the exception is thrown
      */
-    public NetworkConnectionException(final String message) {
+    public NetworkException(final String message) {
         super(message);
     }
 
@@ -46,7 +46,7 @@ public class NetworkConnectionException extends Exception {
      * @param message The message to be shown when the exception is thrown
      * @param cause   The cause of the exception
      */
-    public NetworkConnectionException(final String message, final Throwable cause) {
+    public NetworkException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
@@ -55,7 +55,7 @@ public class NetworkConnectionException extends Exception {
      *
      * @param cause The cause of the exception
      */
-    public NetworkConnectionException(final Throwable cause) {
+    public NetworkException(final Throwable cause) {
         super(cause);
     }
 }

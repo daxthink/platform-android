@@ -15,50 +15,44 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.exception;
+package com.ushahidi.android.data.exception;
 
-import com.ushahidi.android.presentation.state.UserState;
+import com.ushahidi.android.R;
 
-import android.os.Handler;
-import android.os.Looper;
-
-import java.net.HttpURLConnection;
+import android.content.Context;
 
 import javax.inject.Inject;
 
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
- * ErrorHandler for when the API returns an {@link HttpURLConnection.HTTP_UNAUTHORIZED}
+ * ErrorHandler to determine network issues
  *
  * Uses an event bus to pass the state of the login
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UnauthorizedAccessErrorHandler implements ErrorHandler {
+public class RetrofitErrorHandler implements ErrorHandler {
 
-    private static final Handler MAIN_LOOPER_HANDLER = new Handler(Looper.getMainLooper());
-
-    private UserState mUserState;
+    private final Context mContext;
 
     /**
      * Default constructor
      *
-     * @param userState The user state
+     * @param context The calling context
      */
     @Inject
-    public UnauthorizedAccessErrorHandler(UserState userState) {
-        mUserState = userState;
+    public RetrofitErrorHandler(Context context) {
+        mContext = context;
     }
 
     @Override
     public Throwable handleError(RetrofitError cause) {
 
-        Response r = cause.getResponse();
-        if (r != null && r.getStatus() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-            MAIN_LOOPER_HANDLER.post(() -> mUserState.unauthorized());
+        if (cause.getKind() == RetrofitError.Kind.NETWORK) {
+            String errorDescription = mContext.getString(R.string.exception_message_no_connection);
+            return new NetworkException(errorDescription);
         }
         return cause;
     }

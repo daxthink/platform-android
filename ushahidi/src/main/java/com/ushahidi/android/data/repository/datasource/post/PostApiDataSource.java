@@ -40,8 +40,7 @@ import rx.Observable;
 
 /**
  * Data source for manipulating {@link com.ushahidi.android.data.entity.PostEntity} data to and
- * from
- * the API.
+ * from the API.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

@@ -131,7 +131,7 @@ public class FormAttributeModel extends Model {
         /**
          * Date picker
          */
-        DATE("date"),
+        DATETIME("datetime"),
 
         /**
          * Textarea input type
