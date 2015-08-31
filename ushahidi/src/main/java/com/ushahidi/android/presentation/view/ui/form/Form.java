@@ -118,7 +118,10 @@ public class Form {
     private class Priority implements Comparator<FormWidget> {
 
         public int compare(FormWidget item, FormWidget widget) {
-            return item.getPriority() > widget.getPriority() ? 1 : -1;
+            if (widget != null) {
+                return item.getPriority() > widget.getPriority() ? 1 : -1;
+            }
+            return -1;
         }
     }
 
