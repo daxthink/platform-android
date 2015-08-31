@@ -39,6 +39,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -69,6 +70,12 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
 
     @Bind(R.id.form_attributes)
     ViewGroup mFormAttributeViewGroup;
+
+    @Bind(R.id.post_steps_container)
+    ViewGroup mPostStepsContainer;
+
+    @Bind(R.id.post_steps)
+    LinearLayout mPostStepsView;
 
     @Inject
     AddPostPresenter mAddPostPresenter;
