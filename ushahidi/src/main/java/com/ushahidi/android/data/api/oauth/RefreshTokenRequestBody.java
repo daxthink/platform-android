@@ -92,12 +92,12 @@ public class RefreshTokenRequestBody implements Serializable {
 
     @Override
     public String toString() {
-        return "RefreshTokenRequestBody{" +
-                "grantType='" + grantType + '\'' +
-                ", clientId='" + clientId + '\'' +
-                ", clientSecret='" + clientSecret + '\'' +
-                ", scope='" + scope + '\'' +
-                ", refreshToken='" + refreshToken + '\'' +
-                '}';
+        return "RefreshTokenRequestBody{"
+                + "grantType='" + grantType + '\''
+                + ", clientId='" + clientId + '\''
+                + ", clientSecret='" + clientSecret + '\''
+                + ", scope='" + scope + '\''
+                + ", refreshToken='" + refreshToken + '\''
+                + '}';
     }
 }
