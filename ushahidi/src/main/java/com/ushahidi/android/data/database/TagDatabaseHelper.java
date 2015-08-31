@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
@@ -45,6 +46,7 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
      *
      * @param context The calling context. Cannot be a null value
      */
+    @Inject
     public TagDatabaseHelper(@NonNull Context context) {
         super(context);
     }

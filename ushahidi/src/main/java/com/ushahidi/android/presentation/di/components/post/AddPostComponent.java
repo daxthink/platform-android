@@ -5,6 +5,7 @@ import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.post.AddPostModule;
+import com.ushahidi.android.presentation.di.modules.tag.ListTagModule;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
@@ -18,7 +19,8 @@ import dagger.Component;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @ActivityScope
-@Component(dependencies = AppComponent.class, modules = {ActivityModule.class, AddPostModule.class})
+@Component(dependencies = AppComponent.class, modules = {ActivityModule.class, AddPostModule.class,
+        ListTagModule.class})
 public interface AddPostComponent extends AppActivityComponent {
 
     /**

@@ -36,6 +36,7 @@ import com.ushahidi.android.data.repository.FormAttributeDataRepository;
 import com.ushahidi.android.data.repository.FormDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
+import com.ushahidi.android.data.repository.TagDataRepository;
 import com.ushahidi.android.data.repository.UserAccountDataRepository;
 import com.ushahidi.android.data.repository.UserProfileDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
@@ -43,6 +44,7 @@ import com.ushahidi.android.domain.repository.FormAttributeRepository;
 import com.ushahidi.android.domain.repository.FormRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.TagRepository;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 import com.ushahidi.android.presentation.account.AccessTokenStorageManager;
@@ -202,6 +204,19 @@ public class AppModule {
     PostRepository providePostRepository(
             PostDataRepository postDataRepository) {
         return postDataRepository;
+    }
+
+    /**
+     * Provides {@link TagRepository} object
+     *
+     * @param tagDataRepository tag data repository
+     * @return The tag repository
+     */
+    @Provides
+    @Singleton
+    TagRepository provideTagRepository(
+            TagDataRepository tagDataRepository) {
+        return tagDataRepository;
     }
 
     /**

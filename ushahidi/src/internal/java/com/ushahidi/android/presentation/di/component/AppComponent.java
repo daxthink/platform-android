@@ -29,6 +29,7 @@ import com.ushahidi.android.domain.repository.FormAttributeRepository;
 import com.ushahidi.android.domain.repository.FormRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.TagRepository;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 import com.ushahidi.android.presentation.UshahidiApplication;
@@ -129,6 +130,13 @@ public interface AppComponent extends ApplicationComponent {
      * @return The user profile repository
      */
     UserProfileRepository userProfileRepository();
+
+    /**
+     * Provide {@link TagRepository} to the sub-graph
+     *
+     * @return The tag repository
+     */
+    TagRepository tagRepository();
 
     /**
      * Provide {@link PrefsFactory} to the sub-graph

@@ -21,6 +21,7 @@ import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.usecase.post.AddPostUsecase;
+import com.ushahidi.android.domain.usecase.tag.ListTagUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.model.mapper.PostModelDataMapper;

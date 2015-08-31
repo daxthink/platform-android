@@ -22,10 +22,13 @@ import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.FormModel;
 import com.ushahidi.android.presentation.model.PostModel;
+import com.ushahidi.android.presentation.model.TagModel;
 import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
+import com.ushahidi.android.presentation.presenter.tags.ListTagPresenter;
 import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
 import com.ushahidi.android.presentation.view.post.AddPostView;
+import com.ushahidi.android.presentation.view.tags.ListTagsView;
 import com.ushahidi.android.presentation.view.ui.form.Form;
 import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
@@ -69,6 +72,9 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
 
     @Inject
     AddPostPresenter mAddPostPresenter;
+
+    @Inject
+    ListTagPresenter mListTagPresenter;
 
     @Inject
     ListFormAttributePresenter mListFormAttributePresenter;
@@ -127,6 +133,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
         getComponent(AddPostComponent.class).inject(this);
         mAddPostPresenter.setView(this);
         mFormModel = getArguments().getParcelable(ARGUMENT_KEY_FORM_MODEL);
+        intializeTagsView();
         initializeFormAttributeView();
     }
 
@@ -171,6 +178,46 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
         });
 
         mListFormAttributePresenter.getFormOnline(mFormModel._id);
+    }
+
+    private void intializeTagsView() {
+        mListTagPresenter.setView(new ListTagsView() {
+            @Override
+            public void renderTagList(List<TagModel> tagModel) {
+                //todo Render tags
+            }
+
+            @Override
+            public void showLoading() {
+                // Do nothing
+            }
+
+            @Override
+            public void hideLoading() {
+                // Do nothing
+            }
+
+            @Override
+            public void showRetry() {
+                // Do nothing
+            }
+
+            @Override
+            public void hideRetry() {
+                // Do nothing
+            }
+
+            @Override
+            public void showError(String s) {
+                // Do nothing
+            }
+
+            @Override
+            public Context getAppContext() {
+                return getActivity().getApplicationContext();
+            }
+        });
+        mListTagPresenter.loadTags();
     }
 
     @Override
