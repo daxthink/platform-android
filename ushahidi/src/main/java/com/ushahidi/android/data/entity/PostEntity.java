@@ -19,8 +19,6 @@ package com.ushahidi.android.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +29,7 @@ import nl.qbusict.cupboard.annotation.Ignore;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostEntity extends DataEntity {
+public class PostEntity extends Data {
 
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
@@ -194,9 +192,11 @@ public class PostEntity extends DataEntity {
 
     @Override
     public String toString() {
-        return "Post{"
+        return "PostEntity{"
                 + "id=" + _id
+                + "parent=" + parent
                 + ", mParent=" + mParent
+                + ", mUser=" + mUser
                 + ", mType=" + mType
                 + ", mTitle='" + mTitle + '\''
                 + ", mSlug='" + mSlug + '\''
@@ -206,10 +206,27 @@ public class PostEntity extends DataEntity {
                 + ", mStatus=" + mStatus
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
-                + ", mDeploymentId=" + mDeploymentId
                 + ", mValues=" + mValues
+                + ", mPostTagEntityList=" + mPostTagEntityList
+                + ", mDeploymentId=" + mDeploymentId
                 + ", mTags=" + mTags
                 + '}';
+    }
+
+    public UserEntity getUser() {
+        return mUser;
+    }
+
+    public void setUser(UserEntity user) {
+        mUser = user;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     public enum Status {

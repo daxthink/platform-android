@@ -21,14 +21,17 @@
     <string name="action_settings">Settings</string>
 
     <!--Exception messages -->
-    <string name="exception_message_generic">Something funky is going on here. An unknown error
-        occurred
+    <string name="exception_message_generic">Sorry, something went wrong. Try the action again.
     </string>
     <string name="exception_message_no_connection">There is no internet connection</string>
     <string name="exception_message_deployment_not_found">Deployment not found.</string>
     <string name="exception_message_deployment_not_added">Could not add the deployment.</string>
     <string name="exception_message_tag_not_found">Tag not found.</string>
     <string name="exception_message_not_logged_in">User not logged in</string>
+    <string name="exception_message_no_response">No response from server</string>
+    <string name="exception_message_error_network_http_error">There is a network error with code
+        %1$d
+    </string>
 
     <!-- Deployments -->
     <string name="add_deployment_title_hint">The title of the deployment</string>
@@ -126,4 +129,15 @@
     <string name="post_detail">Detail Post</string>
     <string name="share">Share Post</string>
     <string name="search_post_empty_result">No matching posts.</string>
+    <string name="required_field_error">This field is required.</string>
+    <string name="not_logged_in">You have to login to perform this action</string>
+    <string name="geojson_not_found">Could not fetch GeoJson. Not found.</string>
+    <string name="fetch_post_not_found">Could not fetch Post. Not found.</string>
+    <string name="select_post_type">Select Post Type</string>
+    <string name="no_forms_found">No forms found.</string>
+    <string name="post_title">Post title</string>
+    <string name="post_description">Post description</string>
+    <string name="save">Save</string>
+    <string name="add_post">Add Post</string>
+    <string name="form_attribute_not_found">Could not fetch form attribute. Not found.</string>
 </resources>

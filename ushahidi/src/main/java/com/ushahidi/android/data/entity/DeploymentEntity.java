@@ -16,14 +16,12 @@
 
 package com.ushahidi.android.data.entity;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 /**
  * Deployment Data Entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeploymentEntity extends DataEntity {
+public class DeploymentEntity extends Data {
 
     private String mTitle;
 

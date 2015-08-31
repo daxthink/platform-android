@@ -17,12 +17,28 @@
 package com.ushahidi.android.presentation.exception;
 
 
+import com.google.gson.Gson;
+
+import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.R;
+import com.ushahidi.android.data.api.oauth.ErrorResponse;
 import com.ushahidi.android.data.exception.DeploymentNotFoundException;
+import com.ushahidi.android.data.exception.FormAttributeNotFoundException;
+import com.ushahidi.android.data.exception.GeoJsonNotFoundException;
+import com.ushahidi.android.data.exception.NetworkException;
 import com.ushahidi.android.data.exception.PostNotFoundException;
 import com.ushahidi.android.data.exception.TagNotFoundException;
+import com.ushahidi.android.presentation.UshahidiApplication;
+import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 
 import android.content.Context;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+
+import retrofit.RetrofitError;
 
 /**
  * Creates the various app exceptions
@@ -52,9 +68,44 @@ public final class ErrorMessageFactory {
         } else if (exception instanceof TagNotFoundException) {
             message = context.getString(R.string.exception_message_tag_not_found);
         } else if (exception instanceof PostNotFoundException) {
-            message = context.getString(R.string.post_not_found);
+            message = context.getString(R.string.fetch_post_not_found);
+        } else if (exception instanceof GeoJsonNotFoundException) {
+            message = context.getString(R.string.geojson_not_found);
+        } else if (exception instanceof IllegalStateException && exception.getMessage()
+                .equalsIgnoreCase("No access token found.")) {
+            // Double check to make sure exception being checked is that of access token
+            // then trigger a login prompt
+            UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
+
+        } else if (exception instanceof RetrofitError) {
+            RetrofitError retrofitError = (RetrofitError) exception;
+            if (retrofitError.getResponse().getStatus() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
+            }
+            message = getRetrofitErrorMessage(retrofitError);
+        } else if (exception instanceof FormAttributeNotFoundException) {
+            message = context.getString(R.string.form_attribute_not_found);
+        } else if (exception instanceof NetworkException) {
+            message = exception.getMessage();
         }
-        exception.printStackTrace();
+        // Only print stacktrace when running a debug build
+        if (BuildConfig.DEBUG) {
+            exception.printStackTrace();
+        }
         return message;
+    }
+
+    public static String getRetrofitErrorMessage(RetrofitError error) {
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(error.getResponse().getBody().in(), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (reader != null) {
+            ErrorResponse errorResponse = new Gson().fromJson(reader, ErrorResponse.class);
+            return errorResponse.getErrorDescription();
+        }
+        return "";
     }
 }

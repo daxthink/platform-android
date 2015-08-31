@@ -62,6 +62,14 @@ public interface PostRepository {
     Observable<Long> putPost(List<Post> postList);
 
     /**
+     * Add / Update an {@link Post} to/in a storage.
+     *
+     * @param post The post entity to be added.
+     * @return The row affected
+     */
+    Observable<Long> putPost(Post post);
+
+    /**
      * Delete an existing {@link Post} form storage.
      *
      * @param post The post's id to be deleted.

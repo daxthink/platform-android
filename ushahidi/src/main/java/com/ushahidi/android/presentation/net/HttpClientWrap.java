@@ -17,9 +17,6 @@
 
 package com.ushahidi.android.presentation.net;
 
-import com.addhen.android.raiburari.presentation.util.Utils;
-import com.ushahidi.android.presentation.exception.NetworkConnectionException;
-
 import android.content.Context;
 
 import java.io.IOException;
@@ -27,7 +24,6 @@ import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit.RetrofitError;
 import retrofit.client.Client;
 import retrofit.client.Request;
 import retrofit.client.Response;
@@ -60,12 +56,7 @@ public class HttpClientWrap implements Client {
 
     @Override
     public Response execute(Request request) throws IOException {
-        if (!Utils.isNetworkConnected(mContext)) {
-            throw RetrofitError
-                    .unexpectedError("No internet", new NetworkConnectionException("No Internet"));
-        } else {
-            return mClient.execute(request);
-        }
+        return mClient.execute(request);
     }
 
 }

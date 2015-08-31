@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
@@ -45,6 +46,7 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
      *
      * @param context The calling context. Cannot be a null value
      */
+    @Inject
     public TagDatabaseHelper(@NonNull Context context) {
         super(context);
     }
@@ -60,7 +62,7 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
             final List<TagEntity> tagEntityList = cupboard()
                     .withDatabase(getReadableDatabase()).query(TagEntity.class)
                     .withSelection("mDeploymentId = ?", String.valueOf(deploymentId)).list();
-            if (tagEntityList != null) {
+            if (tagEntityList != null && tagEntityList.size() > 0) {
                 subscriber.onNext(tagEntityList);
                 subscriber.onCompleted();
             } else {
@@ -109,5 +111,12 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
                 subscriber.onCompleted();
             }
         });
+    }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(TagEntity.class, null);
     }
 }

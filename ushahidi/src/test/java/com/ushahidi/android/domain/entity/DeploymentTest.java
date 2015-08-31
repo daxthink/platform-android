@@ -1,6 +1,7 @@
 package com.ushahidi.android.domain.entity;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +17,8 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class DeploymentTest {
-
-    private Deployment mDeployment;
 
     private static final Long DUMMY_ID = 1l;
 
@@ -28,6 +27,8 @@ public class DeploymentTest {
     private static final Deployment.Status DUMMY_STATUS = Deployment.Status.DEACTIVATED;
 
     private static final String DUMMY_URL = "http://deployment.com";
+
+    private Deployment mDeployment;
 
     @Before
     public void setUp() {

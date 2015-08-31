@@ -3,6 +3,7 @@ package com.ushahidi.android.domain.usecase.deployment;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 
 import org.junit.Before;
@@ -25,8 +26,10 @@ import static org.mockito.Mockito.verifyZeroInteractions;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class DeleteDeploymentUsecaseTest {
+
+    private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     @Mock
     private ThreadExecutor mockThreadExecutor;
@@ -38,8 +41,6 @@ public class DeleteDeploymentUsecaseTest {
     private DeploymentRepository mockDeploymentRepository;
 
     private DeleteDeploymentUsecase mDeleteDeploymentUsecase;
-
-    private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     @Before
     public void setUp() throws Exception {

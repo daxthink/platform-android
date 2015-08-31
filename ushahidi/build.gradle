@@ -92,13 +92,15 @@ dependencies {
     compile appDependencies.okhttp
     compile appDependencies.okhttpUrlConnection
     compile appDependencies.qrCodeReaderView
-    compile appDependencies.androidIconify
+    compile appDependencies.androidIconifyFontawesome
     compile appDependencies.playServicesMaps
     compile appDependencies.androidMapsUtils
     compile appDependencies.cocoaheroGeoJson
     compile appDependencies.heimdallDroid
-    compile appDependencies.stetho
-    compile appDependencies.stethoOkHttp
+    compile appDependencies.gson
+    compile appDependencies.dialogplus
+    compile appDependencies.rxJava
+    compile appDependencies.rxAndroid
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

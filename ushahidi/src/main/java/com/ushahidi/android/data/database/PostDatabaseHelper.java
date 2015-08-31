@@ -17,6 +17,8 @@
 
 package com.ushahidi.android.data.database;
 
+import com.ushahidi.android.data.entity.FormAttributeEntity;
+import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
@@ -98,7 +100,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     }
 
     /**
-     * Get a list of {@link PostEntity}
+     * Saves a list of {@link PostEntity}
      *
      * @param postEntities The post entities
      * @return An observable that emits a {@link PostEntity}
@@ -118,20 +120,43 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     }
 
     /**
-     * save a list of {@PostEntity}
+     * Saves a list of {@link PostEntity}
+     *
+     * @param postEntity The post entity
+     * @return An observable that emits a {@link PostEntity}
+     */
+    public Observable<Long> putPost(PostEntity postEntity) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                // Delete existing posttag entities.
+                // Lame way to avoid duplicates because the ID is auto generated upon insertion
+                // and we wouldn't know by then to replace them.
+                deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                puts(postEntity, subscriber);
+            }
+        });
+    }
+
+    /**
+     * Saves a list of {@PostEntity}
      *
      * @param deploymentId  The deployment ID
      * @param tagEntities   The Tag entities
      * @param postEntities  The post entities
      * @param geoJsonEntity The GeoJson entity
+     * @param formEntities  The           form entities
      * @return An observable that emits {@link PostEntity}
      */
     public List<PostEntity> putFetchedPosts(Long deploymentId,
             List<TagEntity> tagEntities,
-            List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity) {
+            List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity,
+            List<FormEntity> formEntities) {
+        // Note: Saving other entity types apart from post because it was easier to save
+        // all the different entity types fetched via the API request.
         if (!isClosed()) {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
+            cupboard().withDatabase(getWritableDatabase()).put(formEntities);
             for (PostEntity postEntity : postEntities) {
                 // Delete existing posttag entities.
                 // Lame way to avoid duplicates because the ID is auto generated upon insertion
@@ -142,6 +167,12 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         }
         List<PostEntity> postEntityList = getPosts(deploymentId);
         return setPostEntityList(postEntityList);
+    }
+
+    public void putFetchedFormAttributes(List<FormAttributeEntity> formAttributes) {
+        if (!isClosed()) {
+            cupboard().withDatabase(getWritableDatabase()).put(formAttributes);
+        }
     }
 
     /**
@@ -218,18 +249,22 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
 
     private List<TagEntity> getTagEntity(PostEntity postEntity) {
         List<TagEntity> tagEntityList = new ArrayList<>();
+        String selection = "mDeploymentId = ? AND mPostId = ?";
+        String args[] = {String.valueOf(postEntity.getDeploymentId()),
+                String.valueOf(postEntity._id)};
         // Fetch Tags attached to a post by querying the post entity
         // table to get the tag IDs
         List<PostTagEntity> postTagEntityList = cupboard().withDatabase(getReadableDatabase())
-                .query(PostTagEntity.class)
-                .withSelection("mDeploymentId = ?", String.valueOf(postEntity.getDeploymentId()))
-                .withSelection("mPostId = ?", String.valueOf(postEntity._id)).list();
+                .query(PostTagEntity.class).withSelection(selection, args).list();
         // Iterate through the fetched post tag entity to fetch for the
         // tags attached to the post. This is a manual way of dealing
         // entity relationships
         for (PostTagEntity postTagEntity : postTagEntityList) {
+            String sel = "mDeploymentId = ? AND _id = ?";
+            String arg[] = {String.valueOf(postEntity.getDeploymentId()),
+                    String.valueOf(postTagEntity.getTagId())};
             TagEntity tagEntity = cupboard().withDatabase(getReadableDatabase())
-                    .get(TagEntity.class, postTagEntity.getTagId());
+                    .query(TagEntity.class).withSelection(sel, arg).get();
             tagEntityList.add(tagEntity);
         }
         return tagEntityList;
@@ -286,5 +321,12 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             postEntityList.add(postEntity);
         }
         return postEntityList;
+    }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(PostEntity.class, null);
     }
 }

@@ -17,11 +17,15 @@
 
 package com.ushahidi.android.presentation.view.ui.activity;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.Holder;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.presentation.UshahidiApplication;
+import com.ushahidi.android.presentation.di.components.form.DaggerListFormComponent;
+import com.ushahidi.android.presentation.di.components.form.ListFormComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerPostComponent;
@@ -31,15 +35,20 @@ import com.ushahidi.android.presentation.di.components.post.MapPostComponent;
 import com.ushahidi.android.presentation.di.components.post.PostComponent;
 import com.ushahidi.android.presentation.di.components.post.UserProfileComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
+import com.ushahidi.android.presentation.model.FormModel;
 import com.ushahidi.android.presentation.model.UserProfileModel;
+import com.ushahidi.android.presentation.presenter.form.ListFormPresenter;
 import com.ushahidi.android.presentation.presenter.post.PostPresenter;
 import com.ushahidi.android.presentation.state.LoadUserProfileEvent;
 import com.ushahidi.android.presentation.state.ReloadPostEvent;
 import com.ushahidi.android.presentation.util.Utility;
+import com.ushahidi.android.presentation.view.form.ListFormView;
 import com.ushahidi.android.presentation.view.post.PostView;
+import com.ushahidi.android.presentation.view.ui.adapter.FormAdapter;
 import com.ushahidi.android.presentation.view.ui.fragment.ListPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
+import com.ushahidi.android.presentation.view.ui.widget.CustomGridHolder;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -49,7 +58,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -63,6 +71,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
 import java.util.ArrayList;
@@ -75,7 +84,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostActivity extends BaseAppActivity implements PostView {
+public class PostActivity extends BaseAppActivity implements PostView, ListFormView {
 
     private static final String STATE_PARAM_SELECTED_TAB
             = "com.ushahidi.android.presentation.view.ui.activity.SELECTED_TAB";
@@ -121,6 +130,8 @@ public class PostActivity extends BaseAppActivity implements PostView {
 
     PostPresenter mPostPresenter;
 
+    ListFormPresenter mListFormPresenter;
+
     UshAccessTokenManager mUshAccessTokenManager;
 
     SessionManager<PlatformSession> mSessionManager;
@@ -138,6 +149,8 @@ public class PostActivity extends BaseAppActivity implements PostView {
     private List<DeploymentModel> mDeploymentModelList;
 
     private boolean mPendingIntroAnimation;
+
+    private FormAdapter mFormAdapter;
 
     /**
      * Default constructor
@@ -177,6 +190,7 @@ public class PostActivity extends BaseAppActivity implements PostView {
         super.onResume();
         mPostPresenter.resume();
         showLoginUserProfile();
+        mViewPager.setCurrentItem(mCurrentItem);
     }
 
     @Override
@@ -232,6 +246,7 @@ public class PostActivity extends BaseAppActivity implements PostView {
         }
 
         mTabLayout.setupWithViewPager(mViewPager);
+        mFormAdapter = new FormAdapter(this);
     }
 
     private void injector() {
@@ -239,7 +254,10 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
-
+        ListFormComponent listFormComponent = DaggerListFormComponent.builder()
+                .appComponent(getAppComponent())
+                .activityModule(getActivityModule())
+                .build();
         mListPostComponent = DaggerListPostComponent.builder()
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
@@ -258,6 +276,9 @@ public class PostActivity extends BaseAppActivity implements PostView {
         mSessionManager = getAppComponent().platformSessionManager();
         mPostPresenter = postComponent.postPresenter();
         mPostPresenter.setPostView(this);
+        mListFormPresenter = listFormComponent.listFormPresenter();
+        mListFormPresenter.setView(this);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -288,14 +309,15 @@ public class PostActivity extends BaseAppActivity implements PostView {
                                 // Mark the deployment active if it's not
                                 if (mDeploymentModelList.get(menuItem.getItemId()).getStatus()
                                         == DeploymentModel.Status.DEACTIVATED) {
-                                    mPostPresenter.activateDeployment(
-                                            mDeploymentModelList.get(menuItem.getItemId()));
+                                    mPostPresenter.activateDeployment(mDeploymentModelList,
+                                            menuItem.getItemId());
                                 }
+                                menuItem.setCheckable(true);
+                                menuItem.setChecked(true);
+                                mToolbar.setTitle(menuItem.getTitle());
                             }
 
                     }
-                    menuItem.setChecked(true);
-                    mToolbar.setTitle(menuItem.getTitle());
                     mDrawerLayout.closeDrawers();
                     return true;
                 });
@@ -307,19 +329,20 @@ public class PostActivity extends BaseAppActivity implements PostView {
         if (!Utility.isCollectionEmpty(mDeploymentModelList)) {
             SubMenu subMenu = menu
                     .addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.deployments);
+            subMenu.setGroupCheckable(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, true, true);
             // Use item position as the menu item's id that way we can retrieve the individual
             // deployment when user clicks on it to make it the active deployment
             for (int pos = 0; pos < mDeploymentModelList.size(); pos++) {
                 subMenu.add(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, pos, pos,
-                        mDeploymentModelList.get(pos).getTitle())
-                        .setIcon(R.drawable.ic_action_globe);
+                        mDeploymentModelList.get(pos).getTitle()).setIcon(
+                        R.drawable.ic_action_globe);
                 if (mDeploymentModelList.get(pos).getStatus() == DeploymentModel.Status.ACTIVATED) {
-                    subMenu.getItem().setChecked(true);
+                    mNavigationView.getMenu().findItem(pos).setChecked(true);
+                    mToolbar.setTitle(mNavigationView.getMenu().findItem(pos).getTitle());
                 } else {
-                    subMenu.getItem().setChecked(false);
+                    mNavigationView.getMenu().findItem(pos).setChecked(false);
                 }
             }
-            subMenu.setGroupCheckable(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, true, true);
         }
 
         SubMenu subMenuMisc = menu
@@ -329,16 +352,10 @@ public class PostActivity extends BaseAppActivity implements PostView {
                 .setIcon(R.drawable.ic_action_map);
 
         subMenuMisc.add(MISC_MENU_ITEMS, FEEDBACK_MENU_ID, 2, R.string.send_feedback)
-                .setIcon(R.drawable.ic_action_info);
+                .setIcon(R.drawable.ic_action_help);
         subMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
                 .setIcon(R.drawable.ic_action_info);
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
-
-        // Work around to get the menus items to show
-        // TODO: Remove the code snippet below when there is an official fix for it
-        // https://code.google.com/p/android/issues/detail?id=176300
-        menu.add(0, 99, 0, "gone");
-        menu.removeItem(99);
 
     }
 
@@ -438,8 +455,21 @@ public class PostActivity extends BaseAppActivity implements PostView {
      */
     @OnClick(R.id.post_fab)
     void onFabClick(View view) {
-        Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null)
-                .show();
+        Holder holder = new CustomGridHolder(3);
+        final DialogPlus dialog = DialogPlus.newDialog(this)
+                .setOnItemClickListener((dia, item, view1, position) -> {
+                    mMapPostComponent.launcher().launchAddPost(mFormAdapter.getItem(position));
+                    dia.dismiss();
+                })
+                .setExpanded(true)
+                .setCancelable(true)
+                .setContentHolder(holder)
+                .setHeader(R.layout.form_dialog_header)
+                .setAdapter(mFormAdapter)
+                .setContentHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                .setOnBackPressListener(dialogPlus -> dialogPlus.dismiss())
+                .create();
+        dialog.show();
     }
 
 
@@ -459,7 +489,9 @@ public class PostActivity extends BaseAppActivity implements PostView {
         if (Utility.isCollectionEmpty(deploymentModels)) {
             getListPostComponent().launcher().launchListDeployment();
         } else {
+            markFirstDeploymentActive();
             setNavigationViewMenuItems(mNavigationView.getMenu());
+            mListFormPresenter.loadFormFromDb();
         }
     }
 
@@ -491,6 +523,25 @@ public class PostActivity extends BaseAppActivity implements PostView {
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    @Override
+    public void renderFormList(List<FormModel> formModel) {
+        if (!Utility.isCollectionEmpty(formModel)) {
+            mFormAdapter.setItems(formModel);
+        }
+    }
+
+    // This is to enure there is always an active deployment
+    private void markFirstDeploymentActive() {
+        for (DeploymentModel deploymentModel : mDeploymentModelList) {
+            if (deploymentModel.getStatus() == DeploymentModel.Status.ACTIVATED) {
+                break;
+            } else {
+                // Make the first item the active one
+                mPostPresenter.activateDeployment(mDeploymentModelList, 0);
+            }
+        }
     }
 
     /**

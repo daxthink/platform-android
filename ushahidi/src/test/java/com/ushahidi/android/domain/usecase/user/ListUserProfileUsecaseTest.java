@@ -20,6 +20,7 @@ package com.ushahidi.android.domain.usecase.user;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
 
 import org.junit.Before;
@@ -41,7 +42,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class ListUserProfileUsecaseTest {
 
     @Mock

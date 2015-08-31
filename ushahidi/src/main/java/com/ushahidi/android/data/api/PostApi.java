@@ -19,6 +19,8 @@ package com.ushahidi.android.data.api;
 
 import com.google.gson.JsonElement;
 
+import com.ushahidi.android.data.api.model.FormAttributes;
+import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
@@ -80,5 +82,22 @@ public class PostApi {
         return mUshAccessTokenManager.getValidAccessToken().concatMap(
                 authorizationHeader -> mUshAccessTokenManager.getRestfulService()
                         .getGeoJson(authorizationHeader));
+    }
+
+    /**
+     * Gets a {@link Forms}
+     *
+     * @return An Observable that emits{@link Forms}
+     */
+    public Observable<Forms> getForms() {
+        return mUshAccessTokenManager.getValidAccessToken().concatMap(
+                authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                        .getForms(authorizationHeader));
+    }
+
+    public Observable<FormAttributes> getFormAttributes(Long formId) {
+        return mUshAccessTokenManager.getValidAccessToken().concatMap(
+                authorizationHeader -> mUshAccessTokenManager.getRestfulService()
+                        .getFormAttributes(authorizationHeader, formId));
     }
 }

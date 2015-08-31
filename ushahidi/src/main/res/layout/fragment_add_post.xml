@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <HorizontalScrollView android:id="@+id/post_steps_container"
+                          android:layout_below="@+id/detail_post_content"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/view_spacing_large"
+                          android:scrollbars="none"
+                          android:requiresFadingEdge="horizontal"
+                          android:fadingEdgeLength="@dimen/view_spacing_large"
+                          android:layout_marginBottom="@dimen/view_spacing_large">
+        <LinearLayout android:id="@+id/post_steps"
+                      android:orientation="horizontal"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+    </HorizontalScrollView>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/view_spacing_normal"
+                android:animateLayoutChanges="true">
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_spacing_normal">
+
+                <EditText
+                        android:id="@+id/add_post_title"
+                        style="@style/EditText.Name"
+                        android:hint="@string/post_title"
+                        android:imeOptions="actionNext"
+                        android:nextFocusDown="@+id/add_post_description"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_spacing_normal">
+
+                <EditText
+                        android:id="@+id/add_post_description"
+                        style="@style/EditText.Multiline"
+                        android:hint="@string/post_description"
+                        android:imeOptions="actionDone"/>
+            </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                    android:id="@+id/categories"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <LinearLayout
+                    android:id="@+id/form_attributes"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/dividerVertical"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="?android:buttonBarStyle">
+
+        <Button
+                android:id="@+id/add_post_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/cancel"
+                android:textColor="@color/red"
+                style="?android:buttonBarButtonStyle"
+                android:layout_toStartOf="@+id/save_post"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/save_post"/>
+
+        <Button
+                android:id="@+id/save_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:text="@string/save"
+                style="?android:buttonBarButtonStyle"/>
+
+    </RelativeLayout>
+</LinearLayout>

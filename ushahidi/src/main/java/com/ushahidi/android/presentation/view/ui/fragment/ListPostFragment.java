@@ -25,6 +25,7 @@ import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.presenter.post.ListPostPresenter;
+import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 import com.ushahidi.android.presentation.state.ReloadPostEvent;
 import com.ushahidi.android.presentation.state.RxEventBus;
 import com.ushahidi.android.presentation.util.Utility;
@@ -50,7 +51,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import rx.subscriptions.CompositeSubscription;
 
-import static rx.android.app.AppObservable.bindFragment;
+import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -65,9 +66,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Bind(android.R.id.list)
     BloatedRecyclerView mPostRecyclerView;
-
-    @Bind(android.R.id.empty)
-    TextView mEmptyView;
 
     @Inject
     ListPostPresenter mListPostPresenter;
@@ -84,6 +82,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     private CompositeSubscription mSubscriptions;
 
     private List<PostModel> mPostModelList;
+
+    private Snackbar mSnackbar;
 
     public ListPostFragment() {
         super(PostAdapter.class, R.layout.fragment_list_post, R.menu.list_post);
@@ -112,7 +112,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private void subscribeToRxEventBus() {
         mSubscriptions = new CompositeSubscription();
-        mSubscriptions.add(bindFragment(this, mRxEventBus.toObservable())
+        mSubscriptions.add(bindSupportFragment(this, mRxEventBus.toObservable())
                 .subscribe(event -> {
                     if (event instanceof ReloadPostEvent) {
                         ReloadPostEvent reloadPostEvent
@@ -120,6 +120,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                         if (reloadPostEvent != null) {
                             mListPostPresenter.loadLocalDatabase();
                         }
+                    } else if (event instanceof NoAccessTokenEvent) {
+                        showLoginPrompt();
                     }
                 }));
     }
@@ -132,7 +134,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void initRecyclerView() {
-        mPostAdapter = new PostAdapter(mEmptyView);
+        mPostAdapter = new PostAdapter();
         mPostRecyclerView.setFocusable(true);
         mPostRecyclerView.setFocusableInTouchMode(true);
         mPostRecyclerView.setAdapter(mPostAdapter);
@@ -148,6 +150,8 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
                 .setDefaultOnRefreshListener(() -> {
                     mPostRecyclerView.setRefreshing(true);
                     mListPostPresenter.loadPostViaApi();
+                    // Hide progress bar when pull refresh is in action
+                    mProgressBar.setVisibility(View.GONE);
                     mPostRecyclerView.recyclerView.smoothScrollToPosition(0);
                 });
     }
@@ -183,7 +187,6 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showLoading() {
-        mEmptyView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
@@ -221,12 +224,30 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showRetry() {
-        // Do nothing
+        mSnackbar = Snackbar
+                .make(getView(), getString(R.string.post_not_found), Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, e -> mListPostPresenter.loadLocalDatabase());
+        setSnackbarTextColor();
     }
 
     @Override
     public void hideRetry() {
-        // Do nothing
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
+    }
+
+    /**
+     * Change Snackbar text color to orange by finding the TextView associated with
+     * it. A bit of a hack to get this working as it doesn't come with a native API for doing this.
+     */
+    private void setSnackbarTextColor() {
+        if (mSnackbar != null) {
+            View view = mSnackbar.getView();
+            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+            tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
+            mSnackbar.show();
+        }
     }
 
     @Override
@@ -252,12 +273,17 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     @Override
     public void showError(String s) {
-        Snackbar snackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi());
-        View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
-        snackbar.show();
+        Snackbar.make(getView(), s, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, e -> mListPostPresenter.loadPostViaApi())
+                .setActionTextColor(getAppContext().getResources().getColor(R.color.orange)).show();
+
+    }
+
+    private void showLoginPrompt() {
+        Snackbar.make(getView().getRootView(), getString(R.string.not_logged_in),
+                Snackbar.LENGTH_LONG)
+                .setActionTextColor(getAppContext().getResources().getColor(R.color.orange))
+                .setAction(R.string.login, e -> mLauncher.launchLogin()).show();
     }
 
     @Override

@@ -40,17 +40,27 @@ public final class Constant {
      * OAuth scope
      */
     public static final String SCOPE
-            = "posts media forms api tags sets users stats layers config messages dataproviders";
+            = "posts media forms api tags savedsearches sets users stats layers config messages dataproviders";
 
     /**
      * API version
      */
-    public static final String API_PATH = "/api/v2";
+    public static final String API_PATH = "/api/v3";
 
     /**
      * Posts resources
      */
     public static final String POSTS = API_PATH + "/posts";
+
+    /**
+     * Form resources
+     */
+    public static final String FORMS = API_PATH + "/forms";
+
+    /**
+     * Attribute resources
+     */
+    public static final String ATTRIBUTES = "/attributes";
 
     /**
      * Tags resources

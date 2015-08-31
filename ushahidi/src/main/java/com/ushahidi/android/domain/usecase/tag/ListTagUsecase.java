@@ -23,6 +23,8 @@ import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.entity.From;
 import com.ushahidi.android.domain.repository.TagRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -46,6 +48,7 @@ public class ListTagUsecase extends Usecase {
      * @param threadExecutor      The thread executor
      * @param postExecutionThread The post execution thread
      */
+    @Inject
     protected ListTagUsecase(TagRepository tagRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);

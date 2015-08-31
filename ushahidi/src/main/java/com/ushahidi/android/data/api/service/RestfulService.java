@@ -19,6 +19,8 @@ package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
 
+import com.ushahidi.android.data.api.model.FormAttributes;
+import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.oauth.AccessTokenRequestBody;
@@ -30,8 +32,11 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import rx.Observable;
 
+import static com.ushahidi.android.data.api.Constant.ATTRIBUTES;
+import static com.ushahidi.android.data.api.Constant.FORMS;
 import static com.ushahidi.android.data.api.Constant.GEOJSON;
 import static com.ushahidi.android.data.api.Constant.POSTS;
 import static com.ushahidi.android.data.api.Constant.TAGS;
@@ -52,7 +57,7 @@ public interface RestfulService {
      * @param authorizationHeader The access token header
      * @return Posts
      */
-    @GET(POSTS)
+    @GET(POSTS + "?order=desc&orderby=created")
     Observable<Posts> posts(@Header("Authorization") String authorizationHeader);
 
     // Tags related APIs
@@ -103,6 +108,41 @@ public interface RestfulService {
      * @param authorizationHeader The access token header
      * @return An JsonElement that contains the raw json string
      */
-    @GET(GEOJSON)
+    @GET(GEOJSON + "?order=desc&orderby=created&status=all")
     Observable<JsonElement> getGeoJson(@Header("Authorization") String authorizationHeader);
+
+    // Form related APIs
+
+    /**
+     * Fetches forms associated with a deployment
+     *
+     * @param authorizationHeader The access token header
+     * @return Forms
+     */
+    @GET(FORMS)
+    Observable<Forms> getForms(@Header("Authorization") String authorizationHeader);
+
+    /**
+     * Fetches form attributes
+     *
+     * @param authorizationHeader The access token header
+     * @return Attributes
+     */
+    @GET(FORMS + "/{id}" + ATTRIBUTES + "?order=asc&orderby=priority")
+    Observable<FormAttributes> getFormAttributes(
+            @Header("Authorization") String authorizationHeader,
+            @Path("id") long id);
+
+    /**
+     * Fetches form attributes
+     *
+     * @param authorizationHeader The access token header
+     * @return Attributes
+     */
+    @GET(FORMS + "/{id}" + ATTRIBUTES + "?order=asc&orderby=priority")
+    FormAttributes getFormAttribute(
+            @Header("Authorization") String authorizationHeader,
+            @Path("id") long id);
+
+
 }

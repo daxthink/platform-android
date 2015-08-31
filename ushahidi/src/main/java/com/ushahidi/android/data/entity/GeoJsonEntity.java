@@ -17,14 +17,12 @@
 
 package com.ushahidi.android.data.entity;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 /**
  * GeoJson Data Entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GeoJsonEntity extends DataEntity {
+public class GeoJsonEntity extends Data {
 
     private String mGeoJson;
 

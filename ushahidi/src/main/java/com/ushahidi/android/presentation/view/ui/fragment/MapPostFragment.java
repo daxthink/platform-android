@@ -44,9 +44,10 @@ import com.ushahidi.android.presentation.model.GeoJsonModel;
 import com.ushahidi.android.presentation.presenter.post.MapPostPresenter;
 import com.ushahidi.android.presentation.state.ReloadPostEvent;
 import com.ushahidi.android.presentation.state.RxEventBus;
-import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.util.GeoJsonLoadUtility;
 import com.ushahidi.android.presentation.view.post.MapPostView;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
+import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
 import org.json.JSONException;
 
@@ -71,7 +72,7 @@ import javax.inject.Inject;
 
 import rx.subscriptions.CompositeSubscription;
 
-import static rx.android.app.AppObservable.bindFragment;
+import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * Provides Google maps as a fragment in a {@link android.support.v4.view.ViewPager}. Has support
@@ -91,6 +92,9 @@ public class MapPostFragment extends BaseFragment
     @Inject
     MapPostPresenter mMapPostPresenter;
 
+    @Inject
+    Launcher mLauncher;
+
     RxEventBus mRxEventBus;
 
     private ClusterManager<ClusterMarkerModel> mClusterManager;
@@ -102,6 +106,8 @@ public class MapPostFragment extends BaseFragment
     private HashMap<Marker, ClusterMarkerModel> markers = new HashMap<>();
 
     private CompositeSubscription mSubscriptions;
+
+    private Snackbar mSnackbar;
 
     public MapPostFragment() {
         super(R.layout.map_post, 0);
@@ -116,18 +122,17 @@ public class MapPostFragment extends BaseFragment
 
     public void onResume() {
         super.onResume();
+        mMapPostPresenter.resume();
         // Set up Google map
         setUpMapIfNeeded();
-        mMapPostPresenter.resume();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mSubscriptions = new CompositeSubscription();
-
         mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObservable())
+                .add(bindSupportFragment(this, mRxEventBus.toObservable())
                         .subscribe(event -> {
                             if (event instanceof ReloadPostEvent) {
                                 ReloadPostEvent reloadPostEvent
@@ -172,20 +177,24 @@ public class MapPostFragment extends BaseFragment
             // Try to obtain the map from the SupportMapFragment.
             mMap = mMapFragment.getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                mClusterManager = new ClusterManager<>(getActivity(), mMap);
-                final PostModelRenderer postModelRenderer = new PostModelRenderer(
-                        getActivity().getApplicationContext(), new WeakReference<>(mMap),
-                        new WeakReference<>(mClusterManager),
-                        new WeakReference<>(markers));
-                mClusterManager.setRenderer(postModelRenderer);
-                mMap.setOnCameraChangeListener(mClusterManager);
-                mMap.setOnMarkerClickListener(mClusterManager);
-                mMap.setOnInfoWindowClickListener(mClusterManager);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                mClusterManager.setOnClusterInfoWindowClickListener(this);
-                mClusterManager.setOnClusterItemInfoWindowClickListener(this);
-            }
+            setUpClusterer();
+        }
+    }
+
+    private void setUpClusterer() {
+        if (mMap != null) {
+            mClusterManager = new ClusterManager<>(getActivity(), mMap);
+            final PostModelRenderer postModelRenderer = new PostModelRenderer(
+                    getActivity().getApplicationContext(), new WeakReference<>(mMap),
+                    new WeakReference<>(mClusterManager),
+                    new WeakReference<>(markers));
+            mClusterManager.setRenderer(postModelRenderer);
+            mMap.setOnCameraChangeListener(mClusterManager);
+            mMap.setOnMarkerClickListener(mClusterManager);
+            mMap.setOnInfoWindowClickListener(mClusterManager);
+            //mMap.getUiSettings().setZoomControlsEnabled(true);
+            mClusterManager.setOnClusterInfoWindowClickListener(this);
+            mClusterManager.setOnClusterItemInfoWindowClickListener(this);
         }
     }
 
@@ -218,11 +227,12 @@ public class MapPostFragment extends BaseFragment
             uiObjects = GeoJsonLoadUtility
                     .createUIObjectsFromGeoJSONObjects(featureCollection,
                             getResources().getColor(R.color.white),
-                            getResources().getColor(R.color.red));
+                            getResources().getColor(R.color.color_accent));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        mClusterManager.clearItems();
         for (Object uiObj : uiObjects) {
             if (uiObj instanceof PolylineOptions) {
                 mMap.addPolyline((PolylineOptions) uiObj);
@@ -249,35 +259,34 @@ public class MapPostFragment extends BaseFragment
 
     @Override
     public void showRetry() {
-        Snackbar snackbar = Snackbar.make(getView(), R.string.retry,
-                Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, e -> mMapPostPresenter.loadGeoJsonFromOnline()
-                );
-        setSnackbarTextColor(snackbar);
+        mSnackbar = Snackbar
+                .make(getView(), getString(R.string.geojson_not_found), Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, e -> mMapPostPresenter.loadGeoJsonFromOnline());
+        setSnackbarTextColor();
     }
 
     @Override
     public void hideRetry() {
-
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
     }
 
     @Override
     public void showError(String s) {
-        Snackbar snackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG);
-        setSnackbarTextColor(snackbar);
+        mSnackbar = Snackbar.make(getView(), s, Snackbar.LENGTH_LONG);
+        setSnackbarTextColor();
     }
 
     /**
      * Change Snackbar text color to orange by finding the TextView associated with
      * it. A bit of a hack to get this working as it doesn't come with a native API for doing this.
-     *
-     * @param snackbar The snackbar to change its text color
      */
-    private void setSnackbarTextColor(Snackbar snackbar) {
-        View view = snackbar.getView();
+    private void setSnackbarTextColor() {
+        View view = mSnackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(getAppContext().getResources().getColor(R.color.orange));
-        snackbar.show();
+        mSnackbar.show();
     }
 
     @Override
@@ -301,9 +310,7 @@ public class MapPostFragment extends BaseFragment
 
     @Override
     public void onClusterItemInfoWindowClick(ClusterMarkerModel clusterMarkerModel) {
-        //TODO launch post detail view
-        //For now show a toast with the title
-        showToast(clusterMarkerModel.getTitle());
+        mLauncher.launchDetailPost(clusterMarkerModel._id, clusterMarkerModel.getTitle());
     }
 
     @Override

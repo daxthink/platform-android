@@ -18,6 +18,7 @@
 package com.ushahidi.android.domain.entity;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,8 +34,10 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class UserAccountTest {
+
+    private static final Long DUMMY_ID = 1l;
 
     private UserAccount mUserAccount;
 
@@ -47,8 +50,6 @@ public class UserAccountTest {
     private String AUTH_TOKEN_TYPE = "auth token type";
 
     private long DEPLOYMENT_ID = 1l;
-
-    private static final Long DUMMY_ID = 1l;
 
     @Before
     public void setUp() {

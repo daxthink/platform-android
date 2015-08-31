@@ -31,10 +31,18 @@ public interface PostDataSource {
     /**
      * Add/Update a {@link com.ushahidi.android.data.entity.PostEntity}.
      *
+     * @param postEntities The post entities to be saved.
+     * @return The row affected
+     */
+    Observable<Long> putPostEntities(List<PostEntity> postEntities);
+
+    /**
+     * Add/Update a {@link com.ushahidi.android.data.entity.PostEntity}.
+     *
      * @param postEntity The post entity to be saved.
      * @return The row affected
      */
-    Observable<Long> putPostEntity(List<PostEntity> postEntity);
+    Observable<Long> putPostEntity(PostEntity postEntity);
 
     /**
      * Get a list of {@link com.ushahidi.android.data.entity.PostEntity}.

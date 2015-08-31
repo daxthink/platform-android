@@ -149,4 +149,11 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
             }
         }
     }
+
+    /**
+     * Clears all entries in the table
+     */
+    public void clearEntries() {
+        cupboard().withDatabase(getWritableDatabase()).delete(UserEntity.class, null);
+    }
 }

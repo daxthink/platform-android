@@ -1,6 +1,6 @@
 package com.ushahidi.android.data.repository;
 
-import com.ushahidi.android.BaseTestCase;
+import com.ushahidi.android.data.BaseTestCase;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.entity.mapper.DeploymentEntityDataMapper;
 import com.ushahidi.android.data.repository.datasource.deployment.DeploymentDataSource;
@@ -55,14 +55,14 @@ public class DeploymentDataRepositoryTest extends BaseTestCase {
         clearSingleton(DeploymentDataRepository.class);
         mDeploymentDataRepository = new DeploymentDataRepository(mMockDeploymentDataSourceFactory,
                 mMockDeploymentEntityMapper);
-        given(mMockDeploymentDataSourceFactory.createDatabaseDataSource())
-                .willReturn(mMockDataSource);
+        given(mMockDeploymentDataSourceFactory.createDatabaseDataSource()).willReturn(
+                mMockDataSource);
     }
 
     @Test
     public void shouldSuccessfullyAddADeployment() {
-        given(mMockDataSource.addDeploymentEntity(mMockDeploymentEntity)).willReturn(
-                Observable.just(1l));
+        given(mMockDataSource.addDeploymentEntity(mMockDeploymentEntity))
+                .willReturn(Observable.just(1l));
         given(mMockDeploymentEntityMapper.map(mMockDeployment)).willReturn(mMockDeploymentEntity);
 
         mDeploymentDataRepository.addEntity(mMockDeployment);

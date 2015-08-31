@@ -26,7 +26,7 @@ import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
 public interface AddDeploymentView extends LoadDataView {
 
     /**
-     * Show the status of {@link com.ushahidi.android.presentation.model.DeploymentModel} deletion
+     * Shows that a deployment has successfully been added
      *
      * @param row The affected row
      */

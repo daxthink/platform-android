@@ -18,6 +18,7 @@
 package com.ushahidi.android.domain.entity;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,16 +34,16 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class GeoJsonTest {
-
-    private GeoJson mGeoJson;
 
     private static final Long DUMMY_ID = 1l;
 
     private static final Long DUMMY_DEPLOYMENT_ID = 1l;
 
     private static final String DUMMY_STRING = "Dummy Deployment Title";
+
+    private GeoJson mGeoJson;
 
     @Before
     public void setUp() {

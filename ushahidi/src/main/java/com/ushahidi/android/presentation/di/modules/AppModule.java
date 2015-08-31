@@ -18,7 +18,6 @@ package com.ushahidi.android.presentation.di.modules;
 
 import com.addhen.android.raiburari.data.pref.RxSharedPreferences;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
-import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
@@ -31,17 +30,24 @@ import com.ushahidi.android.data.api.account.PlatformSession;
 import com.ushahidi.android.data.api.account.Session;
 import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
+import com.ushahidi.android.data.exception.RetrofitErrorHandler;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
+import com.ushahidi.android.data.repository.FormAttributeDataRepository;
+import com.ushahidi.android.data.repository.FormDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
+import com.ushahidi.android.data.repository.TagDataRepository;
 import com.ushahidi.android.data.repository.UserAccountDataRepository;
 import com.ushahidi.android.data.repository.UserProfileDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.FormAttributeRepository;
+import com.ushahidi.android.domain.repository.FormRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.TagRepository;
 import com.ushahidi.android.domain.repository.UserAccountRepository;
 import com.ushahidi.android.domain.repository.UserProfileRepository;
-import com.ushahidi.android.presentation.exception.UnauthorizedAccessErrorHandler;
+import com.ushahidi.android.presentation.account.AccessTokenStorageManager;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
 import com.ushahidi.android.presentation.state.AppState;
 import com.ushahidi.android.presentation.state.UserState;
@@ -59,7 +65,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import de.rheinfabrik.heimdall.OAuth2AccessToken;
-import de.rheinfabrik.heimdall.extras.SharedPreferencesOAuth2AccessTokenStorage;
 import retrofit.client.OkClient;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -146,7 +151,6 @@ public class AppModule {
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
         okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
-        okHttpClient.networkInterceptors().add(new StethoInterceptor());
         return new HttpClientWrap(context, new OkClient(okHttpClient));
     }
 
@@ -203,6 +207,19 @@ public class AppModule {
     }
 
     /**
+     * Provides {@link TagRepository} object
+     *
+     * @param tagDataRepository tag data repository
+     * @return The tag repository
+     */
+    @Provides
+    @Singleton
+    TagRepository provideTagRepository(
+            TagDataRepository tagDataRepository) {
+        return tagDataRepository;
+    }
+
+    /**
      * Provides {@link GeoJsonRepository} object
      *
      * @param geoJsonDataRepository The GeoJson data repository
@@ -243,6 +260,31 @@ public class AppModule {
     }
 
     /**
+     * Provides {@link com.ushahidi.android.domain.repository.FormRepository}
+     *
+     * @param formDataRepository The form data repository
+     * @return The form repository
+     */
+    @Provides
+    @Singleton
+    FormRepository provideFormRepository(FormDataRepository formDataRepository) {
+        return formDataRepository;
+    }
+
+    /**
+     * Provides {@link com.ushahidi.android.domain.repository.FormRepository}
+     *
+     * @param formAttributeDataRepository The form data repository
+     * @return The form repository
+     */
+    @Provides
+    @Singleton
+    FormAttributeRepository provideFormAttributeRepository(
+            FormAttributeDataRepository formAttributeDataRepository) {
+        return formAttributeDataRepository;
+    }
+
+    /**
      * Provides {@link AppState} object
      *
      * @param bus The bus object
@@ -277,7 +319,7 @@ public class AppModule {
     @Provides
     @Singleton
     PlatformService provideApiServiceFactory(HttpClientWrap httWrap,
-            UnauthorizedAccessErrorHandler handler, PrefsFactory prefsFactory
+            RetrofitErrorHandler handler, PrefsFactory prefsFactory
     ) {
         return new PlatformService(httWrap, handler, prefsFactory);
     }
@@ -297,10 +339,9 @@ public class AppModule {
         // Define the shared preferences where we will save the access token
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 "UshahidiAccessTokenStorage", Context.MODE_PRIVATE);
-        // Define the storage using the the previously defined preferences
-        SharedPreferencesOAuth2AccessTokenStorage<OAuth2AccessToken> tokenStorage
-                = new SharedPreferencesOAuth2AccessTokenStorage<>(sharedPreferences,
-                OAuth2AccessToken.class);
+        // Define the storage using the previously defined preferences
+        AccessTokenStorageManager<OAuth2AccessToken> tokenStorage
+                = new AccessTokenStorageManager<>(sharedPreferences, OAuth2AccessToken.class);
         return new UshAccessTokenManager(tokenStorage, platformService, platformAuthConfig);
     }
 }

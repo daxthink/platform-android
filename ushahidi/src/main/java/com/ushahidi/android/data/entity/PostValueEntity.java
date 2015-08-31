@@ -17,14 +17,12 @@
 
 package com.ushahidi.android.data.entity;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 /**
  * PostValue data entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostValueEntity extends DataEntity {
+public class PostValueEntity extends Data {
 
     private String mValues;
 

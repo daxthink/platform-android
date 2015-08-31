@@ -39,7 +39,7 @@
         <!-- Activities -->
         <activity
                 android:name=".presentation.view.ui.activity.PostActivity"
-                android:label="@string/posts"
+                android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -91,6 +91,18 @@
                 android:parentActivityName=".presentation.view.ui.activity.PostActivity"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:label="@string/post_detail">
+            <intent-filter>
+                <category android:name="android.intent.category.VIEW"/>
+                <action android:name="android.intent.action.DEFAULT"/>
+            </intent-filter>
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".presentation.view.ui.activity.PostActivity"/>
+        </activity>
+        <activity
+                android:name=".presentation.view.ui.activity.AddPostActivity"
+                android:parentActivityName=".presentation.view.ui.activity.PostActivity"
+                android:label="@string/add_post">
             <intent-filter>
                 <category android:name="android.intent.category.VIEW"/>
                 <action android:name="android.intent.action.DEFAULT"/>

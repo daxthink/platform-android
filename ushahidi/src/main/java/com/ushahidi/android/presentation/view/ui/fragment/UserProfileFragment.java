@@ -24,10 +24,11 @@ import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.di.components.post.UserProfileComponent;
 import com.ushahidi.android.presentation.model.UserProfileModel;
 import com.ushahidi.android.presentation.state.LoadUserProfileEvent;
+import com.ushahidi.android.presentation.state.NoAccessTokenEvent;
 import com.ushahidi.android.presentation.state.RxEventBus;
+import com.ushahidi.android.presentation.util.GravatarUtility;
 import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.util.GravatarUtility;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -44,7 +45,7 @@ import rx.subscriptions.CompositeSubscription;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static butterknife.ButterKnife.findById;
-import static rx.android.app.AppObservable.bindFragment;
+import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * Fragment for showing logged User profile prompt user to login
@@ -96,7 +97,7 @@ public class UserProfileFragment extends BaseFragment {
         mSubscriptions = new CompositeSubscription();
 
         mSubscriptions
-                .add(bindFragment(this, mRxEventBus.toObservable())
+                .add(bindSupportFragment(this, mRxEventBus.toObservable())
                         .subscribe(event -> {
                             if (event instanceof LoadUserProfileEvent) {
                                 LoadUserProfileEvent loadUserProfileEvent
@@ -106,6 +107,10 @@ public class UserProfileFragment extends BaseFragment {
                                 } else {
                                     showLogin();
                                 }
+                            }
+
+                            if (event instanceof NoAccessTokenEvent) {
+                                showLogin();
                             }
                         }));
     }
@@ -145,8 +150,7 @@ public class UserProfileFragment extends BaseFragment {
         mLoginLayout.setVisibility(GONE);
         mUserProfileLayout.setVisibility(VISIBLE);
 
-        AppCompatTextView
-                usernameTextView = findById(mUserProfileLayout, R.id.user_username);
+        AppCompatTextView usernameTextView = findById(mUserProfileLayout, R.id.user_username);
         AppCompatTextView roleTextView = findById(mUserProfileLayout, R.id.user_role);
         usernameTextView.setText(profile.getUsername());
         roleTextView.setText(profile.getRole().getValue());

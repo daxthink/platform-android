@@ -19,8 +19,6 @@ package com.ushahidi.android.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 import java.util.Date;
 
 import nl.qbusict.cupboard.annotation.Ignore;
@@ -30,11 +28,11 @@ import nl.qbusict.cupboard.annotation.Ignore;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class TagEntity extends DataEntity {
+public class TagEntity extends Data {
 
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
-    //For some reasons gson expects this field otherwise it throws errros
+    //For some reasons gson expects this field otherwise it throws errors
     private Parent parent;
 
     private transient Long mParent;

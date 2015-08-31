@@ -17,14 +17,12 @@
 
 package com.ushahidi.android.data.entity;
 
-import com.addhen.android.raiburari.data.entity.DataEntity;
-
 /**
  * User account entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserAccountEntity extends DataEntity {
+public class UserAccountEntity extends Data {
 
     private String mAccountName;
 

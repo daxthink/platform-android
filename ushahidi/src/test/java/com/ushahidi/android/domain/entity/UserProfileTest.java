@@ -18,6 +18,7 @@
 package com.ushahidi.android.domain.entity;
 
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,10 +36,10 @@ import static com.google.common.truth.Truth.assertThat;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class UserProfileTest {
 
-    UserProfile mUserProfile;
+    private static final Long DUMMY_ID = 1l;
 
     private static String EMAIL = "email";
 
@@ -54,7 +55,7 @@ public class UserProfileTest {
 
     private static Long DEPLOYMENT_ID = 1l;
 
-    private static final Long DUMMY_ID = 1l;
+    UserProfile mUserProfile;
 
     @Before
     public void setUp() {

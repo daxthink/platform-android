@@ -1,0 +1,157 @@
+{
+  "count": 7,
+  "results": [
+    {
+      "id": 331,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/331",
+      "parent_id": null,
+      "tag": "Positive reports",
+      "slug": "positive-reports",
+      "type": "category",
+      "color": "#0c1404",
+      "icon": "tag",
+      "description": "Positive reports",
+      "priority": 99,
+      "created": "2015-08-13T09:33:38+00:00",
+      "role": [
+        "user",
+        "admin"
+      ],
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 341,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/341",
+      "parent_id": null,
+      "tag": "Negative Reports",
+      "slug": "negative-reports",
+      "type": "category",
+      "color": "#300323",
+      "icon": "tag",
+      "description": "Negative reports",
+      "priority": 99,
+      "created": "2015-08-13T09:36:59+00:00",
+      "role": [
+        "user",
+        "admin"
+      ],
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 351,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/351",
+      "parent_id": null,
+      "tag": "Neutral",
+      "slug": "neutral",
+      "type": "category",
+      "color": "#5ad948",
+      "icon": "tag",
+      "description": "Neutral",
+      "priority": 99,
+      "created": "2015-08-13T09:37:34+00:00",
+      "role": [
+        "user",
+        "admin"
+      ],
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 361,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/361",
+      "parent_id": null,
+      "tag": "Question",
+      "slug": "question",
+      "type": "category",
+      "color": "#911010",
+      "icon": "tag",
+      "description": "Question",
+      "priority": 99,
+      "created": "2015-08-13T09:58:33+00:00",
+      "role": [
+        "user",
+        "admin"
+      ],
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 371,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/371",
+      "parent_id": null,
+      "tag": "prova prova",
+      "slug": "prova-prova",
+      "type": "category",
+      "color": "#ffe600",
+      "icon": "tag",
+      "description": "prova descrizione",
+      "priority": 99,
+      "created": "2015-08-20T18:01:10+00:00",
+      "role": null,
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 381,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/381",
+      "parent_id": null,
+      "tag": "Protection",
+      "slug": "food",
+      "type": "category",
+      "color": "#00f0ff",
+      "icon": "Protection",
+      "description": "Protection related issues",
+      "priority": 99,
+      "created": "2015-08-22T15:27:21+00:00",
+      "role": [
+        "user",
+        "admin"
+      ],
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    },
+    {
+      "id": 391,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags/391",
+      "parent_id": null,
+      "tag": "WASH",
+      "slug": "wash",
+      "type": "category",
+      "color": "#0047ff",
+      "icon": "WASH",
+      "description": "WASH related issues",
+      "priority": 99,
+      "created": "2015-08-22T15:29:27+00:00",
+      "role": [
+        "user",
+        "admin"
+      ],
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    }
+  ],
+  "limit": null,
+  "offset": 0,
+  "order": "asc",
+  "orderby": "id",
+  "curr": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags?orderby=id&order=asc&offset=0",
+  "next": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags?orderby=id&order=asc&offset=0",
+  "prev": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/tags?orderby=id&order=asc&offset=0",
+  "total_count": 7
+}

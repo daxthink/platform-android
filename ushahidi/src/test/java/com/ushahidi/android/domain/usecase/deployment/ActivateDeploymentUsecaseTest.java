@@ -3,6 +3,7 @@ package com.ushahidi.android.domain.usecase.deployment;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
+import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.entity.Deployment;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 
@@ -13,6 +14,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
@@ -26,7 +30,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
 public class ActivateDeploymentUsecaseTest {
 
     @Mock
@@ -52,9 +56,11 @@ public class ActivateDeploymentUsecaseTest {
 
     @Test
     public void shouldSuccessfullyAddDeployment() {
-        mActivateDeploymentUsecase.setDeployment(mMockDeployment);
+        List<Deployment> deployments = new ArrayList<>();
+        deployments.add(mMockDeployment);
+        mActivateDeploymentUsecase.setDeployment(deployments, 1);
         mActivateDeploymentUsecase.buildUseCaseObservable();
-        verify(mMockDeploymentRepository).updateEntity(mMockDeployment);
+        verify(mMockDeploymentRepository).updateEntity(deployments.get(0));
 
         verifyNoMoreInteractions(mMockDeploymentRepository);
         verifyZeroInteractions(mMockPostExecutionThread);
@@ -64,12 +70,12 @@ public class ActivateDeploymentUsecaseTest {
     @Test
     public void shouldThrowRuntimeException() {
         assertThat(mActivateDeploymentUsecase).isNotNull();
-        mActivateDeploymentUsecase.setDeployment(null);
+        mActivateDeploymentUsecase.setDeployment(null, 0);
         try {
             mActivateDeploymentUsecase.execute(null);
             assert_().fail("Should have thrown RuntimeException");
         } catch (RuntimeException e) {
-            assertThat(e).hasMessage("Deployment is null you need to call setDeployment(...)");
+            assertThat(e).hasMessage("Deployments is null you need to call setDeployment(...)");
         }
     }
 }

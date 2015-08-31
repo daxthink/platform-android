@@ -30,4 +30,8 @@ public interface UserState extends State {
      * To be implemented when the app attempts to access a protected resource from the API
      */
     void unauthorized();
+
+    class UnauthorizedAccessEvent {
+
+    }
 }

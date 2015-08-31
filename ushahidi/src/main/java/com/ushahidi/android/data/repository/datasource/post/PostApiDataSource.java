@@ -20,9 +20,13 @@ package com.ushahidi.android.data.repository.datasource.post;
 import com.google.gson.JsonElement;
 
 import com.ushahidi.android.data.api.PostApi;
+import com.ushahidi.android.data.api.model.FormAttributes;
+import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.database.PostDatabaseHelper;
+import com.ushahidi.android.data.entity.FormAttributeEntity;
+import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.TagEntity;
@@ -36,8 +40,7 @@ import rx.Observable;
 
 /**
  * Data source for manipulating {@link com.ushahidi.android.data.entity.PostEntity} data to and
- * from
- * the API.
+ * from the API.
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
@@ -60,19 +63,26 @@ public class PostApiDataSource implements PostDataSource {
     }
 
     @Override
-    public Observable<Long> putPostEntity(List<PostEntity> postEntity) {
+    public Observable<Long> putPostEntities(List<PostEntity> postEntity) {
         // Do nothing. Not posting via the API ATM
         return null;
     }
 
     @Override
-    public Observable<List<PostEntity>> getPostEntityList(Long deploymentId) {
-        return Observable.zip(mPostApi.getTags(), mPostApi.getPostList(),
-                mPostApi.getGeoJson(),
-                (tags, posts, geoJsons) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
-                        setTag(tags, deploymentId), setPost(posts, deploymentId),
-                        setGeoJson(geoJsons, deploymentId)));
+    public Observable<Long> putPostEntity(PostEntity postEntity) {
+        // TODO: Implement post entity upload via the API
+        return null;
+    }
 
+    @Override
+    public Observable<List<PostEntity>> getPostEntityList(Long deploymentId) {
+        return Observable.zip(mPostApi.getTags(), mPostApi.getPostList(), mPostApi.getGeoJson(),
+                mPostApi.getForms(),
+                (tags, posts, geoJsons, forms) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
+                        setTag(tags, deploymentId),
+                        setPost(posts, deploymentId),
+                        setGeoJson(geoJsons, deploymentId),
+                        setForms(forms, deploymentId)));
     }
 
     @Override
@@ -133,5 +143,24 @@ public class PostApiDataSource implements PostDataSource {
         geoJsonEntity.setGeoJson(jsonElement.toString());
         geoJsonEntity.setDeploymentId(deploymentId);
         return geoJsonEntity;
+    }
+
+    private List<FormEntity> setForms(Forms forms, Long deploymentId) {
+        List<FormEntity> formEntityList = new ArrayList<>();
+        for (FormEntity formEntity : forms.getForms()) {
+            formEntity.setDeploymentId(deploymentId);
+            formEntityList.add(formEntity);
+        }
+        return formEntityList;
+    }
+
+    private List<FormAttributeEntity> setFormAttributes(FormAttributes formAttributes,
+            Long deploymentId) {
+        List<FormAttributeEntity> formAttributeEntities = new ArrayList<>();
+        for (FormAttributeEntity formAttributeEntity : formAttributes.getFormAttributes()) {
+            formAttributeEntity.setDeploymentId(deploymentId);
+            formAttributeEntities.add(formAttributeEntity);
+        }
+        return formAttributeEntities;
     }
 }
