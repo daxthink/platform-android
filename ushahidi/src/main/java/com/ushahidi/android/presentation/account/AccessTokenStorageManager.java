@@ -77,8 +77,6 @@ public class AccessTokenStorageManager<T extends OAuth2AccessToken> implements
     @Override
     public void storeAccessToken(T accessToken) {
         setExpiringDate(accessToken);
-        final String json = new Gson().toJson(accessToken);
-        System.out.println(json);
         mSharedPreferences.edit().putString(ACCESS_TOKEN_PREFERENCES_KEY,
                 new Gson().toJson(accessToken)).apply();
     }
