@@ -86,6 +86,7 @@
     <string name="send_feedback">Send feedback</string>
     <string name="settings">Settings</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="register">Register</string>
     <string name="prompt_login">Select A Deployment To Login to</string>
     <string name="empty_post_list"><b>No posts</b>\n\nPull down on the
@@ -140,4 +141,9 @@
     <string name="save">Save</string>
     <string name="add_post">Add Post</string>
     <string name="form_attribute_not_found">Could not fetch form attribute. Not found.</string>
+
+    <string name="dialog_logout_message">Are you sure you want to logout?</string>
+    <string name="dialog_logout_btn_postive">Logout</string>
+    <string name="dialog_logout_btn_negative">Cancel</string>
+
 </resources>

@@ -104,6 +104,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
 
     private static final int ABOUT_MENU_ID = -3;
 
+    private static final int LOGOUT_MENU_ID = -4;
+
     private static final int START_DELAY_ANIM = 300;
 
     private static final int DURATION_ANIM = 400;
@@ -303,6 +305,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                         case ABOUT_MENU_ID:
                             getListPostComponent().launcher().launchAbout();
                             break;
+                        case LOGOUT_MENU_ID:
+                            getListPostComponent().launcher().launchLogout();
                         default:
                             if (menuItem.getGroupId() == DEPLOYMENTS_MENU_ITEMS_GROUP_ID) {
                                 mCurrentMenu = menuItem.getItemId();
@@ -355,6 +359,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                 .setIcon(R.drawable.ic_action_help);
         subMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
                 .setIcon(R.drawable.ic_action_info);
+        subMenuMisc.add(MISC_MENU_ITEMS, LOGOUT_MENU_ID, 4, R.string.logout)
+                .setIcon(R.drawable.ic_action_settings);
         subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
 
     }
