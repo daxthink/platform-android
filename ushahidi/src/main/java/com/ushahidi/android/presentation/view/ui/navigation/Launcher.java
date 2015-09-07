@@ -16,6 +16,8 @@
 
 package com.ushahidi.android.presentation.view.ui.navigation;
 
+import android.app.Activity;
+
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.FormModel;
 import com.ushahidi.android.presentation.view.ui.activity.AboutActivity;
@@ -25,11 +27,10 @@ import com.ushahidi.android.presentation.view.ui.activity.DetailPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.FeedbackActivity;
 import com.ushahidi.android.presentation.view.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.view.ui.activity.LoginActivity;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.QrcodeReaderActivity;
 import com.ushahidi.android.presentation.view.ui.activity.SearchPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.UpdateDeploymentActivity;
-
-import android.app.Activity;
 
 import javax.inject.Inject;
 
@@ -91,6 +92,13 @@ public class Launcher {
      */
     public void launchFeedback() {
         mActivity.startActivity(FeedbackActivity.getIntent(mActivity));
+    }
+
+    /**
+     * Displays a logout dialog where the user can choose to logout or cancel the action
+     */
+    public void launchLogout() {
+        ((PostActivity) mActivity).launchLogout();
     }
 
     /**

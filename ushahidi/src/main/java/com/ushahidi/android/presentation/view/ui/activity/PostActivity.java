@@ -17,6 +17,32 @@
 
 package com.ushahidi.android.presentation.view.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
+
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
 import com.ushahidi.android.R;
@@ -50,30 +76,6 @@ import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
 import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
 import com.ushahidi.android.presentation.view.ui.widget.CustomGridHolder;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +105,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     private static final int FEEDBACK_MENU_ID = -2;
 
     private static final int ABOUT_MENU_ID = -3;
+
+    private static final int LOGOUT_MENU_ID = -4;
 
     private static final int START_DELAY_ANIM = 300;
 
@@ -151,6 +155,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     private boolean mPendingIntroAnimation;
 
     private FormAdapter mFormAdapter;
+
+    private SubMenu mSubMenuMisc;
 
     /**
      * Default constructor
@@ -303,6 +309,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                         case ABOUT_MENU_ID:
                             getListPostComponent().launcher().launchAbout();
                             break;
+                        case LOGOUT_MENU_ID:
+                            getListPostComponent().launcher().launchLogout();
                         default:
                             if (menuItem.getGroupId() == DEPLOYMENTS_MENU_ITEMS_GROUP_ID) {
                                 mCurrentMenu = menuItem.getItemId();
@@ -345,17 +353,22 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
             }
         }
 
-        SubMenu subMenuMisc = menu
-                .addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.actions);
+        mSubMenuMisc = menu.addSubMenu(Menu.NONE, Menu.FIRST, Menu.NONE, R.string.actions);
 
-        subMenuMisc.add(MISC_MENU_ITEMS, MANAGE_DEPLOYMENT_MENU_ID, 1, R.string.manage_deployments)
+        mSubMenuMisc.add(MISC_MENU_ITEMS, MANAGE_DEPLOYMENT_MENU_ID, 1, R.string.manage_deployments)
                 .setIcon(R.drawable.ic_action_map);
 
-        subMenuMisc.add(MISC_MENU_ITEMS, FEEDBACK_MENU_ID, 2, R.string.send_feedback)
+        mSubMenuMisc.add(MISC_MENU_ITEMS, FEEDBACK_MENU_ID, 2, R.string.send_feedback)
                 .setIcon(R.drawable.ic_action_help);
-        subMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
+        mSubMenuMisc.add(MISC_MENU_ITEMS, ABOUT_MENU_ID, 3, R.string.about)
                 .setIcon(R.drawable.ic_action_info);
-        subMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
+
+        if (mSessionManager.getActiveSession() != null) {
+            mSubMenuMisc.add(MISC_MENU_ITEMS, LOGOUT_MENU_ID, 4, R.string.logout)
+                    .setIcon(R.drawable.ic_action_logout);
+        }
+
+        mSubMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
 
     }
 
@@ -448,6 +461,33 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                 }, x -> x.printStackTrace());
     }
 
+    public void launchLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_logout_message)
+                .setCancelable(false)
+                .setIcon(R.drawable.ic_action_globe)
+                .setPositiveButton(R.string.dialog_logout_btn_postive, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Clear active session
+                        SessionManager sessionManager = getAppComponent().platformSessionManager();
+                        sessionManager.clearActiveSession();
+                        // Clear access token
+                        UshAccessTokenManager ushAccessTokenManager = getAppComponent().ushahidiTokenManager();
+                        ushAccessTokenManager.getStorage().removeAccessToken();
+                        // Send an event
+                        UshahidiApplication.getRxEventBusInstance()
+                                .send(new LoadUserProfileEvent(null));
+                        setNavigationViewMenuItems(mNavigationView.getMenu());
+                    }
+                })
+                .setNegativeButton(R.string.dialog_logout_btn_negative, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.create().show();
+    }
+
     /**
      * Handles FAB clicks
      *
@@ -471,7 +511,6 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                 .create();
         dialog.show();
     }
-
 
     @Override
     public void setActiveUserProfile(UserProfileModel userProfile) {
