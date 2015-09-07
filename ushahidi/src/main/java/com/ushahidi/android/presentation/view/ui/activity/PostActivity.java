@@ -365,7 +365,7 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
 
         if (mSessionManager.getActiveSession() != null) {
             mSubMenuMisc.add(MISC_MENU_ITEMS, LOGOUT_MENU_ID, 4, R.string.logout)
-                    .setIcon(R.drawable.ic_action_settings);
+                    .setIcon(R.drawable.ic_action_logout);
         }
 
         mSubMenuMisc.setGroupCheckable(MISC_MENU_ITEMS, true, true);
