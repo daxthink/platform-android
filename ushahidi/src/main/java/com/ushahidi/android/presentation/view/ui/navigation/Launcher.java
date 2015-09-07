@@ -17,24 +17,17 @@
 package com.ushahidi.android.presentation.view.ui.navigation;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 
-import com.ushahidi.android.R;
-import com.ushahidi.android.data.api.account.SessionManager;
-import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
-import com.ushahidi.android.presentation.UshahidiApplication;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.FormModel;
-import com.ushahidi.android.presentation.state.LoadUserProfileEvent;
 import com.ushahidi.android.presentation.view.ui.activity.AboutActivity;
 import com.ushahidi.android.presentation.view.ui.activity.AddDeploymentActivity;
 import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
-import com.ushahidi.android.presentation.view.ui.activity.BaseAppActivity;
 import com.ushahidi.android.presentation.view.ui.activity.DetailPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.FeedbackActivity;
 import com.ushahidi.android.presentation.view.ui.activity.ListDeploymentActivity;
 import com.ushahidi.android.presentation.view.ui.activity.LoginActivity;
+import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.QrcodeReaderActivity;
 import com.ushahidi.android.presentation.view.ui.activity.SearchPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.UpdateDeploymentActivity;
@@ -105,31 +98,7 @@ public class Launcher {
      * Displays a logout dialog where the user can choose to logout or cancel the action
      */
     public void launchLogout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        builder.setMessage(R.string.dialog_logout_message)
-                .setCancelable(false)
-                .setIcon(R.drawable.ic_action_globe)
-                .setPositiveButton(R.string.dialog_logout_btn_postive, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Clear active session
-                        SessionManager sessionManager =
-                                ((BaseAppActivity) mActivity).getAppComponent().platformSessionManager();
-                        sessionManager.clearActiveSession();
-                        // Clear access token
-                        UshAccessTokenManager ushAccessTokenManager =
-                                ((BaseAppActivity) mActivity).getAppComponent().ushahidiTokenManager();
-                        ushAccessTokenManager.getStorage().removeAccessToken();
-                        // Send an event
-                        UshahidiApplication.getRxEventBusInstance()
-                                .send(new LoadUserProfileEvent(null));
-                    }
-                })
-                .setNegativeButton(R.string.dialog_logout_btn_negative, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        builder.create().show();
+        ((PostActivity) mActivity).launchLogout();
     }
 
     /**
