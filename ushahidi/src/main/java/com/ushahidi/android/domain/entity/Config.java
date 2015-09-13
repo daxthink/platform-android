@@ -153,4 +153,24 @@ public class Config {
     public void setAllowedPrivileges(List<Privilege> allowedPrivileges) {
         this.mAllowedPrivileges = allowedPrivileges;
     }
+
+    @Override
+    public String toString() {
+        return "Config{"
+                + "mId=" + mId
+                + ", mUrl='" + mUrl
+                + ", mName='" + mName
+                + ", mDescription='" + mDescription
+                + ", mEmail=" + mEmail
+                + ", mTimezone='" + mTimeZone
+                + ", mLanguage='" + mLanguage
+                + ", mDateFormat=" + mDateFormat
+                + ", mClientUrl=" + mClientUrl
+                + ", mAllowedPrivileges=" + mAllowedPrivileges
+                + ", mImageHeader=" + mImageHeader
+                + ", mOwnerName=" + mOwnerName
+                + ", mSiteName=" + mSiteName
+                + '}';
+    }
+    
 }
