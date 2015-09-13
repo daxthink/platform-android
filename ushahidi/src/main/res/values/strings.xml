@@ -48,7 +48,7 @@
     <string name="validation_message_no_deployment_title">Please provide a title for the
         deployment
     </string>
-    <string name="validation_message_invalid_url">Please provide a URL fo your deployment</string>
+    <string name="validation_message_invalid_url">Please provide a valid URL for your deployment</string>
     <string name="no_qrcode_found">No valid deployment QR code was found in the reader.</string>
     <!-- Posts  -->
     <string name="list_posts">List Posts</string>
