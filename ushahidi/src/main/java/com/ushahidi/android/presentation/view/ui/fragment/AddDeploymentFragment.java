@@ -199,7 +199,7 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
         if(mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setMessage("Please wait while we get the configuration data");
+            mProgressDialog.setMessage(getString(R.string.site_config_retrieve_progress));
         }
         mProgressDialog.show();
     }

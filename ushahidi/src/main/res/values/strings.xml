@@ -41,6 +41,7 @@
     <string name="add_deployment_url_hint">The API URL of the deployment</string>
     <string name="add_deployment_title">Add Deployment</string>
     <string name="add_deployment_empty_title">Please enter a title for your deployment</string>
+    <string name="site_config_retrieve_progress">Please wait while we get the configuration data</string>
     <string name="search_for_deployment_actionbar_title">Search for a deployment</string>
     <string name="update_deployment">Update Deployment</string>
     <string name="update_deployment_description_hint">Please enter details of the deployment
