@@ -16,15 +16,7 @@
 
 package com.ushahidi.android.presentation.view.ui.fragment;
 
-import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
-import com.ushahidi.android.R;
-import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
-import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
-import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
-import com.ushahidi.android.presentation.validator.UrlValidator;
-import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
-
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,11 +25,26 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
+import com.ushahidi.android.R;
+import com.ushahidi.android.data.api.service.SiteConfigAPI;
+import com.ushahidi.android.domain.entity.Config;
+import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
+import com.ushahidi.android.presentation.model.DeploymentModel;
+import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
+import com.ushahidi.android.presentation.validator.UrlValidator;
+import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
+import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Fragment for adding a new deployment
@@ -48,6 +55,8 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Bind(R.id.add_deployment_url)
     EditText url;
+
+    ProgressDialog mProgressDialog;
 
     @Inject
     AddDeploymentPresenter mAddDeploymentPresenter;
@@ -104,7 +113,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
         mAddDeploymentPresenter.setView(this);
     }
 
-
     @Override
     public Context getAppContext() {
         return getActivity().getApplication();
@@ -140,10 +148,32 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        DeploymentModel deploymentModel = new DeploymentModel();
-        deploymentModel.setUrl(url.getText().toString());
-        mAddDeploymentPresenter.addDeployment(deploymentModel);
+        // Make an api call to <url>api/v3/config/site to get the deployment info and use
+        // the title from the response data
+        showLoading();
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(url.getText().toString()).build();
+        SiteConfigAPI siteConfigApi = restAdapter.create(SiteConfigAPI.class);
+        siteConfigApi.getConfig(mSiteConfigCallback);
     }
+
+    private Callback<Config> mSiteConfigCallback = new Callback<Config>() {
+
+        @Override
+        public void success(Config config, Response response) {
+            DeploymentModel deploymentModel = new DeploymentModel();
+            deploymentModel.setTitle(config.getName());
+            deploymentModel.setUrl(url.getText().toString());
+            mAddDeploymentPresenter.addDeployment(deploymentModel);
+            hideLoading();
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            hideLoading();
+            url.setError(getString(R.string.validation_message_invalid_url));
+        }
+
+    };
 
     @OnClick(R.id.add_deployment_cancel)
     public void onClickCancel() {
@@ -166,12 +196,17 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Override
     public void showLoading() {
-        // Do nothing
+        if(mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setMessage("Please wait while we get the configuration data");
+        }
+        mProgressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        // Do nothing
+        mProgressDialog.hide();
     }
 
     @Override
@@ -183,4 +218,5 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     public void hideRetry() {
         // Do nothing
     }
+
 }
