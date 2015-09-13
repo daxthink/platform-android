@@ -44,17 +44,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_spacing_normal">
                 <EditText
-                        android:id="@+id/add_deployment_title"
-                        style="@style/EditText.Name"
-                        android:hint="@string/add_deployment_title_hint"
-                        android:imeOptions="actionNext"
-                        android:nextFocusDown="@+id/add_deployment_url"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/view_spacing_normal">
-                <EditText
                         android:id="@+id/add_deployment_url"
                         style="@style/EditText.URL"
                         android:hint="@string/add_deployment_url_hint"

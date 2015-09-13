@@ -51,9 +51,6 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     private static final String ARGUMENT_KEY_DEPLOYMENT_MODEL
             = "com.ushahidi.android.ARGUMENT_DEPLOYMENT_MODEL";
 
-    @Bind(R.id.add_deployment_title)
-    EditText title;
-
     @Bind(R.id.add_deployment_url)
     EditText url;
 
@@ -161,7 +158,6 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     @Override
     public void showDeployment(@NonNull DeploymentModel deploymentModel) {
         mDeploymentModel = deploymentModel;
-        title.setText(deploymentModel.getTitle());
         url.setText(deploymentModel.getUrl());
     }
 
@@ -186,15 +182,10 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
 
     private void submit() {
         url.setError(null);
-        if (TextUtils.isEmpty(title.getText().toString())) {
-            title.setError(getString(R.string.validation_message_no_deployment_title));
-            return;
-        }
         if (!(new UrlValidator().isValid(url.getText().toString()))) {
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        mDeploymentModel.setTitle(title.getText().toString());
         mDeploymentModel.setUrl(url.getText().toString());
         mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
     }

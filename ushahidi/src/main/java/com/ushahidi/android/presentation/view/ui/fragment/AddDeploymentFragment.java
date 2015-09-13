@@ -46,9 +46,6 @@ import butterknife.OnEditorAction;
  */
 public class AddDeploymentFragment extends BaseFragment implements AddDeploymentView {
 
-    @Bind(R.id.add_deployment_title)
-    EditText title;
-
     @Bind(R.id.add_deployment_url)
     EditText url;
 
@@ -139,16 +136,11 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     private void submit() {
         url.setError(null);
-        if (TextUtils.isEmpty(title.getText().toString())) {
-            title.setError(getString(R.string.validation_message_no_deployment_title));
-            return;
-        }
         if (!(new UrlValidator().isValid(url.getText().toString()))) {
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
         DeploymentModel deploymentModel = new DeploymentModel();
-        deploymentModel.setTitle(title.getText().toString());
         deploymentModel.setUrl(url.getText().toString());
         mAddDeploymentPresenter.addDeployment(deploymentModel);
     }
@@ -164,7 +156,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     }
 
     public void setDeployment(@NonNull DeploymentModel deploymentModel) {
-        title.setText(deploymentModel.getTitle());
         url.setText(deploymentModel.getUrl());
     }
 
