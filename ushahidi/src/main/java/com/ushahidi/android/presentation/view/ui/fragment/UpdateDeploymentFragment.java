@@ -20,6 +20,8 @@ package com.ushahidi.android.presentation.view.ui.fragment;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView;
 import com.ushahidi.android.R;
+import com.ushahidi.android.data.api.service.SiteConfigAPI;
+import com.ushahidi.android.domain.entity.Config;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
@@ -27,6 +29,7 @@ import com.ushahidi.android.presentation.validator.UrlValidator;
 import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,6 +43,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Fragment for updating a existing deployment
@@ -56,6 +63,8 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
 
     @Bind(R.id.textview_deployment_description)
     FontSupportedTextView mHeader;
+
+    ProgressDialog mProgressDialog;
 
     @Inject
     UpdateDeploymentPresenter mUpdateDeploymentPresenter;
@@ -186,18 +195,45 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        mDeploymentModel.setUrl(url.getText().toString());
-        mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
+        // Make an api call to <url>api/v3/config/site to get the deployment info and use
+        // the title from the response data
+        showLoading();
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(url.getText().toString()).build();
+        SiteConfigAPI siteConfigApi = restAdapter.create(SiteConfigAPI.class);
+        siteConfigApi.getConfig(mSiteConfigCallback);
     }
+
+    private Callback<Config> mSiteConfigCallback = new Callback<Config>() {
+
+        @Override
+        public void success(Config config, Response response) {
+            mDeploymentModel.setTitle(config.getName());
+            mDeploymentModel.setUrl(url.getText().toString());
+            mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
+            hideLoading();
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            hideLoading();
+            url.setError(getString(R.string.validation_message_invalid_url));
+        }
+
+    };
 
     @Override
     public void showLoading() {
-        // Do nothing
+        if(mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setMessage("Please wait while get the configuration data");
+        }
+        mProgressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        // Do nothing
+        mProgressDialog.hide();
     }
 
     @Override
