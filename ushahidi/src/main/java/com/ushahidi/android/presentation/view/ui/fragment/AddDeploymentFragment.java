@@ -64,6 +64,25 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     @Inject
     Launcher mLauncher;
 
+    private Callback<Config> mSiteConfigCallback = new Callback<Config>() {
+
+        @Override
+        public void success(Config config, Response response) {
+            DeploymentModel deploymentModel = new DeploymentModel();
+            deploymentModel.setTitle(config.getName());
+            deploymentModel.setUrl(url.getText().toString());
+            mAddDeploymentPresenter.addDeployment(deploymentModel);
+            hideLoading();
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            hideLoading();
+            url.setError(getString(R.string.validation_message_invalid_url));
+        }
+
+    };
+
     /**
      * Add Deployment  Fragment
      */
@@ -156,25 +175,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
         siteConfigApi.getConfig(mSiteConfigCallback);
     }
 
-    private Callback<Config> mSiteConfigCallback = new Callback<Config>() {
-
-        @Override
-        public void success(Config config, Response response) {
-            DeploymentModel deploymentModel = new DeploymentModel();
-            deploymentModel.setTitle(config.getName());
-            deploymentModel.setUrl(url.getText().toString());
-            mAddDeploymentPresenter.addDeployment(deploymentModel);
-            hideLoading();
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            hideLoading();
-            url.setError(getString(R.string.validation_message_invalid_url));
-        }
-
-    };
-
     @OnClick(R.id.add_deployment_cancel)
     public void onClickCancel() {
         getActivity().finish();
@@ -196,7 +196,7 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Override
     public void showLoading() {
-        if(mProgressDialog == null) {
+        if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setMessage(getString(R.string.site_config_retrieve_progress));
