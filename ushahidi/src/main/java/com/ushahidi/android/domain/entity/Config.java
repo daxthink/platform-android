@@ -126,8 +126,8 @@ public class Config {
         return mImageHeader;
     }
 
-    public void setImageHeader(String mImageHeader) {
-        mImageHeader = mImageHeader;
+    public void setImageHeader(String imageHeader) {
+        mImageHeader = imageHeader;
     }
 
     public String getOwnerName() {
@@ -172,5 +172,5 @@ public class Config {
                 + ", mSiteName=" + mSiteName
                 + '}';
     }
-    
+
 }
