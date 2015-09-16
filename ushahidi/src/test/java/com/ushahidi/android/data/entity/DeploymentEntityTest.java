@@ -55,7 +55,7 @@ public class DeploymentEntityTest {
     @Test
     public void shouldSetDeploymentEntity() {
         mDeploymentEntity._id = DUMMY_ID;
-        mDeploymentEntity.setTitle(DUMMY_TITLE);
+        mDeploymentEntity.setName(DUMMY_TITLE);
         mDeploymentEntity.setStatus(DUMMY_STATUS);
         mDeploymentEntity.setUrl(DUMMY_URL);
 
@@ -63,8 +63,8 @@ public class DeploymentEntityTest {
         assertThat(mDeploymentEntity).isInstanceOf(DeploymentEntity.class);
         assertThat(mDeploymentEntity._id).isNotNull();
         assertThat(mDeploymentEntity._id).isEqualTo(DUMMY_ID);
-        assertThat(mDeploymentEntity.getTitle()).isNotNull();
-        assertThat(mDeploymentEntity.getTitle()).isEqualTo(DUMMY_TITLE);
+        assertThat(mDeploymentEntity.getName()).isNotNull();
+        assertThat(mDeploymentEntity.getName()).isEqualTo(DUMMY_TITLE);
         assertThat(mDeploymentEntity.getStatus()).isNotNull();
         assertThat(mDeploymentEntity.getStatus()).isEqualTo(DUMMY_STATUS);
         assertThat(mDeploymentEntity.getUrl()).isNotNull();
