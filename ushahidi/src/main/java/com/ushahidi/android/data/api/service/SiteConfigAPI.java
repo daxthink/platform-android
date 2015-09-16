@@ -1,6 +1,6 @@
 package com.ushahidi.android.data.api.service;
 
-import com.ushahidi.android.domain.entity.Config;
+import com.ushahidi.android.data.entity.DeploymentEntity;
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -16,6 +16,6 @@ import retrofit.http.GET;
 public interface SiteConfigAPI {
 
     @GET("/api/v3/config/site")
-    void getConfig(Callback<Config> response);
+    void getConfig(Callback<DeploymentEntity> response);
 
 }

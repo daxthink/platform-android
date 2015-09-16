@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.api.service.SiteConfigAPI;
-import com.ushahidi.android.domain.entity.Config;
+import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
@@ -64,12 +64,12 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     @Inject
     Launcher mLauncher;
 
-    private Callback<Config> mSiteConfigCallback = new Callback<Config>() {
+    private Callback<DeploymentEntity> mSiteConfigCallback = new Callback<DeploymentEntity>() {
 
         @Override
-        public void success(Config config, Response response) {
+        public void success(DeploymentEntity deploymentEntity, Response response) {
             DeploymentModel deploymentModel = new DeploymentModel();
-            deploymentModel.setTitle(config.getName());
+            deploymentModel.setTitle(deploymentEntity.getName());
             deploymentModel.setUrl(url.getText().toString());
             mAddDeploymentPresenter.addDeployment(deploymentModel);
             hideLoading();

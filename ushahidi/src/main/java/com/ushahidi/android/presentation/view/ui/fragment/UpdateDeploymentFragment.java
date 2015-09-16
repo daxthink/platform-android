@@ -17,17 +17,6 @@
 
 package com.ushahidi.android.presentation.view.ui.fragment;
 
-import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
-import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView;
-import com.ushahidi.android.R;
-import com.ushahidi.android.data.api.service.SiteConfigAPI;
-import com.ushahidi.android.domain.entity.Config;
-import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
-import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
-import com.ushahidi.android.presentation.validator.UrlValidator;
-import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -37,6 +26,17 @@ import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
+import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView;
+import com.ushahidi.android.R;
+import com.ushahidi.android.data.api.service.SiteConfigAPI;
+import com.ushahidi.android.data.entity.DeploymentEntity;
+import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
+import com.ushahidi.android.presentation.model.DeploymentModel;
+import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
+import com.ushahidi.android.presentation.validator.UrlValidator;
+import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
 
 import javax.inject.Inject;
 
@@ -73,11 +73,11 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
 
     private DeploymentModel mDeploymentModel;
 
-    private Callback<Config> mSiteConfigCallback = new Callback<Config>() {
+    private Callback<DeploymentEntity> mSiteConfigCallback = new Callback<DeploymentEntity>() {
 
         @Override
-        public void success(Config config, Response response) {
-            mDeploymentModel.setTitle(config.getName());
+        public void success(DeploymentEntity deploymentEntity, Response response) {
+            mDeploymentModel.setTitle(deploymentEntity.getName());
             mDeploymentModel.setUrl(url.getText().toString());
             mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
             hideLoading();
