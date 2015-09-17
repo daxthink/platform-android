@@ -71,7 +71,7 @@ public class DeploymentEntityDataMapperTest {
     public void shouldMapDeploymentEntityToDeployment() {
         mDeploymentEntity = new DeploymentEntity();
         mDeploymentEntity._id = DUMMY_ID;
-        mDeploymentEntity.setTitle(DUMMY_TITLE);
+        mDeploymentEntity.setName(DUMMY_TITLE);
         mDeploymentEntity.setStatus(DEPLOYMENT_ENTITY_DUMMY_STATUS);
         mDeploymentEntity.setUrl(DUMMY_URL);
 
@@ -103,8 +103,8 @@ public class DeploymentEntityDataMapperTest {
         assertThat(deploymentEntity).isInstanceOf(DeploymentEntity.class);
         assertThat(deploymentEntity._id).isNotNull();
         assertThat(deploymentEntity._id).isEqualTo(DUMMY_ID);
-        assertThat(deploymentEntity.getTitle()).isNotNull();
-        assertThat(deploymentEntity.getTitle()).isEqualTo(DUMMY_TITLE);
+        assertThat(deploymentEntity.getName()).isNotNull();
+        assertThat(deploymentEntity.getName()).isEqualTo(DUMMY_TITLE);
         assertThat(deploymentEntity.getStatus()).isNotNull();
         assertThat(deploymentEntity.getStatus()).isEqualTo(DEPLOYMENT_ENTITY_DUMMY_STATUS);
         assertThat(deploymentEntity.getUrl()).isNotNull();

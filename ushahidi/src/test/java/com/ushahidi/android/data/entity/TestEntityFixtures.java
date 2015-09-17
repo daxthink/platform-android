@@ -104,7 +104,7 @@ public class TestEntityFixtures {
         if (mDeploymentEntity == null) {
             mDeploymentEntity = new DeploymentEntity();
             mDeploymentEntity._id = ID;
-            mDeploymentEntity.setTitle("Deployment Tititle");
+            mDeploymentEntity.setName("Deployment Tititle");
             mDeploymentEntity.setStatus(DeploymentEntity.Status.ACTIVATED);
             mDeploymentEntity.setUrl("http://api.myushahidiinstance.com");
         }
