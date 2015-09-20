@@ -27,8 +27,6 @@ import android.widget.TextView;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.ushahidi.android.R;
-import com.ushahidi.android.data.api.service.SiteConfigAPI;
-import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
@@ -41,10 +39,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Fragment for adding a new deployment
@@ -63,25 +57,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Inject
     Launcher mLauncher;
-
-    private Callback<DeploymentEntity> mSiteConfigCallback = new Callback<DeploymentEntity>() {
-
-        @Override
-        public void success(DeploymentEntity deploymentEntity, Response response) {
-            DeploymentModel deploymentModel = new DeploymentModel();
-            deploymentModel.setTitle(deploymentEntity.getName());
-            deploymentModel.setUrl(url.getText().toString());
-            mAddDeploymentPresenter.addDeployment(deploymentModel);
-            hideLoading();
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            hideLoading();
-            url.setError(getString(R.string.validation_message_invalid_url));
-        }
-
-    };
 
     /**
      * Add Deployment  Fragment
@@ -167,12 +142,7 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        // Make an api call to <url>api/v3/config/site to get the deployment info and use
-        // the title from the response data
-        showLoading();
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(url.getText().toString()).build();
-        SiteConfigAPI siteConfigApi = restAdapter.create(SiteConfigAPI.class);
-        siteConfigApi.getConfig(mSiteConfigCallback);
+        mAddDeploymentPresenter.submitUrl(url.getText().toString());
     }
 
     @OnClick(R.id.add_deployment_cancel)
