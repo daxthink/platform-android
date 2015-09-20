@@ -18,13 +18,13 @@
 package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
-
 import com.ushahidi.android.data.api.model.FormAttributes;
 import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
 import com.ushahidi.android.data.api.oauth.AccessTokenRequestBody;
 import com.ushahidi.android.data.api.oauth.RefreshTokenRequestBody;
+import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.entity.UserEntity;
 
 import de.rheinfabrik.heimdall.OAuth2AccessToken;
@@ -144,5 +144,14 @@ public interface RestfulService {
             @Header("Authorization") String authorizationHeader,
             @Path("id") long id);
 
+    /**
+     * This interface has the api for getting the site config information from API + /api/v3/config/site
+     *
+     * Intended to be used to get the title of the url (and also a way to verify that the url is a valid
+     * ushahidi platform url) at the time the user enters/updates the deployment information.
+     *
+     */
+    @GET("/api/v3/config/site")
+    Observable<DeploymentEntity> getDeploymentConfig();
 
 }
