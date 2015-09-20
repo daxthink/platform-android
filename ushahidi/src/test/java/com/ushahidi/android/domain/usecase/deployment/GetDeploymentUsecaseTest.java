@@ -43,8 +43,8 @@ public class GetDeploymentUsecaseTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mGetDeploymentUsecase = new GetDeploymentUsecase(DUMMY_DEPLOYMENT_ID,
-                mockDeploymentRepository, mockThreadExecutor, mockPostExecutionThread);
+        mGetDeploymentUsecase = new GetDeploymentUsecase(mockDeploymentRepository, mockThreadExecutor, mockPostExecutionThread);
+        mGetDeploymentUsecase.setDeploymentId(DUMMY_DEPLOYMENT_ID);
     }
 
     @Test
