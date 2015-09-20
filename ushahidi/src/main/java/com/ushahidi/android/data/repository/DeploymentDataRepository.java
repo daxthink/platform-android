@@ -16,7 +16,9 @@
 
 package com.ushahidi.android.data.repository;
 
+import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.entity.mapper.DeploymentEntityDataMapper;
+import com.ushahidi.android.data.repository.datasource.deployment.DeploymentApiDataSource;
 import com.ushahidi.android.data.repository.datasource.deployment.DeploymentDataSource;
 import com.ushahidi.android.data.repository.datasource.deployment.DeploymentDataSourceFactory;
 import com.ushahidi.android.domain.entity.Deployment;
@@ -102,4 +104,12 @@ public class DeploymentDataRepository implements DeploymentRepository {
                 .createDatabaseDataSource();
         return deploymentDataSource.deleteDeploymentEntity(deploymentId);
     }
+
+    @Override
+    public Observable<DeploymentEntity> getDeploymentEntity(String url) {
+        final DeploymentApiDataSource deploymentApiDataSource = mDeploymentDataStoreFactory
+                .createDeploymentApiDataSource();
+        return deploymentApiDataSource.getDeploymentEntity(url);
+    }
+
 }
