@@ -16,10 +16,10 @@
 
 package com.ushahidi.android.data.repository.datasource.deployment;
 
+import android.support.annotation.NonNull;
+
 import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
 import com.ushahidi.android.data.entity.DeploymentEntity;
-
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -73,4 +73,10 @@ public class DeploymentDatabaseDataSource implements DeploymentDataSource {
     public Observable<Long> deleteDeploymentEntity(Long deploymentId) {
         return mDeploymentDatabaseHelper.deleteDeployment(deploymentId);
     }
+
+    @Override
+    public Observable<DeploymentEntity> getDeploymentEntity(String url) {
+        throw new UnsupportedOperationException();
+    }
+
 }

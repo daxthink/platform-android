@@ -81,4 +81,13 @@ public interface DeploymentDataSource {
      * @return The row affected
      */
     Observable<Long> deleteDeploymentEntity(Long deploymentId);
+
+    /**
+     * Get an {@link Observable} which will emit a {@link DeploymentEntity} by its url.
+     *
+     * @param url The url to retrieve DeploymentEntity.
+     * @return Observable that emits a {@link DeploymentEntity}
+     */
+    Observable<DeploymentEntity> getDeploymentEntity(String url);
+
 }
