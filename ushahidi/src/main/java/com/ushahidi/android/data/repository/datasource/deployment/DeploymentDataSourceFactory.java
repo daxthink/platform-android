@@ -16,9 +16,10 @@
 
 package com.ushahidi.android.data.repository.datasource.deployment;
 
-import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
-
 import android.support.annotation.NonNull;
+
+import com.ushahidi.android.data.api.DeploymentApi;
+import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -51,4 +52,15 @@ public class DeploymentDataSourceFactory {
     public DeploymentDataSource createDatabaseDataSource() {
         return new DeploymentDatabaseDataSource(mDeploymentDatabaseHelper);
     }
+
+    /**
+     * Creates {@link DeploymentApiDataSource}
+     *
+     * @return The deployment api data source
+     */
+    public DeploymentApiDataSource createDeploymentApiDataSource() {
+        DeploymentApi deploymentApi = new DeploymentApi();
+        return new DeploymentApiDataSource(deploymentApi, mDeploymentDatabaseHelper);
+    }
+
 }
