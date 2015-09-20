@@ -18,27 +18,53 @@ public class GetDeploymentUsecase extends Usecase {
 
     private final DeploymentRepository mDeploymentRepository;
 
-    private final Long mDeploymentId;
+    private Long mDeploymentId;
+
+    private String mUrl = null;
 
     /**
      * Default constructor
      *
-     * @param deploymentId         The deployment Id
      * @param deploymentRepository The deployment repository
      * @param threadExecutor       The thread executor
      * @param postExecutionThread  The post execution thread
      */
     @Inject
-    protected GetDeploymentUsecase(Long deploymentId, DeploymentRepository deploymentRepository,
+    protected GetDeploymentUsecase(DeploymentRepository deploymentRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        mDeploymentId = deploymentId;
         mDeploymentRepository = deploymentRepository;
+    }
+
+    /**
+     * Sets the deployment id to be used to fetch the {@link com.ushahidi.android.domain.entity.Deployment}
+     *
+     * @param deploymentId the deployment id
+     */
+    public void setDeploymentId(Long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    /**
+     * Sets the deployment url to be used to fetch the {@link com.ushahidi.android.data.entity.DeploymentEntity}
+     *
+     * @param url The url associated with the deployment
+     */
+    public void setDeploymentUrl(String url) {
+        mUrl = url;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return mDeploymentRepository.getEntity(mDeploymentId);
+        if (mUrl == null) {
+            if (mDeploymentId == null) {
+                throw new IllegalStateException("Either the deploymentId or the deploymentUrl should be a non null "
+                        + "value");
+            }
+            return mDeploymentRepository.getEntity(mDeploymentId);
+        }
+        return mDeploymentRepository.getDeploymentEntity(mUrl);
     }
+
 }
