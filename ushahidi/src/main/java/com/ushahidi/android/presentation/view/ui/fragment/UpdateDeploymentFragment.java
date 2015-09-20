@@ -30,8 +30,6 @@ import android.widget.TextView;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView;
 import com.ushahidi.android.R;
-import com.ushahidi.android.data.api.service.SiteConfigAPI;
-import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.presentation.di.components.deployment.UpdateDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
@@ -43,10 +41,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Fragment for updating a existing deployment
@@ -72,24 +66,6 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     private UpdateDeploymentListener mActionListener;
 
     private DeploymentModel mDeploymentModel;
-
-    private Callback<DeploymentEntity> mSiteConfigCallback = new Callback<DeploymentEntity>() {
-
-        @Override
-        public void success(DeploymentEntity deploymentEntity, Response response) {
-            mDeploymentModel.setTitle(deploymentEntity.getName());
-            mDeploymentModel.setUrl(url.getText().toString());
-            mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
-            hideLoading();
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            hideLoading();
-            url.setError(getString(R.string.validation_message_invalid_url));
-        }
-
-    };
 
     /**
      * Update Deployment  Fragment
@@ -213,12 +189,7 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        // Make an api call to <url>api/v3/config/site to get the deployment info and use
-        // the title from the response data
-        showLoading();
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(url.getText().toString()).build();
-        SiteConfigAPI siteConfigApi = restAdapter.create(SiteConfigAPI.class);
-        siteConfigApi.getConfig(mSiteConfigCallback);
+        mUpdateDeploymentPresenter.submitUrl(url.getText().toString());
     }
 
     @Override

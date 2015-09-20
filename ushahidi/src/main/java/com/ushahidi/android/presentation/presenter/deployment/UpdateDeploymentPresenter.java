@@ -21,6 +21,8 @@ import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
+import com.ushahidi.android.data.entity.DeploymentEntity;
+import com.ushahidi.android.domain.usecase.deployment.GetDeploymentUsecase;
 import com.ushahidi.android.domain.usecase.deployment.UpdateDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.DeploymentModel;
@@ -39,6 +41,8 @@ public class UpdateDeploymentPresenter implements Presenter {
 
     private final UpdateDeploymentUsecase mUpdateDeploymentUsecase;
 
+    private final GetDeploymentUsecase mGetDeploymentUsecase;
+
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
     private UpdateDeploymentView mUpdateDeploymentView;
@@ -52,9 +56,11 @@ public class UpdateDeploymentPresenter implements Presenter {
     @Inject
     public UpdateDeploymentPresenter(
             @Named("categoryUpdate") UpdateDeploymentUsecase updateDeploymentUsecase,
+            GetDeploymentUsecase getDeploymentUsecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
         mUpdateDeploymentUsecase = updateDeploymentUsecase;
         mDeploymentModelDataMapper = deploymentModelDataMapper;
+        mGetDeploymentUsecase = getDeploymentUsecase;
     }
 
     @Override
@@ -101,6 +107,32 @@ public class UpdateDeploymentPresenter implements Presenter {
             @Override
             public void onNext(Long row) {
                 mUpdateDeploymentView.onDeploymentSuccessfullyUpdated(row);
+            }
+        });
+    }
+
+    public void submitUrl(String url) {
+        mUpdateDeploymentView.showLoading();
+        mGetDeploymentUsecase.setDeploymentUrl(url);
+        mGetDeploymentUsecase.execute(new DefaultSubscriber<DeploymentEntity>() {
+            @Override
+            public void onCompleted() {
+                mUpdateDeploymentView.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mUpdateDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+                mUpdateDeploymentView.showRetry();
+            }
+
+            @Override
+            public void onNext(DeploymentEntity deploymentEntity) {
+                DeploymentModel deploymentModel = new DeploymentModel();
+                deploymentModel.setTitle(deploymentEntity.getName());
+                deploymentModel.setUrl(url);
+                updateDeployment(deploymentModel);
             }
         });
     }
