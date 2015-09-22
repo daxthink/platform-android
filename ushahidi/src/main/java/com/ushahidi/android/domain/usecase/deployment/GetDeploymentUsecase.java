@@ -20,8 +20,6 @@ public class GetDeploymentUsecase extends Usecase {
 
     private Long mDeploymentId;
 
-    private String mUrl = null;
-
     /**
      * Default constructor
      *
@@ -46,25 +44,12 @@ public class GetDeploymentUsecase extends Usecase {
         mDeploymentId = deploymentId;
     }
 
-    /**
-     * Sets the deployment url to be used to fetch the {@link com.ushahidi.android.data.entity.DeploymentEntity}
-     *
-     * @param url The url associated with the deployment
-     */
-    public void setDeploymentUrl(String url) {
-        mUrl = url;
-    }
-
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mUrl == null) {
-            if (mDeploymentId == null) {
-                throw new IllegalStateException("Either the deploymentId or the deploymentUrl should be a non null "
-                        + "value");
-            }
-            return mDeploymentRepository.getEntity(mDeploymentId);
+        if (mDeploymentId == null) {
+            throw new IllegalStateException("DeploymentId should be a non null value");
         }
-        return mDeploymentRepository.getDeploymentEntity(mUrl);
+        return mDeploymentRepository.getEntity(mDeploymentId);
     }
 
 }
