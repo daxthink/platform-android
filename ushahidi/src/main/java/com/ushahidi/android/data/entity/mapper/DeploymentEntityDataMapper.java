@@ -56,7 +56,7 @@ public class DeploymentEntityDataMapper {
             deployment = new Deployment();
             deployment._id = deploymentEntity._id;
             deployment.setStatus(Deployment.Status.valueOf(deploymentEntity.getStatus().name()));
-            deployment.setTitle(deploymentEntity.getName());
+            deployment.setTitle(deploymentEntity.getTitle());
             deployment.setUrl(deploymentEntity.getUrl());
         }
 
@@ -75,7 +75,7 @@ public class DeploymentEntityDataMapper {
         if (deployment != null) {
             deploymentEntity = new DeploymentEntity();
             deploymentEntity._id = deployment._id;
-            deploymentEntity.setName(deployment.getTitle());
+            deploymentEntity.setTitle(deployment.getTitle());
             deploymentEntity.setStatus(DeploymentEntity.Status.valueOf(
                     deployment.getStatus().name()));
             deploymentEntity.setUrl(deployment.getUrl());

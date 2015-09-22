@@ -43,7 +43,7 @@ public class DeploymentEntity {
     private String mUrl;
 
     @SerializedName("name")
-    private String mName;
+    private String mTitle;
 
     @SerializedName("description")
     private String mDescription;
@@ -91,12 +91,12 @@ public class DeploymentEntity {
         mUrl = url;
     }
 
-    public String getName() {
-        return mName;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public void setName(String name) {
-        mName = name;
+    public void setTitle(String title) {
+        mTitle = title;
     }
 
     public String getDescription() {
@@ -199,7 +199,7 @@ public class DeploymentEntity {
         return "DeploymentEntity {"
                 + ", mStatus='" + mStatus
                 + ", mUrl='" + mUrl
-                + ", mName='" + mName
+                + ", mTitle='" + mTitle
                 + ", mDescription='" + mDescription
                 + ", mEmail=" + mEmail
                 + ", mTimezone='" + mTimeZone

@@ -128,7 +128,7 @@ public class AddDeploymentPresenter implements Presenter {
             @Override
             public void onNext(DeploymentEntity deploymentEntity) {
                 DeploymentModel deploymentModel = new DeploymentModel();
-                deploymentModel.setTitle(deploymentEntity.getName());
+                deploymentModel.setTitle(deploymentEntity.getTitle());
                 deploymentModel.setUrl(url);
                 addDeployment(deploymentModel);
             }
