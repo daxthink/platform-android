@@ -17,19 +17,19 @@
 
 package com.ushahidi.android.presentation.presenter.deployment;
 
+import android.support.annotation.NonNull;
+
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.data.entity.DeploymentEntity;
-import com.ushahidi.android.domain.usecase.deployment.GetDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.deployment.FetchDeploymentUsecase;
 import com.ushahidi.android.domain.usecase.deployment.UpdateDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
 import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
-
-import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,7 +41,7 @@ public class UpdateDeploymentPresenter implements Presenter {
 
     private final UpdateDeploymentUsecase mUpdateDeploymentUsecase;
 
-    private final GetDeploymentUsecase mGetDeploymentUsecase;
+    private final FetchDeploymentUsecase mFetchDeploymentUsecase;
 
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
@@ -56,11 +56,11 @@ public class UpdateDeploymentPresenter implements Presenter {
     @Inject
     public UpdateDeploymentPresenter(
             @Named("categoryUpdate") UpdateDeploymentUsecase updateDeploymentUsecase,
-            GetDeploymentUsecase getDeploymentUsecase,
+            FetchDeploymentUsecase fetchDeploymentUsecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
         mUpdateDeploymentUsecase = updateDeploymentUsecase;
         mDeploymentModelDataMapper = deploymentModelDataMapper;
-        mGetDeploymentUsecase = getDeploymentUsecase;
+        mFetchDeploymentUsecase = fetchDeploymentUsecase;
     }
 
     @Override
@@ -113,8 +113,8 @@ public class UpdateDeploymentPresenter implements Presenter {
 
     public void submitUrl(String url) {
         mUpdateDeploymentView.showLoading();
-        mGetDeploymentUsecase.setDeploymentUrl(url);
-        mGetDeploymentUsecase.execute(new DefaultSubscriber<DeploymentEntity>() {
+        mFetchDeploymentUsecase.setDeploymentUrl(url);
+        mFetchDeploymentUsecase.execute(new DefaultSubscriber<DeploymentEntity>() {
             @Override
             public void onCompleted() {
                 mUpdateDeploymentView.hideLoading();

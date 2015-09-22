@@ -24,6 +24,7 @@ import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.domain.usecase.deployment.AddDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.deployment.FetchDeploymentUsecase;
 import com.ushahidi.android.domain.usecase.deployment.GetDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.DeploymentModel;
@@ -40,7 +41,7 @@ public class AddDeploymentPresenter implements Presenter {
 
     private final AddDeploymentUsecase mAddDeploymentUsecase;
 
-    private final GetDeploymentUsecase mGetDeploymentUsecase;
+    private final FetchDeploymentUsecase mFetchDeploymentUsecase;
 
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
@@ -49,16 +50,17 @@ public class AddDeploymentPresenter implements Presenter {
     /**
      * Default constructor
      *
-     * @param addDeploymentUsecase      The add deployment use case
+     * @param addDeploymentUsecase The add deployment use case
+     * @param fetchDeploymentUsecase The fetch deployment use case
      * @param deploymentModelDataMapper the deployment model data mapper
      */
     @Inject
     public AddDeploymentPresenter(@Named("categoryAdd") AddDeploymentUsecase addDeploymentUsecase,
-                                  GetDeploymentUsecase getDeploymentUsecase,
+                                  FetchDeploymentUsecase fetchDeploymentUsecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
         mAddDeploymentUsecase = addDeploymentUsecase;
         mDeploymentModelDataMapper = deploymentModelDataMapper;
-        mGetDeploymentUsecase = getDeploymentUsecase;
+        mFetchDeploymentUsecase = fetchDeploymentUsecase;
     }
 
     @Override
@@ -111,8 +113,8 @@ public class AddDeploymentPresenter implements Presenter {
 
     public void submitUrl(String url) {
         mAddDeploymentView.showLoading();
-        mGetDeploymentUsecase.setDeploymentUrl(url);
-        mGetDeploymentUsecase.execute(new DefaultSubscriber<DeploymentEntity>() {
+        mFetchDeploymentUsecase.setDeploymentUrl(url);
+        mFetchDeploymentUsecase.execute(new DefaultSubscriber<DeploymentEntity>() {
             @Override
             public void onCompleted() {
                 mAddDeploymentView.hideLoading();
