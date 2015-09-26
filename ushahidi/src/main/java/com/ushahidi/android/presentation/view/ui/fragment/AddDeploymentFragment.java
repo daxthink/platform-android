@@ -16,13 +16,15 @@
 
 package com.ushahidi.android.presentation.view.ui.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
@@ -50,7 +52,14 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     @Bind(R.id.add_deployment_url)
     EditText url;
 
-    ProgressDialog mProgressDialog;
+    @Bind(R.id.add_deployment_progress_bar)
+    ProgressBar mProgressBar;
+
+    @Bind(R.id.add_deployment_add)
+    Button mAddButton;
+
+    @Bind(R.id.add_deployment_cancel)
+    Button mCancelButton;
 
     @Inject
     AddDeploymentPresenter mAddDeploymentPresenter;
@@ -166,17 +175,16 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Override
     public void showLoading() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setMessage(getString(R.string.site_config_retrieve_progress));
-        }
-        mProgressDialog.show();
+        mAddButton.setVisibility(View.INVISIBLE);
+        mCancelButton.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        mProgressDialog.hide();
+        mProgressBar.setVisibility(View.GONE);
+        mAddButton.setVisibility(View.VISIBLE);
+        mCancelButton.setVisibility(View.VISIBLE);
     }
 
     @Override

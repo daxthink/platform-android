@@ -82,5 +82,16 @@
                 android:layout_alignParentEnd="true"
                 android:text="@string/update"
                 style="?android:buttonBarButtonStyle"/>
+        <ProgressBar
+                android:id="@+id/add_deployment_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/add_deployment_cancel"
+                android:layout_alignRight="@id/add_deployment_add"
+                android:layout_alignTop="@id/add_deployment_add"
+                android:layout_alignBottom="@id/add_deployment_add"
+                android:visibility="gone"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyle"/>
     </RelativeLayout>
 </LinearLayout>
