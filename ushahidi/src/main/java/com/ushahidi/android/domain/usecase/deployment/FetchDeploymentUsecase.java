@@ -26,15 +26,15 @@ import javax.inject.Inject;
 import rx.Observable;
 
 /**
- * Get {@link com.ushahidi.android.domain.entity.Deployment} use case
+ * Fetch {@link com.ushahidi.android.data.entity.DeploymentEntity} use case
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class GetDeploymentUsecase extends Usecase {
+public class FetchDeploymentUsecase extends Usecase {
 
     private final DeploymentRepository mDeploymentRepository;
 
-    private Long mDeploymentId;
+    private String mUrl = null;
 
     /**
      * Default constructor
@@ -44,28 +44,28 @@ public class GetDeploymentUsecase extends Usecase {
      * @param postExecutionThread  The post execution thread
      */
     @Inject
-    protected GetDeploymentUsecase(DeploymentRepository deploymentRepository,
-            ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
+    protected FetchDeploymentUsecase(DeploymentRepository deploymentRepository,
+                                     ThreadExecutor threadExecutor,
+                                     PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mDeploymentRepository = deploymentRepository;
     }
 
     /**
-     * Sets the deployment id to be used to fetch the {@link com.ushahidi.android.domain.entity.Deployment}
+     * Sets the deployment url to be used to fetch the {@link com.ushahidi.android.data.entity.DeploymentEntity}
      *
-     * @param deploymentId the deployment id
+     * @param url The url associated with the deployment
      */
-    public void setDeploymentId(Long deploymentId) {
-        mDeploymentId = deploymentId;
+    public void setDeploymentUrl(String url) {
+        mUrl = url;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        if (mDeploymentId == null) {
-            throw new IllegalStateException("DeploymentId should be a non null value");
+        if (mUrl == null) {
+                throw new IllegalStateException("DeploymentUrl should be a non null value");
         }
-        return mDeploymentRepository.getEntity(mDeploymentId);
+        return mDeploymentRepository.getDeploymentEntity(mUrl);
     }
 
 }

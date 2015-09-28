@@ -16,17 +16,19 @@
 
 package com.ushahidi.android.presentation.presenter.deployment;
 
+import android.support.annotation.NonNull;
+
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
+import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.domain.usecase.deployment.AddDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.deployment.FetchDeploymentUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
 import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
-
-import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +40,8 @@ public class AddDeploymentPresenter implements Presenter {
 
     private final AddDeploymentUsecase mAddDeploymentUsecase;
 
+    private final FetchDeploymentUsecase mFetchDeploymentUsecase;
+
     private final DeploymentModelDataMapper mDeploymentModelDataMapper;
 
     private AddDeploymentView mAddDeploymentView;
@@ -45,14 +49,17 @@ public class AddDeploymentPresenter implements Presenter {
     /**
      * Default constructor
      *
-     * @param addDeploymentUsecase      The add deployment use case
+     * @param addDeploymentUsecase The add deployment use case
+     * @param fetchDeploymentUsecase The fetch deployment use case
      * @param deploymentModelDataMapper the deployment model data mapper
      */
     @Inject
     public AddDeploymentPresenter(@Named("categoryAdd") AddDeploymentUsecase addDeploymentUsecase,
+                                  FetchDeploymentUsecase fetchDeploymentUsecase,
             DeploymentModelDataMapper deploymentModelDataMapper) {
         mAddDeploymentUsecase = addDeploymentUsecase;
         mDeploymentModelDataMapper = deploymentModelDataMapper;
+        mFetchDeploymentUsecase = fetchDeploymentUsecase;
     }
 
     @Override
@@ -99,6 +106,32 @@ public class AddDeploymentPresenter implements Presenter {
             @Override
             public void onNext(Long row) {
                 mAddDeploymentView.onDeploymentSuccessfullyAdded(row);
+            }
+        });
+    }
+
+    public void submitUrl(String url) {
+        mAddDeploymentView.showLoading();
+        mFetchDeploymentUsecase.setDeploymentUrl(url);
+        mFetchDeploymentUsecase.execute(new DefaultSubscriber<DeploymentEntity>() {
+            @Override
+            public void onCompleted() {
+                mAddDeploymentView.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mAddDeploymentView.hideLoading();
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+                mAddDeploymentView.showRetry();
+            }
+
+            @Override
+            public void onNext(DeploymentEntity deploymentEntity) {
+                DeploymentModel deploymentModel = new DeploymentModel();
+                deploymentModel.setTitle(deploymentEntity.getTitle());
+                deploymentModel.setUrl(url);
+                addDeployment(deploymentModel);
             }
         });
     }

@@ -18,6 +18,7 @@ package com.ushahidi.android.data.repository.datasource.deployment;
 
 import android.support.annotation.NonNull;
 
+import com.ushahidi.android.data.api.DeploymentApi;
 import com.ushahidi.android.data.database.DeploymentDatabaseHelper;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 
@@ -26,57 +27,60 @@ import java.util.List;
 import rx.Observable;
 
 /**
- * Retrieves and adds a deployment data to the database
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeploymentDatabaseDataSource implements DeploymentDataSource {
+public class DeploymentApiDataSource implements DeploymentDataSource {
+
+    private final DeploymentApi mDeploymentApi;
 
     private final DeploymentDatabaseHelper mDeploymentDatabaseHelper;
 
     /**
-     * Default constructor
+     * Default constructor that constructs {@link DeploymentApiDataSource}
      *
-     * @param deploymentDatabaseHelper The deployment database helper
+     * @param deploymentApi            The Deployment API
+     * @param deploymentDatabaseHelper The Deployment database helper
      */
-    public DeploymentDatabaseDataSource(
-            @NonNull DeploymentDatabaseHelper deploymentDatabaseHelper) {
+    public DeploymentApiDataSource(@NonNull DeploymentApi deploymentApi,
+                                DeploymentDatabaseHelper deploymentDatabaseHelper) {
+        mDeploymentApi = deploymentApi;
         mDeploymentDatabaseHelper = deploymentDatabaseHelper;
     }
 
     @Override
     public Observable<List<DeploymentEntity>> getDeploymentEntityList() {
-        return mDeploymentDatabaseHelper.getDeployments();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<DeploymentEntity> getDeploymentEntity(Long deploymentId) {
-        return mDeploymentDatabaseHelper.getDeployment(deploymentId);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<DeploymentEntity> getByStatus(DeploymentEntity.Status status) {
-        return mDeploymentDatabaseHelper.getByStatus(status);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Long> addDeploymentEntity(DeploymentEntity deployment) {
-        return mDeploymentDatabaseHelper.put(deployment);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Long> updateDeploymentEntity(DeploymentEntity deployment) {
-        return mDeploymentDatabaseHelper.put(deployment);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<Long> deleteDeploymentEntity(Long deploymentId) {
-        return mDeploymentDatabaseHelper.deleteDeployment(deploymentId);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Observable<DeploymentEntity> getDeploymentEntity(String url) {
-        throw new UnsupportedOperationException();
+        return mDeploymentApi.getDeploymentConfig(url).doOnNext(deploymentEntity -> mDeploymentDatabaseHelper
+                .put(deploymentEntity));
     }
 
 }

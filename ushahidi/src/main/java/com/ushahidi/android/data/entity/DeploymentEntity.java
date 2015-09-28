@@ -16,41 +16,71 @@
 
 package com.ushahidi.android.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+import com.ushahidi.android.domain.entity.Privilege;
+
+import java.util.List;
+
+import nl.qbusict.cupboard.annotation.Ignore;
+
 /**
  * Deployment Data Entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class DeploymentEntity extends Data {
+public class DeploymentEntity {
 
-    private String mTitle;
+    /**
+     * The id field has an underscore to ensure any existing id value will be
+     * replaced. if _id is null then a new entity will be created. This is {@link cupboard()} way
+     * of avoiding duplicated IDs
+     */
+    public Long _id;
 
     private Status mStatus;
 
+    @SerializedName("url")
     private String mUrl;
+
+    @SerializedName("name")
+    private String mTitle;
+
+    @SerializedName("description")
+    private String mDescription;
+
+    @SerializedName("email")
+    private String mEmail;
+
+    @SerializedName("timezone")
+    private String mTimeZone;
+
+    @SerializedName("language")
+    private String mLanguage;
+
+    @SerializedName("date_format")
+    private String mDateFormat;
+
+    @SerializedName("client_url")
+    private String mClientUrl;
+
+    @SerializedName("allowed_privileges")
+    @Ignore
+    private List<Privilege> mAllowedPrivileges;
+
+    @SerializedName("image_header")
+    private String mImageHeader;
+
+    @SerializedName("owner_name")
+    private String mOwnerName;
+
+    @SerializedName("site_name")
+    private String mSiteName;
 
     /**
      * Default constructor
      */
     public DeploymentEntity() {
         mStatus = Status.DEACTIVATED;
-    }
-
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public Status getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(Status status) {
-        mStatus = status;
     }
 
     public String getUrl() {
@@ -61,14 +91,100 @@ public class DeploymentEntity extends Data {
         mUrl = url;
     }
 
-    @Override
-    public String toString() {
-        return "Deployment{"
-                + "_id=" + _id
-                + ", mTitle='" + mTitle + '\''
-                + ", mStatus='" + mStatus + '\''
-                + ", mUrl='" + mUrl + '\''
-                + '}';
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(String email) {
+        mEmail = email;
+    }
+
+    public String getTimeZone() {
+        return mTimeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        mTimeZone = timeZone;
+    }
+
+    public String getLanguage() {
+        return mLanguage;
+    }
+
+    public void setLanguage(String language) {
+        mLanguage = language;
+    }
+
+    public String getDateFormat() {
+        return mDateFormat;
+    }
+
+    public void setDateFormat(String dateFormat) {
+        mDateFormat = dateFormat;
+    }
+
+    public String getClientUrl() {
+        return mClientUrl;
+    }
+
+    public void setClientUrl(String clientUrl) {
+        mClientUrl = clientUrl;
+    }
+
+    public String getImageHeader() {
+        return mImageHeader;
+    }
+
+    public void setImageHeader(String imageHeader) {
+        mImageHeader = imageHeader;
+    }
+
+    public String getOwnerName() {
+        return mOwnerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        mOwnerName = ownerName;
+    }
+
+    public String getSiteName() {
+        return mSiteName;
+    }
+
+    public void setSiteName(String siteName) {
+        mSiteName = siteName;
+    }
+
+    public List<Privilege> getAllowedPrivileges() {
+        return mAllowedPrivileges;
+    }
+
+    public void setAllowedPrivileges(List<Privilege> allowedPrivileges) {
+        this.mAllowedPrivileges = allowedPrivileges;
+    }
+
+    public Status getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(Status status) {
+        mStatus = status;
     }
 
     public enum Status {
@@ -77,4 +193,24 @@ public class DeploymentEntity extends Data {
         /** Represents de-activated deployment **/
         DEACTIVATED
     }
+
+    @Override
+    public String toString() {
+        return "DeploymentEntity {"
+                + ", mStatus='" + mStatus
+                + ", mUrl='" + mUrl
+                + ", mTitle='" + mTitle
+                + ", mDescription='" + mDescription
+                + ", mEmail=" + mEmail
+                + ", mTimezone='" + mTimeZone
+                + ", mLanguage='" + mLanguage
+                + ", mDateFormat=" + mDateFormat
+                + ", mClientUrl=" + mClientUrl
+                + ", mAllowedPrivileges=" + mAllowedPrivileges
+                + ", mImageHeader=" + mImageHeader
+                + ", mOwnerName=" + mOwnerName
+                + ", mSiteName=" + mSiteName
+                + '}';
+    }
+
 }

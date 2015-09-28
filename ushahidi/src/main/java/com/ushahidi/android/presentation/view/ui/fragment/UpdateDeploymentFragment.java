@@ -17,6 +17,18 @@
 
 package com.ushahidi.android.presentation.view.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.addhen.android.raiburari.presentation.ui.widget.FontSupportedTextView;
 import com.ushahidi.android.R;
@@ -25,15 +37,6 @@ import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.UpdateDeploymentPresenter;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 import com.ushahidi.android.presentation.view.deployment.UpdateDeploymentView;
-
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -51,14 +54,20 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     private static final String ARGUMENT_KEY_DEPLOYMENT_MODEL
             = "com.ushahidi.android.ARGUMENT_DEPLOYMENT_MODEL";
 
-    @Bind(R.id.add_deployment_title)
-    EditText title;
-
     @Bind(R.id.add_deployment_url)
     EditText url;
 
     @Bind(R.id.textview_deployment_description)
     FontSupportedTextView mHeader;
+
+    @Bind(R.id.add_deployment_progress_bar)
+    ProgressBar mProgressBar;
+
+    @Bind(R.id.add_deployment_add)
+    Button mUpdateButton;
+
+    @Bind(R.id.add_deployment_cancel)
+    Button mCancelButton;
 
     @Inject
     UpdateDeploymentPresenter mUpdateDeploymentPresenter;
@@ -161,7 +170,6 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
     @Override
     public void showDeployment(@NonNull DeploymentModel deploymentModel) {
         mDeploymentModel = deploymentModel;
-        title.setText(deploymentModel.getTitle());
         url.setText(deploymentModel.getUrl());
     }
 
@@ -186,27 +194,25 @@ public class UpdateDeploymentFragment extends BaseFragment implements UpdateDepl
 
     private void submit() {
         url.setError(null);
-        if (TextUtils.isEmpty(title.getText().toString())) {
-            title.setError(getString(R.string.validation_message_no_deployment_title));
-            return;
-        }
         if (!(new UrlValidator().isValid(url.getText().toString()))) {
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        mDeploymentModel.setTitle(title.getText().toString());
-        mDeploymentModel.setUrl(url.getText().toString());
-        mUpdateDeploymentPresenter.updateDeployment(mDeploymentModel);
+        mUpdateDeploymentPresenter.submitUrl(url.getText().toString());
     }
 
     @Override
     public void showLoading() {
-        // Do nothing
+        mUpdateButton.setVisibility(View.INVISIBLE);
+        mCancelButton.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        // Do nothing
+        mProgressBar.setVisibility(View.GONE);
+        mUpdateButton.setVisibility(View.VISIBLE);
+        mCancelButton.setVisibility(View.VISIBLE);
     }
 
     @Override

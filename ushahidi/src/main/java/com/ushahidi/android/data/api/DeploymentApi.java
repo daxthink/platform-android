@@ -14,35 +14,23 @@
  * https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.domain.repository;
+package com.ushahidi.android.data.api;
 
-import com.addhen.android.raiburari.domain.repository.Repository;
+import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.DeploymentEntity;
-import com.ushahidi.android.domain.entity.Deployment;
 
+import retrofit.RestAdapter;
 import rx.Observable;
 
 /**
- * Repository for manipulating {@link Deployment} data
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface DeploymentRepository extends Repository<Deployment> {
+public class DeploymentApi {
 
-    /**
-     * Get an {@link Deployment} by its status.
-     *
-     * @param status The deployment status to be used for retrieving deployment data.
-     * @return The deployment
-     */
-    Observable<Deployment> getByStatus(Deployment.Status status);
-
-    /**
-     * Get an {@link DeploymentEntity} by its url.
-     *
-     * @param url The url to be used to retrieve the deployment entity.
-     * @return The deployment entity.
-     */
-    Observable<DeploymentEntity> getDeploymentEntity(String url);
+    public Observable<DeploymentEntity> getDeploymentConfig(String url) {
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(url).build();
+        RestfulService restfulService = restAdapter.create(RestfulService.class);
+        return restfulService.getDeploymentConfig();
+    }
 
 }

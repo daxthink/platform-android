@@ -25,9 +25,9 @@ import static org.mockito.Mockito.verifyZeroInteractions;
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(sdk = DefaultConfig.EMULATE_SDK, constants = BuildConfig.class)
-public class GetDeploymentUsecaseTest {
+public class FetchDeploymentUsecaseTest {
 
-    private static final Long DUMMY_DEPLOYMENT_ID = 1l;
+    private static final String DUMMY_DEPLOYMENT_URL = "http://ushahidi-platform-api-release.herokuapp.com/";
 
     @Mock
     private ThreadExecutor mockThreadExecutor;
@@ -38,19 +38,19 @@ public class GetDeploymentUsecaseTest {
     @Mock
     private DeploymentRepository mockDeploymentRepository;
 
-    private GetDeploymentUsecase mGetDeploymentUsecase;
+    private FetchDeploymentUsecase mFetchDeploymentUsecase;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mGetDeploymentUsecase = new GetDeploymentUsecase(mockDeploymentRepository, mockThreadExecutor, mockPostExecutionThread);
-        mGetDeploymentUsecase.setDeploymentId(DUMMY_DEPLOYMENT_ID);
+        mFetchDeploymentUsecase = new FetchDeploymentUsecase(mockDeploymentRepository, mockThreadExecutor, mockPostExecutionThread);
+        mFetchDeploymentUsecase.setDeploymentUrl(DUMMY_DEPLOYMENT_URL);
     }
 
     @Test
     public void shouldSuccessfullyDeleteDeployment() {
-        mGetDeploymentUsecase.buildUseCaseObservable();
-        verify(mockDeploymentRepository).getEntity(DUMMY_DEPLOYMENT_ID);
+        mFetchDeploymentUsecase.buildUseCaseObservable();
+        verify(mockDeploymentRepository).getDeploymentEntity(DUMMY_DEPLOYMENT_URL);
 
         verifyNoMoreInteractions(mockDeploymentRepository);
         verifyZeroInteractions(mockPostExecutionThread);

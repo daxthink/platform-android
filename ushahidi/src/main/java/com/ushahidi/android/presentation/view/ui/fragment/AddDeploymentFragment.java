@@ -16,22 +16,25 @@
 
 package com.ushahidi.android.presentation.view.ui.fragment;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.deployment.AddDeploymentComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.presenter.deployment.AddDeploymentPresenter;
-import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 import com.ushahidi.android.presentation.validator.UrlValidator;
 import com.ushahidi.android.presentation.view.deployment.AddDeploymentView;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
+import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
 import javax.inject.Inject;
 
@@ -46,11 +49,17 @@ import butterknife.OnEditorAction;
  */
 public class AddDeploymentFragment extends BaseFragment implements AddDeploymentView {
 
-    @Bind(R.id.add_deployment_title)
-    EditText title;
-
     @Bind(R.id.add_deployment_url)
     EditText url;
+
+    @Bind(R.id.add_deployment_progress_bar)
+    ProgressBar mProgressBar;
+
+    @Bind(R.id.add_deployment_add)
+    Button mAddButton;
+
+    @Bind(R.id.add_deployment_cancel)
+    Button mCancelButton;
 
     @Inject
     AddDeploymentPresenter mAddDeploymentPresenter;
@@ -107,7 +116,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
         mAddDeploymentPresenter.setView(this);
     }
 
-
     @Override
     public Context getAppContext() {
         return getActivity().getApplication();
@@ -139,18 +147,11 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     private void submit() {
         url.setError(null);
-        if (TextUtils.isEmpty(title.getText().toString())) {
-            title.setError(getString(R.string.validation_message_no_deployment_title));
-            return;
-        }
         if (!(new UrlValidator().isValid(url.getText().toString()))) {
             url.setError(getString(R.string.validation_message_invalid_url));
             return;
         }
-        DeploymentModel deploymentModel = new DeploymentModel();
-        deploymentModel.setTitle(title.getText().toString());
-        deploymentModel.setUrl(url.getText().toString());
-        mAddDeploymentPresenter.addDeployment(deploymentModel);
+        mAddDeploymentPresenter.submitUrl(url.getText().toString());
     }
 
     @OnClick(R.id.add_deployment_cancel)
@@ -164,7 +165,6 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     }
 
     public void setDeployment(@NonNull DeploymentModel deploymentModel) {
-        title.setText(deploymentModel.getTitle());
         url.setText(deploymentModel.getUrl());
     }
 
@@ -175,12 +175,16 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
 
     @Override
     public void showLoading() {
-        // Do nothing
+        mAddButton.setVisibility(View.INVISIBLE);
+        mCancelButton.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        // Do nothing
+        mProgressBar.setVisibility(View.GONE);
+        mAddButton.setVisibility(View.VISIBLE);
+        mCancelButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -192,4 +196,5 @@ public class AddDeploymentFragment extends BaseFragment implements AddDeployment
     public void hideRetry() {
         // Do nothing
     }
+
 }
