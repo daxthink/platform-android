@@ -81,8 +81,12 @@ public final class ErrorMessageFactory {
             RetrofitError retrofitError = (RetrofitError) exception;
             if (retrofitError.getResponse().getStatus() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 UshahidiApplication.getRxEventBusInstance().send(new NoAccessTokenEvent());
+                message = getRetrofitErrorMessage(retrofitError, context.getString(R.string.exception_message_generic));
+            } else if (retrofitError.getResponse().getStatus() == HttpURLConnection.HTTP_NOT_FOUND) {
+                message = context.getString(R.string.url_not_found_msg);
+            } else {
+                message = getRetrofitErrorMessage(retrofitError, context.getString(R.string.exception_message_generic));
             }
-            message = getRetrofitErrorMessage(retrofitError);
         } else if (exception instanceof FormAttributeNotFoundException) {
             message = context.getString(R.string.form_attribute_not_found);
         } else if (exception instanceof NetworkException) {
@@ -95,17 +99,21 @@ public final class ErrorMessageFactory {
         return message;
     }
 
-    public static String getRetrofitErrorMessage(RetrofitError error) {
-        Reader reader = null;
+    public static String getRetrofitErrorMessage(RetrofitError error, String genericExceptionMessage) {
+        Reader reader;
         try {
             reader = new InputStreamReader(error.getResponse().getBody().in(), "UTF-8");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return genericExceptionMessage;
         }
-        if (reader != null) {
+
+        try {
             ErrorResponse errorResponse = new Gson().fromJson(reader, ErrorResponse.class);
             return errorResponse.getErrorDescription();
+        } catch (Exception e) {
+            return genericExceptionMessage;
         }
-        return "";
     }
+
 }
