@@ -14,11 +14,14 @@ public class AddPostFragmentStatePageAdapter extends BaseFragmentStatePageAdapte
 
     private List<Fragment> mFragmentPages;
 
+    private List<String> mStepTitle;
+
     public AddPostFragmentStatePageAdapter(FragmentManager fragmentManager, int totalPage,
-            List<Fragment> fragmentPages) {
+            List<Fragment> fragmentPages, List<String> stepTitle) {
         super(fragmentManager);
         mTotalPage = totalPage;
         mFragmentPages = fragmentPages;
+        mStepTitle = stepTitle;
     }
 
     @Override
@@ -29,5 +32,10 @@ public class AddPostFragmentStatePageAdapter extends BaseFragmentStatePageAdapte
     @Override
     public int getCount() {
         return mTotalPage;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mStepTitle.get(position);
     }
 }
