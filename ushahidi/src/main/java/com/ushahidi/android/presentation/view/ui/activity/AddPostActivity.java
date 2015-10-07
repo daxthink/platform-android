@@ -21,11 +21,16 @@ import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerAddPostComponent;
 import com.ushahidi.android.presentation.model.FormModel;
+import com.ushahidi.android.presentation.view.ui.adapter.AddPostFragmentStatePageAdapter;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+
+import butterknife.Bind;
 
 /**
  * Renders {@link AddPostFragment}
@@ -43,11 +48,16 @@ public class AddPostActivity extends BaseAppActivity
 
     private static final String FRAG_TAG = "add_post";
 
+    @Bind(R.id.view_pager)
+    ViewPager mViewPager;
+
     private AddPostComponent mAddPostComponent;
 
     private AddPostFragment mAddPostFragment;
 
     private FormModel mFormModel;
+
+    private AddPostFragmentStatePageAdapter mAddPostFragmentStatePageAdapter;
 
     /**
      * Default constructor
@@ -103,10 +113,51 @@ public class AddPostActivity extends BaseAppActivity
             mFormModel = savedInstanceState.getParcelable(BUNDLE_STATE_PARAM_FORM_MODEL);
         }
         getSupportActionBar().setTitle(mFormModel.getName());
+        // TODO: Fetch form steps via the API and setup pager adapter 
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
     }
 
     @Override
     public AddPostComponent getComponent() {
         return mAddPostComponent;
+    }
+
+
+    private class DepthPageTransformer implements ViewPager.PageTransformer {
+
+        private static final float MIN_SCALE = 0.75f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0);
+
+            } else if (position <= 0) { // [-1,0]
+                // Use the default slide transition when moving to the left page
+                view.setAlpha(1);
+                view.setTranslationX(0);
+                view.setScaleX(1);
+                view.setScaleY(1);
+
+            } else if (position <= 1) { // (0,1]
+                // Fade the page out.
+                view.setAlpha(1 - position);
+
+                // Counteract the default slide transition
+                view.setTranslationX(pageWidth * -position);
+
+                // Scale the page down (between MIN_SCALE and 1)
+                float scaleFactor = MIN_SCALE
+                        + (1 - MIN_SCALE) * (1 - Math.abs(position));
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
+        }
     }
 }

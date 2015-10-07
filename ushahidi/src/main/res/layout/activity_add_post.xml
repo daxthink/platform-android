@@ -15,16 +15,25 @@
   ~ https://www.gnu.org/licenses/agpl-3.0.html
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".presentation.ui.AddPostActivity">
-
-    <FrameLayout
-            android:id="@+id/add_post_fragment_container"
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/add_post_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.AddPostActivity">
+    <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+        <android.support.v4.view.PagerTabStrip
+                android:id="@+id/pager_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:paddingBottom="@dimen/view_spacing_normal"
+                android:paddingTop="@dimen/view_spacing_normal"/>
+
+    </android.support.v4.view.ViewPager>
+</FrameLayout>

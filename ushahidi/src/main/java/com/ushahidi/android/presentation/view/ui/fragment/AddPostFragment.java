@@ -149,7 +149,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
         mListFormAttributePresenter.setView(new ListFormAttributeView() {
             @Override
             public void renderFormAttribute(List<FormAttributeModel> formModel) {
-                // TODO: show custom form UI
+                // TODO: show custom form URL
                 mForm.renderForm(formModel);
             }
 
