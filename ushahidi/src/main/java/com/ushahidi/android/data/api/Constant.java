@@ -63,6 +63,11 @@ public final class Constant {
     public static final String ATTRIBUTES = "/attributes";
 
     /**
+     * Stages resources
+     */
+    public static final String STAGES = "/stages";
+
+    /**
      * Tags resources
      */
     public static final String TAGS = API_PATH + "/tags";

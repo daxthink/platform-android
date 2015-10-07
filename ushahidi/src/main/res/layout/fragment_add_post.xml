@@ -3,20 +3,6 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <HorizontalScrollView android:id="@+id/post_steps_container"
-                          android:layout_below="@+id/detail_post_content"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginLeft="@dimen/view_spacing_large"
-                          android:scrollbars="none"
-                          android:requiresFadingEdge="horizontal"
-                          android:fadingEdgeLength="@dimen/view_spacing_large"
-                          android:layout_marginBottom="@dimen/view_spacing_large">
-        <LinearLayout android:id="@+id/post_steps"
-                      android:orientation="horizontal"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"/>
-    </HorizontalScrollView>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0px"
@@ -38,6 +24,7 @@
                         android:id="@+id/add_post_title"
                         style="@style/EditText.Name"
                         android:hint="@string/post_title"
+                        android:textAllCaps="true"
                         android:imeOptions="actionNext"
                         android:nextFocusDown="@+id/add_post_description"/>
 
@@ -52,18 +39,40 @@
                         android:id="@+id/add_post_description"
                         style="@style/EditText.Multiline"
                         android:hint="@string/post_description"
+                        android:textAllCaps="true"
                         android:imeOptions="actionDone"/>
             </android.support.design.widget.TextInputLayout>
             <LinearLayout
                     android:id="@+id/categories"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/view_spacing_large">
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/post_categories_label"
+                          android:text="@string/categories"
+                          android:paddingBottom="@dimen/view_spacing_large"
+                          android:textAllCaps="true"/>
+            </LinearLayout>
+
             <LinearLayout
                     android:id="@+id/form_attributes"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/view_spacing_large"
+                    android:paddingLeft="@dimen/view_spacing_large"
+                    android:paddingRight="@dimen/view_spacing_large"
+                    android:paddingEnd="@dimen/view_spacing_large">
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/post_steps_label"
+                          android:text="@string/post_steps"
+                          android:textAllCaps="true"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

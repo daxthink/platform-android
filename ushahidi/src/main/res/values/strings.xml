@@ -49,7 +49,8 @@
     <string name="validation_message_no_deployment_title">Please provide a title for the
         deployment
     </string>
-    <string name="validation_message_invalid_url">Please provide a valid URL for your deployment</string>
+    <string name="validation_message_invalid_url">Please provide a valid URL for your deployment
+    </string>
     <string name="no_qrcode_found">No valid deployment QR code was found in the reader.</string>
     <!-- Posts  -->
     <string name="list_posts">List Posts</string>
@@ -146,5 +147,6 @@
     <string name="dialog_logout_message">Are you sure you want to logout?</string>
     <string name="dialog_logout_btn_postive">Logout</string>
     <string name="dialog_logout_btn_negative">Cancel</string>
-
+    <string name="post_steps">This Post\'s Steps</string>
+    <string name="categories">Categories</string>
 </resources>

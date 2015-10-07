@@ -72,8 +72,6 @@ import javax.inject.Inject;
 
 import rx.subscriptions.CompositeSubscription;
 
-import static rx.android.app.AppObservable.bindSupportFragment;
-
 /**
  * Provides Google maps as a fragment in a {@link android.support.v4.view.ViewPager}. Has support
  * for clustering markers and drawing polygons.
@@ -105,7 +103,7 @@ public class MapPostFragment extends BaseFragment
 
     private HashMap<Marker, ClusterMarkerModel> markers = new HashMap<>();
 
-    private CompositeSubscription mSubscriptions;
+    private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     private Snackbar mSnackbar;
 
@@ -130,18 +128,16 @@ public class MapPostFragment extends BaseFragment
     @Override
     public void onStart() {
         super.onStart();
-        mSubscriptions = new CompositeSubscription();
         mSubscriptions
-                .add(bindSupportFragment(this, mRxEventBus.toObservable())
-                        .subscribe(event -> {
-                            if (event instanceof ReloadPostEvent) {
-                                ReloadPostEvent reloadPostEvent
-                                        = (ReloadPostEvent) event;
-                                if (reloadPostEvent != null) {
-                                    mMapPostPresenter.loadGeoJsonFromDb();
-                                }
-                            }
-                        }));
+                .add(mRxEventBus.toObservable().subscribe(event -> {
+                    if (event instanceof ReloadPostEvent) {
+                        ReloadPostEvent reloadPostEvent
+                                = (ReloadPostEvent) event;
+                        if (reloadPostEvent != null) {
+                            mMapPostPresenter.loadGeoJsonFromDb();
+                        }
+                    }
+                }));
     }
 
     @Override
@@ -151,8 +147,19 @@ public class MapPostFragment extends BaseFragment
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (!mSubscriptions.isUnsubscribed()) {
+            mSubscriptions.unsubscribe();
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        if (!mSubscriptions.isUnsubscribed()) {
+            mSubscriptions.unsubscribe();
+        }
         mMapPostPresenter.destroy();
     }
 

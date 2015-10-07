@@ -77,8 +77,8 @@ public abstract class FormWidget {
         return mLayout;
     }
 
-    public void setVisbility(int visbility) {
-        mLayout.setVisibility(visbility);
+    public void setVisibility(int visibility) {
+        mLayout.setVisibility(visibility);
     }
 
     public void addValidator(Validator validator) {

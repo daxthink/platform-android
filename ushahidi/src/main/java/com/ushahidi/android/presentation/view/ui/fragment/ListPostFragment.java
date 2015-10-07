@@ -51,7 +51,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import rx.subscriptions.CompositeSubscription;
 
-import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -79,7 +78,7 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
 
     private LinearLayoutManager mLinearLayoutManager;
 
-    private CompositeSubscription mSubscriptions;
+    private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     private List<PostModel> mPostModelList;
 
@@ -111,19 +110,17 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     }
 
     private void subscribeToRxEventBus() {
-        mSubscriptions = new CompositeSubscription();
-        mSubscriptions.add(bindSupportFragment(this, mRxEventBus.toObservable())
-                .subscribe(event -> {
-                    if (event instanceof ReloadPostEvent) {
-                        ReloadPostEvent reloadPostEvent
-                                = (ReloadPostEvent) event;
-                        if (reloadPostEvent != null) {
-                            mListPostPresenter.loadLocalDatabase();
-                        }
-                    } else if (event instanceof NoAccessTokenEvent) {
-                        showLoginPrompt();
-                    }
-                }));
+        mSubscriptions.add(mRxEventBus.toObservable().subscribe(event -> {
+            if (event instanceof ReloadPostEvent) {
+                ReloadPostEvent reloadPostEvent
+                        = (ReloadPostEvent) event;
+                if (reloadPostEvent != null) {
+                    mListPostPresenter.loadLocalDatabase();
+                }
+            } else if (event instanceof NoAccessTokenEvent) {
+                showLoginPrompt();
+            }
+        }));
     }
 
     private void initialize() {
@@ -170,7 +167,9 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void onStop() {
         super.onStop();
-        mSubscriptions.unsubscribe();
+        if (!mSubscriptions.isUnsubscribed()) {
+            mSubscriptions.unsubscribe();
+        }
     }
 
     @Override
@@ -182,6 +181,9 @@ public class ListPostFragment extends BaseRecyclerViewFragment<PostModel, PostAd
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (!mSubscriptions.isUnsubscribed()) {
+            mSubscriptions.unsubscribe();
+        }
         mListPostPresenter.destroy();
     }
 

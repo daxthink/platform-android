@@ -20,7 +20,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class FormTest {
 
     @Test
-    public void shouldTestAllFormFieldIntialized() {
+    public void shouldTestAllFormFieldInitialized() {
         Form form = TestFixtures.getForm();
         assertThat(form).isNotNull();
         assertThat(form).isInstanceOf(Form.class);

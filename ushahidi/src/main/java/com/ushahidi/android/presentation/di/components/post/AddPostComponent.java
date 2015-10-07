@@ -6,6 +6,8 @@ import com.ushahidi.android.presentation.di.component.AppComponent;
 import com.ushahidi.android.presentation.di.components.AppActivityComponent;
 import com.ushahidi.android.presentation.di.modules.post.AddPostModule;
 import com.ushahidi.android.presentation.di.modules.tag.ListTagModule;
+import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
+import com.ushahidi.android.presentation.presenter.formstage.ListFormStagePresenter;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
@@ -43,4 +45,8 @@ public interface AddPostComponent extends AppActivityComponent {
      * @return The add post presenter
      */
     AddPostPresenter addPostPresenter();
+
+    ListFormStagePresenter listFormStagePresenter();
+
+    ListFormAttributePresenter listFormAttributePresenter();
 }

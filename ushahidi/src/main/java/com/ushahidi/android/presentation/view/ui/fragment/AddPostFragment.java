@@ -17,27 +17,34 @@
 package com.ushahidi.android.presentation.view.ui.fragment;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
+import com.expandable.view.ExpandableView;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
-import com.ushahidi.android.presentation.model.FormModel;
+import com.ushahidi.android.presentation.model.FormStageModel;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.model.TagModel;
 import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
+import com.ushahidi.android.presentation.presenter.formstage.ListFormStagePresenter;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.presenter.tags.ListTagPresenter;
+import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
+import com.ushahidi.android.presentation.view.formstage.ListFormStageView;
 import com.ushahidi.android.presentation.view.post.AddPostView;
 import com.ushahidi.android.presentation.view.tags.ListTagsView;
 import com.ushahidi.android.presentation.view.ui.form.Form;
 import com.ushahidi.android.presentation.view.ui.navigation.Launcher;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +56,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import timber.log.Timber;
 
 /**
  * Fragment for adding a new post
@@ -57,10 +65,11 @@ import butterknife.OnEditorAction;
  */
 public class AddPostFragment extends BaseFragment implements AddPostView {
 
-    private static final String ARGUMENT_KEY_FORM_MODEL
-            = "com.ushahidi.android.ARGUMENT_KEY_FORM_MODEL";
+    private static final String ARGUMENT_KEY_FORM_ID
+            = "com.ushahidi.android.ARGUMENT_KEY_FORM_ID";
 
-    private static AddPostFragment mAddPostFragment;
+    private static final String ARGUMENT_KEY_FORM_STAGE_ID
+            = "com.ushahidi.android.ARGUMENT_KEY_FORM_STAGE_ID";
 
     @Bind(R.id.add_post_title)
     EditText title;
@@ -71,11 +80,8 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     @Bind(R.id.form_attributes)
     ViewGroup mFormAttributeViewGroup;
 
-    @Bind(R.id.post_steps_container)
-    ViewGroup mPostStepsContainer;
-
-    @Bind(R.id.post_steps)
-    LinearLayout mPostStepsView;
+    @Bind(R.id.categories)
+    ViewGroup mCategories;
 
     @Inject
     AddPostPresenter mAddPostPresenter;
@@ -87,11 +93,20 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     ListFormAttributePresenter mListFormAttributePresenter;
 
     @Inject
+    ListFormStagePresenter mListFormStagePresenter;
+
+    @Inject
     Launcher mLauncher;
 
-    private FormModel mFormModel;
+    private LinearLayout mCustomFormsContainer;
+
+    private Long mFormId;
+
+    private Long mFormStageId;
 
     private Form mForm;
+
+    private List<FormAttributeModel> mFormAttributeModels;
 
     /**
      * Add Deployment  Fragment
@@ -100,15 +115,13 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
         super(R.layout.fragment_add_post, R.menu.add_deployment);
     }
 
-    public static AddPostFragment newInstance(FormModel formModel) {
-        if (mAddPostFragment == null) {
-            mAddPostFragment = new AddPostFragment();
-        }
-
+    public static AddPostFragment newInstance(Long formId, Long formStageId) {
+        AddPostFragment addPostFragment = new AddPostFragment();
         Bundle arguments = new Bundle();
-        arguments.putParcelable(ARGUMENT_KEY_FORM_MODEL, formModel);
-        mAddPostFragment.setArguments(arguments);
-        return mAddPostFragment;
+        arguments.putLong(ARGUMENT_KEY_FORM_ID, formId);
+        arguments.putLong(ARGUMENT_KEY_FORM_STAGE_ID, formStageId);
+        addPostFragment.setArguments(arguments);
+        return addPostFragment;
     }
 
     @Override
@@ -121,36 +134,45 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
     public void onResume() {
         super.onResume();
         mAddPostPresenter.resume();
-        //mListFormAttributePresenter.getFormDb(mFormModel._id);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mAddPostPresenter.pause();
+        mListFormAttributePresenter.pause();
+        mListFormStagePresenter.pause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mAddPostPresenter.destroy();
+        mListFormStagePresenter.destroy();
+        mListFormAttributePresenter.destroy();
     }
 
     private void initialize() {
         getComponent(AddPostComponent.class).inject(this);
         mAddPostPresenter.setView(this);
-        mFormModel = getArguments().getParcelable(ARGUMENT_KEY_FORM_MODEL);
-        intializeTagsView();
+        mFormId = getArguments().getLong(ARGUMENT_KEY_FORM_ID);
+        mFormStageId = getArguments().getLong(ARGUMENT_KEY_FORM_STAGE_ID);
+        initializeTagsView();
         initializeFormAttributeView();
     }
 
     private void initializeFormAttributeView() {
-        mForm = new Form(getActivity(), mFormAttributeViewGroup);
+        mCustomFormsContainer = new LinearLayout(getAppContext());
+        mCustomFormsContainer.setOrientation(LinearLayout.VERTICAL);
+        mCustomFormsContainer.setLayoutParams(
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+        mForm = new Form(getActivity(), mCustomFormsContainer);
         mListFormAttributePresenter.setView(new ListFormAttributeView() {
             @Override
             public void renderFormAttribute(List<FormAttributeModel> formModel) {
-                // TODO: show custom form UI
-                mForm.renderForm(formModel);
+                mFormAttributeModels = formModel;
+                initListFormStageView();
             }
 
             @Override
@@ -175,7 +197,7 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
 
             @Override
             public void showError(String s) {
-                showSnabackar(getView(), s);
+                showSnackbar(getView(), s);
             }
 
             @Override
@@ -183,15 +205,82 @@ public class AddPostFragment extends BaseFragment implements AddPostView {
                 return getActivity().getApplicationContext();
             }
         });
-
-        mListFormAttributePresenter.getFormOnline(mFormModel._id);
+        mListFormAttributePresenter.getFormOnline(mFormId);
     }
 
-    private void intializeTagsView() {
+    private void initListFormStageView() {
+        mListFormStagePresenter.setView(new ListFormStageView() {
+            @Override
+            public void showError(String message) {
+
+            }
+
+            @Override
+            public Context getAppContext() {
+                return getContext();
+            }
+
+            @Override
+            public void showLoading() {
+
+            }
+
+            @Override
+            public void hideLoading() {
+
+            }
+
+            @Override
+            public void showRetry() {
+
+            }
+
+            @Override
+            public void hideRetry() {
+
+            }
+
+            @Override
+            public void renderFormStage(List<FormStageModel> formModels) {
+                if (!Utility.isCollectionEmpty(formModels)) {
+                    mFormAttributeViewGroup.setVisibility(View.VISIBLE);
+                    for (FormStageModel formStage : formModels) {
+                        ExpandableView stage = new ExpandableView(getAppContext());
+                        stage.fillData(0, formStage.getLabel(), true);
+                        for (FormAttributeModel formAttributeModel : mFormAttributeModels) {
+                            if (formStage._id == formAttributeModel.getFormStageId()) {
+                                mForm.renderForm(formAttributeModel);
+                            }
+                        }
+                        mForm.getContainer();
+                        stage.addContentView(mCustomFormsContainer);
+                        mFormAttributeViewGroup.addView(stage);
+                    }
+                }
+            }
+        });
+        mListFormStagePresenter.getFormOnline(mFormId);
+    }
+
+
+    private void initializeTagsView() {
         mListTagPresenter.setView(new ListTagsView() {
             @Override
-            public void renderTagList(List<TagModel> tagModel) {
-                //todo Render tags
+            public void renderTagList(List<TagModel> tagModels) {
+                if (!Utility.isCollectionEmpty(tagModels)) {
+                    mCategories.setVisibility(View.VISIBLE);
+                    for (TagModel tag : tagModels) {
+                        Timber.i("RenderTags", "Tag: " + tag.getTag());
+                        CheckBox checkBox = new CheckBox(getAppContext());
+                        int id = Resources.getSystem()
+                                .getIdentifier("btn_check_holo_light", "drawable", "android");
+                        checkBox.setButtonDrawable(id);
+                        checkBox.setTag(tag._id);
+                        checkBox.setText(tag.getTag());
+                        checkBox.setTextColor(getResources().getColor(R.color.black_dark));
+                        mCategories.addView(checkBox);
+                    }
+                }
             }
 
             @Override

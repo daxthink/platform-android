@@ -32,6 +32,20 @@ public class FormAttribute extends Entity {
 
     private Integer mCardinality;
 
+    private Long mFormStageId;
+
+    public Long getFormStageId() {
+        return mFormStageId;
+    }
+
+    public void setFormStageId(Long formStageId) {
+        mFormStageId = formStageId;
+    }
+
+    public void setCardinality(Integer cardinality) {
+        mCardinality = cardinality;
+    }
+
     public void setCardinality(int cardinality) {
         mCardinality = cardinality;
     }
@@ -122,8 +136,24 @@ public class FormAttribute extends Entity {
         SELECT("select"),
         /** Date picker */
         DATETIME("datetime"),
+        /**
+         * Date input
+         */
+        DATE("date"),
         /** TextArea input type */
-        TEXTAREA("textarea");
+        TEXTAREA("textarea"),
+        /** Number type */
+        NUMBER("number"),
+
+        /**
+         * Radio input type
+         */
+        RADIO("radio"),
+
+        /**
+         * Checkbox input type
+         */
+        CHECKBOX("checkbox");
 
         private String value;
 
@@ -152,7 +182,17 @@ public class FormAttribute extends Entity {
         /** A text type */
         TEXT("text"),
         /** A geometry type */
-        GEOMETRY("geometry");
+        GEOMETRY("geometry"),
+
+        /**
+         * Int type
+         */
+        INT("int"),
+
+        /**
+         * Link type
+         */
+        LINK("link");
 
         private String value;
 
@@ -180,6 +220,7 @@ public class FormAttribute extends Entity {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ",mFormStageId=" + mFormStageId
                 + ", mCardinality=" + mCardinality
                 + '}';
     }
