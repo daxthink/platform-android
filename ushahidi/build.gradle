@@ -75,6 +75,11 @@ android {
             applicationId 'com.ushahidi.android.internal'
         }
     }
+
+    dexOptions {
+        incremental = true;
+    }
+
 }
 
 retrolambda {
