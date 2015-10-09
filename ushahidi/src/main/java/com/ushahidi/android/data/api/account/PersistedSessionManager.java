@@ -176,7 +176,7 @@ public class PersistedSessionManager<T extends Session> implements SessionManage
                 mActiveSessionRef.get().getDeploymentId() == deploymentId)) {
             synchronized (this) {
                 mActiveSessionRef.set(null);
-                mSharedPreferences.edit().remove(mPrefKeyActiveSession).commit();
+                mSharedPreferences.edit().remove(getPrefKey(id, deploymentId)).commit();
             }
         }
 
