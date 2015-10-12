@@ -42,9 +42,11 @@ public class FormAttributeEntityDataMapper {
             formAttribute.setOptions(formAttributeEntity.getOptions());
             formAttribute.setFormId(formAttributeEntity.getFormId());
             formAttribute.setRequired(formAttributeEntity.getRequired());
-            formAttribute.setInput(FormAttribute.Input.valueOf(formAttributeEntity.getInput().name()));
+            formAttribute.setInput(
+                    FormAttribute.Input.valueOf(formAttributeEntity.getInput().name()));
             formAttribute.setType(FormAttribute.Type.valueOf(formAttributeEntity.getType().name()));
             formAttribute.setLabel(formAttributeEntity.getLabel());
+            formAttribute.setFormStageId(formAttributeEntity.getFormStageId());
         }
         return formAttribute;
     }
@@ -73,6 +75,8 @@ public class FormAttributeEntityDataMapper {
             formAttributeEntity
                     .setType(FormAttributeEntity.Type.valueOf(formAttribute.getType().name()));
             formAttributeEntity.setLabel(formAttribute.getLabel());
+            formAttributeEntity.setFormStageId(formAttribute.getFormStageId());
+            formAttribute.setCardinality(formAttribute.getCardinality());
         }
         return formAttributeEntity;
     }

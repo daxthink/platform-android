@@ -32,6 +32,20 @@ public class FormAttribute extends Entity {
 
     private Integer mCardinality;
 
+    private Long mFormStageId;
+
+    public Long getFormStageId() {
+        return mFormStageId;
+    }
+
+    public void setFormStageId(Long formStageId) {
+        mFormStageId = formStageId;
+    }
+
+    public void setCardinality(Integer cardinality) {
+        mCardinality = cardinality;
+    }
+
     public void setCardinality(int cardinality) {
         mCardinality = cardinality;
     }
@@ -180,6 +194,7 @@ public class FormAttribute extends Entity {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ",mFormStageId=" + mFormStageId
                 + ", mCardinality=" + mCardinality
                 + '}';
     }

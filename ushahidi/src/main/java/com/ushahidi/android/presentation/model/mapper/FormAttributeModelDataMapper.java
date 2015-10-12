@@ -46,6 +46,7 @@ public class FormAttributeModelDataMapper {
                     .setInput(FormAttribute.Input.valueOf(formAttributeModel.getInput().name()));
             formAttribute.setType(FormAttribute.Type.valueOf(formAttributeModel.getType().name()));
             formAttribute.setLabel(formAttributeModel.getLabel());
+            formAttribute.setFormStageId(formAttributeModel.getFormStageId());
         }
         return formAttribute;
     }
@@ -74,6 +75,7 @@ public class FormAttributeModelDataMapper {
             formAttributeModel
                     .setType(FormAttributeModel.Type.valueOf(formAttribute.getType().name()));
             formAttributeModel.setLabel(formAttribute.getLabel());
+            formAttributeModel.setFormStageId(formAttribute.getFormStageId());
         }
         return formAttributeModel;
     }

@@ -41,6 +41,9 @@ public class FormAttributeEntity extends Data {
 
     private Long mFormId;
 
+    @SerializedName("form_stage_id")
+    private Long mFormStageId;
+
     public void setFormId(Long formId) {
         mFormId = formId;
     }
@@ -119,6 +122,18 @@ public class FormAttributeEntity extends Data {
 
     public Integer getCardinality() {
         return mCardinality;
+    }
+
+    public void setCardinality(Integer cardinality) {
+        mCardinality = cardinality;
+    }
+
+    public Long getFormStageId() {
+        return mFormStageId;
+    }
+
+    public void setFormStageId(Long formStageId) {
+        mFormStageId = formStageId;
     }
 
     public enum Input {
@@ -227,6 +242,7 @@ public class FormAttributeEntity extends Data {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ", mFormStageId=" + mFormStageId
                 + ", mCardinality=" + mCardinality
                 + '}';
     }

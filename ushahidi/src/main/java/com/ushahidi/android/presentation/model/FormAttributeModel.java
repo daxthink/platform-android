@@ -31,6 +31,20 @@ public class FormAttributeModel extends Model {
 
     private Integer mCardinality;
 
+    private Long mFormStageId;
+
+    public Long getFormStageId() {
+        return mFormStageId;
+    }
+
+    public void setFormStageId(Long formStageId) {
+        mFormStageId = formStageId;
+    }
+
+    public void setCardinality(Integer cardinality) {
+        mCardinality = cardinality;
+    }
+
     public void setFormId(Long formId) {
         mFormId = formId;
     }
@@ -207,6 +221,7 @@ public class FormAttributeModel extends Model {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ",mFormStageId=" + mFormStageId
                 + ", mCardinality=" + mCardinality
                 + '}';
     }
