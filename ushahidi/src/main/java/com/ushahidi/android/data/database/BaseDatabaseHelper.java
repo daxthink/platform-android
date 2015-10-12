@@ -11,6 +11,7 @@ import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.entity.UserEntity;
+import com.ushahidi.android.domain.entity.FormStage;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,7 +42,7 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
 
     private static final Class[] ENTITIES = new Class[]{DeploymentEntity.class, UserEntity.class,
             TagEntity.class, PostTagEntity.class, PostEntity.class,
-            GeoJsonEntity.class, FormEntity.class, FormAttributeEntity.class};
+            GeoJsonEntity.class, FormEntity.class, FormAttributeEntity.class, FormStage.class};
 
     private static final String TAG = BaseDatabaseHelper.class.getSimpleName();
 
