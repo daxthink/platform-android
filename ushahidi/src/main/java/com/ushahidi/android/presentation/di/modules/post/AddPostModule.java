@@ -2,6 +2,7 @@ package com.ushahidi.android.presentation.di.modules.post;
 
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.ushahidi.android.domain.usecase.formattribute.ListFormAttributeUsecase;
+import com.ushahidi.android.domain.usecase.formstages.ListFormStageUsecase;
 import com.ushahidi.android.domain.usecase.post.AddPostUsecase;
 
 import javax.inject.Named;
@@ -43,5 +44,20 @@ public class AddPostModule {
     ListFormAttributeUsecase provideListFormAttributeUsecase(
             ListFormAttributeUsecase listFormAttributeUsecase) {
         return listFormAttributeUsecase;
+    }
+
+    /**
+     * Provides {@link com.ushahidi.android.domain.usecase.formattribute.GetFormAttributeUsecase}
+     * object annotated with the name "formAttributeGet"
+     *
+     * @param listFormStageUsecase Get Form Attribute Usecase
+     * @return The get form stage usecase
+     */
+    @Provides
+    @ActivityScope
+    @Named("formStageList")
+    ListFormStageUsecase provideListFormStageUsecase(
+            ListFormStageUsecase listFormStageUsecase) {
+        return listFormStageUsecase;
     }
 }

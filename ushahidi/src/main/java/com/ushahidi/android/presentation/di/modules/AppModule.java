@@ -34,6 +34,7 @@ import com.ushahidi.android.data.exception.RetrofitErrorHandler;
 import com.ushahidi.android.data.repository.DeploymentDataRepository;
 import com.ushahidi.android.data.repository.FormAttributeDataRepository;
 import com.ushahidi.android.data.repository.FormDataRepository;
+import com.ushahidi.android.data.repository.FormStageDataRepository;
 import com.ushahidi.android.data.repository.GeoJsonDataRepository;
 import com.ushahidi.android.data.repository.PostDataRepository;
 import com.ushahidi.android.data.repository.TagDataRepository;
@@ -42,6 +43,7 @@ import com.ushahidi.android.data.repository.UserProfileDataRepository;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.FormAttributeRepository;
 import com.ushahidi.android.domain.repository.FormRepository;
+import com.ushahidi.android.domain.repository.FormStageRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.domain.repository.TagRepository;
@@ -282,6 +284,19 @@ public class AppModule {
     FormAttributeRepository provideFormAttributeRepository(
             FormAttributeDataRepository formAttributeDataRepository) {
         return formAttributeDataRepository;
+    }
+
+    /**
+     * Provides {@link com.ushahidi.android.domain.repository.FormStageRepository}
+     *
+     * @param formStageDataRepository The form data repository
+     * @return The form repository
+     */
+    @Provides
+    @Singleton
+    FormStageRepository provideFormStageRepository(
+            FormStageDataRepository formStageDataRepository) {
+        return formStageDataRepository;
     }
 
     /**
