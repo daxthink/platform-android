@@ -113,7 +113,7 @@ public class AddPostActivity extends BaseAppActivity
             mFormModel = savedInstanceState.getParcelable(BUNDLE_STATE_PARAM_FORM_MODEL);
         }
         getSupportActionBar().setTitle(mFormModel.getName());
-        // TODO: Fetch form steps via the API and setup pager adapter 
+        // TODO: Fetch form steps via the API and setup pager adapter
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
     }
 

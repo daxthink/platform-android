@@ -24,6 +24,8 @@ public class AddPostFragmentStatePageAdapter extends BaseFragmentStatePageAdapte
         mStepTitle = stepTitle;
     }
 
+
+
     @Override
     public Fragment getItem(int position) {
         return mFragmentPages.get(position);
