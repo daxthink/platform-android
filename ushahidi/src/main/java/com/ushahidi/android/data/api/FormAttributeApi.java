@@ -38,8 +38,8 @@ public class FormAttributeApi {
     public Observable<List<FormAttributeEntity>> getFormAttributes(Long formId) {
         return mUshAccessTokenManager.getValidAccessToken().concatMap(
                 authorizationHeader -> mUshAccessTokenManager.getRestfulService()
-                        .getFormAttributes(authorizationHeader, formId))
-                .flatMap(this::setFormAttributes);
+                        .getFormAttributes(authorizationHeader, formId)).flatMap(
+                this::setFormAttributes);
     }
 
     private Observable<List<FormAttributeEntity>> setFormAttributes(FormAttributes attributes) {

@@ -18,7 +18,9 @@
 package com.ushahidi.android.data.api.service;
 
 import com.google.gson.JsonElement;
+
 import com.ushahidi.android.data.api.model.FormAttributes;
+import com.ushahidi.android.data.api.model.FormStages;
 import com.ushahidi.android.data.api.model.Forms;
 import com.ushahidi.android.data.api.model.Posts;
 import com.ushahidi.android.data.api.model.Tags;
@@ -39,6 +41,7 @@ import static com.ushahidi.android.data.api.Constant.ATTRIBUTES;
 import static com.ushahidi.android.data.api.Constant.FORMS;
 import static com.ushahidi.android.data.api.Constant.GEOJSON;
 import static com.ushahidi.android.data.api.Constant.POSTS;
+import static com.ushahidi.android.data.api.Constant.STAGES;
 import static com.ushahidi.android.data.api.Constant.TAGS;
 import static com.ushahidi.android.data.api.Constant.USERS_ME;
 
@@ -134,6 +137,17 @@ public interface RestfulService {
             @Path("id") long id);
 
     /**
+     * Fetches form stages
+     *
+     * @param authorizationHeader The access token header
+     * @return FormStages
+     */
+    @GET(FORMS + "/{id}" + STAGES + "?order=asc&orderby=priority")
+    Observable<FormStages> getFormStages(
+            @Header("Authorization") String authorizationHeader,
+            @Path("id") long id);
+
+    /**
      * Fetches form attributes
      *
      * @param authorizationHeader The access token header
@@ -145,11 +159,12 @@ public interface RestfulService {
             @Path("id") long id);
 
     /**
-     * This interface has the api for getting the site config information from API + /api/v3/config/site
+     * This interface has the api for getting the site config information from API +
+     * /api/v3/config/site
      *
-     * Intended to be used to get the title of the url (and also a way to verify that the url is a valid
+     * Intended to be used to get the title of the url (and also a way to verify that the url is a
+     * valid
      * ushahidi platform url) at the time the user enters/updates the deployment information.
-     *
      */
     @GET("/api/v3/config/site")
     Observable<DeploymentEntity> getDeploymentConfig();

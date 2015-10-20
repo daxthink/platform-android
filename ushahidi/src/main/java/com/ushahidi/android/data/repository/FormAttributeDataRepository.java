@@ -52,14 +52,4 @@ public class FormAttributeDataRepository implements FormAttributeRepository {
         return formAttributeDataSource.getFormAttributes(deploymentId, formId)
                 .map(mFormAttributeEntityDataMapper::map);
     }
-
-    @Override
-    public Observable<Long> putFormAttribute(FormAttribute form) {
-        return null;
-    }
-
-    @Override
-    public Observable<FormAttribute> getFormAttribute(Long deploymentId, Long formAttributeId) {
-        return null;
-    }
 }

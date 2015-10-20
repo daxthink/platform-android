@@ -45,7 +45,6 @@ import rx.subscriptions.CompositeSubscription;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static butterknife.ButterKnife.findById;
-import static rx.android.app.AppObservable.bindSupportFragment;
 
 /**
  * Fragment for showing logged User profile prompt user to login
@@ -67,7 +66,7 @@ public class UserProfileFragment extends BaseFragment {
     // So we can close the nav drawer
     private DrawerLayout mDrawerLayout;
 
-    private CompositeSubscription mSubscriptions;
+    private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     public UserProfileFragment() {
         super(R.layout.fragment_user_profile, 0);
@@ -95,30 +94,38 @@ public class UserProfileFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         mSubscriptions = new CompositeSubscription();
-
         mSubscriptions
-                .add(bindSupportFragment(this, mRxEventBus.toObservable())
-                        .subscribe(event -> {
-                            if (event instanceof LoadUserProfileEvent) {
-                                LoadUserProfileEvent loadUserProfileEvent
-                                        = (LoadUserProfileEvent) event;
-                                if (loadUserProfileEvent.getUserProfileModel() != null) {
-                                    showUserProfile(loadUserProfileEvent.getUserProfileModel());
-                                } else {
-                                    showLogin();
-                                }
-                            }
+                .add(mRxEventBus.toObservable().subscribe(event -> {
+                    if (event instanceof LoadUserProfileEvent) {
+                        LoadUserProfileEvent loadUserProfileEvent
+                                = (LoadUserProfileEvent) event;
+                        if (loadUserProfileEvent.getUserProfileModel() != null) {
+                            showUserProfile(loadUserProfileEvent.getUserProfileModel());
+                        } else {
+                            showLogin();
+                        }
+                    }
 
-                            if (event instanceof NoAccessTokenEvent) {
-                                showLogin();
-                            }
-                        }));
+                    if (event instanceof NoAccessTokenEvent) {
+                        showLogin();
+                    }
+                }));
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mSubscriptions.unsubscribe();
+        if (!mSubscriptions.isUnsubscribed()) {
+            mSubscriptions.unsubscribe();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (!mSubscriptions.isUnsubscribed()) {
+            mSubscriptions.unsubscribe();
+        }
     }
 
     private void initialize() {

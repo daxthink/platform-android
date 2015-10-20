@@ -30,18 +30,18 @@ public class FormAttributeApiDataSource implements FormAttributeDataSource {
     public Observable<List<FormAttributeEntity>> getFormAttributes(Long deploymentId, Long formId) {
         return mFormAttributeApi.getFormAttributes(formId).doOnNext(
                 formsAttributes -> mFormAttributeDatabaseHelper
-                        .putFormAttributeEntity(
-                                setFormAttributeEntity(formsAttributes, deploymentId)));
+                        .put(setFormAttributeEntity(formsAttributes, deploymentId, formId)));
 
     }
 
 
     private List<FormAttributeEntity> setFormAttributeEntity(
             List<FormAttributeEntity> formAttributeEntityList,
-            Long deploymentId) {
+            Long deploymentId, Long formId) {
         List<FormAttributeEntity> formAttributeList = new ArrayList<>();
         for (FormAttributeEntity formAttributeEntity : formAttributeEntityList) {
             formAttributeEntity.setDeploymentId(deploymentId);
+            formAttributeEntity.setFormId(formId);
             formAttributeList.add(formAttributeEntity);
         }
         return formAttributeList;

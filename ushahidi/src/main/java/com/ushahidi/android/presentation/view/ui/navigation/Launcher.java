@@ -16,10 +16,7 @@
 
 package com.ushahidi.android.presentation.view.ui.navigation;
 
-import android.app.Activity;
-
 import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.model.FormModel;
 import com.ushahidi.android.presentation.view.ui.activity.AboutActivity;
 import com.ushahidi.android.presentation.view.ui.activity.AddDeploymentActivity;
 import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
@@ -31,6 +28,8 @@ import com.ushahidi.android.presentation.view.ui.activity.PostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.QrcodeReaderActivity;
 import com.ushahidi.android.presentation.view.ui.activity.SearchPostActivity;
 import com.ushahidi.android.presentation.view.ui.activity.UpdateDeploymentActivity;
+
+import android.app.Activity;
 
 import javax.inject.Inject;
 
@@ -112,12 +111,14 @@ public class Launcher {
     }
 
     /**
-     * Launches add post
+     * Launches form add
      *
-     * @param formModel The selected form model
+     * @param formId    form Id
+     * @param formTitle form title
      */
-    public void launchAddPost(FormModel formModel) {
-        mActivity.startActivity(AddPostActivity.getIntent(mActivity, formModel));
+    public void launchAddPost(Long formId, String formTitle) {
+        mActivity.startActivity(
+                AddPostActivity.getIntent(mActivity, formId, formTitle));
     }
 
     /**

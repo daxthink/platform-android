@@ -32,6 +32,6 @@ public class FormDatabaseDataSource implements FormDataSource {
 
     @Override
     public Observable<Long> putForm(FormEntity formEntity) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

@@ -34,6 +34,17 @@ public final class TestFixtures {
         return formAttributeList;
     }
 
+    public static FormStage getFormStage() {
+        FormStage formStage = new FormStage();
+        formStage._id = ID;
+        formStage.setLabel("Test varchar");
+        formStage.setRequired(true);
+        formStage.setPriority(1);
+        formStage.setDeploymentId(DEPLOYMENT_ID);
+        formStage.setFormId(2l);
+        return formStage;
+    }
+
     public static FormAttribute getFormAttribute() {
         FormAttribute formAttribute = new FormAttribute();
         formAttribute._id = ID;
