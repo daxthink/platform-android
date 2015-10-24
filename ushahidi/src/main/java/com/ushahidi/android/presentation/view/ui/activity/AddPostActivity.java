@@ -20,12 +20,15 @@ import com.addhen.android.raiburari.presentation.di.HasComponent;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerAddPostComponent;
-import com.ushahidi.android.presentation.model.FormModel;
+import com.ushahidi.android.presentation.model.FormStageModel;
+import com.ushahidi.android.presentation.view.ui.adapter.AddPostFragmentStatePageAdapter;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import java.util.List;
 
 /**
  * Renders {@link AddPostFragment}
@@ -35,11 +38,17 @@ import android.os.Bundle;
 public class AddPostActivity extends BaseAppActivity
         implements HasComponent<AddPostComponent> {
 
-    private static final String INTENT_EXTRA_PARAM_FORM_MODEL
-            = "com.ushahidi.android.INTENT_PARAM_POST_MODEL";
+    private static final String INTENT_EXTRA_PARAM_FORM_ID
+            = "com.ushahidi.android.INTENT_PARAM_FORM_ID";
 
-    private static final String BUNDLE_STATE_PARAM_FORM_MODEL
-            = "com.ushahidi.android.STATE_PARAM_POST_MODEL";
+    private static final String INTENT_EXTRA_PARAM_FORM_TITLE
+            = "com.ushahidi.android.INTENT_PARAM_FORM_TITLE";
+
+    private static final String BUNDLE_STATE_PARAM_FORM_ID
+            = "com.ushahidi.android.STATE_PARAM_FORM_ID";
+
+    private static final String BUNDLE_STATE_PARAM_FORM_TITLE
+            = "com.ushahidi.android.STATE_PARAM_FORM_TITLE";
 
     private static final String FRAG_TAG = "add_post";
 
@@ -47,7 +56,13 @@ public class AddPostActivity extends BaseAppActivity
 
     private AddPostFragment mAddPostFragment;
 
-    private FormModel mFormModel;
+    private Long mFormId;
+
+    private List<FormStageModel> mFormStages;
+
+    private String mFormTitle;
+
+    private AddPostFragmentStatePageAdapter mAddPostFragmentStatePageAdapter;
 
     /**
      * Default constructor
@@ -59,13 +74,13 @@ public class AddPostActivity extends BaseAppActivity
     /**
      * Provides {@link Intent} for launching this activity
      *
-     * @param context   The calling context
-     * @param formModel The form model to pass to this activity from the calling activity
+     * @param context The calling context
      * @return The intent to launch this activity
      */
-    public static Intent getIntent(final Context context, FormModel formModel) {
+    public static Intent getIntent(final Context context, Long formId, String formTitle) {
         Intent intent = new Intent(context, AddPostActivity.class);
-        intent.putExtra(INTENT_EXTRA_PARAM_FORM_MODEL, formModel);
+        intent.putExtra(INTENT_EXTRA_PARAM_FORM_ID, formId);
+        intent.putExtra(INTENT_EXTRA_PARAM_FORM_TITLE, formTitle);
         return intent;
     }
 
@@ -78,7 +93,8 @@ public class AddPostActivity extends BaseAppActivity
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelable(BUNDLE_STATE_PARAM_FORM_MODEL, mFormModel);
+        savedInstanceState.putLong(BUNDLE_STATE_PARAM_FORM_ID, mFormId);
+        savedInstanceState.putString(BUNDLE_STATE_PARAM_FORM_TITLE, mFormTitle);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -91,22 +107,25 @@ public class AddPostActivity extends BaseAppActivity
 
     private void initialize(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            mFormModel = getIntent().getParcelableExtra(INTENT_EXTRA_PARAM_FORM_MODEL);
-            mAddPostFragment = (AddPostFragment) getSupportFragmentManager()
-                    .findFragmentByTag(FRAG_TAG);
+            mFormId = getIntent().getLongExtra(INTENT_EXTRA_PARAM_FORM_ID, 0l);
+            mFormTitle = getIntent().getStringExtra(INTENT_EXTRA_PARAM_FORM_TITLE);
+            mAddPostFragment = (AddPostFragment) getSupportFragmentManager().findFragmentByTag(
+                    FRAG_TAG);
             if (mAddPostFragment == null) {
-                mAddPostFragment = AddPostFragment.newInstance(mFormModel);
+                mAddPostFragment = AddPostFragment.newInstance(mFormId, mFormId);
                 replaceFragment(R.id.add_post_fragment_container, mAddPostFragment, FRAG_TAG);
             }
 
         } else {
-            mFormModel = savedInstanceState.getParcelable(BUNDLE_STATE_PARAM_FORM_MODEL);
+            mFormId = savedInstanceState.getLong(BUNDLE_STATE_PARAM_FORM_ID);
+            mFormTitle = savedInstanceState.getString(BUNDLE_STATE_PARAM_FORM_TITLE);
         }
-        getSupportActionBar().setTitle(mFormModel.getName());
+        getSupportActionBar().setTitle(mFormTitle);
     }
 
     @Override
     public AddPostComponent getComponent() {
         return mAddPostComponent;
     }
+
 }

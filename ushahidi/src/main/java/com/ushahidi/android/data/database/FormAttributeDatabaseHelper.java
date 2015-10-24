@@ -39,11 +39,13 @@ public class FormAttributeDatabaseHelper extends BaseDatabaseHelper {
     public Observable<List<FormAttributeEntity>> getFormAttributeEntity(Long deploymentId,
             Long formId) {
         return Observable.create(subscriber -> {
+            String selection = " mFormId = ?  AND mDeploymentId = ?";
+            String args[] = {String.valueOf(formId), String.valueOf(deploymentId)};
             final List<FormAttributeEntity> formAttributeEntities = cupboard()
                     .withDatabase(getReadableDatabase())
                     .query(FormAttributeEntity.class)
-                    .withSelection("mDeploymentId = ?", String.valueOf(deploymentId))
-                    .withSelection("mFormId = ?", String.valueOf(formId)).list();
+                    .withSelection(selection, args)
+                    .list();
 
             if (formAttributeEntities != null && formAttributeEntities.size() > 0) {
                 subscriber.onNext(formAttributeEntities);
@@ -68,6 +70,10 @@ public class FormAttributeDatabaseHelper extends BaseDatabaseHelper {
                 subscriber.onCompleted();
             }
         });
+    }
+
+    public void put(List<FormAttributeEntity> formAttributeEntity) {
+        cupboard().withDatabase(getWritableDatabase()).put(formAttributeEntity);
     }
 
     /**

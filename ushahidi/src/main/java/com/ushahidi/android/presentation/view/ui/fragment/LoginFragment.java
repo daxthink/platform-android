@@ -23,9 +23,9 @@ import com.ushahidi.android.presentation.di.components.account.LoginComponent;
 import com.ushahidi.android.presentation.model.DeploymentModel;
 import com.ushahidi.android.presentation.model.UserAccountModel;
 import com.ushahidi.android.presentation.presenter.account.LoginPresenter;
+import com.ushahidi.android.presentation.view.account.LoginView;
 import com.ushahidi.android.presentation.view.ui.activity.LoginActivity;
 import com.ushahidi.android.presentation.view.ui.adapter.DeploymentSpinnerAdapter;
-import com.ushahidi.android.presentation.view.account.LoginView;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -51,10 +51,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import rx.Observable;
 import rx.Subscription;
-import rx.android.widget.OnTextChangeEvent;
-import rx.android.widget.WidgetObservable;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -95,10 +92,6 @@ public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedC
     LoginPresenter mLoginPresenter;
 
     private DeploymentSpinnerAdapter mDeploymentSpinnerArrayAdapter;
-
-    private Observable<OnTextChangeEvent> mUsernameText;
-
-    private Observable<OnTextChangeEvent> mPasswordText;
 
     private Subscription mSubscribe;
 
@@ -141,8 +134,6 @@ public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedC
                 (v, hasFocus) -> mEmailAutoComplete.showDropDown());
         mLoginPresenter.getDeploymentList();
         mRegisterRadioButton.setVisibility(View.GONE);
-        mUsernameText = WidgetObservable.text(mUsername);
-        mPasswordText = WidgetObservable.text(mPassword);
     }
 
     @OnClick(R.id.login_submit_btn)
@@ -246,7 +237,7 @@ public class LoginFragment extends BaseFragment implements RadioGroup.OnCheckedC
 
     @Override
     public void showError(String s) {
-        showSnabackar(getView(), s);
+        showSnackbar(getView(), s);
     }
 
     @Override

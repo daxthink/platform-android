@@ -17,6 +17,41 @@
 
 package com.ushahidi.android.presentation.view.ui.activity;
 
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.Holder;
+import com.ushahidi.android.R;
+import com.ushahidi.android.data.api.account.PlatformSession;
+import com.ushahidi.android.data.api.account.SessionManager;
+import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
+import com.ushahidi.android.presentation.UshahidiApplication;
+import com.ushahidi.android.presentation.di.components.form.DaggerListFormComponent;
+import com.ushahidi.android.presentation.di.components.form.ListFormComponent;
+import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
+import com.ushahidi.android.presentation.di.components.post.DaggerAddPostComponent;
+import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
+import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
+import com.ushahidi.android.presentation.di.components.post.DaggerPostComponent;
+import com.ushahidi.android.presentation.di.components.post.DaggerUserProfileComponent;
+import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
+import com.ushahidi.android.presentation.di.components.post.MapPostComponent;
+import com.ushahidi.android.presentation.di.components.post.PostComponent;
+import com.ushahidi.android.presentation.di.components.post.UserProfileComponent;
+import com.ushahidi.android.presentation.model.DeploymentModel;
+import com.ushahidi.android.presentation.model.FormModel;
+import com.ushahidi.android.presentation.model.UserProfileModel;
+import com.ushahidi.android.presentation.presenter.form.ListFormPresenter;
+import com.ushahidi.android.presentation.presenter.post.PostPresenter;
+import com.ushahidi.android.presentation.state.LoadUserProfileEvent;
+import com.ushahidi.android.presentation.state.ReloadPostEvent;
+import com.ushahidi.android.presentation.util.Utility;
+import com.ushahidi.android.presentation.view.form.ListFormView;
+import com.ushahidi.android.presentation.view.post.PostView;
+import com.ushahidi.android.presentation.view.ui.adapter.FormAdapter;
+import com.ushahidi.android.presentation.view.ui.fragment.ListPostFragment;
+import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
+import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
+import com.ushahidi.android.presentation.view.ui.widget.CustomGridHolder;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
@@ -42,39 +77,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.Holder;
-import com.ushahidi.android.R;
-import com.ushahidi.android.data.api.account.PlatformSession;
-import com.ushahidi.android.data.api.account.SessionManager;
-import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
-import com.ushahidi.android.presentation.UshahidiApplication;
-import com.ushahidi.android.presentation.di.components.form.DaggerListFormComponent;
-import com.ushahidi.android.presentation.di.components.form.ListFormComponent;
-import com.ushahidi.android.presentation.di.components.post.DaggerListPostComponent;
-import com.ushahidi.android.presentation.di.components.post.DaggerMapPostComponent;
-import com.ushahidi.android.presentation.di.components.post.DaggerPostComponent;
-import com.ushahidi.android.presentation.di.components.post.DaggerUserProfileComponent;
-import com.ushahidi.android.presentation.di.components.post.ListPostComponent;
-import com.ushahidi.android.presentation.di.components.post.MapPostComponent;
-import com.ushahidi.android.presentation.di.components.post.PostComponent;
-import com.ushahidi.android.presentation.di.components.post.UserProfileComponent;
-import com.ushahidi.android.presentation.model.DeploymentModel;
-import com.ushahidi.android.presentation.model.FormModel;
-import com.ushahidi.android.presentation.model.UserProfileModel;
-import com.ushahidi.android.presentation.presenter.form.ListFormPresenter;
-import com.ushahidi.android.presentation.presenter.post.PostPresenter;
-import com.ushahidi.android.presentation.state.LoadUserProfileEvent;
-import com.ushahidi.android.presentation.state.ReloadPostEvent;
-import com.ushahidi.android.presentation.util.Utility;
-import com.ushahidi.android.presentation.view.form.ListFormView;
-import com.ushahidi.android.presentation.view.post.PostView;
-import com.ushahidi.android.presentation.view.ui.adapter.FormAdapter;
-import com.ushahidi.android.presentation.view.ui.fragment.ListPostFragment;
-import com.ushahidi.android.presentation.view.ui.fragment.MapPostFragment;
-import com.ushahidi.android.presentation.view.ui.fragment.UserProfileFragment;
-import com.ushahidi.android.presentation.view.ui.widget.CustomGridHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +147,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     private MapPostComponent mMapPostComponent;
 
     private UserProfileComponent mUserProfileComponent;
+
+    private AddPostComponent mAddPostComponent;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -278,13 +282,18 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
+
+        mAddPostComponent = DaggerAddPostComponent.builder()
+                .appComponent(getAppComponent())
+                .activityModule(getActivityModule())
+                .build();
+
         mUshAccessTokenManager = getAppComponent().ushahidiTokenManager();
         mSessionManager = getAppComponent().platformSessionManager();
         mPostPresenter = postComponent.postPresenter();
         mPostPresenter.setPostView(this);
         mListFormPresenter = listFormComponent.listFormPresenter();
         mListFormPresenter.setView(this);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -316,9 +325,10 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                                 mCurrentMenu = menuItem.getItemId();
                                 // Mark the deployment active if it's not
                                 if (mDeploymentModelList.get(menuItem.getItemId()).getStatus()
-                                        == DeploymentModel.Status.DEACTIVATED) {
+                                        .equals(DeploymentModel.Status.DEACTIVATED)) {
                                     mPostPresenter.activateDeployment(mDeploymentModelList,
                                             menuItem.getItemId());
+                                    menuItem.setChecked(true);
                                 }
                                 menuItem.setCheckable(true);
                                 menuItem.setChecked(true);
@@ -344,7 +354,8 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
                 subMenu.add(DEPLOYMENTS_MENU_ITEMS_GROUP_ID, pos, pos,
                         mDeploymentModelList.get(pos).getTitle()).setIcon(
                         R.drawable.ic_action_globe);
-                if (mDeploymentModelList.get(pos).getStatus() == DeploymentModel.Status.ACTIVATED) {
+                if (mDeploymentModelList.get(pos).getStatus()
+                        .equals(DeploymentModel.Status.ACTIVATED)) {
                     mNavigationView.getMenu().findItem(pos).setChecked(true);
                     mToolbar.setTitle(mNavigationView.getMenu().findItem(pos).getTitle());
                 } else {
@@ -466,25 +477,29 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         builder.setMessage(R.string.dialog_logout_message)
                 .setCancelable(false)
                 .setIcon(R.drawable.ic_action_globe)
-                .setPositiveButton(R.string.dialog_logout_btn_postive, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Clear active session
-                        SessionManager sessionManager = getAppComponent().platformSessionManager();
-                        sessionManager.clearActiveSession();
-                        // Clear access token
-                        UshAccessTokenManager ushAccessTokenManager = getAppComponent().ushahidiTokenManager();
-                        ushAccessTokenManager.getStorage().removeAccessToken();
-                        // Send an event
-                        UshahidiApplication.getRxEventBusInstance()
-                                .send(new LoadUserProfileEvent(null));
-                        setNavigationViewMenuItems(mNavigationView.getMenu());
-                    }
-                })
-                .setNegativeButton(R.string.dialog_logout_btn_negative, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setPositiveButton(R.string.dialog_logout_btn_postive,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Clear active session
+                                SessionManager sessionManager = getAppComponent()
+                                        .platformSessionManager();
+                                sessionManager.clearActiveSession();
+                                // Clear access token
+                                UshAccessTokenManager ushAccessTokenManager = getAppComponent()
+                                        .ushahidiTokenManager();
+                                ushAccessTokenManager.getStorage().removeAccessToken();
+                                // Send an event
+                                UshahidiApplication.getRxEventBusInstance()
+                                        .send(new LoadUserProfileEvent(null));
+                                setNavigationViewMenuItems(mNavigationView.getMenu());
+                            }
+                        })
+                .setNegativeButton(R.string.dialog_logout_btn_negative,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
         builder.create().show();
     }
 
@@ -498,7 +513,9 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         Holder holder = new CustomGridHolder(3);
         final DialogPlus dialog = DialogPlus.newDialog(this)
                 .setOnItemClickListener((dia, item, view1, position) -> {
-                    mMapPostComponent.launcher().launchAddPost(mFormAdapter.getItem(position));
+                    final FormModel formModel = mFormAdapter.getItem(position);
+                    mMapPostComponent.launcher()
+                            .launchAddPost(formModel._id, formModel.getName());
                     dia.dismiss();
                 })
                 .setExpanded(true)
@@ -571,10 +588,10 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
         }
     }
 
-    // This is to enure there is always an active deployment
+    // This is to ensure there is always an active deployment
     private void markFirstDeploymentActive() {
         for (DeploymentModel deploymentModel : mDeploymentModelList) {
-            if (deploymentModel.getStatus() == DeploymentModel.Status.ACTIVATED) {
+            if (deploymentModel.getStatus().equals(DeploymentModel.Status.ACTIVATED)) {
                 break;
             } else {
                 // Make the first item the active one

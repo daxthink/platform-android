@@ -142,7 +142,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostView {
 
     @Override
     public void showError(String s) {
-        showSnabackar(getView(), s);
+        showSnackbar(getView(), s);
     }
 
     @Override

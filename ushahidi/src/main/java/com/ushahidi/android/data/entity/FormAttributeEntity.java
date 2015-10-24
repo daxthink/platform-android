@@ -41,6 +41,9 @@ public class FormAttributeEntity extends Data {
 
     private Long mFormId;
 
+    @SerializedName("form_stage_id")
+    private Long mFormStageId;
+
     public void setFormId(Long formId) {
         mFormId = formId;
     }
@@ -121,6 +124,18 @@ public class FormAttributeEntity extends Data {
         return mCardinality;
     }
 
+    public void setCardinality(Integer cardinality) {
+        mCardinality = cardinality;
+    }
+
+    public Long getFormStageId() {
+        return mFormStageId;
+    }
+
+    public void setFormStageId(Long formStageId) {
+        mFormStageId = formStageId;
+    }
+
     public enum Input {
 
         /**
@@ -142,16 +157,41 @@ public class FormAttributeEntity extends Data {
         SELECT("select"),
 
         /**
-         * Date picker
+         * Date picker input type
          */
         @SerializedName("datetime")
         DATETIME("datetime"),
 
         /**
+         * Date input type
+         */
+        @SerializedName("date")
+        DATE("date"),
+
+        /**
          * Textarea input type
          */
         @SerializedName("textarea")
-        TEXTAREA("textarea");
+        TEXTAREA("textarea"),
+
+        /**
+         * Number input type
+         */
+        @SerializedName("number")
+        NUMBER("number"),
+
+        /**
+         * Radio input type
+         */
+        @SerializedName("radio")
+        RADIO("radio"),
+
+        /**
+         * Checkbox input type
+         */
+        @SerializedName("checkbox")
+        CHECKBOX("checkbox");
+
 
         private String value;
 
@@ -199,7 +239,19 @@ public class FormAttributeEntity extends Data {
          * A geometry type
          */
         @SerializedName("geometry")
-        GEOMETRY("geometry");
+        GEOMETRY("geometry"),
+
+        /**
+         * Int type
+         */
+        @SerializedName("int")
+        INT("int"),
+
+        /**
+         * Link type
+         */
+        @SerializedName("link")
+        LINK("link");
 
         private String value;
 
@@ -227,6 +279,7 @@ public class FormAttributeEntity extends Data {
                 + ", mRequired=" + mRequired
                 + ", mPriority=" + mPriority
                 + ", mOptions=" + mOptions
+                + ", mFormStageId=" + mFormStageId
                 + ", mCardinality=" + mCardinality
                 + '}';
     }

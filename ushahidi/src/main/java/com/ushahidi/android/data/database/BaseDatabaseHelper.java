@@ -6,6 +6,7 @@ import com.ushahidi.android.data.database.converter.PostEntityConverter;
 import com.ushahidi.android.data.entity.DeploymentEntity;
 import com.ushahidi.android.data.entity.FormAttributeEntity;
 import com.ushahidi.android.data.entity.FormEntity;
+import com.ushahidi.android.data.entity.FormStageEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
@@ -41,7 +42,8 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
 
     private static final Class[] ENTITIES = new Class[]{DeploymentEntity.class, UserEntity.class,
             TagEntity.class, PostTagEntity.class, PostEntity.class,
-            GeoJsonEntity.class, FormEntity.class, FormAttributeEntity.class};
+            GeoJsonEntity.class, FormEntity.class, FormAttributeEntity.class,
+            FormStageEntity.class};
 
     private static final String TAG = BaseDatabaseHelper.class.getSimpleName();
 
@@ -65,8 +67,10 @@ public abstract class BaseDatabaseHelper extends SQLiteOpenHelper {
                         new EnumEntityFieldConverter<>(PostEntity.Status.class))
                 .registerFieldConverter(PostEntity.Type.class,
                         new EnumEntityFieldConverter<>(PostEntity.Type.class))
+
                 .registerFieldConverter(FormAttributeEntity.Input.class,
                         new EnumEntityFieldConverter<>(FormAttributeEntity.Input.class))
+
                 .registerFieldConverter(FormAttributeEntity.Type.class,
                         new EnumEntityFieldConverter<>(FormAttributeEntity.Type.class))
                 .registerEntityConverterFactory(factory).useAnnotations().build());

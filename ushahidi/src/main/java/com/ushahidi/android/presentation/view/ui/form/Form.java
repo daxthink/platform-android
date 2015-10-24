@@ -77,6 +77,16 @@ public class Form {
     }
 
     /**
+     * Renders one or more form widgets.
+     *
+     * @param attribute The rest of the form attribute that makes up the form widget
+     * @return The container in which the form widgets have been added
+     */
+    public void renderForm(FormAttributeModel attribute) {
+        generateFormWidget(attribute);
+    }
+
+    /**
      * Validates the form widget's values
      *
      * @return The validation status. True for the field being valid
@@ -93,21 +103,22 @@ public class Form {
     private void generateFormWidget(FormAttributeModel attribute) {
         FormWidget formWidget = null;
         FormAttributeModel.Input input = attribute.getInput();
-        if (Attribute.Input.TEXT.equals(input)) {
+        if (FormAttributeModel.Input.TEXT.equals(input)) {
             formWidget = new EditFormWidget(mContext, attribute.getKey(), attribute.getLabel());
             formWidget.setPriority(attribute.getPriority());
 
-        } else if (Attribute.Input.SELECT.equals(input)) {
+        } else if (FormAttributeModel.Input.SELECT.equals(input)) {
             formWidget = new SelectFormWidget(mContext, attribute.getKey(), attribute.getLabel(),
                     attribute.getOptions());
             formWidget.setPriority(attribute.getPriority());
         }
-
-        mFormWidgets.add(formWidget);
+        if (formWidget != null) {
+            mFormWidgets.add(formWidget);
+        }
 
     }
 
-    private ViewGroup getContainer() {
+    public ViewGroup getContainer() {
         Collections.sort(mFormWidgets, new Priority());
         for (FormWidget formWidget : mFormWidgets) {
             mContainer.addView(formWidget.getLayout());

@@ -1,0 +1,24 @@
+{
+  "count": 1,
+  "results": [
+    {
+      "id": 201,
+      "url": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/form_stages/201",
+      "form_id": 141,
+      "label": "Where & when?",
+      "priority": 99,
+      "required": false,
+      "allowed_privileges": [
+        "read",
+        "search"
+      ]
+    }
+  ],
+  "limit": null,
+  "offset": 0,
+  "order": "asc",
+  "orderby": "priority",
+  "curr": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/forms/141/stages?order=asc&orderby=priority&offset=0",
+  "next": "http://ushahidi-platform-api-release.herokuapp.com/api/v3/forms/141/stages?order=asc&orderby=priority&offset=0",
+  "total_count": 1
+}

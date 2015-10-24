@@ -27,6 +27,7 @@ import com.ushahidi.android.data.api.oauth.UshAccessTokenManager;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
 import com.ushahidi.android.domain.repository.FormAttributeRepository;
 import com.ushahidi.android.domain.repository.FormRepository;
+import com.ushahidi.android.domain.repository.FormStageRepository;
 import com.ushahidi.android.domain.repository.GeoJsonRepository;
 import com.ushahidi.android.domain.repository.PostRepository;
 import com.ushahidi.android.domain.repository.TagRepository;
@@ -116,6 +117,13 @@ public interface AppComponent extends ApplicationComponent {
      * @return the form attribute repository
      */
     FormAttributeRepository formAttributeRepository();
+
+    /**
+     * Provide {@link FormStageRepository}
+     *
+     * @return the form stage repository
+     */
+    FormStageRepository formStageRepository();
 
     /**
      * Provide {@link UserAccountRepository} to the sub-graph

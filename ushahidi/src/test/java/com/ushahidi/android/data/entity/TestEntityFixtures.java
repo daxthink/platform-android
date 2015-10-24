@@ -138,4 +138,21 @@ public class TestEntityFixtures {
         tagEntityList.add(getTagEntity());
         return tagEntityList;
     }
+
+    public static List<FormStageEntity> getFormStageEntities() {
+        List<FormStageEntity> formStageList = new ArrayList<>();
+        formStageList.add(getFormStageEntity());
+        return formStageList;
+    }
+
+    public static FormStageEntity getFormStageEntity() {
+        FormStageEntity formStage = new FormStageEntity();
+        formStage._id = ID;
+        formStage.setLabel("Test varchar");
+        formStage.setRequired(true);
+        formStage.setPriority(1);
+        formStage.setDeploymentId(DEPLOYMENT_ID);
+        formStage.setFormId(2l);
+        return formStage;
+    }
 }

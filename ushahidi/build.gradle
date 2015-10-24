@@ -75,6 +75,11 @@ android {
             applicationId 'com.ushahidi.android.internal'
         }
     }
+
+    dexOptions {
+        incremental = true;
+    }
+
 }
 
 retrolambda {
@@ -97,10 +102,8 @@ dependencies {
     compile appDependencies.androidMapsUtils
     compile appDependencies.cocoaheroGeoJson
     compile appDependencies.heimdallDroid
-    compile appDependencies.gson
     compile appDependencies.dialogplus
-    compile appDependencies.rxJava
-    compile appDependencies.rxAndroid
+    compile appDependencies.expandableview
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit
@@ -114,6 +117,8 @@ dependencies {
     androidTestCompile appTestDependencies.mockito
     androidTestCompile appTestDependencies.dexmaker
     androidTestCompile appTestDependencies.dexmakerMockito
-    androidTestCompile appTestDependencies.espresso
-    androidTestCompile appTestDependencies.testingSupportLib
+    androidTestCompile(appTestDependencies.testingSupportRunner) {
+        exclude module: 'support-annotations'
+    }
+    androidTestApt appDependencies.daggerCompiler
 }
